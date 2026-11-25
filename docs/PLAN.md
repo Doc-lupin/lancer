@@ -20,12 +20,12 @@ One continuous zoom, with no cuts or scene changes between levels:
 - **Affiliation layers.** Swappable map overlays: governments, corporations, cultures (peoples), religions, and possibly outlaws and armed companies. Each faction gets a layer category and a color.
 - **Contested control** is drawn as stripes in the colors of the factions involved.
 - **Player mode** only hides GM notes in the interface. Players are trusted, so there is no separate player file.
+- **Positions** are generated from the chart layout and then adjusted by hand (`tools/generate_positions.py`; locked values survive regeneration).
 - **Instancing** for stars and icons, as planned.
 - **Tidal lanes are always drawn.** Their brightness fades with the 73-day tidal cycle: bright while open (about 14 days), dim while closed. The cycle is driven by the dashboard's current system time, so the GM sets or advances a single in-game clock.
 
 ## Open questions
 
-- How region positions in 3D are chosen: hand-placed, generated, or generated and then adjusted.
 - Data needed for the cultures and religions layers: which regions each people or faith is present in, and how strongly.
 - Where the dashboard clock starts: the in-game date of the opening session, and which day of the 73-day cycle it falls on.
 
