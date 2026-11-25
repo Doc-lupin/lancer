@@ -1,0 +1,75 @@
+# Phase 2: 3D view — work plan
+
+**Status: not started.** Branch `phase-2`, cut from `main` on Nov 25, 2026. The Phase 1 test still passes on it (`python3 tools/validate_map.py --complete`: 0 errors, 0 warnings).
+
+Phase 2 checklist and test are in [PLAN.md](PLAN.md). This file breaks them into small tasks and lists what must be decided first.
+
+**Exit test (from PLAN.md):** zoom Basin → planet and back without a break; no shaking; smooth on a phone.
+
+## What the data gives the view
+
+Measured on `data/map.json` at the start of the phase:
+
+| Item | Count or range |
+|---|---|
+| Regions | 24 (the Furnace and the Mire have an `effect`) |
+| Systems | 155: 144 star centers, 7 rogue planets, 3 wrecks, 1 structure; 40 have `charted: false` |
+| Bodies | 329: 118 planets, 27 gas giants, 20 moons, 39 stations, 71 lane mouths, 4 companion stars, 9 wrecks, 7 rogue planets, 10 asteroids, 6 belts, 14 fields, 4 structures |
+| Places | 163, each on a body at `at: [lat, long]` |
+| Lanes | 37, each end a system and a lane-mouth body |
+| System positions | Light-years, all within 24.4 ly of the origin |
+| Orbits in AU | 272, from 0.006 to 120 AU |
+| Orbits in km | 46, from 12 km to 6,200,000 km |
+
+The smallest thing the GM will look at closely is a station a few hundred metres across; the largest view is the whole Basin, about 49 ly (4.6 × 10^14 km). That is a range of about 10^15, two orders more than the 10^13 in the risk table. The precision test (task 2.4) has to cover it.
+
+## Decisions needed
+
+Each has a recommended default. Task 2.1 needs P1 and P2; task 2.4 needs P3 and P4. The others can wait until their task.
+
+| # | Question | Recommended |
+|---|---|---|
+| P1 | Language | Plain JavaScript with JSX. TypeScript would be a new tool. |
+| P2 | Packages | `three`, `react`, `react-dom`, `@react-three/fiber`, `@react-three/drei`, `zustand`, and as dev tools `vite` and `@vitejs/plugin-react` (Vite's React plugin, needed to build JSX; asking because it is not named in CLAUDE.md). Exact versions pinned in `package.json`, with `package-lock.json` committed. |
+| P3 | Floating origin | Every position is kept in the store in kilometres as a JavaScript number (64-bit). Each frame, the view subtracts the camera's position and hands Three.js only the offset, so the GPU's 32-bit floats only ever see small numbers near the camera. The camera itself stays at the scene origin. |
+| P4 | Depth buffer | `logarithmicDepthBuffer: true` on the renderer, near plane 1 m, far plane 10^16 km. If a phone shows depth flicker, fall back to two passes (far stars, then the near system). |
+| P5 | Sizes on screen | True positions always. Stars, systems and icons drawn with a minimum size in pixels, so they stay visible from far away; a body becomes a true-size sphere once it is larger than that minimum. No exaggerated planet sizes. |
+| P6 | Camera control | Our own small controller in `src/views/camera/`: orbit around a focus, zoom by a ratio per wheel step or pinch (so one gesture works at every scale), fly to an object on click, zoom out to the parent when the camera passes the parent's view distance. drei's `CameraControls` assumes a fixed target and fights the rebasing in P3. drei is still used for text labels. |
+| P7 | Loading `map.json` | Fetched once at start (`import url from '../../data/map.json?url'`, then `fetch`), not bundled into the code. The file stays in `data/`, read-only, per D5. |
+| P8 | Star colors and luminosities | Port the `STAR` table of `tools/derive_stats.py` by hand to `src/data/starKinds.js`, plus a check in `tools/` that both tables list the same kinds and values. |
+| P9 | JavaScript tests | Node's built-in test runner (`node --test`) for data helpers; no new library. Scripted browser checks with the Playwright that is pre-installed in this environment, kept in `tools/` and not added to `package.json`. |
+| P10 | Phone for the test | The GM names a phone. Until then: Chromium's phone emulation with 4× CPU throttling. "Smooth" = at least 30 frames per second throughout the zoom, aiming for 60. |
+| P11 | Planet look in Phase 2 | Sphere tinted from `appearance.color`, rings where given, a thin atmosphere shell. Textures and clouds later (they belong to the risk "planet surfaces"). |
+| P12 | Lanes | A straight line from mouth body to mouth body. One-way lanes get chevrons along the line pointing the way of travel; drifting lanes are dashed ("broken"). In Phase 2 tidal lanes take their open or closed state from `clock.current` once at load; the live clock comes in Phase 3. |
+| P13 | Player mode in Phase 2 | A `playerMode` flag in the store from task 2.2, default off (GM). Views skip `visibility: "gm"` objects when it is on. The switch in the interface is Phase 4. |
+
+## Tasks
+
+One task = one session's work, touching only the files listed. Do them in order. Each task ends with `npm run build` passing (from task 2.1 on) and the Phase 1 check still passing.
+
+| # | Task | Function | Files | Done when |
+|---|---|---|---|---|
+| 2.0 | Settle P1–P13 | — | `docs/PHASE2.md` | Answers recorded here |
+| 2.1 | App scaffold: Vite + React + R3F, one empty canvas filling the page | Continuous zoom | `package.json`, `package-lock.json`, `vite.config.js`, `index.html`, `src/main.jsx`, `src/views/Scene.jsx` | `npm run dev` shows a black canvas; `npm run build` passes |
+| 2.2 | Store: load `map.json` once into Zustand; lookups by id; parent chain (body → system → region); "(WIP)" stripped for display, as in `tools/describe_world.py`; `playerMode` flag (P13) | Data storage | `src/storage/loadMap.js`, `src/data/store.js`, `src/data/names.js`, `src/data/store.test.js` | `node --test` loads the file and finds 24 regions, 155 systems, 329 bodies; every parent chain resolves |
+| 2.3 | Star kinds table (P8) | Continuous zoom | `src/data/starKinds.js`, `tools/check_star_kinds.py` | Every `kind` in `map.json` has a color and luminosity; the check passes |
+| 2.4 | Precision test, first, as the risk table asks: floating origin and log depth (P3, P4) with three test objects, one at each scale (ly, AU, km), and a scripted zoom from 50 ly to 1 km above a station | Continuous zoom | `src/views/origin.js`, `src/views/PrecisionTest.jsx`, `tools/check_jitter.mjs` | With the camera still, no test object moves more than half a pixel between frames at any step; no depth flicker. The GM looks at the screenshots |
+| 2.5 | Camera controller (P6): orbit, zoom by ratio, pinch and drag on touch, click to fly to an object, zoom out to the parent | Continuous zoom | `src/views/camera/*.js` | One wheel or pinch gesture covers Basin to station; the fly-to ends on the object with no overshoot |
+| 2.6 | Regions and stars from the store, instanced; star color and brightness from `starKinds`; unmapped stars dimmer; region labels at the Basin level (P5) | Continuous zoom | `src/views/Stars.jsx`, `src/views/RegionLabels.jsx` | 155 systems drawn in one or two draw calls; labels readable on a phone |
+| 2.7 | Lanes faded by default; lanes mode bright with day and type labels; one-way chevrons; drifting lanes dashed; tidal open or closed from the clock (P12) | Lanes mode | `src/data/lanes.js`, `src/data/lanes.test.js`, `src/views/Lanes.jsx`, `src/interface/LanesToggle.jsx` | All 37 lanes drawn; the toggle switches modes; the tidal state for day 300 is "open, 9 more days" |
+| 2.8 | Region effects: a simple glow or particle cloud for the Furnace's nebula and the Mire's dust; non-star centers (rogue planet, wreck, structure) with their own instanced icons | Continuous zoom | `src/views/RegionEffects.jsx`, `src/views/Centers.jsx` | Both effects visible from the Basin level; every system center type has an icon |
+| 2.9 | System level: center star and companion stars, planets and giants placed by orbit and clock, orbit lines, belts and fields, lane mouths, stations | Continuous zoom | `src/data/orbits.js`, `src/data/orbits.test.js`, `src/views/System.jsx` | Orbit angle = `phaseDeg + 360 × days since epoch / periodDays`, tested against three hand-worked bodies; Ostrom and Tallis look right to the GM |
+| 2.10 | Planet level: globe with tint and rings (P11), moons and stations on km orbits, surface places as markers at their latitude and longitude | Continuous zoom | `src/views/Planet.jsx`, `src/views/Places.jsx`, `src/data/globe.js`, `src/data/globe.test.js` | Scald's places sit on either side of the Seam; Tallis's moons and stations are in orbit |
+| 2.11 | Phase 2 test: scripted zoom Basin → Tallis → planet → station and back, on desktop and in phone emulation (P10); jitter and frame-rate log; the GM tries it on their phone; tick the boxes in PLAN.md | — | `tools/check_zoom.mjs`, `docs/PLAN.md`, `docs/PHASE2.md` | Exit test passes |
+
+Tasks 2.1–2.5 have no map content worth showing; the first look at the Basin comes with 2.6.
+
+## Risks for this phase
+
+| Risk | What to do |
+|---|---|
+| Range of scale is ~10^15, not ~10^13 | Task 2.4 before any content. If half a pixel can't be held at station range, cap the closest zoom at the station's size. |
+| Log depth costs fill rate on phones | Measure in 2.4; fall back to two passes (P4). |
+| 745 KB `map.json` on a phone connection | Fine for private use. If start-up is slow, gzip on the host serves it at about a tenth. |
+| Labels at every level crowd the screen | Labels only for the level in view and its children, fading with distance. |
+| Clicking small objects on a phone | Pick by screen distance to the icon, not by ray hit on the true-size mesh. |

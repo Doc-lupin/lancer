@@ -3,7 +3,7 @@
 Repository copy of the V2 plan (Nov 25, 2026). The shared document is at
 https://claude.ai/artifact/MDzMcUZF9q7TRJi2YMVwLC. V1 is `3D_Universe_Map_Tool_Overview_and_Action_Plan.docx`.
 
-**Current phase: Phase 2 (3D view), not started.** Phase 1 passed its test and is merged into `main`.
+**Current phase: Phase 2 (3D view), not started; work on branch `phase-2`.** Phase 1 passed its test and is merged into `main`.
 
 ## Design decisions
 
@@ -77,6 +77,8 @@ Task breakdown, review findings and open decisions: [PHASE1.md](PHASE1.md).
 - **Result (Nov 25, 2026): passed.** `python3 tools/validate_map.py --complete` reports 0 errors and 0 warnings; 1,447 references resolve; every charted region has a system. Details in [PHASE1.md](PHASE1.md).
 
 ### Phase 2: 3D view
+Task breakdown, scale measurements and open decisions: [PHASE2.md](PHASE2.md).
+
 Built with Vite (D19). The app reads `data/map.json`; the data is still authored in `data/src/` and built by `tools/build_map.py` until Phase 5 (D5).
 
 - [ ] Regions and stars from JSON, instanced; unmapped stars dimmer
