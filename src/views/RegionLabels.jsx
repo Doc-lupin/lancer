@@ -3,7 +3,7 @@
 // region's stars, so it doesn't cover them, or else above, right or left.
 // Every label that fits is placed by name first, inner regions before frontier
 // ones and the crossroads outward; then each gets its subtitle where there
-// is still room.
+// is still room (not in lanes mode, where the lane labels need the space).
 //   RegionLabels         the text, rendered outside the canvas
 //   RegionLabelsUpdater  inside the canvas: each frame, moves every label to
 //                        its region's center on screen
@@ -25,6 +25,8 @@ const FADE_TO_LY = 3; // gone within this
 const PAD = 4; // px kept clear around each label
 
 const els = new Map(); // region id → label element
+// Where the region labels are on screen this frame; lane labels keep clear of them.
+export const regionLabelBoxes = [];
 let redraw = () => {};
 
 function useRegions() {
@@ -46,6 +48,7 @@ export function RegionLabels() {
       {regions.map((r) => (
         <button
           key={r.id}
+          data-region={r.id}
           ref={(el) => (el ? els.set(r.id, el) : els.delete(r.id))}
           onClick={() => fly(r.id)}
           style={{
@@ -77,6 +80,7 @@ function measure(el) {
 export function RegionLabelsUpdater() {
   const regions = useRegions();
   const { camera, size, invalidate } = useThree();
+  const lanesMode = useMap((s) => s.lanesMode);
   useEffect(() => {
     redraw = invalidate;
     return () => { redraw = () => {}; };
@@ -121,10 +125,12 @@ export function RegionLabelsUpdater() {
       if (box) { boxes.set(it, box); it.compact = true; }
     }
     for (const it of items) {
-      if (!boxes.has(it) || !it.el.children[1]) continue;
+      if (lanesMode || !boxes.has(it) || !it.el.children[1]) continue;
       const box = spots(it, measure(it.el)[0]).find((b) => fits(b, it));
       if (box) { boxes.set(it, box); it.compact = false; }
     }
+    regionLabelBoxes.length = 0;
+    for (const b of boxes.values()) regionLabelBoxes.push(b);
     for (const it of items) {
       const { el } = it;
       const box = boxes.get(it);

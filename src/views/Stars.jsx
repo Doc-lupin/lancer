@@ -3,8 +3,9 @@
 //   glow  a soft disc facing the camera, sized in screen pixels by luminosity,
 //         drawn additively so close pairs brighten.
 // Colors and luminosity come from src/data/starKinds.js. Unmapped stars
-// (charted: false) are drawn dimmer. A black hole has a dark core in its
-// disk's glow. Positions are set relative to the camera each frame (P3).
+// (charted: false) are drawn dimmer, except those in FULL_BRIGHTNESS. A black
+// hole has a dark core in its disk's glow. Positions are set relative to the
+// camera each frame (P3).
 
 import { useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
@@ -18,6 +19,9 @@ import { starRadiusKm } from './mapTargets.js';
 const CORE_PX = 2.5;
 const UNMAPPED_CORE = 0.5; // color multiplier for unmapped stars
 const UNMAPPED_GLOW = 0.35;
+// Unmapped stars drawn at full brightness all the same. The Watchfire is
+// visible from every world in the Basin and spacers steer by it (GM, Nov 25).
+const FULL_BRIGHTNESS = new Set(['watchfire-system']);
 
 // Glow width in CSS pixels from luminosity (Sun = 1): 8 px for the Sun,
 // 3.2 px more per factor of ten, from 5 px (dim dwarfs, remnants) to 26 px.
@@ -78,8 +82,8 @@ export default function Stars() {
         place: view.targets.get(s.id)?.place ?? { anchor: s.pos, offset: [0, 0, 0] },
         radiusKm: starRadiusKm(s.center.kind),
         color: new THREE.Color(k.color),
-        glow: glowPx(k.luminosity) * (s.charted ? 1 : 0.75),
-        dim: !s.charted,
+        glow: glowPx(k.luminosity) * (s.charted || FULL_BRIGHTNESS.has(s.id) ? 1 : 0.75),
+        dim: !s.charted && !FULL_BRIGHTNESS.has(s.id),
         dark: s.center.kind === 'black-hole',
       };
     }), [map, index, playerMode]);

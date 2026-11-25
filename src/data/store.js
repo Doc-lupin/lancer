@@ -67,9 +67,11 @@ export const useMap = create((set) => ({
   map: null,
   index: null,
   playerMode: false, // GM view by default; the switch arrives in Phase 4
+  lanesMode: false, // lanes bright with labels (task 2.7); faded otherwise
 
   setLoading: () => set({ status: 'loading', error: null }),
   setMap: (map) => set({ map, index: buildIndex(map), status: 'ready', error: null }),
   setError: (error) => set({ status: 'error', error: String(error) }),
   setPlayerMode: (playerMode) => set({ playerMode }),
+  setLanesMode: (lanesMode) => set({ lanesMode }),
 }));

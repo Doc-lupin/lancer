@@ -35,7 +35,7 @@ async function settle(page) {
 }
 
 async function labels(page) {
-  return page.evaluate(() => [...document.querySelectorAll('button')].map((b) => {
+  return page.evaluate(() => [...document.querySelectorAll('button[data-region]')].map((b) => {
     const r = b.getBoundingClientRect();
     return { text: b.children[0].textContent, shown: +b.style.opacity > 0, px: parseFloat(getComputedStyle(b).fontSize), box: [r.left, r.top, r.right, r.bottom] };
   }));
@@ -54,7 +54,8 @@ async function run(browser, base, name, options) {
     const meshes = window.__lancer.scene.children.filter((o) => o.isInstancedMesh);
     return { calls: window.__lancer.render().calls, counts: meshes.map((m) => m.count), stars: window.__lancer.view.targets.size };
   });
-  check('all 144 star systems drawn in two draw calls', info.calls === 2 && info.counts.every((c) => c === 144), `${info.calls} calls, instances ${info.counts.join(' + ')}`);
+  // Two instanced meshes, one draw call each; the lanes (task 2.7) add two more.
+  check('all 144 star systems drawn in two draw calls', info.counts.length === 2 && info.counts.every((c) => c === 144) && info.calls === 4, `2 star meshes (instances ${info.counts.join(' + ')}), ${info.calls} calls with the lanes`);
 
   const ls = await labels(page);
   const shown = ls.filter((l) => l.shown);
