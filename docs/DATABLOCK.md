@@ -1,8 +1,8 @@
 # World datablock
 
-Every typed world in `data/map.json` carries a datablock in two parts: `stats`, its physical figures, and `profile`, what it means to the people of the Basin. Stations carry a `profile`. The information box shows the datablock above the world's description; `python3 tools/describe_world.py <body id>` prints both.
+Every typed world in `data/map.json` carries a datablock in two parts: `stats`, its physical figures, and `profile`, what it means to the people of the Basin. The datablock is written as an in-universe register, the kind the Survey Office and the Exchange would keep: it holds what a well-informed traveler could look up, and nothing the GM keeps hidden. A visible world's datablock never draws on GM-only objects (its moon count, settlements, defenses and trade leave them out). Stations carry a `profile`. The information box shows the datablock above the world's description; `python3 tools/describe_world.py <body id>` prints both.
 
-Most values are derived by `tools/derive_stats.py` during the build, from the world's orbit, star, type, variant, features, places and the lane network. Values written in `data/src/profiles.json` always win over derived ones; that file holds populations, trends, settled years, canon exports and imports, print access, a few physical overrides and the GM's story hooks. Pronunciations come from `data/src/pronunciation.json`.
+Most values are derived by `tools/derive_stats.py` during the build, from the world's orbit, star, type, variant, features, places and the lane network. Values written in `data/src/profiles.json` always win over derived ones; that file holds populations, trends, settled years, the economies of the notable worlds and stations, and a few physical overrides. Pronunciations come from `data/src/pronunciation.json`.
 
 **Union standard** means Earth: 1 g, a 24-hour day, a 365.25-day year, 1 atm, and the sunlight Earth receives. Fields ending in `Rel` compare a world to standard.
 
@@ -48,19 +48,52 @@ Most values are derived by `tools/derive_stats.py` during the build, from the wo
 | `surveyStatus` | Settled, surveyed, partly surveyed, seen from orbit only, unvisited | Places, stations and whether the region is frontier |
 | `authority` | Who governs, or "contested: …", or no authority | Control on the world, its system or its region |
 | `claims` | Allotment-registered, disputed, closed by quarantine, pending a sapience ruling, held by a faction, unclaimed | Features and control |
-| `security` | 1 to 5, military and criminal threat, with reasons | Contested control, fighting, insurgency, sieges, smugglers, outlaws in the region, contested ground; fortification lowers it |
+| `security` | 1 to 5, military and criminal threat, with reasons | Contested control, fighting, insurgency, sieges, smugglers, outlaws in the region, contested ground; fortified settlements offset one point |
 | `hazard` | 1 to 5, environmental danger, with reasons | Habitability plus hazard features (radiation, custodians, predators, disease, flares, quakes and others) |
 | `navyReach` | Navy home waters, within patrol range (3 lane days or less from Ostrom or Tallis), occasional patrols (6 or less), beyond the Navy's reach | Lane network |
 | `toMarrow` | Shortest route in lane days to Ostrom and the regions it passes, noting tidal or drifting lanes. News travels no faster | Lane network, respecting one-way lanes |
 | `transitDays`, `transitFrom` | Days from the nearest lane mouth at standard drive (1 g, accelerating to midpoint then braking), using positions on the clock date; or from a local-lane arrival if the system has no primary mouth | Orbits and clock |
-| `portClass`, `defenses` | Landing field, spaceport, orbital station or both; guns, pickets, garrisons | Places and stations |
+| `portClass`, `defenses` | Landing pad, landing field, spaceport, orbital station or both; guns, pickets, garrisons | Places and stations; a capital or traffic hub has a spaceport |
 | `settlements` | Count, the main settlement and notable places | Places |
-| `population`, `populationTrend`, `settled` | People awake, trend (uninhabited, growing, stable, declining, evacuating) and first settlement year | Authored; the Basin totals about 1.2 million awake |
+| `population`, `populationTrend`, `settled` | People awake, trend (uninhabited, abandoned, growing, stable, declining, evacuating) and first settlement year | Authored; the Basin totals about 1.2 million awake |
 | `peoples`, `faiths` | The peoples and faiths present, major or minor | Presence on the world and its region |
-| `exports`, `imports`, `printAccess`, `food`, `water` | Trade, what can be printed there, and whether it feeds and waters itself | Resource features and control, with canon overrides |
-| `lattice` | Rating, where, whether worked and by whom | Lattice data, mining places and control |
+| `economy` | Trade and supply; see below | Features, places, control and the lane network, with authored economies for notable worlds |
+| `lattice` | Rating, where, whether worked and by whom | Lattice data, mining places, exports and control |
 | `code` | Quick-reference line (below) | Generated |
-| `gmHooks` | Two or three story prompts. GM-only: hidden in player mode | Authored |
+
+`populationTrend` reads abandoned for a world that was settled and is now empty (Verdance, Sump, Ashlar).
+
+## economy
+
+| Field | Meaning |
+|---|---|
+| `base` | Primary activity: farming and ranching, lattice mining, refining, frame manufacture, free-port trade, Navy picket and levy collection, and so on; none when uninhabited |
+| `exports` | Each good with where it goes (`to`) and its commodity class |
+| `imports` | Each good with where it comes from (`from`) and its class |
+| `resources` | Known resources other than lattice, each worked, unworked, claimed but unworked, or closed by quarantine |
+| `levies` | Tithes, tolls and protection paid on the world's trade routes |
+| `printAccess` | What can be printed there: licensed print shops, company designs only, Armory licenses only, unsigned prints, open market |
+| `food`, `water` | Self-sufficient, a surplus exported, partly local, imported, recycled aboard, shipped in with supplies; empty when uninhabited |
+
+**How trade is routed.** Every import names a supplier, and that supplier's exports name the buyer's region, so the two sides of a trade always agree.
+
+- Lattice is sold to a market: the Assay House on the Marrow, which sets the Basin price; Sable Harbor, the levy-free port; or the Halvard's Rest refinery. The seller's allegiance picks the market. Crossroads sellers and Mercer-Ibarra sell to the Assay House; Rimelight and Kerr-Varga sell to both the Assay House and Sable; the Southern League sells through Halvard's Rest and Sable; the Gatherers' Guild and the Seventh sell at Sable; the Purview keeps its lattice for its own yards and the Armory. A small lattice rating supplies local printers only.
+- Lattice buyers draw first on their own holder's mines or market, then on the market nearest their allegiance.
+- Other goods come from the nearest producer by lane days. A good with no producer in the Basin is bought on the Exchange at the Marrow (Sable Harbor for the trailing traders and outlaws).
+- Outposts of fewer than 200 people are supplied by their holder and do not trade on their own.
+
+**Levies** follow the route each trade takes:
+
+| Levy | Applies to |
+|---|---|
+| Navy tithe: a tenth of lattice crossing Ostrom | Lattice whose route passes through Ostrom. Trade with Sable Harbor takes routes that keep clear of Ostrom, which is how Sable's lattice stays levy-free |
+| Mercer-Ibarra passage fee on the Halvard Gap | Any trade using the Halvard Gap, except Mercer-Ibarra's own |
+| Purview entry tax on ships entering the Shoals | Trade into, out of or through the Shoals, except the Purview's own |
+| The Tallymen's tally on the Sable Run | Protection paid on trade along the Sable Run |
+| Picket levies | Worlds with a picket |
+| No levy or inspection | Free ports such as Wending |
+
+Authored levies add to these (Bellows pays the Seventh for protection).
 
 ## Quick-reference code
 

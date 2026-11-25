@@ -23,6 +23,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 CATALOG = ROOT / "data/schema/worlds.json"
 MAP = ROOT / "data/map.json"
+WIP = re.compile(r" \(WIP\)")
 PLACEHOLDER = re.compile(r"\{(World|world)('s)?\}")
 NOUNS = {"planet": "the planet", "rogue-planet": "the planet", "moon": "the moon", "gas-giant": "the giant",
          "asteroid": "the body", "dwarf-planet": "the planet"}
@@ -82,6 +83,14 @@ def compose(body, cat):
     return [fill(b, name, kind) for b in blocks]
 
 
+def and_list(xs):
+    return xs[0] if len(xs) == 1 else ", ".join(xs[:-1]) + " and " + xs[-1]
+
+
+def fmt_rel(x):
+    return f"{x:g}×" if x >= 0.001 else "under 0.001×"
+
+
 def fmt_pop(n):
     return "none" if not n else f"{n:,}"
 
@@ -98,7 +107,7 @@ def datablock(b, m):
     if pr.get("code"):
         L.append(f"Code: {pr['code']}")
     if st:
-        L += [f"Size: {st['sizeClass']}, {st['diameterKm']:,} km across ({st['radiusRel']}× standard); mass {st['massRel']}× standard; gravity {st['gravityG']} g; orbit access {st['orbitAccess']}",
+        L += [f"Size: {st['sizeClass']}, {st['diameterKm']:,} km across ({st['radiusRel']}× standard); mass {fmt_rel(st['massRel'])} standard; gravity {st['gravityG']} g; orbit access {st['orbitAccess']}",
               f"Day: {st['dayHours']} hours ({st['dayRel']}× standard){', tidally locked' if st['tidallyLocked'] else ''}; year: "
               + (f"{st['yearDays']} days ({st['yearRel']}× standard, {st['localDaysPerYear']} local days)" if st['yearDays'] else "none (no star)")
               + f"; axial tilt {st['axialTiltDeg']}°, seasons {st['seasons']}",
@@ -115,19 +124,30 @@ def datablock(b, m):
     L += [f"Survey: {pr['surveyStatus']}. Authority: {pr['authority']}. Claims: {pr['claims']}",
           f"Security {pr['security']['rating']}/5 ({'; '.join(pr['security']['reasons'])}). Hazard {pr['hazard']['rating']}/5 ({'; '.join(pr['hazard']['reasons'])})",
           f"Navy: {pr['navyReach']}. To the Marrow: " + (f"{tm['days']} lane day{'s' if tm['days'] != 1 else ''} via {', '.join(tm['route'])}" if tm['days'] else ("here" if tm['days'] == 0 else "no known route")) + (f" ({tm['note']})" if tm.get('note') else ""),
-          f"Arrival: {pr['transitDays']} days at standard drive from the {pr['transitFrom']}; port {pr['portClass']}" + (f"; defenses: {', '.join(pr['defenses'])}" if pr['defenses'] else ""),
+          f"Arrival: {pr['transitDays']} days at standard drive from the {re.sub(r'^The ', '', pr['transitFrom'])}; port {pr['portClass']}" + (f"; defenses: {', '.join(pr['defenses'])}" if pr['defenses'] else ""),
           f"Population: {fmt_pop(pr['population'])} ({pr['populationTrend']}" + (f", settled {pr['settled']}u" if pr.get('settled') else "") + ")"
           + (f"; settlements {pr['settlements']['count']}, chiefly {pr['settlements']['main']}" if pr['settlements']['main'] else ""),
           ]
     if pr["peoples"] or pr["faiths"]:
         L.append("Peoples: " + (", ".join(f"{F[x['faction']]} ({x['strength']})" for x in pr["peoples"]) or "none recorded")
                  + ". Faiths: " + (", ".join(f"{F[x['faction']]} ({x['strength']})" for x in pr["faiths"]) or "none recorded"))
-    L.append(f"Economy: exports {', '.join(pr['exports']) or 'nothing'}; imports {', '.join(pr['imports']) or 'nothing'}; prints: {pr['printAccess']}; food {pr['food']}; water {pr['water']}")
+    eco = pr["economy"]
+    L.append(f"Economy: {eco['base']}; prints: {eco['printAccess']}"
+             + (f"; food {eco['food']}; water {eco['water']}" if eco["food"] else ""))
+    if eco["exports"]:
+        groups = {}
+        for x in eco["exports"]:  # goods with the same buyers share one entry
+            groups.setdefault(tuple(x["to"]), []).append(x["good"])
+        L.append("Exports: " + "; ".join(f"{and_list(g)} (to {', '.join(to)})" for to, g in groups.items()))
+    if eco["imports"]:
+        L.append("Imports: " + "; ".join(f"{x['good']} (from {x['from']})" for x in eco["imports"]))
+    if eco["resources"]:
+        L.append("Resources: " + "; ".join(f"{r['resource']} ({r['status']})" for r in eco["resources"]))
+    if eco["levies"]:
+        L.append("Levies: " + "; ".join(eco["levies"]))
     lat = pr["lattice"]
     L.append(f"Lattice: {lat['rating']}" + (f" ({lat['where']})" if lat.get('where') else "") + ("; worked" if lat['worked'] else ""))
-    if pr.get("gmHooks"):
-        L.append("GM hooks: " + " | ".join(pr["gmHooks"]))
-    return L
+    return [WIP.sub("", line) for line in L]
 
 
 def templates(cat):
@@ -165,7 +185,7 @@ def main(argv):
     ids = [a for i, a in enumerate(argv) if not a.startswith("--") and (i == 0 or argv[i - 1] != "--map")]
     bodies = [b for b in m["bodies"] if (not ids or b["id"] in ids) and (b.get("world") or b.get("profile"))]
     for b in bodies:
-        print(f"## {b['name']}\n")
+        print(f"## {clean_name(b['name'])}\n")
         block = datablock(b, m)
         if block:
             print("\n".join("- " + line for line in block) + "\n")

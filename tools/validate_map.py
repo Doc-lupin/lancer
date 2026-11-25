@@ -324,6 +324,42 @@ def check_population(m, r, strict):
             r.issue(strict, "datablock", f"bodies/{b['id']}", "station without a profile (run tools/build_map.py)")
 
 
+LATTICE_RANK = ["none", "trace", "small", "moderate", "rich", "very rich", "exceptional"]
+
+
+def check_datablock_consistency(m, r):
+    """The datablock reads as a public register: no hidden names, and trade that agrees with itself."""
+    hidden = {o["name"] for k in ("bodies", "places", "areas") for o in m[k] if o.get("visibility") == "gm"}
+    for b in m["bodies"]:
+        pr = b.get("profile")
+        if not pr:
+            continue
+        w = f"bodies/{b['id']}"
+        if b.get("visibility") != "gm":
+            text = json.dumps(pr, ensure_ascii=False) + json.dumps(b.get("stats", {}), ensure_ascii=False)
+            for n in hidden:
+                if f'"{n}"' in text or f"{n} (" in text or f"{n}," in text:
+                    r.error("datablock", w, f"names the GM-only object '{n}'")
+        eco = pr.get("economy")
+        if not eco:
+            continue
+        rating = pr.get("lattice", {}).get("rating", "none")
+        rk = LATTICE_RANK.index(rating) if rating in LATTICE_RANK else -1
+        markets = {"marrow", "sable-harbor-port", "halvards-rest"}
+        for x in eco["exports"]:
+            if x.get("class") == "lattice" and b["type"] != "station" and b["id"] not in markets and rk < 2:
+                r.error("datablock", w, f"exports lattice with a '{rating}' rating")
+            if x.get("class") == "lattice" and rk == 2 and any(t in ("the Assay House (the Marrow)", "Sable Harbor") for t in x["to"]):
+                r.error("datablock", w, "a small lattice rating supplies local printers only")
+        if pr["authority"].startswith("contested") and pr["claims"].startswith("held by"):
+            r.error("datablock", w, "contested world whose claims read as held")
+        classes_in = {i.get("class") for i in eco["imports"]}
+        if eco.get("food") and eco["food"].startswith("self-sufficient") and "food" in classes_in:
+            r.error("datablock", w, "self-sufficient in food but imports it")
+        if not pr.get("population") and eco["exports"] and b["type"] != "station":
+            r.warn("datablock", w, "uninhabited world with exports")
+
+
 def check_factions_and_clock(m, r, strict):
     by_layer = {}
     for f in m["factions"]:
@@ -366,6 +402,7 @@ def validate(m, strict=False):
     check_hierarchy(m, ids, r, strict)
     check_worlds(m, r, strict)
     check_population(m, r, strict)
+    check_datablock_consistency(m, r)
     check_factions_and_clock(m, r, strict)
     return r
 

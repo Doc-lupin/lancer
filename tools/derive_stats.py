@@ -4,7 +4,8 @@ Called by tools/build_map.py after assembly, or alone:
   python3 tools/derive_stats.py FILE      derive in place (e.g. the example map)
 
 `stats` holds physical figures and comparisons to Union standard (Earth = 1).
-`profile` holds travel, control, people, economy, ratings and GM hooks.
+`profile` holds travel, control, people, economy and ratings, written as the
+Basin's public survey and trade registers would record them.
 Most values are worked out here from orbits, star kinds, world types,
 features, places and the lane network. Authored values in data/src/profiles.json
 (merged into each body before this runs) always win over derived ones.
@@ -125,8 +126,52 @@ PRINT = {"stewardship": "licensed print shops", "charter-bench": "licensed print
          "compact": "unsigned prints", "seventh": "unsigned prints", "coldwell-claims": "unsigned prints", "bellows-commune": "unsigned prints",
          "northern-concord": "licensed print shops", "southern-league": "licensed and unsigned prints", "basin-office": "licensed print shops",
          "rimelight": "company designs only", "reach-companies": "licensed print shops", "survey-office": "licensed print shops"}
+LATTICE_RANK = ["none", "trace", "small", "moderate", "rich", "very rich", "exceptional"]
+RESOURCE_NAME = {"arable-land": "arable land", "grazing-land": "grazing land", "fisheries": "fisheries", "timber": "timber stands",
+                 "medicinal-flora": "medicinal plants", "water-ice-reserves": "water ice"}
+OUTPOST = 200  # below this many people, an outpost is supplied by its holder rather than trading on its own
+LIVING_RESOURCES = {"timber", "fisheries", "arable-land", "grazing-land", "medicinal-flora"}
+ACTIVITY = [("refinery", "refining"), ("orbital-yards", "shipbuilding"), ("mining-camps", "mining"), ("mine", "mining"),
+            ("arable-land", "farming"), ("homesteads", "farming"), ("grazing-land", "ranching"), ("fisheries", "fishing"),
+            ("timber", "forestry"), ("free-port", "free-port trade"), ("salvage", "salvage"), ("traffic-hub", "shipping services"),
+            ("mission", "mission work"), ("survey-camp", "survey work"), ("survey-beacon", "survey work"), ("refugee-settlements", "relief work"), ("base", "garrison")]
+STATION_ACTIVITY = [("quarantine", "quarantine enforcement"), ("staging", "staging and transshipment"), ("picket", "Navy picket and levy collection"), ("relay", "communications"), ("research", "research"),
+                    ("survey", "survey work"), ("signal", "signal research"), ("salvage", "salvage"), ("shipyard", "shipbuilding"),
+                    ("yards", "ship repair and refit"), ("gun", "defense"), ("armed", "defense and passage control"),
+                    ("fuel", "fuel and water supply"), ("mining", "mining and smelting"), ("prospect", "lattice prospecting"),
+("receiving", "receiving and transshipment"), ("anchored", "water, fuel and freight"),
+                    ("hulls", "free-port trade"), ("asteroid", "finance, exchange and government"), ("shielded", "lattice gathering"),
+                    ("claim", "lattice mining"), ("raider", "raiding"), ("hidden", "raiding and smuggling"), ("hideout", "salvage and raiding"),
+                    ("platform", "research"), ("anchorage", "unknown")]
+# Commodity classes, matched in order against a good's name.
+CLASSES = [("composite", "manufactures"), ("lattice", "lattice"), ("printer feed", "printer feed"), ("grain", "food"), ("meat", "food"),
+           ("fish", "food"), ("seed", "food"), ("food", "food"), ("water", "water"), ("reaction mass", "water"), ("ice", "water"),
+           ("frames", "frames"), ("frigate", "ships"), ("corvette", "ships"), ("ships", "ships"), ("refit", "ships"), ("hull", "ships"),
+           ("timber", "timber"), ("medicine", "medicines"), ("ore", "metal"), ("iron", "metal"), ("nickel", "metal"), ("metal", "metal"),
+           ("rare earth", "metal"), ("precious", "metal"), ("radioactive", "metal"), ("helium-3", "fuel"), ("deuterium", "fuel"),
+           ("hydrocarbon", "fuel"), ("volatile", "fuel"), ("salvage", "salvage"), ("absent", "salvage"), ("stone", "stone"),
+           ("pattern", "patterns"), ("design", "patterns"), ("prints", "patterns"), ("munitions", "munitions"), ("exotic", "exotics"),
+           ("shielding", "manufactures"), ("machine", "manufactures"), ("supplies", "manufactures"), ("fittings", "manufactures"),
+           ("freight", "services"), ("moorage", "services"), ("banking", "services"), ("credit", "services"), ("contracts", "services"),
+           ("insurance", "services"), ("passage", "services"), ("brokerage", "services")]
+# Lattice markets: where lattice is sold and bought. Everything else trades between producers and buyers directly.
+MARKET_NAMES = {"marrow": "the Assay House (the Marrow)", "sable-harbor-port": "Sable Harbor", "halvards-rest": "the Halvard's Rest refinery"}
+LATTICE_MARKET = {"northern-concord": ["marrow"], "mercer-ibarra": ["marrow"], "stewardship": ["marrow"], "rimelight": ["marrow", "sable-harbor-port"],
+                  "kerr-varga": ["marrow", "sable-harbor-port"], "southern-league": ["halvards-rest", "sable-harbor-port"],
+                  "gatherers-guild": ["sable-harbor-port"], "seventh": ["sable-harbor-port"], "purview": []}
+ALIGN_MARKET = {"crossroads": ["marrow"], "gap-accord": ["halvards-rest"], "trailing-traders": ["sable-harbor-port"], "outlaw": ["sable-harbor-port"]}
+INTERNAL = {"purview": "the Purview yards and the Armory"}
 SETTLED_KINDS = {"city", "town", "settlement", "camp", "base", "port", "mine", "refinery", "landing"}
 NOUN = {"planet": "planet", "moon": "moon", "gas-giant": "giant", "rogue-planet": "planet", "asteroid": "body"}
+
+
+def rank(rating):
+    return LATTICE_RANK.index(rating) if rating in LATTICE_RANK else -1
+
+
+def classify(good):
+    g = good.lower()
+    return next((c for k, c in CLASSES if re.search(r"\b" + re.escape(k), g)), "goods")
 
 
 def frac(key, salt=""):
@@ -191,8 +236,8 @@ class Ctx:
                 g.setdefault(b, []).append((a,) + info)
         return g
 
-    def route(self, start, goals):
-        """Shortest lane route in days from a region to any goal region."""
+    def route(self, start, goals, avoid=()):
+        """Shortest lane route in days from a region to any goal region, optionally avoiding regions."""
         if start in goals:
             return 0, [start], False, False
         best = {start: 0}
@@ -204,6 +249,8 @@ class Ctx:
             if d > best.get(r, 1e9):
                 continue
             for nb, days, _, t, dr in self.graph.get(r, []):
+                if nb in avoid and nb not in goals:
+                    continue
                 nd = d + days
                 if nd < best.get(nb, 1e9):
                     best[nb] = nd
@@ -243,6 +290,12 @@ class Ctx:
         return k
 
     # ------------------------------------------------------------ stats
+    def seen(self, b, objs):
+        """Objects that may inform b's datablock: a visible body's draws only on visible objects."""
+        if b.get("visibility") == "gm":
+            return list(objs)
+        return [o for o in objs if o.get("visibility") != "gm"]
+
     def stats(self, b):
         w, v = b["world"], b.get("variant")
         fam = self.family[w]
@@ -351,6 +404,8 @@ class Ctx:
             precip = "none"
         else:
             precip = TYPE_PRECIP.get(w, PRECIP.get(fam, "light"))
+            if "still-air" in feats and precip in ("moderate", "wet", "torrential"):
+                precip = "light"  # calm air carries little weather
         if w in ("lava", "volcanic") or "supervolcano" in feats:
             geo = "violent"
         elif feats & GEOLOGY_ACTIVE or fam.startswith("habitable"):
@@ -367,7 +422,7 @@ class Ctx:
         if "radiation" in feats:
             rad += 2
         if "no-magnetosphere" in feats:
-            rad += 1
+            rad += 2
         if p is not None and p < 0.005:
             rad += 1
         if p is not None and p >= 1:
@@ -376,7 +431,7 @@ class Ctx:
             rad -= 1
         radiation = ["low", "low", "moderate", "high", "lethal"][max(0, min(4, rad))] if not giant else "high in the belts" if "radiation-belts" in feats else "moderate"
         # sky
-        moons = [c for c in self.children.get(b["id"], []) if c["type"] in ("moon", "asteroid")]
+        moons = [c for c in self.seen(b, self.children.get(b["id"], [])) if c["type"] in ("moon", "asteroid")]
         if p is None:
             sky = "not applicable"
         elif p < 0.005:
@@ -442,7 +497,7 @@ class Ctx:
         if "dangerous-biosphere" in feats:
             life.append("dangerous")
         stats = {
-            "sizeClass": size_class(r, giant), "diameterKm": round(2 * r), "radiusRel": rnd(r / 6371, 2), "massRel": rnd(mass, 3),
+            "sizeClass": size_class(r, giant), "diameterKm": round(2 * r), "radiusRel": rnd(r / 6371, 2), "massRel": float(f"{mass:.3g}"),
             "gravityG": rnd(grav, 2), "escapeKms": rnd(esc, 1), "orbitAccess": access,
             "dayHours": rnd(day, 1), "dayRel": rnd(day / 24, 2), "tidallyLocked": locked,
             "yearDays": rnd(year, 1), "yearRel": rnd(year / 365.25, 2) if year else None,
@@ -464,8 +519,8 @@ class Ctx:
         feats = set(b.get("worldFeatures", []))
         sysm = self.systems[b["system"]]
         reg = self.regions.get(sysm.get("region")) if sysm.get("region") else None
-        places = self.places_by_body.get(b["id"], [])
-        stations = [c for c in self.children.get(b["id"], []) if c["type"] == "station"]
+        places = self.seen(b, self.places_by_body.get(b["id"], []))
+        stations = [c for c in self.seen(b, self.children.get(b["id"], [])) if c["type"] == "station"]
         control = b.get("control") or sysm.get("control") or (reg or {}).get("control") or {"status": "none"}
         holders = control.get("holders", [])
         prof = {}
@@ -499,6 +554,8 @@ class Ctx:
             claims = "disputed"
         elif "allotment-claims" in feats:
             claims = "registered with the Allotment"
+        elif control["status"] == "contested":
+            claims = "disputed between " + " and ".join(self.factions[h]["name"] for h in holders)
         elif holders:
             claims = f"held by {self.factions[holders[0]]['name']}"
         else:
@@ -518,11 +575,11 @@ class Ctx:
         outl = [p["faction"] for p in (reg or {}).get("presence", []) + b.get("presence", []) if p["faction"] in OUTLAWS]
         if outl:
             sec += 1; why.append("outlaws in the region: " + ", ".join(sorted({self.factions[o]["name"] for o in outl})))
-        if any(a["body"] == b["id"] and a["control"]["status"] == "contested" for a in self.m["areas"]):
+        if any(a["body"] == b["id"] and a["control"]["status"] == "contested" for a in self.seen(b, self.m["areas"])):
             sec += 1; why.append("contested ground on the surface")
         if "fortified" in feats:
-            sec -= 1; why.append("fortified")
-        prof["security"] = {"rating": max(1, min(5, sec)), "reasons": why or ["settled and policed"]}
+            sec -= 1; why.append("offset by fortified settlements")
+        prof["security"] = {"rating": max(1, min(5, sec)), "reasons": why}  # a default reason is set once navy reach is known
         # navy reach and distance to the Marrow
         rid = sysm.get("region")
         if rid in ("ostrom", "tallis"):
@@ -532,6 +589,9 @@ class Ctx:
             prof["navyReach"] = "beyond the Navy's reach" if nd is None or nd > 6 else ("within patrol range" if nd <= 3 else "occasional patrols")
         else:
             prof["navyReach"] = "beyond the Navy's reach"
+        if not prof["security"]["reasons"]:
+            near = prof["navyReach"] in ("Navy home waters", "within patrol range")
+            prof["security"]["reasons"] = ["settled and policed" if (settled or stations or b["type"] == "station") and near else "no recorded threats"]
         if rid:
             dd, path, tid, dri = self.route(rid, {"ostrom"})
             if dd is None:
@@ -558,11 +618,14 @@ class Ctx:
         prof["transitFrom"] = via
         # port, defenses, settlements
         kinds = {p["kind"] for p in places}
+        big_town = any(p["kind"] == "town" and p.get("population", 0) >= 10000 for p in places)
         port = "orbital station" if stations else None
-        if kinds & {"city", "port"}:
+        if kinds & {"city", "port"} or big_town or (feats & {"capital", "traffic-hub"} and settled and b["type"] != "station"):
             port = "orbital station and spaceport" if port else "spaceport"
         elif kinds & {"landing", "town", "base"}:
             port = port or "landing field"
+        elif kinds & {"camp", "mine", "refinery", "settlement"} or b.get("profile", {}).get("population"):
+            port = port or "landing pad"
         prof["portClass"] = port or ("this is the port" if b["type"] == "station" else "none")
         defs = [label for f, label in (("orbital-guns", "orbital guns"), ("fortified", "fortified settlements"), ("picket", "picket")) if f in feats]
         defs += [s["name"] for s in stations if re.search(r"picket|gun|squadron|guard", s["id"] + s.get("class", ""))]
@@ -581,34 +644,63 @@ class Ctx:
         prof["peoples"] = [{"faction": f, "strength": s} for f, s in pres.items() if self.factions[f]["category"] == "people"] if inhabited else []
         faith_ids = [f for f, s in pres.items() if self.factions[f]["category"] == "faith" or "religions" in self.factions[f]["layers"]]
         prof["faiths"] = [{"faction": f, "strength": pres[f]} for f in faith_ids] if inhabited else []
-        # economy
-        exports = [RESOURCE_LABEL[f] for f in b.get("worldFeatures", []) if f in RESOURCE_LABEL]
+        # economy: trade partners are filled in by trade() once every profile exists
         lat = b.get("lattice", {})
-        worked = bool(feats & {"mining-camps", "lattice-seams"} and (settled or "mining-camps" in feats))
-        if lat.get("rating") in ("moderate", "rich", "very rich", "exceptional") and worked:
+        rating = lat.get("rating", "none")
+        working = bool(feats & {"mining-camps", "refinery", "company-town"} or kinds & {"mine", "refinery"})
+        worked = inhabited and rank(rating) >= rank("small") and bool(feats & {"mining-camps", "lattice-seams"}) and working
+        res = []
+        for f in b.get("worldFeatures", []):
+            if f not in RESOURCE_LABEL:
+                continue
+            label = RESOURCE_NAME.get(f, RESOURCE_LABEL[f])
+            if "quarantine" in feats:
+                status = "closed by quarantine"
+            elif inhabited and ((f in LIVING_RESOURCES and (pop >= 1000 or "homesteads" in feats)) or (f not in LIVING_RESOURCES and working)):
+                status = "worked"
+            elif "allotment-claims" in feats or "disputed-claims" in feats or holders:
+                status = "claimed, unworked"
+            else:
+                status = "unworked"
+            res.append({"resource": label, "status": status})
+        goods = {RESOURCE_NAME.get(f, RESOURCE_LABEL[f]): RESOURCE_LABEL[f] for f in b.get("worldFeatures", []) if f in RESOURCE_LABEL}
+        exports = [goods[r["resource"]] for r in res if r["status"] == "worked"]
+        if worked:
             exports.insert(0, "lattice")
         imports = []
-        if inhabited:
-            if lat.get("rating") in (None, "none", "trace"):
+        if inhabited and pop < OUTPOST:
+            seat = (self.factions[holders[0]].get("seat") or [None])[0] if holders else None
+            src = (self.factions[holders[0]]["name"] + (f" ({self.regions[seat]['name']})" if seat in self.regions else "")) if holders else "passing traders"
+            imports.append({"good": "supplies", "from": src})
+        elif inhabited:
+            if not worked:
                 imports.append("lattice")
-            if b.get("habitability") not in ("garden", "habitable"):
+            if b.get("habitability") not in ("garden", "habitable") and not feats & {"fisheries", "arable-land"}:
                 imports.append("food")
             if stats and stats.get("surface") and not stats["surface"]["water"] and not stats["surface"]["ice"] and "water-ice-reserves" not in feats:
                 imports.append("water")
             imports.append("printer feed")
-        prof["exports"] = exports
-        prof["imports"] = imports
-        prof["printAccess"] = PRINT.get(holders[0], "licensed print shops") if inhabited and holders else ("none" if not inhabited else "unsigned prints")
+        hab = b.get("habitability")
         if not inhabited:
-            food = water = "none needed (uninhabited)"
+            food = water = None
         else:
-            hab = b.get("habitability")
-            food = "exports food" if "arable-land" in feats else ("self-sufficient" if hab in ("garden", "habitable") else
-                                                                   ("partly self-sufficient" if hab == "marginal" else "imports all food"))
-            s = stats.get("surface") if stats else None
-            water = "abundant" if s and s["water"] >= 30 else ("local" if (s and (s["water"] or s["ice"])) or "water-ice-reserves" in feats else "imported")
-        prof["food"], prof["water"] = food, water
-        prof["lattice"] = {"rating": lat.get("rating", "none"), **({"where": lat["where"]} if lat.get("where") else {}),
+            food = ("self-sufficient, with a surplus for export" if feats & {"arable-land", "grazing-land", "fisheries"} and hab in ("garden", "habitable")
+                    else "self-sufficient" if hab in ("garden", "habitable")
+                    else "partly local, the rest imported" if hab == "marginal" or feats & {"fisheries", "arable-land"}
+                    else "imported")
+            s_ = stats.get("surface") if stats else None
+            water = ("abundant" if s_ and s_["water"] >= 30 else
+                     "local, from ice" if (s_ and s_["ice"]) or "water-ice-reserves" in feats else
+                     "local" if s_ and s_["water"] else "imported")
+        prof["economy"] = {
+            "base": self.activity(b, feats, kinds, worked, inhabited),
+            "exports": [{"good": g} for g in exports],
+            "imports": [i if isinstance(i, dict) else {"good": i} for i in imports],
+            "resources": res,
+            "levies": [],
+            "printAccess": PRINT.get(holders[0], "licensed print shops") if inhabited and holders else ("none" if not inhabited else "unsigned prints"),
+            "food": food, "water": water}
+        prof["lattice"] = {"rating": rating, **({"where": lat["where"]} if lat.get("where") else {}),
                            "worked": worked, "workedBy": holders if worked else []}
         # hazard
         if stats:
@@ -621,6 +713,25 @@ class Ctx:
             prof["hazard"] = {"rating": 2 if b["type"] == "station" else 3, "reasons": ["station: sealed habitat"]}
         return prof
 
+    def activity(self, b, feats, kinds, worked, inhabited):
+        """Primary economic activity, from features, places and station class."""
+        if not inhabited:
+            return "none"
+        if b["type"] == "station":
+            c = (b.get("class") or b["id"]).lower()
+            for key, label in STATION_ACTIVITY:
+                if key in c or key in b["id"]:
+                    return label
+            return "station services"
+        acts = []
+        for key, label in ACTIVITY:
+            if key in feats or key in kinds:
+                if label == "mining" and worked:
+                    label = "lattice mining"
+                if label not in acts:
+                    acts.append(label)
+        return " and ".join(acts[:2]) or "subsistence"
+
     def qcode(self, b, stats, prof):
         hab = {"garden": "G", "habitable": "H", "marginal": "M", "hostile": "X", "lethal": "L", "none": "N"}[b["habitability"]]
         br = {"breathable": "B", "breathable in season": "S", "breathable with a gas mix": "D", "mask required": "K",
@@ -630,8 +741,249 @@ class Ctx:
         pop = prof["population"]
         popc = "0" if not pop else (f"{pop / 1e6:.1f}M" if pop >= 1e6 else (f"{round(pop / 1e3)}K" if pop >= 1e3 else str(pop)))
         temp = stats["tempMeanC"]
-        return (f"{self.typecode[b['world']]}/{hab} {stats['gravityG']:.1f}g {temp:+d}°C {press}/{br} "
+        g = stats["gravityG"]
+        gs = f"{g:.1f}" if g >= 0.1 else f"{g:.2f}"
+        return (f"{self.typecode[b['world']]}/{hab} {gs}g {temp:+d}°C {press}/{br} "
                 f"W{wat} H{prof['hazard']['rating']} S{prof['security']['rating']} P{popc}")
+
+
+def trade(ctx, m):
+    """Fill in where exports go, where imports come from, and the levies on the way.
+
+    Lattice is sold to a market (the Assay House, Sable Harbor or the Halvard's Rest
+    refinery) chosen by the seller's allegiance, and bought from the market nearest
+    the buyer's allegiance; a small lattice rating supplies only its own region.
+    Other goods come from the nearest producer by lane days, and an exporter's
+    destinations are exactly the regions of the buyers that chose it.
+    """
+    MARKETS = {k: v for k, v in MARKET_NAMES.items() if k in ctx.bodies}
+    traders = [b for b in m["bodies"] if b.get("profile", {}).get("economy")]
+    region = {b["id"]: ctx.systems[b["system"]].get("region") for b in traders}
+    rname = lambda r: ctx.regions[r]["name"] if r in ctx.regions else "uncharted space"
+    dist_cache = {}
+
+    sable = region.get("sable-harbor-port") or "sable"
+
+    def dist(a, b, avoid=()):
+        """Lane days; trade with Sable Harbor keeps clear of Ostrom, which is how its lattice stays levy-free."""
+        if a == b:
+            return 0
+        avoid = tuple(avoid) or (("ostrom",) if sable in (a, b) and "ostrom" not in (a, b) else ())
+        if (a, b, avoid) not in dist_cache:
+            d, pth, _, _ = ctx.route(a, {b}, avoid) if a and b else (None, None, False, False)
+            if d is None and avoid:
+                d, pth, _, _ = ctx.route(a, {b})
+            dist_cache[(a, b, avoid)] = (d if d is not None else 1e9, pth or [])
+        return dist_cache[(a, b, avoid)][0]
+
+    def path(a, b):
+        if a == b:
+            return [a]
+        dist(a, b)
+        avoid = ("ostrom",) if sable in (a, b) and "ostrom" not in (a, b) else ()
+        return dist_cache[(a, b, avoid)][1]
+
+    def holders(b):
+        c = b.get("control") or ctx.systems[b["system"]].get("control") or (ctx.regions.get(region[b["id"]]) or {}).get("control") or {}
+        return c.get("holders", [])
+
+    def align(b):
+        hs = holders(b)
+        return ctx.factions[hs[0]].get("alignment") if hs else None
+
+    def label(sup, buyer_region):
+        name = sup["name"]
+        r = region[sup["id"]]
+        return name if r == buyer_region or rname(r) == name else f"{name} ({rname(r)})"
+
+    for b in traders:
+        for x in b["profile"]["economy"]["exports"] + b["profile"]["economy"]["imports"]:
+            x.setdefault("class", classify(x["good"]))
+    visible = lambda b: b.get("visibility") != "gm"
+    pop = lambda b: b["profile"].get("population", 0)
+    suppliers = {}
+    for b in traders:
+        if pop(b) or b["profile"]["settlements"]["count"]:
+            for x in b["profile"]["economy"]["exports"]:
+                suppliers.setdefault(x["class"], []).append(b)
+    buyers = {}      # (supplier id, class) -> [buyer region ids]
+    routes = {}      # body id -> [(region path, class)]
+
+    def record(sup, cls, buyer):
+        if visible(buyer) or not visible(sup):
+            buyers.setdefault((sup["id"], cls), []).append(region[buyer["id"]])
+        routes.setdefault(buyer["id"], []).append((path(region[buyer["id"]], region[sup["id"]]), cls))
+        routes.setdefault(sup["id"], []).append((path(region[sup["id"]], region[buyer["id"]]), cls))
+
+    byname = {o["name"]: o for o in traders}
+    byname.update({v: ctx.bodies[k] for k, v in MARKETS.items()})
+    for b in traders:  # authored sources register the buyer with the supplier
+        for i in b["profile"]["economy"]["imports"]:
+            if i.get("from") in byname:
+                sup = byname[i["from"]]
+                record(sup, i["class"], b)
+                if i["from"] not in MARKETS.values():
+                    i["from"] = label(sup, region[b["id"]])
+
+    def markets_for(b, selling):
+        hs = holders(b)
+        out = []
+        for h in hs or [None]:
+            ms = LATTICE_MARKET.get(h)
+            if ms is None:
+                ms = ALIGN_MARKET.get(ctx.factions[h].get("alignment") if h else None)
+            if ms is None:  # independent or unheld: the nearest open market
+                ms = [min([k for k in ("marrow", "sable-harbor-port") if k in MARKETS] or ["marrow"], key=lambda k: dist(region.get(b["id"]), region.get(k)))]
+            out += [k for k in ms if k != b["id"] and k not in out and k in MARKETS]
+        return out
+
+    # 1. lattice sellers to markets
+    for b in traders:
+        eco = b["profile"]["economy"]
+        for x in eco["exports"]:
+            if x["class"] != "lattice" or "to" in x or b["id"] in MARKETS:
+                continue
+            hs = holders(b)
+            if rank(b["profile"]["lattice"]["rating"]) == rank("small"):
+                local = [o for o in traders if o is not b and region[o["id"]] == region[b["id"]]
+                         and any(i["class"] == "lattice" for i in o["profile"]["economy"]["imports"])]
+                x["to"] = [o["name"] for o in local] or ["local printers"]
+                for o in local:
+                    for i in o["profile"]["economy"]["imports"]:
+                        if i["class"] == "lattice" and "from" not in i:
+                            i["from"] = label(b, region[o["id"]])
+                    routes.setdefault(b["id"], []).append(([region[b["id"]]], "lattice"))
+                continue
+            internal = [INTERNAL[h] for h in hs if h in INTERNAL]
+            ms = markets_for(b, True)
+            x["to"] = internal + [MARKETS[k] for k in ms]
+            x["to"] = x["to"] or ["the Exchange (the Marrow)"]
+            if internal and len(hs) == 1:
+                continue
+            for k in ms:
+                mk = ctx.bodies[k]
+                buyers.setdefault((k, "lattice-in"), []).append(region[b["id"]])
+                routes.setdefault(b["id"], []).append((path(region[b["id"]], region[k]), "lattice"))
+    # 2. markets buy from their sellers; 3. other lattice buyers draw on a market or their own holder's mines
+    for b in traders:
+        for i in b["profile"]["economy"]["imports"]:
+            if i["class"] != "lattice" or "from" in i:
+                continue
+            if b["id"] in MARKETS:
+                regs = buyers.get((b["id"], "lattice-in"), [])
+                regs = ["local mines" if r == region[b["id"]] else rname(r) for r in regs]
+                names = sorted(set(regs), key=lambda n: -regs.count(n))
+                i["from"] = ", ".join(names[:5]) if names else "miners across the Basin"
+                continue
+            own = [o for o in traders if o is not b and set(holders(o)) & set(holders(b)) and (visible(o) or not visible(b))
+                   and any(x["class"] == "lattice" for x in o["profile"]["economy"]["exports"])
+                   and (set(holders(o)) & set(INTERNAL) or dist(region[b["id"]], region[o["id"]]) <= 12)]
+            if own:  # a holder's own mines or market come first
+                sup = min(own, key=lambda o: (dist(region[b["id"]], region[o["id"]]), -pop(o)))
+                i["from"] = label(sup, region[b["id"]])
+                record(sup, "lattice", b)
+                continue
+            ms = markets_for(b, False)
+            if not ms:
+                i["from"] = "the Exchange (the Marrow)"
+                continue
+            k = min(ms, key=lambda k: dist(region[b["id"]], region[k]))
+            i["from"] = MARKETS[k]
+            record(ctx.bodies[k], "lattice", b)
+    for b in traders:  # sellers whose lattice also feeds their holder's own stations
+        for x in b["profile"]["economy"]["exports"]:
+            if x["class"] == "lattice" and "to" in x and b["id"] not in MARKETS:
+                for r in dict.fromkeys(buyers.get((b["id"], "lattice"), [])):
+                    n = "local buyers" if r == region[b["id"]] else rname(r)
+                    if not any(n in t for t in x["to"]):
+                        x["to"].append(n)
+    # 4. everything else: the nearest producer, or the Marrow's Exchange when nobody produces it
+    for b in traders:
+        for i in b["profile"]["economy"]["imports"]:
+            if "from" in i:
+                continue
+            cands = [o for o in suppliers.get(i["class"], []) if o is not b and (visible(o) or not visible(b))]
+            if not cands:
+                i["from"] = ("suppliers across the Basin" if b["id"] == "marrow" else
+                             "the Exchange (the Marrow)" if align(b) not in ("trailing-traders", "outlaw") else "Sable Harbor")
+                continue
+            sup = min(cands, key=lambda o: (dist(region[b["id"]], region[o["id"]]), -pop(o)))
+            i["from"] = label(sup, region[b["id"]])
+            record(sup, i["class"], b)
+    # destinations for exports
+    for b in traders:
+        for x in b["profile"]["economy"]["exports"]:
+            if "to" in x:
+                continue
+            regs = buyers.get((b["id"], x["class"]), [])
+            if regs:
+                order = sorted(set(regs), key=lambda r: (-regs.count(r), dist(region[b["id"]], r)))
+                x["to"] = [("local buyers" if r == region[b["id"]] else rname(r)) for r in order[:6]]
+                if len(order) > 6:
+                    x["to"].append(f"{len(order) - 6} other regions")
+                if b["id"] in MARKETS and x["class"] == "lattice":
+                    for k in markets_for(b, True):
+                        x["to"].append(MARKETS[k])
+                        routes.setdefault(b["id"], []).append((path(region[b["id"]], region[k]), "lattice"))
+            elif x["class"] == "services":
+                x["to"] = ["passing ships"]
+            elif any(i["class"] == x["class"] for o in traders if o is not b and visible(o) for i in o["profile"]["economy"]["imports"]):
+                imp = [o for o in traders if o is not b and visible(o) and any(i["class"] == x["class"] for i in o["profile"]["economy"]["imports"])]
+                near = min(dist(region[b["id"]], region[o["id"]]) for o in imp)
+                regs = list(dict.fromkeys(region[o["id"]] for o in imp if dist(region[b["id"]], region[o["id"]]) == near))
+                x["to"] = [("local buyers" if r == region[b["id"]] else rname(r)) for r in regs]
+                routes.setdefault(b["id"], []).append((path(region[b["id"]], regs[0]), x["class"]))
+            else:
+                a = align(b)
+                k = "sable-harbor-port" if a in ("trailing-traders", "outlaw") else "halvards-rest" if a == "gap-accord" and b["id"] != "halvards-rest" else "marrow"
+                x["to"] = ["the Exchange (the Marrow)" if k == "marrow" or k not in ctx.bodies else ctx.bodies[k]["name"]]
+                if k in region:
+                    routes.setdefault(b["id"], []).append((path(region[b["id"]], region[k]), x["class"]))
+    # levies along the routes
+    for b in traders:
+        eco = b["profile"]["economy"]
+        hs = set(holders(b))
+        lev = []
+        feats = set(b.get("worldFeatures", []))
+        for pth, cls in routes.get(b["id"], []):
+            pairs = set(zip(pth, pth[1:])) | set(zip(pth[1:], pth))
+            if cls == "lattice" and "ostrom" in pth:
+                lev.append("Navy tithe: a tenth of lattice crossing Ostrom")
+            if ("halvard", "ferrous") in pairs and "mercer-ibarra" not in hs:
+                lev.append("Mercer-Ibarra passage fee on the Halvard Gap")
+            if "shoals" in pth and "purview" not in hs:
+                lev.append("Purview entry tax on ships entering the Shoals")
+            if ("sable", "tarn") in pairs:
+                lev.append("the Tallymen's tally on the Sable Run (protection)")
+        if "free-port" in feats:
+            lev.append("no levy or inspection at the free port")
+        if "picket" in feats:
+            lev.append("levies collected by the picket")
+        eco["levies"] = list(dict.fromkeys(lev + eco["levies"]))
+        lat = b["profile"]["lattice"]
+        if rank(lat["rating"]) >= rank("small") and any(x["class"] == "lattice" for x in eco["exports"]) and b["id"] not in MARKETS:
+            lat["worked"], lat["workedBy"] = True, holders(b)
+        if any(i["good"] == "supplies" for i in eco["imports"]) and eco["food"] is not None:
+            eco["food"] = eco["food"] if eco["food"].startswith("self") else "shipped in with supplies"
+            eco["water"] = eco["water"] if eco["water"] != "imported" else "shipped in with supplies"
+        elif eco["food"] is not None:
+            cls_in = {i["class"] for i in eco["imports"]} | ({"food", "water"} if any(i["good"] == "supplies" for i in eco["imports"]) else set())
+            cls_out = {x["class"] for x in eco["exports"]}
+            if "food" in cls_out and "food" in cls_in:
+                eco["food"] = (f"a surplus of {' and '.join(x['good'] for x in eco['exports'] if x['class'] == 'food')} exported; "
+                               f"{' and '.join(i['good'] for i in eco['imports'] if i['class'] == 'food')} imported")
+            elif "food" in cls_out:
+                eco["food"] = "self-sufficient, with a surplus for export"
+            elif "food" in cls_in:
+                eco["food"] = "partly local, the rest imported" if b.get("habitability") in ("garden", "habitable", "marginal") else "imported"
+            elif not eco["food"].startswith("self") and b["type"] != "station":
+                eco["food"] = "self-sufficient"
+            if "water" in cls_out:
+                eco["water"] = eco["water"] if eco["water"] != "imported" else "local, from ice"
+            elif "water" in cls_in:
+                eco["water"] = "imported"
+            elif eco["water"] == "imported":
+                eco["water"] = "recycled aboard" if b["type"] == "station" else "local, from ice"
 
 
 def merge(derived, authored):
@@ -645,8 +997,21 @@ def merge(derived, authored):
     return out
 
 
+def authored_economy(pr):
+    eco = pr.get("economy")
+    if not eco:
+        return pr
+    for k in ("exports", "imports"):
+        if k in eco:
+            eco[k] = [{"good": x} if isinstance(x, str) else dict(x) for x in eco[k]]
+    return pr
+
+
 def derive(m):
     ctx = Ctx(m)
+    for b in m["bodies"]:
+        if b.get("profile"):
+            authored_economy(b["profile"])
     for b in m["bodies"]:
         authored_stats, authored_prof = b.get("stats", {}), b.get("profile", {})
         if b.get("world"):
@@ -662,12 +1027,31 @@ def derive(m):
             if pr.get("population") and pr.get("populationTrend") == "uninhabited":
                 pr["populationTrend"] = authored_prof.get("populationTrend", "stable")
             b["profile"] = pr
+    for b in m["bodies"]:
+        pr = b.get("profile")
+        if pr and b["type"] != "station" and not pr.get("population") and pr.get("settled") and pr["surveyStatus"] == "settled":
+            pr["surveyStatus"] = "surveyed"
+        if pr and b["type"] != "station" and not pr.get("population") and pr.get("populationTrend") in (None, "uninhabited", "stable") and pr.get("settled"):
+            pr["populationTrend"] = "abandoned"
+        if pr:
+            for k in ("exports", "imports"):  # an authored 'from' may name a body by id
+                for x in pr["economy"][k]:
+                    for f in ("from",):
+                        if x.get(f) in ctx.bodies:
+                            x[f] = ctx.bodies[x[f]]["name"]
+    trade(ctx, m)
     return m
 
 
 if __name__ == "__main__":
     p = Path(sys.argv[1])
     m = json.loads(p.read_text())
+    for b in m["bodies"]:  # start again from the authored part: populations and settlement dates
+        b.pop("stats", None)
+        if "profile" in b:
+            b["profile"] = {k: v for k, v in b["profile"].items() if k in ("population", "populationTrend", "settled")}
+            if not b["profile"]:
+                del b["profile"]
     derive(m)
     p.write_text(json.dumps(m, indent=2, ensure_ascii=False) + "\n")
     print(f"derived datablocks in {p}")

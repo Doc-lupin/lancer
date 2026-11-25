@@ -333,58 +333,6 @@
       "notes": "Thin nitrogen atmosphere. Nothing on the surface worth landing for.",
       "origin": "canon",
       "visibility": "all",
-      "stats": {
-        "sizeClass": "super-Earth",
-        "diameterKm": 20400,
-        "radiusRel": 1.6,
-        "massRel": 4.469,
-        "gravityG": 1.74,
-        "escapeKms": 18.7,
-        "orbitAccess": "costly",
-        "dayHours": 31,
-        "dayRel": 1.29,
-        "tidallyLocked": false,
-        "yearDays": 640,
-        "yearRel": 1.75,
-        "localDaysPerYear": 495.5,
-        "axialTiltDeg": 33.2,
-        "seasons": "strong",
-        "distanceAu": 1.4,
-        "insolationRel": 0.128,
-        "heatSource": "star",
-        "tempMeanC": -40,
-        "tempRangeC": [
-          -70,
-          -10
-        ],
-        "tempNote": "thin air: wide daily swings",
-        "pressureAtm": 0.3,
-        "breathability": "sealed suit",
-        "atmosphere": "thin nitrogen",
-        "surface": {
-          "water": 0,
-          "land": 85,
-          "ice": 15,
-          "other": 0
-        },
-        "precipitation": "light",
-        "geology": "quiet",
-        "radiation": "low",
-        "sky": {
-          "color": "deep blue, darkening toward black",
-          "sun": "orange, 0.59× standard size",
-          "sunSizeRel": 0.588,
-          "objects": [
-            "the Watchfire"
-          ]
-        },
-        "moons": 0,
-        "moonNames": [],
-        "rings": false,
-        "biosphere": "none",
-        "nativeLife": "none",
-        "absent": []
-      },
       "profile": {
         "surveyStatus": "settled",
         "authority": "The Stewardship",
@@ -415,11 +363,16 @@
         "populationTrend": "uninhabited",
         "peoples": [],
         "faiths": [],
-        "exports": [],
-        "imports": [],
-        "printAccess": "none",
-        "food": "none needed (uninhabited)",
-        "water": "none needed (uninhabited)",
+        "economy": {
+          "base": "none",
+          "exports": [],
+          "imports": [],
+          "resources": [],
+          "levies": [],
+          "printAccess": "none",
+          "food": null,
+          "water": null
+        },
         "lattice": {
           "rating": "none",
           "worked": false,
@@ -431,7 +384,59 @@
             "hostile world"
           ]
         },
-        "code": "SEE/X 1.7g -40°C 0.3atm/U W0 H4 S1 P0"
+        "code": "SEE/X 1.7g -36°C 0.3atm/U W0 H4 S1 P0"
+      },
+      "stats": {
+        "sizeClass": "super-Earth",
+        "diameterKm": 20400,
+        "radiusRel": 1.6,
+        "massRel": 4.47,
+        "gravityG": 1.74,
+        "escapeKms": 18.7,
+        "orbitAccess": "costly",
+        "dayHours": 31,
+        "dayRel": 1.29,
+        "tidallyLocked": false,
+        "yearDays": 640,
+        "yearRel": 1.75,
+        "localDaysPerYear": 495.5,
+        "axialTiltDeg": 33.2,
+        "seasons": "strong",
+        "distanceAu": 1.4,
+        "insolationRel": 0.128,
+        "heatSource": "star",
+        "tempMeanC": -36,
+        "tempRangeC": [
+          -66,
+          -6
+        ],
+        "tempNote": "thin air: wide daily swings",
+        "pressureAtm": 0.3,
+        "breathability": "sealed suit",
+        "atmosphere": "thin nitrogen",
+        "surface": {
+          "water": 0,
+          "land": 85,
+          "ice": 15,
+          "other": 0
+        },
+        "precipitation": "light",
+        "geology": "quiet",
+        "radiation": "low",
+        "sky": {
+          "color": "deep blue, darkening toward black",
+          "sun": "orange, 0.59× standard size",
+          "sunSizeRel": 0.588,
+          "objects": [
+            "the Watchfire"
+          ]
+        },
+        "moons": 0,
+        "moonNames": [],
+        "rings": false,
+        "biosphere": "none",
+        "nativeLife": "none",
+        "absent": []
       }
     },
     {
@@ -476,7 +481,7 @@
         },
         "transitDays": 3.7,
         "transitFrom": "local lane",
-        "portClass": "this is the port",
+        "portClass": "landing pad",
         "defenses": [],
         "settlements": {
           "count": 0,
@@ -487,15 +492,34 @@
         "populationTrend": "stable",
         "peoples": [],
         "faiths": [],
-        "exports": [],
-        "imports": [
-          "lattice",
-          "food",
-          "printer feed"
-        ],
-        "printAccess": "licensed print shops",
-        "food": "imports all food",
-        "water": "imported",
+        "economy": {
+          "base": "station services",
+          "exports": [],
+          "imports": [
+            {
+              "good": "lattice",
+              "class": "lattice",
+              "from": "miners across the Basin"
+            },
+            {
+              "good": "food",
+              "class": "food",
+              "from": "suppliers across the Basin"
+            },
+            {
+              "good": "printer feed",
+              "class": "printer feed",
+              "from": "suppliers across the Basin"
+            }
+          ],
+          "resources": [],
+          "levies": [
+            "Navy tithe: a tenth of lattice crossing Ostrom"
+          ],
+          "printAccess": "licensed print shops",
+          "food": "imported",
+          "water": "recycled aboard"
+        },
         "lattice": {
           "rating": "none",
           "worked": false,
@@ -586,6 +610,84 @@
       },
       "origin": "canon",
       "visibility": "all",
+      "profile": {
+        "surveyStatus": "settled",
+        "authority": "contested: Northern Concord, Southern League",
+        "claims": "disputed between Northern Concord and Southern League",
+        "security": {
+          "rating": 3,
+          "reasons": [
+            "contested control"
+          ]
+        },
+        "navyReach": "occasional patrols",
+        "toMarrow": {
+          "days": 4,
+          "route": [
+            "Scald",
+            "Ostrom"
+          ]
+        },
+        "transitDays": 8.0,
+        "transitFrom": "Ostrom mouth",
+        "portClass": "spaceport",
+        "defenses": [],
+        "settlements": {
+          "count": 1,
+          "main": "Kerrtown",
+          "notable": [
+            "Kettle Flats",
+            "Kerrtown",
+            "The Seam"
+          ]
+        },
+        "population": 30000,
+        "populationTrend": "stable",
+        "peoples": [],
+        "faiths": [],
+        "economy": {
+          "base": "subsistence",
+          "exports": [],
+          "imports": [
+            {
+              "good": "lattice",
+              "class": "lattice",
+              "from": "the Assay House (the Marrow)"
+            },
+            {
+              "good": "food",
+              "class": "food",
+              "from": "the Exchange (the Marrow)"
+            },
+            {
+              "good": "printer feed",
+              "class": "printer feed",
+              "from": "the Exchange (the Marrow)"
+            }
+          ],
+          "resources": [],
+          "levies": [
+            "Navy tithe: a tenth of lattice crossing Ostrom"
+          ],
+          "printAccess": "licensed print shops",
+          "food": "partly local, the rest imported",
+          "water": "local"
+        },
+        "lattice": {
+          "rating": "very rich",
+          "where": "Seams beneath the glassfields",
+          "worked": false,
+          "workedBy": []
+        },
+        "hazard": {
+          "rating": 4,
+          "reasons": [
+            "marginal world",
+            "custodians"
+          ]
+        },
+        "code": "GLA/M 1.0g +117°C 0.55atm/K W1 H4 S3 P30K"
+      },
       "stats": {
         "sizeClass": "Earth-sized",
         "diameterKm": 12200,
@@ -629,83 +731,17 @@
           "sun": "brilliant white, 0.84× standard size",
           "sunSizeRel": 0.838,
           "objects": [
-            "Scald II",
             "the Watchfire"
           ]
         },
-        "moons": 1,
-        "moonNames": [
-          "Scald II (WIP)"
-        ],
+        "moons": 0,
+        "moonNames": [],
         "rings": false,
         "biosphere": "none",
         "nativeLife": "none",
         "absent": [
           "custodians below about 400 m"
         ]
-      },
-      "profile": {
-        "surveyStatus": "settled",
-        "authority": "contested: Northern Concord, Southern League",
-        "claims": "held by Northern Concord",
-        "security": {
-          "rating": 3,
-          "reasons": [
-            "contested control"
-          ]
-        },
-        "navyReach": "occasional patrols",
-        "toMarrow": {
-          "days": 4,
-          "route": [
-            "Scald",
-            "Ostrom"
-          ]
-        },
-        "transitDays": 8.0,
-        "transitFrom": "Ostrom mouth",
-        "portClass": "landing field",
-        "defenses": [],
-        "settlements": {
-          "count": 1,
-          "main": "Kerrtown",
-          "notable": [
-            "Kettle Flats",
-            "Kerrtown",
-            "The Seam"
-          ]
-        },
-        "population": 30000,
-        "populationTrend": "stable",
-        "peoples": [],
-        "faiths": [],
-        "exports": [
-          "lattice"
-        ],
-        "imports": [
-          "food",
-          "printer feed"
-        ],
-        "printAccess": "licensed print shops",
-        "food": "partly self-sufficient",
-        "water": "local",
-        "lattice": {
-          "rating": "very rich",
-          "where": "Seams beneath the glassfields",
-          "worked": true,
-          "workedBy": [
-            "northern-concord",
-            "southern-league"
-          ]
-        },
-        "hazard": {
-          "rating": 4,
-          "reasons": [
-            "marginal world",
-            "custodians"
-          ]
-        },
-        "code": "GLA/M 1.0g +117°C 0.55atm/K W1 H4 S3 P30K"
       }
     },
     {
@@ -726,11 +762,65 @@
       "gmNotes": "Invented filler moon.",
       "origin": "invented",
       "visibility": "gm",
+      "profile": {
+        "surveyStatus": "surveyed",
+        "authority": "contested: Northern Concord, Southern League",
+        "claims": "disputed between Northern Concord and Southern League",
+        "security": {
+          "rating": 3,
+          "reasons": [
+            "contested control"
+          ]
+        },
+        "navyReach": "occasional patrols",
+        "toMarrow": {
+          "days": 4,
+          "route": [
+            "Scald",
+            "Ostrom"
+          ]
+        },
+        "transitDays": 8.0,
+        "transitFrom": "Ostrom mouth",
+        "portClass": "none",
+        "defenses": [],
+        "settlements": {
+          "count": 0,
+          "main": null,
+          "notable": []
+        },
+        "population": 0,
+        "populationTrend": "uninhabited",
+        "peoples": [],
+        "faiths": [],
+        "economy": {
+          "base": "none",
+          "exports": [],
+          "imports": [],
+          "resources": [],
+          "levies": [],
+          "printAccess": "none",
+          "food": null,
+          "water": null
+        },
+        "lattice": {
+          "rating": "none",
+          "worked": false,
+          "workedBy": []
+        },
+        "hazard": {
+          "rating": 4,
+          "reasons": [
+            "hostile world"
+          ]
+        },
+        "code": "MOO/X 0.02g +114°C 0atm/V W0 H4 S3 P0"
+      },
       "stats": {
         "sizeClass": "small",
         "diameterKm": 800,
         "radiusRel": 0.06,
-        "massRel": 0.0,
+        "massRel": 8.98e-05,
         "gravityG": 0.02,
         "escapeKms": 0.4,
         "orbitAccess": "easy",
@@ -778,55 +868,6 @@
         "biosphere": "none",
         "nativeLife": "none",
         "absent": []
-      },
-      "profile": {
-        "surveyStatus": "surveyed",
-        "authority": "contested: Northern Concord, Southern League",
-        "claims": "held by Northern Concord",
-        "security": {
-          "rating": 3,
-          "reasons": [
-            "contested control"
-          ]
-        },
-        "navyReach": "occasional patrols",
-        "toMarrow": {
-          "days": 4,
-          "route": [
-            "Scald",
-            "Ostrom"
-          ]
-        },
-        "transitDays": 8.0,
-        "transitFrom": "Ostrom mouth",
-        "portClass": "none",
-        "defenses": [],
-        "settlements": {
-          "count": 0,
-          "main": null,
-          "notable": []
-        },
-        "population": 0,
-        "populationTrend": "uninhabited",
-        "peoples": [],
-        "faiths": [],
-        "exports": [],
-        "imports": [],
-        "printAccess": "none",
-        "food": "none needed (uninhabited)",
-        "water": "none needed (uninhabited)",
-        "lattice": {
-          "rating": "none",
-          "worked": false,
-          "workedBy": []
-        },
-        "hazard": {
-          "rating": 4,
-          "reasons": [
-            "hostile world"
-          ]
-        },
-        "code": "MOO/X 0.0g +114°C 0atm/V W0 H4 S3 P0"
       }
     }
   ],
