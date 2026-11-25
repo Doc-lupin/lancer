@@ -4,7 +4,7 @@ An interactive 3D map of a fictional universe, built as a web page (no installat
 
 The full plan is in [docs/PLAN.md](docs/PLAN.md). The original document is in `docs/`.
 
-Status: Phase 1 (complete the data) in progress on branch `phase-1`. The schema is done (`data/schema/`); see [docs/PHASE1.md](docs/PHASE1.md) for the task list and the decisions it needs.
+Status: Phase 1 (complete the data) in progress on branch `phase-1`. Schema, validator and build script are done (`python3 tools/build_map.py` builds `data/map.json`); see [docs/PHASE1.md](docs/PHASE1.md) for the task list and the decisions it needs.
 
 ## Stack
 
@@ -22,8 +22,9 @@ Status: Phase 1 (complete the data) in progress on branch `phase-1`. The schema 
 data/
   raw/        Source documents (source/*.docx), Markdown conversions, extracted images
   parsed/     Structured JSON extracts of regions, lanes, factions, timeline
-  schema/     JSON schema for the map data (Phase 1)
-  map.json    The map data file (added in Phase 1)
+  schema/     JSON schema, field guide and a two-region example
+  src/        Authored map data (per-region files, layers, lane edits)
+  map.json    The map data file, built by tools/build_map.py
 src/
   data/       Store (Zustand) and data loading
   views/      Sector, system and planet views
