@@ -302,8 +302,26 @@ def check_worlds(m, r, strict):
                 r.error("world", w, f"features '{f}' and '{x}' exclude each other")
             if info["bodies"] and b["type"] not in info["bodies"]:
                 r.warn("world", w, f"feature '{f}' is meant for {', '.join(info['bodies'])}, not a {b['type']}")
+        st, pr = b.get("stats"), b.get("profile")
+        if st is None or pr is None:
+            r.issue(strict, "datablock", w, "no stats or profile (run tools/build_map.py)")
+        elif hab == "garden" and not -10 <= st.get("tempMeanC", 0) <= 32:
+            r.error("datablock", w, f"a garden world at a mean of {st['tempMeanC']} °C")
+        elif st.get("gravityG") and st.get("sizeClass") == "Earth-sized" and not 0.5 <= st["gravityG"] <= 2:
+            r.warn("datablock", w, f"Earth-sized but {st['gravityG']} g")
         if hab == "none" and b["type"] != "gas-giant":
             r.error("world", w, "habitability 'none' is for gas giants; a solid world is at least 'lethal'")
+
+
+def check_population(m, r, strict):
+    pops = [b.get("profile", {}).get("population", 0) for b in m["bodies"]]
+    total = sum(pops)
+    full_basin = len(m["systems"]) > 100  # the population rule describes the whole Basin, not samples
+    if full_basin and any(b.get("profile") for b in m["bodies"]) and strict and not 1100000 <= total <= 1300000:
+        r.error("datablock", "bodies", f"awake population totals {total:,}; the setting says nearly 1.2 million")
+    for b in m["bodies"]:
+        if b["type"] == "station" and "profile" not in b:
+            r.issue(strict, "datablock", f"bodies/{b['id']}", "station without a profile (run tools/build_map.py)")
 
 
 def check_factions_and_clock(m, r, strict):
@@ -347,6 +365,7 @@ def validate(m, strict=False):
     check_names(m, r)
     check_hierarchy(m, ids, r, strict)
     check_worlds(m, r, strict)
+    check_population(m, r, strict)
     check_factions_and_clock(m, r, strict)
     return r
 

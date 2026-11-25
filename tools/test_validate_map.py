@@ -85,6 +85,10 @@ CASES = [
     ("variant without a world type", lambda m: find(m, "bodies", "ostrom-iv").pop("world") and find(m, "bodies", "ostrom-iv").update(variant="cold"), False, "world"),
     ("features that exclude each other", lambda m: find(m, "bodies", "scald-planet").update(worldFeatures=["moonless", "many-moons"]), False, "world"),
     ("moon-only feature on a planet warns only", lambda m: find(m, "bodies", "scald-planet").update(worldFeatures=["dominant-parent"]), False, None),
+    ("complete: world without a datablock", lambda m: find(m, "bodies", "scald-planet").pop("stats"), True, "datablock"),
+    ("garden world far too hot", lambda m: find(m, "bodies", "scald-planet").update(habitability="garden", stats={**find(m, "bodies", "scald-planet")["stats"], "tempMeanC": 90}), False, "datablock"),
+    ("schema: bad breathability", lambda m: find(m, "bodies", "scald-planet")["stats"].update(breathability="fine"), False, "schema"),
+    ("schema: unknown profile field", lambda m: find(m, "bodies", "scald-planet")["profile"].update(mood="tense"), False, "schema"),
     ("structure check only warns on missing data", lambda m: find(m, "factions", "kerr-varga").pop("color"), False, None),
 ]
 

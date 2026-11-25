@@ -9,6 +9,8 @@
 | `regions/<region id>.json` | One region: `region` (edits), `systems`, `bodies`, `places`, `areas` |
 | `unmapped.json` | Unmapped stars (task 1.11) |
 | `clock.json`, `content.json` | Clock override; units, text boxes, headlines |
+| `profiles.json` | Authored datablock values by body id: population, trend, settled year, exports and imports, print access, physical overrides, GM story hooks. They win over derived values. |
+| `pronunciation.json` | Gazetteer respellings by object id |
 
 An entry whose id already exists changes only the fields it lists. A field set to `null` is removed.
 

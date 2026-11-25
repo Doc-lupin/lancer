@@ -82,6 +82,54 @@ def compose(body, cat):
     return [fill(b, name, kind) for b in blocks]
 
 
+def fmt_pop(n):
+    return "none" if not n else f"{n:,}"
+
+
+def datablock(b, m):
+    """Lines of the world's datablock, as the information box shows it."""
+    st, pr = b.get("stats"), b.get("profile")
+    if not pr:
+        return []
+    F = {f["id"]: f["name"] for f in m["factions"]}
+    L = []
+    if b.get("pronunciation"):
+        L.append(f"Pronounced: {b['pronunciation']}")
+    if pr.get("code"):
+        L.append(f"Code: {pr['code']}")
+    if st:
+        L += [f"Size: {st['sizeClass']}, {st['diameterKm']:,} km across ({st['radiusRel']}× standard); mass {st['massRel']}× standard; gravity {st['gravityG']} g; orbit access {st['orbitAccess']}",
+              f"Day: {st['dayHours']} hours ({st['dayRel']}× standard){', tidally locked' if st['tidallyLocked'] else ''}; year: "
+              + (f"{st['yearDays']} days ({st['yearRel']}× standard, {st['localDaysPerYear']} local days)" if st['yearDays'] else "none (no star)")
+              + f"; axial tilt {st['axialTiltDeg']}°, seasons {st['seasons']}",
+              f"Temperature: mean {st['tempMeanC']} °C" + (f", range {st['tempRangeC'][0]} to {st['tempRangeC'][1]} °C" if st['tempRangeC'] else "")
+              + f" ({st['tempNote']}); heat from {st['heatSource']}; sunlight {st['insolationRel']}× standard",
+              f"Atmosphere: {st['atmosphere']}" + (f", {st['pressureAtm']} atm" if st['pressureAtm'] is not None else "") + f"; {st['breathability']}",
+              (f"Surface: water {st['surface']['water']}%, land {st['surface']['land']}%, ice {st['surface']['ice']}%"
+               + (f", {st['surface']['otherKind']} {st['surface']['other']}%" if st['surface'].get('otherKind') else "") if st['surface'] else "Surface: none")
+              + f"; precipitation {st['precipitation']}; geology {st['geology']}; surface radiation {st['radiation']}",
+              f"Sky: {st['sky']['color']}; sun {st['sky']['sun']}; also visible: {', '.join(st['sky']['objects'])}",
+              f"Moons: {st['moons']}" + (f" ({', '.join(n.replace(' (WIP)', '') for n in st['moonNames'])})" if st['moonNames'] else "") + ("; rings" if st['rings'] else ""),
+              f"Life: {st['biosphere']}" + (f"; {st['nativeLife']}" if st['nativeLife'] not in ("none", "none noted") else "") + (f". Absent presence: {', '.join(st['absent'])}" if st['absent'] else "")]
+    tm = pr["toMarrow"]
+    L += [f"Survey: {pr['surveyStatus']}. Authority: {pr['authority']}. Claims: {pr['claims']}",
+          f"Security {pr['security']['rating']}/5 ({'; '.join(pr['security']['reasons'])}). Hazard {pr['hazard']['rating']}/5 ({'; '.join(pr['hazard']['reasons'])})",
+          f"Navy: {pr['navyReach']}. To the Marrow: " + (f"{tm['days']} lane day{'s' if tm['days'] != 1 else ''} via {', '.join(tm['route'])}" if tm['days'] else ("here" if tm['days'] == 0 else "no known route")) + (f" ({tm['note']})" if tm.get('note') else ""),
+          f"Arrival: {pr['transitDays']} days at standard drive from the {pr['transitFrom']}; port {pr['portClass']}" + (f"; defenses: {', '.join(pr['defenses'])}" if pr['defenses'] else ""),
+          f"Population: {fmt_pop(pr['population'])} ({pr['populationTrend']}" + (f", settled {pr['settled']}u" if pr.get('settled') else "") + ")"
+          + (f"; settlements {pr['settlements']['count']}, chiefly {pr['settlements']['main']}" if pr['settlements']['main'] else ""),
+          ]
+    if pr["peoples"] or pr["faiths"]:
+        L.append("Peoples: " + (", ".join(f"{F[x['faction']]} ({x['strength']})" for x in pr["peoples"]) or "none recorded")
+                 + ". Faiths: " + (", ".join(f"{F[x['faction']]} ({x['strength']})" for x in pr["faiths"]) or "none recorded"))
+    L.append(f"Economy: exports {', '.join(pr['exports']) or 'nothing'}; imports {', '.join(pr['imports']) or 'nothing'}; prints: {pr['printAccess']}; food {pr['food']}; water {pr['water']}")
+    lat = pr["lattice"]
+    L.append(f"Lattice: {lat['rating']}" + (f" ({lat['where']})" if lat.get('where') else "") + ("; worked" if lat['worked'] else ""))
+    if pr.get("gmHooks"):
+        L.append("GM hooks: " + " | ".join(pr["gmHooks"]))
+    return L
+
+
 def templates(cat):
     """Every template in the catalog, with a label."""
     types, feats, climate, hab = index(cat)
@@ -115,9 +163,12 @@ def main(argv):
     path = Path(argv[argv.index("--map") + 1]) if "--map" in argv else MAP
     m = json.loads(path.read_text())
     ids = [a for i, a in enumerate(argv) if not a.startswith("--") and (i == 0 or argv[i - 1] != "--map")]
-    bodies = [b for b in m["bodies"] if (not ids or b["id"] in ids) and b.get("world")]
+    bodies = [b for b in m["bodies"] if (not ids or b["id"] in ids) and (b.get("world") or b.get("profile"))]
     for b in bodies:
         print(f"## {b['name']}\n")
+        block = datablock(b, m)
+        if block:
+            print("\n".join("- " + line for line in block) + "\n")
         print("\n\n".join(compose(b, cat)) + "\n")
     return 0
 

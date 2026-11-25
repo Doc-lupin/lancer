@@ -103,6 +103,7 @@ One task = one session's work, touching only the files listed. Do them in order.
 | 1.12 | (done) Factions: layers, colors, five peoples, presence for peoples and faiths, control at region/system/planet level | `data/src/factions.json`, `data/src/regions/*.json`, `tools/build_map.py` | Each layer ≤15; every region and split planet has control set |
 | 1.13 | (done) Clock start | `data/src/clock.json` | 5029u, day 300 (Basin year 12), tidal day 5 of 73, open 9 more days |
 | 1.14 | (done) Assemble `data/map.json`, run the Phase 1 test, tick the boxes in PLAN.md | `data/map.json`, `docs/PLAN.md` | Exit test passes |
+| 1.15 | (done) World datablock (added after the test, at the GM's request): stats and profile for every world and station, gazetteer pronunciations, comparisons to standard | `tools/derive_stats.py`, `data/src/profiles.json`, `data/src/pronunciation.json`, `docs/DATABLOCK.md` | Complete check still passes |
 
 Fixed in 1.4: R1 (stray alignments mapped to `independent` with the source wording kept as `alignmentNote`; the Glass Syndicate and the three faiths have no alignment), R6 (the Pale has two white dwarfs), R7 (every star in `data/parsed/regions.json` has a schema `kind`; `kindOrigin: invented` marks the ones the documents don't give, listed below), D7 (cycle days 1–73, open 1–14).
 
@@ -204,5 +205,11 @@ Notes from 1.12:
 - Contested regions reviewed: Tarn (Basin Office, Smith-Shimano, Ringwreckers) and Cairn (Kerr-Varga, the Bench) match their canon feuds; the Shoals now include the Bellows Commune beside the Purview and the Seventh, as the Factions doc lists it.
 - System-level control where a system differs from its region: the Purview's prospecting systems and Tideline in the Shoals, the Commune's Eddy, Rimelight's Hollows, Ferrous Consolidated's Boneyard concessions, Matins and Dolmen.
 - After 1.12 the complete Phase 1 check passes with no errors and no warnings.
+
+Notes from 1.15:
+- Every one of the 182 typed worlds carries `stats` and `profile`; the 39 stations carry `profile`. Field guide: [DATABLOCK.md](DATABLOCK.md).
+- Authored: populations for 74 worlds and stations totaling 1,199,350 awake (the canon's "nearly 1.2 million"), trends, settled years, canon exports and imports, print access, and GM story hooks for the notable worlds and stations. 381 gazetteer pronunciations.
+- Deriving temperatures from stellar brightness exposed orbits that contradicted their climates. Sixteen livable worlds moved to orbits that fit (Gloam, Orison, Pennant, Wending, Halcyon, Meridian, Nocturne, Iris, Menhir and others); hostile worlds kept their orbits and took the climate their star gives them; the Ferrous belt and foundry asteroids moved out to 18 AU and Sable's moonlets a little further from Sable. Airless worlds take their physical temperature directly.
+- A tidally locked world's day now always equals its orbit (Gloam's day is its 55-day year).
 
 The pilot in 1.5 exists to catch schema problems on two regions before data goes into the other twenty-two. Change the schema there if needed, not later.

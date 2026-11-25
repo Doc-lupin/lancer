@@ -15,6 +15,7 @@ The schema checks the shape of each object. It does not check that an id points 
 | `id` | Lowercase kebab-case, unique across the whole file. Regions use the bare name (`scald`). System ids always end in `-system` (`scald-system`). A body uses its name, plus its type when the id is taken (`scald-planet`). A lane mouth is `<lane id>-at-<region>` (`ostrom-scald-at-ostrom`). |
 | `name` | Display name. Ends with " (WIP)" when the name is invented. |
 | `origin` | `canon` if the setting documents establish the object, `invented` if not. |
+| `pronunciation` | Gazetteer respelling, stressed syllable in capitals (TAL-iss). |
 | `nameOrigin` | Only when the name's origin differs from the object's, e.g. a canon star with an invented name, or "Ostrom II (WIP)": the documents say Ostrom has six planets but name only Ostrom IV. Defaults to `origin`. "(WIP)" follows this value. A name built from canon names ("Ostrom – Scald", "Scald mouth") counts as canon. |
 | `visibility` | `all`: players see the object. `gm`: hidden in player mode. |
 | `notes` | Player-visible text. |
@@ -77,6 +78,7 @@ On a layer, an object is colored by its `control.holders` that belong to that la
 | `starFeature` | flares, starspots, debris-disk, protoplanetary-disk, accretion-disk, planetary-nebula, jets, strong-wind. Set on a star as `features`. |
 | `body` | `system`; `parent` (the body it orbits; none = orbits the center); `type` (star, planet, gas-giant, moon, rogue-planet, asteroid, asteroid-belt, field, station, structure, wreck, lane-mouth); `kind` (stars only); `class` (free text, e.g. "garden world"); `orbit`; `radiusKm`; `rotation`; `appearance`; `population`; `lattice`, `control`, `presence`. |
 | `body.world` and friends | `world` (world type), `variant` (one of that type's variants), `habitability` (garden, habitable, marginal, hostile, lethal, none), `climate`, `worldFeatures`. Only on planets, moons, rogue planets, gas giants and asteroids. The ids and their definitions live in `worlds.json` in this folder; the schema holds the id lists only. Reference: [docs/WORLDS.md](../../docs/WORLDS.md). |
+| `body.stats`, `body.profile` | The world datablock: physical figures and setting profile, derived by `tools/derive_stats.py` with authored values from `data/src/profiles.json`. Field guide: [docs/DATABLOCK.md](../../docs/DATABLOCK.md). |
 | `body.orbit` | `distance` and `unit` (au or km); `periodDays` (null = fixed position, e.g. a lane mouth); `phaseDeg` (angle at the epoch); `inclinationDeg`; `eccentricity`. Positions follow the dashboard clock. |
 | `body.rotation` | `periodHours`, `tidallyLocked`, `axialTiltDeg`. |
 | `body.appearance` | `color`, `texture` (file in `public/textures/`), `clouds`, `atmosphere`, `rings`. |
