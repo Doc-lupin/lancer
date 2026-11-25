@@ -12,13 +12,17 @@ The schema checks the shape of each object. It does not check that an id points 
 
 | Field | Meaning |
 |---|---|
-| `id` | Lowercase kebab-case, unique across the whole file. |
+| `id` | Lowercase kebab-case, unique across the whole file. Regions use the bare name (`scald`). System ids always end in `-system` (`scald-system`). A body uses its name, plus its type when the id is taken (`scald-planet`). |
 | `name` | Display name. Ends with " (WIP)" when the name is invented. |
 | `origin` | `canon` if the setting documents establish the object, `invented` if not. |
 | `nameOrigin` | Only when the name's origin differs from the object's, e.g. a canon star with an invented name. Defaults to `origin`. "(WIP)" follows this value. |
 | `visibility` | `all`: players see the object. `gm`: hidden in player mode. |
 | `notes` | Player-visible text. |
 | `gmNotes` | GM-only text. Hidden in player mode even when the object is visible. |
+
+## Checking the data
+
+`python3 tools/validate_map.py [file]` checks a map file (default `data/map.json`). Add `--complete` for the Phase 1 exit test, which also requires every region to have a system, every lane end to be attached to a system, every faction to have a color, every region position to be locked and every orbiting body to have an orbit. `example.json` is a two-region example that passes `--complete`. `python3 tools/test_validate_map.py` tests the validator against it.
 
 ## Top level
 
