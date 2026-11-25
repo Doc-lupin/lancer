@@ -34,6 +34,15 @@ export function reanchor(p, anchorLy) {
   return place(anchorLy, d);
 }
 
+// The point a fraction t of the way from place a to place b, measured from
+// whichever end is nearer, so precision follows the nearer end.
+export function lerpPlace(a, b, t) {
+  const d = offsetKm(a, b);
+  return t < 0.5
+    ? place(a.anchor, a.offset.map((v, i) => v + d[i] * t))
+    : place(b.anchor, b.offset.map((v, i) => v - d[i] * (1 - t)));
+}
+
 // Screen pixels covered by 1 km at a given distance (perspective camera).
 export function pixelsPerKm(distanceKm, fovDeg, heightPx) {
   return heightPx / 2 / (distanceKm * Math.tan((fovDeg * Math.PI) / 360));

@@ -2,11 +2,9 @@
 // the text for lanes mode. Plain functions on map data.
 
 import { displayName } from './names.js';
+import { daysBetween, daysSinceEpoch, bodyOffsetKm } from './orbits.js';
 
-// Days from date a to date b ({ year, day }, Union calendar).
-export function daysBetween(a, b, daysPerYear = 365) {
-  return (b.year - a.year) * daysPerYear + (b.day - a.day);
-}
+export { daysBetween };
 
 // The Lantern tide on `date` (default: the clock's current date).
 // Cycle days run 1..cycleDays; the tide is open on days 1..openDays (D7).
@@ -26,11 +24,26 @@ export function tideState(lane, clock, date) {
   return { unknown: true };
 }
 
-// Positions of a lane's two ends in light-years: the system at each end, or
-// the region where an end has no system yet (the Silent Mouths in the Quiet).
-// Task 2.9 moves the ends onto the lane-mouth bodies.
+// Rough positions of a lane's two ends in light-years: the system at each
+// end, or the region where an end has no system (the Silent Mouths in the Quiet).
 export function laneEnds(lane, index) {
   const at = (end) => (end.system ? index.byId.get(end.system).pos : index.byId.get(end.region).pos);
+  return [at(lane.from), at(lane.to)];
+}
+
+// Exact ends on a given date, as places (anchor in ly, offset in km): the
+// lane-mouth body where there is one (task 2.9), else the system's center,
+// else the region's center.
+export function laneEndPlaces(lane, index, clock, date) {
+  const days = daysSinceEpoch(clock, date);
+  const at = (end) => {
+    if (end.mouth) {
+      const mouth = index.byId.get(end.mouth);
+      return { anchor: [...index.byId.get(mouth.system).pos], offset: bodyOffsetKm(mouth, index, days) };
+    }
+    const pos = end.system ? index.byId.get(end.system).pos : index.byId.get(end.region).pos;
+    return { anchor: [...pos], offset: [0, 0, 0] };
+  };
   return [at(lane.from), at(lane.to)];
 }
 

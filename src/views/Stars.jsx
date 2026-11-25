@@ -1,4 +1,5 @@
-// Every star-centered system, in two instanced draw calls (task 2.6):
+// Every star: each star-centered system's, and the companion stars that
+// orbit some of them (task 2.9). Two instanced draw calls (task 2.6):
 //   core  a sphere at true size, never smaller than CORE_PX on screen (P5);
 //   glow  a soft disc facing the camera, sized in screen pixels by luminosity,
 //         drawn additively so close pairs brighten.
@@ -73,25 +74,34 @@ export default function Stars() {
   const core = useRef();
   const glow = useRef();
 
-  const stars = useMemo(() => map.systems
-    .filter((s) => s.center.type === 'star' && !isHidden(index, s.id, playerMode))
-    .map((s) => {
-      const k = STAR_KINDS[s.center.kind];
+  // System stars, then companion stars (bodies of type star, task 2.9).
+  const stars = useMemo(() => {
+    const entry = (id, kind, placeOf, charted) => {
+      const k = STAR_KINDS[kind];
       return {
-        id: s.id,
-        place: view.targets.get(s.id)?.place ?? { anchor: s.pos, offset: [0, 0, 0] },
-        radiusKm: starRadiusKm(s.center.kind),
+        id,
+        place: view.targets.get(id)?.place ?? placeOf,
+        radiusKm: starRadiusKm(kind),
         color: new THREE.Color(k.color),
-        glow: glowPx(k.luminosity) * (s.charted || FULL_BRIGHTNESS.has(s.id) ? 1 : 0.75),
-        dim: !s.charted && !FULL_BRIGHTNESS.has(s.id),
-        dark: s.center.kind === 'black-hole',
+        glow: glowPx(k.luminosity) * (charted || FULL_BRIGHTNESS.has(id) ? 1 : 0.75),
+        dim: !charted && !FULL_BRIGHTNESS.has(id),
+        dark: kind === 'black-hole',
       };
-    }), [map, index, playerMode]);
+    };
+    const systems = map.systems
+      .filter((s) => s.center.type === 'star' && !isHidden(index, s.id, playerMode))
+      .map((s) => entry(s.id, s.center.kind, { anchor: s.pos, offset: [0, 0, 0] }, s.charted));
+    const companions = map.bodies
+      .filter((b) => b.type === 'star' && !isHidden(index, b.id, playerMode) && view.targets.has(b.id))
+      .map((b) => entry(b.id, b.kind, null, index.byId.get(b.system).charted));
+    return [...systems, ...companions];
+  }, [map, index, playerMode]);
 
   const { glowGeometry, glowMaterial, coreMaterial } = useMemo(() => {
     const g = new THREE.PlaneGeometry(1, 1);
     const colors = new Float32Array(stars.length * 3);
-    stars.forEach((s, i) => s.color.clone().multiplyScalar(s.dim ? UNMAPPED_GLOW : 1).toArray(colors, i * 3));
+    // The glow's own shader needs display colors (color.js); the core's built-in material converts for itself.
+    stars.forEach((s, i) => s.color.clone().convertLinearToSRGB().multiplyScalar(s.dim ? UNMAPPED_GLOW : 1).toArray(colors, i * 3));
     g.setAttribute('aColor', new THREE.InstancedBufferAttribute(colors, 3));
     g.setAttribute('aSize', new THREE.InstancedBufferAttribute(new Float32Array(stars.length), 1));
     const m = new THREE.ShaderMaterial({

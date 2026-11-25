@@ -11,6 +11,7 @@ import { useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useMap, isHidden } from '../data/store.js';
+import { displayColor } from './color.js';
 import { offsetKm, place, KM_PER_LY } from './origin.js';
 import { view } from './camera/view.js';
 import { spriteVertex, spriteFragmentHead, spriteUniforms, spriteGeometry, updateViewport } from './sprite.js';
@@ -21,7 +22,7 @@ const STYLES = {
     blending: { blending: THREE.AdditiveBlending }, renderOrder: 1,
   },
   'dust-cloud': {
-    puffs: 80, colors: ['#7d5236', '#6a4430', '#8a5a3a', '#553828'], alpha: [0.3, 0.5],
+    puffs: 80, colors: ['#3d2618', '#33200f', '#47291a', '#2a1a12'], alpha: [0.35, 0.55],
     blending: { blending: THREE.CustomBlending, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor }, renderOrder: 2,
   },
 };
@@ -59,7 +60,7 @@ export function makePuffs(region, radiusKm, style) {
     return {
       place: place(region.pos, offset),
       sizeKm: R * (0.25 + 0.3 * rand()),
-      color: new THREE.Color(style.colors[Math.floor(rand() * style.colors.length)]),
+      color: displayColor(style.colors[Math.floor(rand() * style.colors.length)]),
       alpha: style.alpha[0] + (style.alpha[1] - style.alpha[0]) * rand(),
     };
   });

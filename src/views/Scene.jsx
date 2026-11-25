@@ -5,8 +5,8 @@
 import { useEffect, useMemo } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
 import { useMap } from '../data/store.js';
-import { CAMERA, place } from './origin.js';
-import { laneEnds } from '../data/lanes.js';
+import { CAMERA, lerpPlace } from './origin.js';
+import { laneEndPlaces } from '../data/lanes.js';
 import { STAR_KINDS } from '../data/starKinds.js';
 import { view } from './camera/view.js';
 import { createRig, frameFor, focusOn } from './camera/rig.js';
@@ -18,6 +18,8 @@ import { RegionLabels, RegionLabelsUpdater } from './RegionLabels.jsx';
 import Lanes from './Lanes.jsx';
 import RegionEffects from './RegionEffects.jsx';
 import Centers from './Centers.jsx';
+import System, { bodyAlpha } from './System.jsx';
+import { BodyLabels, BodyLabelsUpdater } from './BodyLabels.jsx';
 import { LaneLabels, LaneLabelsUpdater } from './LaneLabels.jsx';
 import LanesToggle from '../interface/LanesToggle.jsx';
 
@@ -31,10 +33,12 @@ function DebugHook() {
       screen: (id) => screenPos(camera, view.rig.camera, view.targets.get(id).place, size.width, size.height),
       laneScreen: (id, t) => {
         const { map, index } = useMap.getState();
-        const [a, b] = laneEnds(map.lanes.find((l) => l.id === id), index);
-        return screenPos(camera, view.rig.camera, place(a.map((v, i) => v + (b[i] - v) * t)), size.width, size.height);
+        const [a, b] = laneEndPlaces(map.lanes.find((l) => l.id === id), index, map.clock);
+        return screenPos(camera, view.rig.camera, lerpPlace(a, b, t), size.width, size.height);
       },
       focus: (id) => { focusOn(view.rig, view.targets, id, performance.now()); invalidate(); },
+      bodyAlpha: (id) => bodyAlpha.get(id) ?? 0,
+      layerCount: (layer) => scene.children.filter((o) => o.userData.layer === layer).map((o) => o.geometry.instanceCount ?? o.count),
       centerOf: (id) => useMap.getState().index.byId.get(id)?.center?.type,
       centerTypes: () => {
         const icons = scene.children.find((o) => o.userData.layer === 'icons');
@@ -84,11 +88,13 @@ export default function Scene() {
           <>
             <CameraRig />
             <Lanes />
+            <System />
             <Stars />
             <Centers />
             <RegionEffects />
             <RegionLabelsUpdater />
             <LaneLabelsUpdater />
+            <BodyLabelsUpdater />
             <DebugHook />
           </>
         )}
@@ -97,6 +103,7 @@ export default function Scene() {
         <>
           <RegionLabels />
           <LaneLabels />
+          <BodyLabels />
           <LanesToggle />
         </>
       )}

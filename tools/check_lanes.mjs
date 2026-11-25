@@ -103,7 +103,9 @@ async function run(browser, base, name, options) {
     const strips = window.__lancer.scene.children.find((o) => o.userData.layer === 'lanes');
     const c = strips.geometry.attributes.aColor;
     const teal = [];
-    for (let i = 0; i < c.count; i++) if (c.getX(i) < 0.3 && c.getY(i) > 0.7 && c.getW(i) === 1) teal.push(i);
+    // The open style's #79e3d2, as display values (src/views/color.js), at full strength.
+    const want = [0x79, 0xe3, 0xd2].map((v) => v / 255);
+    for (let i = 0; i < c.count; i++) if (Math.abs(c.getX(i) - want[0]) < 0.01 && Math.abs(c.getY(i) - want[1]) < 0.01 && Math.abs(c.getZ(i) - want[2]) < 0.01 && c.getW(i) === 1) teal.push(i);
     return teal.length;
   });
   check('five tidal lanes drawn open (teal, full strength)', openStyle === 5, `${openStyle} pieces`);

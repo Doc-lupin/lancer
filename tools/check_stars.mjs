@@ -55,7 +55,7 @@ async function run(browser, base, name, options) {
     return { calls: window.__lancer.render().calls, counts: meshes.map((m) => m.count), stars: window.__lancer.view.targets.size };
   });
   // Two instanced meshes, one draw call each. (Lanes, icons and effects add their own.)
-  check('all 144 star systems drawn in two draw calls', info.counts.length === 2 && info.counts.every((c) => c === 144), `2 star meshes, instances ${info.counts.join(' + ')}; ${info.calls} calls in all`);
+  check('all 148 stars (144 systems + 4 companions) drawn in two draw calls', info.counts.length === 2 && info.counts.every((c) => c === 148), `2 star meshes, instances ${info.counts.join(' + ')}; ${info.calls} calls in all`);
 
   const ls = await labels(page);
   const shown = ls.filter((l) => l.shown);

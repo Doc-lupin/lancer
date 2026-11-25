@@ -2,7 +2,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { buildIndex } from './store.js';
-import { lanternTide, tideState, laneEnds, laneLabel, laneDaysShort, daysBetween } from './lanes.js';
+import { lanternTide, tideState, laneEnds, laneEndPlaces, laneLabel, laneDaysShort, daysBetween } from './lanes.js';
+import { KM_PER_AU } from './orbits.js';
 
 const map = JSON.parse(readFileSync(new URL('../../data/map.json', import.meta.url), 'utf8'));
 const index = buildIndex(map);
@@ -51,4 +52,15 @@ test('the short form is just the days', () => {
   assert.equal(laneDaysShort(lane('ostrom-tallis')), '1 d');
   assert.equal(laneDaysShort(lane('sable-tarn')), '10–15 d');
   assert.equal(laneDaysShort(lane('silent-mouth-2')), '? d');
+});
+
+test('lane ends sit on their lane-mouth bodies', () => {
+  const [a, b] = laneEndPlaces(lane('ostrom-tallis'), index, clock);
+  assert.deepEqual(a.anchor, index.byId.get('ostrom-system').pos);
+  assert.ok(Math.abs(Math.hypot(...a.offset) - 2.6 * KM_PER_AU) < 1); // the Tallis mouth at Ostrom, 2.6 AU out
+  assert.ok(Math.abs(Math.hypot(...b.offset) - 2.2 * KM_PER_AU) < 1); // the Ostrom mouth at Tallis, 2.2 AU out
+  // The Silent Mouths start in the Quiet (no system) and end near Ostrom's gate.
+  const [q, o] = laneEndPlaces(lane('silent-mouth-1'), index, clock);
+  assert.deepEqual(q, { anchor: index.byId.get('quiet').pos, offset: [0, 0, 0] });
+  assert.ok(Math.abs(Math.hypot(...o.offset) - 19 * KM_PER_AU) < 0.03 * KM_PER_AU);
 });

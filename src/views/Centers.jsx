@@ -3,13 +3,15 @@
 //   rogue planet  a dark disc with a pale rim (the Hollows' starless worlds)
 //   wreck         a ring broken in three places (the Boneyard's Absent wrecks)
 //   structure     a clock face: ring, four ticks and a center dot (the Orrery)
-// Bodies themselves, at true size, come with task 2.9.
+// Each icon fades out as the body itself (drawn by System.jsx) grows larger
+// than the icon on screen.
 
 import { useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useMap, isHidden } from '../data/store.js';
-import { offsetKm, KM_PER_LY } from './origin.js';
+import { displayColor } from './color.js';
+import { offsetKm, pixelsPerKm, KM_PER_LY } from './origin.js';
 import { view } from './camera/view.js';
 import { spriteVertex, spriteFragmentHead, spriteUniforms, spriteGeometry, updateViewport } from './sprite.js';
 
@@ -69,7 +71,7 @@ export default function Centers() {
     const g = spriteGeometry(centers.length);
     const c = new THREE.Color();
     centers.forEach((it, i) => {
-      c.set(it.icon.color);
+      displayColor(it.icon.color, c);
       g.attributes.aColor.setXYZW(i, c.r, c.g, c.b, 1);
       g.attributes.aType.setX(i, it.icon.type);
     });
@@ -92,16 +94,22 @@ export default function Centers() {
 
   const rel = useMemo(() => [0, 0, 0], []);
   const mat = useMemo(() => new THREE.Matrix4(), []);
-  useFrame(({ size, viewport }) => {
+  useFrame(({ camera, size, viewport }) => {
     const cam = view.rig?.camera;
     if (!cam) return;
     updateViewport(mesh.material, size, viewport);
     const sizes = mesh.geometry.attributes.aSize;
+    const colors = mesh.geometry.attributes.aColor;
     centers.forEach((it, i) => {
       offsetKm(cam, it.place, rel);
       mesh.setMatrixAt(i, mat.makeTranslation(rel[0], rel[1], rel[2]));
-      sizes.setX(i, iconPx(Math.hypot(rel[0], rel[1], rel[2]) / KM_PER_LY));
+      const dist = Math.hypot(rel[0], rel[1], rel[2]);
+      const px = iconPx(dist / KM_PER_LY);
+      sizes.setX(i, px);
+      const bodyPx = 2 * view.targets.get(it.id).radiusKm * pixelsPerKm(dist, camera.fov, size.height);
+      colors.setW(i, 1 - Math.min(1, Math.max(0, (bodyPx - px) / px)));
     });
+    colors.needsUpdate = true;
     mesh.instanceMatrix.needsUpdate = true;
     sizes.needsUpdate = true;
   }, -1);

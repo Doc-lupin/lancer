@@ -10,8 +10,8 @@
 import { useMemo } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useMap, isHidden } from '../data/store.js';
-import { laneEnds, laneLabel, laneDaysShort } from '../data/lanes.js';
-import { place } from './origin.js';
+import { laneEndPlaces, laneLabel, laneDaysShort } from '../data/lanes.js';
+import { lerpPlace } from './origin.js';
 import { view } from './camera/view.js';
 import { screenPos } from './camera/pick.js';
 import { regionLabelBoxes } from './RegionLabels.jsx';
@@ -27,8 +27,8 @@ function useLanes() {
   return useMemo(() => map.lanes
     .filter((l) => !isHidden(index, l.id, playerMode))
     .map((l) => {
-      const [a, b] = laneEnds(l, index);
-      return { lane: l, spots: ALONG.map((t) => place(a.map((v, i) => v + (b[i] - v) * t))), text: laneLabel(l, map.clock), short: laneDaysShort(l) };
+      const [a, b] = laneEndPlaces(l, index, map.clock);
+      return { lane: l, spots: ALONG.map((t) => lerpPlace(a, b, t)), text: laneLabel(l, map.clock), short: laneDaysShort(l) };
     }), [map, index, playerMode]);
 }
 

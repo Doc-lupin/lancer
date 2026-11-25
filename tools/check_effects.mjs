@@ -106,7 +106,7 @@ async function run(browser, base, name, options) {
     for (const o of window.__lancer.scene.children) if (o.userData.layer) byLayer[o.userData.layer] = o.count;
     return { calls: window.__lancer.render().calls, byLayer, icons: window.__lancer.centerTypes() };
   });
-  check('draw calls: stars 2, lanes 2, icons 1, effects 2', info.calls === 7, `${info.calls}`);
+  check('draw calls: stars 2, lanes 2, icons 1, effects 2, bodies 1 (no orbit lines at the Basin)', info.calls === 8, `${info.calls}`);
   check('11 center icons: 7 rogue planets, 3 wrecks, 1 structure', info.icons['rogue-planet'] === 7 && info.icons.wreck === 3 && info.icons.structure === 1 && Object.keys(info.icons).length === 3, JSON.stringify(info.icons));
 
   // Icons are no bigger than a Sun-like star's glow (8 px), so they don't out-scale the stars.
