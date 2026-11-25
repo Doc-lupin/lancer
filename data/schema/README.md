@@ -85,6 +85,7 @@ On a layer, an object is colored by its `control.holders` that belong to that la
 
 | Field | Meaning |
 |---|---|
+| `name` | The lane's canon name if it has one ("The Halvard Gap"); otherwise the two region names, "Ostrom – Scald". A name made from region names counts as canon. |
 | `from`, `to` | Lane ends: `region` (required), `system` and `mouth` (a body of type lane-mouth) once known. Order matters only for one-way lanes. |
 | `scope` | `primary` (default) or `local`. |
 | `days` | Lane time; null when unknown (the Silent Mouths). `daysRange` [min, max] for lanes that vary, e.g. the Sable Run [10, 15]. |

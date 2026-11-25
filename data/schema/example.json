@@ -69,7 +69,7 @@
   ],
   "lanes": [
     {
-      "id": "ostrom-scald", "name": "Ostrom–Scald lane (WIP)", "nameOrigin": "invented",
+      "id": "ostrom-scald", "name": "Ostrom – Scald",
       "from": { "region": "ostrom", "system": "cinder-system", "mouth": "ostrom-scald-mouth-o" },
       "to": { "region": "scald", "system": "scald-system", "mouth": "ostrom-scald-mouth-s" },
       "days": 4, "drifting": false, "oneWay": false, "silent": false,

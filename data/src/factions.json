@@ -1,0 +1,21 @@
+{
+  "_comment": "Edits on top of data/parsed/factions.json. Layers follow the D13 recommendation in docs/PHASE1.md and are provisional until D13 is settled. 'factions' entries are merged by id over the parsed factions (null removes a field). Colors, peoples and presence come in task 1.12.",
+  "layers": [
+    { "id": "governments", "name": "Governments", "kind": "governments", "origin": "canon", "visibility": "all" },
+    { "id": "corporations", "name": "Corporations", "kind": "corporations", "origin": "canon", "visibility": "all" },
+    { "id": "companies", "name": "Companies and outlaws", "kind": "companies", "origin": "canon", "visibility": "all" },
+    { "id": "cultures", "name": "Peoples", "kind": "cultures", "origin": "canon", "visibility": "all" },
+    { "id": "religions", "name": "Faiths", "kind": "religions", "origin": "canon", "visibility": "all" }
+  ],
+  "layerByCategory": {
+    "government": "governments",
+    "commerce": "corporations",
+    "company": "companies",
+    "outlaw": "companies",
+    "people": "cultures",
+    "faith": "religions"
+  },
+  "factions": [
+    { "id": "synod", "layers": ["governments", "religions"] }
+  ]
+}

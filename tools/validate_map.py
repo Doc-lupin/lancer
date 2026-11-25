@@ -202,8 +202,8 @@ def check_hierarchy(m, ids, r, strict):
     for reg in m["regions"]:
         w = f"regions/{reg['id']}"
         has = any(s.get("region") == reg["id"] for s in m["systems"])
-        if not has:
-            r.issue(strict and reg["arm"] != "beyond", "empty-region", w, "has no system (star or special object)")
+        if not has and reg["arm"] != "beyond":
+            r.issue(strict, "empty-region", w, "has no system (star or special object)")
         if not reg.get("locked"):
             r.issue(strict, "unlocked", w, "position not locked (hand-adjust, then set locked: true)")
         radius = m["basin"].get("diameterLy", 50) / 2
@@ -223,8 +223,8 @@ def check_hierarchy(m, ids, r, strict):
                 r.error("ref", f"{w}.{side}.system", f"'{end['system']}' is not a known systems id")
             elif s is not None and s.get("region") != reg["id"]:
                 r.error("lane-end", f"{w}.{side}", f"system '{s['id']}' is in region '{s.get('region')}', not '{reg['id']}'")
-            elif s is None:
-                r.issue(strict and reg["arm"] != "beyond", "lane-end", f"{w}.{side}", "lane end not attached to a system")
+            elif s is None and reg["arm"] != "beyond":
+                r.issue(strict, "lane-end", f"{w}.{side}", "lane end not attached to a system")
             if "mouth" in end:
                 mb = bodies.get(end["mouth"])
                 if "system" not in end:
