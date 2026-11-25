@@ -183,6 +183,6 @@ Notes from 1.10:
 
 Notes from 1.11:
 - 40 unmapped stars, seen at long range and never charted, with no known lanes. Most are named from the Calder probe catalog (Calder 117 and so on); three notable ones are named: the Watchfire, a blue supergiant 22 ly out that is visible from every world in the Basin and that spacers steer by; Lodestar, a blue giant; and Howl, a magnetar. One white dwarf sits in a planetary nebula, three red dwarfs flare, and three are wide binaries with their companions recorded as star bodies.
-- With them the Basin holds about 148 stars, using every star kind in the schema.
+- With them the Basin holds 148 stars of 23 kinds (only the generic `remnant` is unused): 45% red and brown dwarfs, 16% orange and yellow dwarfs, 12% hot and young stars, 11% giants and 15% stellar remnants.
 
 The pilot in 1.5 exists to catch schema problems on two regions before data goes into the other twenty-two. Change the schema there if needed, not later.
