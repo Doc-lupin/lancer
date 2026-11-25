@@ -1,0 +1,9 @@
+{
+  "_comment": "Task 1.7: systems of ferrous. Offsets in light-years from the region center (D12). Planets come in tasks 1.8 and 1.9.",
+  "systems": [
+    {"id": "ferrous-system", "name": "Ferrous", "origin": "canon", "visibility": "all", "region": "ferrous", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "red-giant"}, "notes": "Red giant that swelled late and broke up its inner worlds; much of the region's rock may be what is left of them.", "_comment": "Star kind not given in the documents (R7, D16)."},
+    {"id": "billet-system", "name": "Billet (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "ferrous", "charted": true, "offset": [-0.47, -0.25, 0.59], "center": {"type": "star", "kind": "white-dwarf", "features": ["debris-disk"]}, "notes": "White dwarf ringed by a debris disk.", "_comment": "Star kind not given in the documents (R7, D16)."},
+    {"id": "ingot-system", "name": "Ingot (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "ferrous", "charted": true, "offset": [-0.45, 0.28, 0.36], "center": {"type": "star", "kind": "orange-dwarf"}, "notes": "Orange dwarf with dense metal-rich belts.", "_comment": "Star kind not given in the documents (R7, D16)."},
+    {"id": "temper-system", "name": "Temper (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "ferrous", "charted": true, "offset": [-0.01, 0.02, -0.41], "center": {"type": "star", "kind": "yellow-white-star"}, "notes": "Yellow-white star with dense metal-rich belts.", "_comment": "Star kind not given in the documents (R7, D16)."}
+  ]
+}

@@ -62,7 +62,7 @@ Task breakdown, review findings and open decisions: [PHASE1.md](PHASE1.md).
 - [x] JSON schema: Basin, region, system, body, lane, faction, unit, text box, headline, clock
 - [x] System center types (star, rogue planet, wreck, structure); region effects (none, nebula, dust cloud); origin and visibility tags
 - [x] Hand-adjust and lock region positions
-- [ ] Stars in each region, with positions
+- [x] Stars in each region, with positions
 - [ ] Unmapped stars
 - [ ] Missing planets, moons and stations (invented tag)
 - [ ] Attach each lane to a star at each end

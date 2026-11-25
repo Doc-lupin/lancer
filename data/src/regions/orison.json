@@ -1,0 +1,7 @@
+{
+  "_comment": "Task 1.7: systems of orison. Offsets in light-years from the region center (D12). Planets come in tasks 1.8 and 1.9.",
+  "systems": [
+    {"id": "orison-system", "name": "Orison", "origin": "canon", "visibility": "all", "region": "orison", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "orange-dwarf"}, "notes": "Primary of the failing garden world Orison.", "_comment": "Star kind not given in the documents (R7, D16)."},
+    {"id": "vesper-system", "name": "Vesper (WIP)", "origin": "invented", "visibility": "all", "region": "orison", "charted": true, "offset": [-0.27, 0.48, 1.09], "center": {"type": "star", "kind": "white-star"}, "notes": "Bright white star at the edge of the region. The tidal mouth to Gloam opens here.", "_comment": "D9 companion."}
+  ]
+}

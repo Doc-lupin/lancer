@@ -1,0 +1,11 @@
+{
+  "_comment": "Task 1.7: systems of furnace. Offsets in light-years from the region center (D12). Planets come in tasks 1.8 and 1.9.",
+  "systems": [
+    {"id": "crucible-system", "name": "Crucible (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "furnace", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "blue-star"}, "notes": "Young blue star at the heart of the nebula. Its radiation blinds sensors and burns out unshielded electronics."},
+    {"id": "anvil-system", "name": "Anvil (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "furnace", "charted": true, "offset": [-0.18, 0.59, 0.77], "center": {"type": "star", "kind": "wolf-rayet", "features": ["jets", "strong-wind"]}, "notes": "Wolf-Rayet star shedding its outer layers in fierce winds and jets."},
+    {"id": "tuyere-system", "name": "Tuyere (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "furnace", "charted": true, "offset": [-0.4, -0.25, -0.43], "center": {"type": "star", "kind": "blue-white-star", "features": ["protoplanetary-disk"]}, "notes": "Young blue-white star with worlds still forming in the dust around it."},
+    {"id": "quench-system", "name": "Quench (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "furnace", "charted": true, "offset": [-0.27, 0.36, 0.27], "center": {"type": "star", "kind": "protostar", "features": ["protoplanetary-disk", "jets"]}, "notes": "Protostar still gathering mass, wrapped in its forming disk."},
+    {"id": "clinker-system", "name": "Clinker (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "furnace", "charted": true, "offset": [0.46, 0.0, 0.59], "center": {"type": "star", "kind": "protostar", "features": ["protoplanetary-disk"]}, "notes": "Protostar deep in the nebula, known mostly from Gatherers' Guild charts."},
+    {"id": "bloom-system", "name": "Bloom (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "furnace", "charted": true, "offset": [0.58, -0.56, -0.15], "center": {"type": "star", "kind": "blue-white-star"}, "notes": "Young blue-white star, bright through the nebula."}
+  ]
+}

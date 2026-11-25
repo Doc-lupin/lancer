@@ -1,0 +1,7 @@
+{
+  "_comment": "Task 1.7: systems of halvard. Offsets in light-years from the region center (D12). Planets come in tasks 1.8 and 1.9.",
+  "systems": [
+    {"id": "halvard-system", "name": "Halvard", "origin": "canon", "visibility": "all", "region": "halvard", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "yellow-giant"}, "notes": "Yellow giant. The gas giant Halvard orbits far out.", "_comment": "Departs from the documents (D17); see docs/PHASE1.md."},
+    {"id": "gaff-system", "name": "Gaff (WIP)", "origin": "invented", "visibility": "all", "region": "halvard", "charted": true, "offset": [-0.44, 0.03, 0.63], "center": {"type": "star", "kind": "orange-dwarf"}, "notes": "Orange dwarf a few hours from Halvard.", "_comment": "D9 companion."}
+  ]
+}

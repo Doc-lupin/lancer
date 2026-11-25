@@ -1,0 +1,9 @@
+{
+  "_comment": "Task 1.7: systems of pale. Offsets in light-years from the region center (D12). Planets come in tasks 1.8 and 1.9.",
+  "systems": [
+    {"id": "shroud-system", "name": "Shroud (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "pale", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "white-dwarf", "features": ["planetary-nebula"]}, "notes": "Dying white dwarf, still inside the glowing shell it shed. Airless worlds near it carry lattice crusts."},
+    {"id": "wane-system", "name": "Wane (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "pale", "charted": true, "offset": [-0.67, 0.04, -0.07], "center": {"type": "star", "kind": "white-dwarf"}, "notes": "Cold white dwarf. Airless worlds near it carry lattice crusts. The Survey Office station is here."},
+    {"id": "pyre-system", "name": "Pyre (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "pale", "charted": true, "offset": [-0.33, -0.25, -0.25], "center": {"type": "star", "kind": "magnetar"}, "notes": "Magnetar, the strongest magnetic field in the Basin.", "_comment": "Departs from the documents (D17); see docs/PHASE1.md."},
+    {"id": "well-system", "name": "The Well (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "pale", "charted": true, "offset": [-0.1, -0.4, 0.23], "center": {"type": "star", "kind": "black-hole", "features": ["accretion-disk"]}, "notes": "Black hole with a faint accretion disk: the cold remnant of something larger that burned out long before the Absent came.", "_comment": "Departs from the documents (D17); see docs/PHASE1.md."}
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "_comment": "Task 1.7: systems of wending. Offsets in light-years from the region center (D12). Planets come in tasks 1.8 and 1.9.",
+  "systems": [
+    {"id": "wending-system", "name": "Wending", "origin": "canon", "visibility": "all", "region": "wending", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "blue-white-star"}, "notes": "Hot blue-white star, primary of the ocean world Wending."},
+    {"id": "neap-system", "name": "Neap (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "wending", "charted": true, "offset": [-0.1, -0.34, -0.1], "center": {"type": "star", "kind": "red-dwarf"}, "notes": "Dim red dwarf, seen from Wending's surface only at night.", "_comment": "Star kind not given in the documents (R7, D16)."},
+    {"id": "slack-system", "name": "Slack (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "wending", "charted": true, "offset": [0.21, -0.54, -0.35], "center": {"type": "star", "kind": "white-dwarf"}, "notes": "Dim white dwarf, seen from Wending's surface only at night.", "_comment": "Star kind not given in the documents (R7, D16)."}
+  ]
+}

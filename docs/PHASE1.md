@@ -29,7 +29,7 @@ Problems to fix during Phase 1:
 
 Each has a recommended default. The schema task (1.1) needs D1–D6. The others can wait until their task.
 
-**Decided Nov 25, 2026:** D1–D7 as recommended. D8–D15 are still open.
+**Decided Nov 25, 2026:** D1–D7 as recommended; D9, D10 and D12 applied as recommended in task 1.7. D8, D11 and D13–D15 are still open.
 
 | # | Question | Recommended |
 |---|---|---|
@@ -83,7 +83,7 @@ One task = one session's work, touching only the files listed. Do them in order.
 | 1.4 | (done) Fix R1, R7 and D7 in the parsed data | `data/parsed/factions.json`, `data/parsed/regions.json`, `data/parsed/reference.json` | Validator alignment and star checks pass |
 | 1.5 | (done, approved by the GM Nov 25) Pilot: Ostrom and Tallis complete (systems, planets, moons, stations, lane mouths, surface places, control) | `data/src/regions/ostrom.json`, `tallis.json` | Validator passes; the GM reads the two regions and approves the level of detail |
 | 1.6 | (done) GM approved the generated region positions as they stand; all 24 locked | `data/parsed/positions.json` | All regions `locked: true`; preview redrawn |
-| 1.7 | Canon systems for all other regions (from `regions.json`), with D8–D10 companions | `data/src/regions/*.json` | Every region has its systems and centers |
+| 1.7 | (done) Canon systems for all other regions, with D9 companions and 24 Shoals systems (D10) | `data/src/regions/*.json` | Every region has its systems and centers |
 | 1.8 | Bodies, inner arms first: coreward (Pennant, Orison, Wending), trailing (Halyard, Lumen, Sable), spinward (Gloam, Halvard), rimward (Scald, Ferrous, Tarn, Cairn). One task per arm. | `data/src/regions/<id>.json` | Validator passes after each arm |
 | 1.9 | Bodies, frontier, lighter detail: Lantern Reach, Pale, Orrery, Furnace, Hollows, Shoals, Deeps, Boneyard, Mire, the Quiet | same | Validator passes |
 | 1.10 | Lane mouths: attach each lane end to a system (D2, D8) | `data/parsed/lanes.json` or `data/src/lanes.json` | Every lane end resolves to a system |
@@ -144,5 +144,11 @@ Notes from 1.3:
 - Alignment values that are not defined alignments are kept as `alignmentNote` until task 1.4 fixes them (R1).
 - Tarn, Cairn and the Shoals are "Contested" in the Factions doc with no holder named. The build sets contenders from the canon feuds (Tarn yards; Cairn) and the Purview–Seventh conflict (Shoals). Review in 1.12.
 - The Returned NHPs (`returned` in `data/parsed/factions.json`) are not in the map yet. Decide in 1.12 whether they become units, places or faction notes.
+
+Notes from 1.7:
+- 104 systems: 98 stars, 5 rogue worlds in the Hollows, 2 drifting Absent wrecks in the Boneyard (beside its three dim stars, per PLAN.md) and the Orrery's central structure, with its red dwarf as a companion body. Every star kind in the schema is used.
+- New names (all marked "(WIP)") follow a theme per region: tidal words at Wending (Neap, Slack), lamp words in the Lantern Reach (Cresset, Taper, Wick, Sconce, Votive, Tallow, Beacon, Glimmer, Brand), forge words in the Furnace (Crucible, Anvil, Tuyere, Quench, Clinker, Bloom), shoal words in the Shoals, rope words at Halyard (Sheet, Bight, Cleat), glassmaking at Scald (Frit, Cullet), metalworking at Ferrous (Billet, Ingot, Temper), water words at Tarn (Mere, Lough), old things in the Deeps (Elder, Sere, Soot, Relict, Lees, Umber, Dregs), burial words in the Boneyard (Ossuary, Charnel, Knell, the Spine, the Keel), marsh words in the Mire (Murk, Slough, Fen, Quag), cold words in the Hollows (Gelid, Rime, Cistern, Sump, Coldharbour) and dead-star words in the Pale (Shroud, Wane, Pyre, the Well).
+- D9 companions: Vesper (Orison, region edge, Gloam tidal mouth), Jet (Sable), Gaff (Halvard), Barrow (Cairn, region edge, Deeps mouth).
+- Placed for later tasks: Verdance at Taper, Stillwater at Wick, the four unseen Lantern garden worlds at Sconce, Votive, Beacon and Glimmer; Choir at Riffle and Bellows at Eddy in the Shoals; Ashlar at Relict in the Deeps; Rimelight's stations on Gelid, Rime (two) and Cistern, and the lost one on Sump.
 
 The pilot in 1.5 exists to catch schema problems on two regions before data goes into the other twenty-two. Change the schema there if needed, not later.

@@ -1,0 +1,9 @@
+{
+  "_comment": "Task 1.7: systems of halyard. Offsets in light-years from the region center (D12). Planets come in tasks 1.8 and 1.9.",
+  "systems": [
+    {"id": "halyard-system", "name": "Halyard", "origin": "canon", "visibility": "all", "region": "halyard", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "red-dwarf"}, "notes": "Small dim star of the largest system, where Halyard Station is anchored to a shattered ice moon.", "_comment": "Star kind not given in the documents (R7, D16)."},
+    {"id": "sheet-system", "name": "Sheet (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "halyard", "charted": true, "offset": [-0.43, 0.25, 0.51], "center": {"type": "star", "kind": "red-dwarf"}, "notes": "Small dim star; comets and ice moons.", "_comment": "Star kind not given in the documents (R7, D16)."},
+    {"id": "bight-system", "name": "Bight (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "halyard", "charted": true, "offset": [-0.04, -0.66, 0.32], "center": {"type": "star", "kind": "brown-dwarf"}, "notes": "Small dim star; comets and ice moons.", "_comment": "Star kind not given in the documents (R7, D16)."},
+    {"id": "cleat-system", "name": "Cleat (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "halyard", "charted": true, "offset": [0.51, 0.12, 0.7], "center": {"type": "star", "kind": "white-dwarf"}, "notes": "Small dim star; comets and ice moons.", "_comment": "Star kind not given in the documents (R7, D16)."}
+  ]
+}

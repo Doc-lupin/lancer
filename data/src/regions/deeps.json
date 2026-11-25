@@ -1,0 +1,12 @@
+{
+  "_comment": "Task 1.7: systems of deeps. Offsets in light-years from the region center (D12). Planets come in tasks 1.8 and 1.9.",
+  "systems": [
+    {"id": "elder-system", "name": "Elder (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "deeps", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "red-giant"}, "notes": "One of the Deeps' unusually old stars.", "_comment": "Star kind not given in the documents (R7, D16)."},
+    {"id": "sere-system", "name": "Sere (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "deeps", "charted": true, "offset": [0.21, 0.37, -0.19], "center": {"type": "star", "kind": "orange-giant"}, "notes": "One of the Deeps' unusually old stars.", "_comment": "Star kind not given in the documents (R7, D16)."},
+    {"id": "soot-system", "name": "Soot (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "deeps", "charted": true, "offset": [0.34, -0.61, 0.18], "center": {"type": "star", "kind": "carbon-star", "features": ["strong-wind"]}, "notes": "Old carbon star, deep red and shedding soot-dark dust.", "_comment": "Star kind not given in the documents (R7, D16)."},
+    {"id": "relict-system", "name": "Relict (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "deeps", "charted": true, "offset": [0.63, 0.34, 0.27], "center": {"type": "star", "kind": "white-dwarf"}, "notes": "Old white dwarf. Ashlar orbits here.", "_comment": "Star kind not given in the documents (R7, D16)."},
+    {"id": "lees-system", "name": "Lees (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "deeps", "charted": true, "offset": [0.54, -0.26, -0.06], "center": {"type": "star", "kind": "white-dwarf"}, "notes": "Old white dwarf.", "_comment": "Star kind not given in the documents (R7, D16)."},
+    {"id": "umber-system", "name": "Umber (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "deeps", "charted": true, "offset": [0.37, -0.33, -0.4], "center": {"type": "star", "kind": "red-dwarf"}, "notes": "Red dwarf.", "_comment": "Star kind not given in the documents (R7, D16)."},
+    {"id": "dregs-system", "name": "Dregs (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "deeps", "charted": true, "offset": [0.7, 0.07, -0.31], "center": {"type": "star", "kind": "red-dwarf"}, "notes": "Red dwarf.", "_comment": "Star kind not given in the documents (R7, D16)."}
+  ]
+}

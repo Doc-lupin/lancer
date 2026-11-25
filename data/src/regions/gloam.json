@@ -1,0 +1,7 @@
+{
+  "_comment": "Task 1.7: systems of gloam. Offsets in light-years from the region center (D12). Planets come in tasks 1.8 and 1.9.",
+  "systems": [
+    {"id": "gloam-system", "name": "Gloam", "origin": "canon", "visibility": "all", "region": "gloam", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "red-dwarf", "features": ["starspots"]}, "notes": "Dim red star, heavily spotted; its light wavers over weeks. Gloam is tidally locked to it."},
+    {"id": "ember-system", "name": "Ember (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "gloam", "charted": true, "offset": [0.61, -0.39, -0.4], "center": {"type": "star", "kind": "orange-giant"}, "notes": "Cool orange giant a few hours from Gloam, with an asteroid belt and little else.", "_comment": "Departs from the documents (D17); see docs/PHASE1.md."}
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "_comment": "Task 1.7: systems of sable. Offsets in light-years from the region center (D12). Planets come in tasks 1.8 and 1.9.",
+  "systems": [
+    {"id": "sable-system", "name": "Sable", "origin": "canon", "visibility": "all", "region": "sable", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "brown-dwarf"}, "notes": "Dim brown dwarf with a handful of dark moonlets. Sable Harbor is moored around the largest."},
+    {"id": "jet-system", "name": "Jet (WIP)", "origin": "invented", "visibility": "all", "region": "sable", "charted": true, "offset": [-0.09, -0.31, -0.15], "center": {"type": "star", "kind": "white-dwarf"}, "notes": "Faint white dwarf a few hours from Sable.", "_comment": "D9 companion."}
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "_comment": "Task 1.7: systems of mire. Offsets in light-years from the region center (D12). Planets come in tasks 1.8 and 1.9.",
+  "systems": [
+    {"id": "murk-system", "name": "Murk (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "mire", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "red-supergiant"}, "notes": "Red supergiant glowing through the dust cloud, the only star of the Mire seen directly."},
+    {"id": "slough-system", "name": "Slough (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "mire", "charted": true, "offset": [-0.24, 0.16, 0.52], "center": {"type": "star", "kind": "red-dwarf"}, "notes": "Red dwarf hidden in the cloud, known only from the lanes that lead to it."},
+    {"id": "fen-system", "name": "Fen (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "mire", "charted": true, "offset": [-0.18, -0.28, -0.48], "center": {"type": "star", "kind": "brown-dwarf"}, "notes": "Brown dwarf hidden in the cloud, known only from the lanes that lead to it."},
+    {"id": "quag-system", "name": "Quag (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "mire", "charted": true, "offset": [-0.08, -0.37, 0.65], "center": {"type": "star", "kind": "neutron-star"}, "notes": "Neutron star hidden in the cloud, known only from the lanes that lead to it."}
+  ]
+}

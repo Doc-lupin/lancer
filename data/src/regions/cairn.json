@@ -1,0 +1,7 @@
+{
+  "_comment": "Task 1.7: systems of cairn. Offsets in light-years from the region center (D12). Planets come in tasks 1.8 and 1.9.",
+  "systems": [
+    {"id": "cairn-system", "name": "Cairn", "origin": "canon", "visibility": "all", "region": "cairn", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "orange-dwarf"}, "notes": "Primary of the cold, cloudy world Cairn.", "_comment": "Star kind not given in the documents (R7, D16)."},
+    {"id": "barrow-system", "name": "Barrow (WIP)", "origin": "invented", "visibility": "all", "region": "cairn", "charted": true, "offset": [-0.8, -1.06, -0.33], "center": {"type": "star", "kind": "subgiant"}, "notes": "Subgiant at the edge of the region. The one-way lane to the Deeps opens here.", "_comment": "D9 companion."}
+  ]
+}
