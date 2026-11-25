@@ -1,0 +1,438 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lancer.local/schema/map.schema.json",
+  "title": "Basin map",
+  "description": "The single map data file (data/map.json). Field guide: data/schema/README.md. Cross-references (ids) and completeness rules are checked by tools/validate_map.py, not by this schema.",
+  "type": "object",
+  "required": ["schemaVersion", "basin", "clock", "layers", "alignments", "factions", "regions", "systems", "bodies", "places", "areas", "lanes", "units", "textBoxes", "headlines"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "_comment": { "type": "string" },
+    "schemaVersion": { "const": 1 },
+    "basin": { "$ref": "#/$defs/basin" },
+    "clock": { "$ref": "#/$defs/clock" },
+    "layers": { "type": "array", "items": { "$ref": "#/$defs/layer" } },
+    "alignments": { "type": "array", "items": { "$ref": "#/$defs/alignment" } },
+    "factions": { "type": "array", "items": { "$ref": "#/$defs/faction" } },
+    "feuds": { "type": "array", "items": { "$ref": "#/$defs/feud" } },
+    "regions": { "type": "array", "items": { "$ref": "#/$defs/region" } },
+    "systems": { "type": "array", "items": { "$ref": "#/$defs/system" } },
+    "bodies": { "type": "array", "items": { "$ref": "#/$defs/body" } },
+    "places": { "type": "array", "items": { "$ref": "#/$defs/place" } },
+    "areas": { "type": "array", "items": { "$ref": "#/$defs/area" } },
+    "lanes": { "type": "array", "items": { "$ref": "#/$defs/lane" } },
+    "units": { "type": "array", "items": { "$ref": "#/$defs/unit" } },
+    "textBoxes": { "type": "array", "items": { "$ref": "#/$defs/textBox" } },
+    "headlines": { "type": "array", "items": { "$ref": "#/$defs/headline" } }
+  },
+  "additionalProperties": false,
+
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "idList": { "type": "array", "items": { "$ref": "#/$defs/id" }, "uniqueItems": true },
+    "origin": { "enum": ["canon", "invented"] },
+    "visibility": { "enum": ["all", "gm"] },
+    "vec3": { "type": "array", "items": { "type": "number" }, "minItems": 3, "maxItems": 3 },
+    "latLon": {
+      "type": "array",
+      "prefixItems": [
+        { "type": "number", "minimum": -90, "maximum": 90 },
+        { "type": "number", "minimum": -180, "maximum": 180 }
+      ],
+      "minItems": 2, "maxItems": 2
+    },
+    "date": {
+      "type": "object",
+      "required": ["year", "day"],
+      "properties": {
+        "year": { "type": "integer" },
+        "day": { "type": "integer", "minimum": 1, "maximum": 365 }
+      },
+      "additionalProperties": false
+    },
+    "latticeRating": { "enum": ["none", "trace", "small", "moderate", "rich", "very rich", "exceptional", "unknown"] },
+    "lattice": {
+      "type": "object",
+      "required": ["rating"],
+      "properties": {
+        "rating": { "$ref": "#/$defs/latticeRating" },
+        "trend": { "enum": ["rising", "falling", "steady"] },
+        "where": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+
+    "tagged": {
+      "type": "object",
+      "required": ["id", "origin", "visibility"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "origin": { "$ref": "#/$defs/origin" },
+        "visibility": { "$ref": "#/$defs/visibility" },
+        "notes": { "type": "string" },
+        "gmNotes": { "type": "string" },
+        "_comment": { "type": "string" }
+      }
+    },
+    "named": {
+      "allOf": [{ "$ref": "#/$defs/tagged" }],
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "nameOrigin": { "$ref": "#/$defs/origin" }
+      }
+    },
+
+    "control": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": { "enum": ["held", "contested", "none", "unknown"] },
+        "holders": { "$ref": "#/$defs/idList" },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        { "if": { "properties": { "status": { "const": "held" } } }, "then": { "required": ["holders"], "properties": { "holders": { "minItems": 1 } } } },
+        { "if": { "properties": { "status": { "const": "contested" } } }, "then": { "required": ["holders"], "properties": { "holders": { "minItems": 1 } } } },
+        { "if": { "properties": { "status": { "enum": ["none", "unknown"] } } }, "then": { "properties": { "holders": { "maxItems": 0 } } } }
+      ]
+    },
+    "presence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["faction"],
+        "properties": {
+          "faction": { "$ref": "#/$defs/id" },
+          "strength": { "enum": ["major", "minor"] },
+          "note": { "type": "string" },
+          "visibility": { "$ref": "#/$defs/visibility" }
+        },
+        "additionalProperties": false
+      }
+    },
+
+    "basin": {
+      "allOf": [{ "$ref": "#/$defs/named" }],
+      "properties": {
+        "diameterLy": { "type": "number", "exclusiveMinimum": 0 },
+        "axes": { "type": "string" }
+      },
+      "unevaluatedProperties": false
+    },
+
+    "tidalCycle": {
+      "type": "object",
+      "required": ["cycleDays", "openDays", "anchor"],
+      "properties": {
+        "cycleDays": { "type": "integer", "minimum": 1 },
+        "openDays": { "type": "integer", "minimum": 0 },
+        "anchor": {
+          "type": "object",
+          "required": ["date", "cycleDay"],
+          "properties": {
+            "date": { "$ref": "#/$defs/date" },
+            "cycleDay": { "type": "integer", "minimum": 1 }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "clock": {
+      "type": "object",
+      "required": ["daysPerYear", "basinYearOffset", "epoch", "current", "lanternTide"],
+      "properties": {
+        "daysPerYear": { "const": 365 },
+        "basinYearOffset": { "type": "integer" },
+        "epoch": { "$ref": "#/$defs/date" },
+        "current": { "$ref": "#/$defs/date" },
+        "lanternTide": { "$ref": "#/$defs/tidalCycle" },
+        "_comment": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+
+    "layer": {
+      "allOf": [{ "$ref": "#/$defs/named" }],
+      "properties": {
+        "kind": { "enum": ["governments", "corporations", "companies", "cultures", "religions", "other"] }
+      },
+      "required": ["kind"],
+      "unevaluatedProperties": false
+    },
+    "alignment": {
+      "allOf": [{ "$ref": "#/$defs/named" }],
+      "unevaluatedProperties": false
+    },
+    "faction": {
+      "allOf": [{ "$ref": "#/$defs/named" }],
+      "required": ["category", "layers"],
+      "properties": {
+        "category": { "enum": ["government", "company", "outlaw", "commerce", "faith", "people"] },
+        "layers": { "allOf": [{ "$ref": "#/$defs/idList" }], "minItems": 1 },
+        "color": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "parent": { "$ref": "#/$defs/id" },
+        "seat": { "$ref": "#/$defs/idList" },
+        "seatDetail": { "type": "string" },
+        "alignment": { "$ref": "#/$defs/id" },
+        "alignmentNote": { "type": "string" },
+        "leaders": { "type": "array", "items": { "type": "string" } },
+        "strength": { "type": "string" },
+        "population": { "type": "integer", "minimum": 0 },
+        "latticeAtHome": { "type": "string" }
+      },
+      "unevaluatedProperties": false
+    },
+    "feud": {
+      "allOf": [{ "$ref": "#/$defs/named" }],
+      "required": ["sides"],
+      "properties": {
+        "sides": { "type": "array", "items": { "$ref": "#/$defs/idList" }, "minItems": 2 },
+        "over": { "type": "string" },
+        "regions": { "$ref": "#/$defs/idList" },
+        "lanes": { "$ref": "#/$defs/idList" }
+      },
+      "unevaluatedProperties": false
+    },
+
+    "region": {
+      "allOf": [{ "$ref": "#/$defs/named" }],
+      "required": ["arm", "frontier", "pos", "effect", "control"],
+      "properties": {
+        "arm": { "enum": ["crossroads", "coreward", "trailing", "spinward", "rimward", "beyond"] },
+        "frontier": { "type": "boolean" },
+        "label": { "type": "string" },
+        "chartPos": { "type": "array", "items": { "type": "number" }, "minItems": 2, "maxItems": 2 },
+        "pos": { "$ref": "#/$defs/vec3" },
+        "locked": { "type": "boolean" },
+        "effect": { "enum": ["none", "nebula", "dust-cloud"] },
+        "lattice": { "$ref": "#/$defs/lattice" },
+        "control": { "$ref": "#/$defs/control" },
+        "presence": { "$ref": "#/$defs/presence" }
+      },
+      "unevaluatedProperties": false
+    },
+
+    "starKind": { "enum": ["yellow-dwarf", "orange-dwarf", "red-dwarf", "brown-dwarf", "white-dwarf", "white-star", "hot-white-star", "young-hot-star", "neutron-star", "remnant"] },
+    "variability": {
+      "type": "object",
+      "required": ["cycle"],
+      "properties": {
+        "cycle": { "enum": ["lantern"] },
+        "amplitude": { "type": "number", "minimum": 0, "maximum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "system": {
+      "allOf": [{ "$ref": "#/$defs/named" }],
+      "required": ["charted", "pos", "center"],
+      "properties": {
+        "region": { "anyOf": [{ "$ref": "#/$defs/id" }, { "type": "null" }] },
+        "charted": { "type": "boolean" },
+        "pos": { "$ref": "#/$defs/vec3" },
+        "center": {
+          "type": "object",
+          "required": ["type"],
+          "properties": {
+            "type": { "enum": ["star", "rogue-planet", "wreck", "structure"] },
+            "kind": { "$ref": "#/$defs/starKind" },
+            "body": { "$ref": "#/$defs/id" },
+            "variable": { "$ref": "#/$defs/variability" }
+          },
+          "additionalProperties": false,
+          "if": { "properties": { "type": { "const": "star" } } },
+          "then": { "required": ["kind"], "not": { "required": ["body"] } },
+          "else": { "required": ["body"], "not": { "required": ["kind"] } }
+        },
+        "lattice": { "$ref": "#/$defs/lattice" },
+        "control": { "$ref": "#/$defs/control" },
+        "presence": { "$ref": "#/$defs/presence" }
+      },
+      "unevaluatedProperties": false
+    },
+
+    "orbit": {
+      "type": "object",
+      "required": ["distance", "unit", "periodDays", "phaseDeg"],
+      "properties": {
+        "distance": { "type": "number", "minimum": 0 },
+        "unit": { "enum": ["au", "km"] },
+        "periodDays": { "anyOf": [{ "type": "number", "exclusiveMinimum": 0 }, { "type": "null" }] },
+        "phaseDeg": { "type": "number", "minimum": 0, "exclusiveMaximum": 360 },
+        "inclinationDeg": { "type": "number", "minimum": -180, "maximum": 180 },
+        "eccentricity": { "type": "number", "minimum": 0, "exclusiveMaximum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "body": {
+      "allOf": [{ "$ref": "#/$defs/named" }],
+      "required": ["system", "type"],
+      "properties": {
+        "system": { "$ref": "#/$defs/id" },
+        "parent": { "$ref": "#/$defs/id" },
+        "type": { "enum": ["star", "planet", "gas-giant", "moon", "rogue-planet", "asteroid", "asteroid-belt", "field", "station", "structure", "wreck", "lane-mouth"] },
+        "kind": { "$ref": "#/$defs/starKind" },
+        "class": { "type": "string" },
+        "orbit": { "$ref": "#/$defs/orbit" },
+        "radiusKm": { "type": "number", "exclusiveMinimum": 0 },
+        "rotation": {
+          "type": "object",
+          "properties": {
+            "periodHours": { "type": "number", "exclusiveMinimum": 0 },
+            "tidallyLocked": { "type": "boolean" },
+            "axialTiltDeg": { "type": "number", "minimum": -180, "maximum": 180 }
+          },
+          "additionalProperties": false
+        },
+        "appearance": {
+          "type": "object",
+          "properties": {
+            "color": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+            "texture": { "type": "string" },
+            "clouds": { "type": "boolean" },
+            "atmosphere": { "type": "boolean" },
+            "rings": { "type": "boolean" }
+          },
+          "additionalProperties": false
+        },
+        "population": { "type": "integer", "minimum": 0 },
+        "lattice": { "$ref": "#/$defs/lattice" },
+        "control": { "$ref": "#/$defs/control" },
+        "presence": { "$ref": "#/$defs/presence" }
+      },
+      "if": { "properties": { "type": { "const": "star" } } },
+      "then": { "required": ["kind"] },
+      "else": { "not": { "required": ["kind"] } },
+      "unevaluatedProperties": false
+    },
+
+    "place": {
+      "allOf": [{ "$ref": "#/$defs/named" }],
+      "required": ["body", "kind", "at"],
+      "properties": {
+        "body": { "$ref": "#/$defs/id" },
+        "kind": { "enum": ["city", "town", "settlement", "base", "camp", "mine", "refinery", "port", "landing", "front", "battlefield", "structure", "ruin", "site", "other"] },
+        "at": { "$ref": "#/$defs/latLon" },
+        "path": { "type": "array", "items": { "$ref": "#/$defs/latLon" }, "minItems": 2 },
+        "population": { "type": "integer", "minimum": 0 },
+        "control": { "$ref": "#/$defs/control" }
+      },
+      "unevaluatedProperties": false
+    },
+    "area": {
+      "allOf": [{ "$ref": "#/$defs/named" }],
+      "required": ["body", "polygon", "control"],
+      "properties": {
+        "body": { "$ref": "#/$defs/id" },
+        "polygon": { "type": "array", "items": { "$ref": "#/$defs/latLon" }, "minItems": 3 },
+        "control": { "$ref": "#/$defs/control" }
+      },
+      "unevaluatedProperties": false
+    },
+
+    "laneEnd": {
+      "type": "object",
+      "required": ["region"],
+      "properties": {
+        "region": { "$ref": "#/$defs/id" },
+        "system": { "$ref": "#/$defs/id" },
+        "mouth": { "$ref": "#/$defs/id" }
+      },
+      "additionalProperties": false
+    },
+    "lane": {
+      "allOf": [{ "$ref": "#/$defs/named" }],
+      "required": ["from", "to", "days", "drifting", "oneWay", "silent"],
+      "properties": {
+        "from": { "$ref": "#/$defs/laneEnd" },
+        "to": { "$ref": "#/$defs/laneEnd" },
+        "scope": { "enum": ["primary", "local"] },
+        "days": { "anyOf": [{ "type": "number", "exclusiveMinimum": 0 }, { "type": "null" }] },
+        "daysRange": { "type": "array", "items": { "type": "number", "exclusiveMinimum": 0 }, "minItems": 2, "maxItems": 2 },
+        "drifting": { "type": "boolean" },
+        "oneWay": { "type": "boolean" },
+        "silent": { "type": "boolean" },
+        "tidal": {
+          "oneOf": [
+            { "type": "object", "required": ["cycle"], "properties": { "cycle": { "enum": ["lantern", "unknown"] } }, "additionalProperties": false },
+            { "type": "object", "required": ["cycle", "custom"], "properties": { "cycle": { "const": "custom" }, "custom": { "$ref": "#/$defs/tidalCycle" } }, "additionalProperties": false }
+          ]
+        },
+        "bypass": { "type": "string" },
+        "control": { "$ref": "#/$defs/control" }
+      },
+      "unevaluatedProperties": false
+    },
+
+    "location": {
+      "type": "object",
+      "minProperties": 1,
+      "properties": {
+        "region": { "$ref": "#/$defs/id" },
+        "system": { "$ref": "#/$defs/id" },
+        "body": { "$ref": "#/$defs/id" },
+        "place": { "$ref": "#/$defs/id" },
+        "lane": { "$ref": "#/$defs/id" }
+      },
+      "additionalProperties": false
+    },
+    "unit": {
+      "allOf": [{ "$ref": "#/$defs/named" }],
+      "required": ["faction", "kind", "location"],
+      "properties": {
+        "faction": { "$ref": "#/$defs/id" },
+        "kind": { "enum": ["fleet", "ship", "convoy", "frames", "troops", "other"] },
+        "size": { "type": "string" },
+        "location": { "$ref": "#/$defs/location" },
+        "orders": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["lanes", "status"],
+            "properties": {
+              "lanes": { "allOf": [{ "$ref": "#/$defs/idList" }], "minItems": 1 },
+              "to": { "$ref": "#/$defs/location" },
+              "depart": { "$ref": "#/$defs/date" },
+              "status": { "enum": ["planned", "moving", "done", "cancelled"] },
+              "visibility": { "$ref": "#/$defs/visibility" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "unevaluatedProperties": false
+    },
+
+    "textBox": {
+      "allOf": [{ "$ref": "#/$defs/tagged" }],
+      "required": ["text", "anchor"],
+      "properties": {
+        "title": { "type": "string" },
+        "text": { "type": "string", "minLength": 1 },
+        "anchor": {
+          "oneOf": [
+            { "type": "object", "required": ["object"], "properties": { "object": { "$ref": "#/$defs/id" } }, "additionalProperties": false },
+            {
+              "type": "object", "required": ["screen"],
+              "properties": { "screen": { "type": "array", "items": { "type": "number", "minimum": 0, "maximum": 1 }, "minItems": 2, "maxItems": 2 } },
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "unevaluatedProperties": false
+    },
+    "headline": {
+      "allOf": [{ "$ref": "#/$defs/tagged" }],
+      "required": ["text", "date"],
+      "properties": {
+        "text": { "type": "string", "minLength": 1 },
+        "date": { "$ref": "#/$defs/date" },
+        "about": { "$ref": "#/$defs/idList" }
+      },
+      "unevaluatedProperties": false
+    }
+  }
+}

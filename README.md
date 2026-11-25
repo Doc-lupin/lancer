@@ -4,7 +4,7 @@ An interactive 3D map of a fictional universe, built as a web page (no installat
 
 The full plan is in [docs/PLAN.md](docs/PLAN.md). The original document is in `docs/`.
 
-Status: Phase 0 done. Phase 1 (complete the data) is prepared but not started; see [docs/PHASE1.md](docs/PHASE1.md) for the task list and the decisions it needs.
+Status: Phase 1 (complete the data) in progress on branch `phase-1`. The schema is done (`data/schema/`); see [docs/PHASE1.md](docs/PHASE1.md) for the task list and the decisions it needs.
 
 ## Stack
 

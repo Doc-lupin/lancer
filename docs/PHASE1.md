@@ -29,6 +29,8 @@ Problems to fix during Phase 1:
 
 Each has a recommended default. The schema task (1.1) needs D1–D6. The others can wait until their task.
 
+**Decided Nov 25, 2026:** D1–D6 as recommended. D7–D15 are still open.
+
 | # | Question | Recommended |
 |---|---|---|
 | D1 | Lane behavior model | Separate flags instead of one type: `drifting`, `tidal` (with `cycleDays`, `openDays`, `phaseOffset`), `oneWay`, `silent`. `days` plus optional `daysRange`. |
@@ -71,8 +73,8 @@ One task = one session's work, touching only the files listed. Do them in order.
 
 | # | Task | Files | Done when |
 |---|---|---|---|
-| 1.0 | Settle D1–D6 | `docs/PHASE1.md` | Answers recorded here |
-| 1.1 | JSON schema: Basin, region, system, body, surface place, control area, lane, faction, layer, unit, text box, headline, clock. Enums for center type (star, rogue planet, wreck, structure), region effect (none, nebula, dust cloud), origin, visibility. Player `notes` and `gmNotes` kept apart. Orbit fields (AU, period, phase at epoch), rotation, tidal lock. | `data/schema/map.schema.json`, `data/schema/README.md` | Schema loads; README explains each field in one line |
+| 1.0 | Settle D1–D6 (done) | `docs/PHASE1.md` | Answers recorded here |
+| 1.1 | (done) JSON schema: Basin, region, system, body, surface place, control area, lane, faction, layer, unit, text box, headline, clock. Enums for center type (star, rogue planet, wreck, structure), region effect (none, nebula, dust cloud), origin, visibility. Player `notes` and `gmNotes` kept apart. Orbit fields (AU, period, phase at epoch), rotation, tidal lock. | `data/schema/map.schema.json`, `data/schema/README.md` | Schema loads; README explains each field in one line |
 | 1.2 | Validator: schema check, unique IDs, every reference resolves, every region has a system, every lane end is a system in the right region, "(WIP)" on invented names only, each layer ≤15 factions | `tools/validate_map.py` | Passes on a hand-written two-region sample; fails on a broken sample |
 | 1.3 | Assembler: parsed data + `data/src/` files → `data/map.json` | `tools/build_map.py` | Builds a map with 24 regions and no systems yet |
 | 1.4 | Fix R1, R7 and D7 in the parsed data | `data/parsed/factions.json`, `data/parsed/regions.json`, `data/parsed/reference.json` | Validator alignment and star checks pass |
