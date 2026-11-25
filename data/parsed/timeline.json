@@ -1,0 +1,34 @@
+{
+  "_source": "Setting Primer 'Key dates', History and Timeline narrative and chronology. Present day is late 5029u (Basin year twelve). Basin reckoning: year = union - 5017.",
+  "eras": [
+    { "name": "Before the crossing", "from": 4961, "to": 5016 },
+    { "name": "The crossing", "from": 5017, "to": 5017 },
+    { "name": "The Lean Years", "from": 5018, "to": 5020 },
+    { "name": "Recovery", "from": 5021, "to": 5022 },
+    { "name": "The Rush", "from": 5023, "to": 5026 },
+    { "name": "The wars", "from": 5027, "to": 5029 }
+  ],
+  "events": [
+    { "year": 4961, "text": "The survey ship Dalton (Capt. Iolo Brandt) finds the gate." },
+    { "year": 4963, "text": "Union quarantines the system; Calder Station built." },
+    { "year": 4968, "text": "First probe returns with charts; Joaquim Reyes names the Basin." },
+    { "year": 4989, "text": "Calder team identifies the lanes." },
+    { "year": 5009, "text": "Unlicensed prospector Ashgrove runs the quarantine; never heard from again." },
+    { "year": 5011, "text": "Third Committee debate opens." },
+    { "year": 5014, "text": "IPS-N, Smith-Shimano and Harrison Armory chosen as partners; Battlegroup XI assigned." },
+    { "year": 5016, "text": "Native-life clauses kept in the Charter." },
+    { "year": 5017, "text": "Basin Charter approved; the crossing; the Closing on day 41; the pulse; the Anselm falls into Ostrom's star; the Landing on Tallis.", "regions": ["ostrom", "tallis"] },
+    { "year": 5018, "text": "First Tallis landing fails; the Requisition; IPS-N crews take their ships and found the Free Lines (Halyard Station); 23 NHPs return unshackled.", "regions": ["tallis", "halyard"] },
+    { "year": 5019, "text": "Halloran seizes the Tallis grain stores; the 7th Marines mutiny; work begins on the Marrow; lattice first sampled on Scald.", "regions": ["tallis", "ostrom", "scald"] },
+    { "year": 5020, "text": "The Armory garrison moves to Gloam (the Purview); the Ostrom Instrument.", "regions": ["gloam", "ostrom"] },
+    { "year": 5021, "text": "The Returned decision; Absent machinery found under Tallis; Survey Office founded; Corvel breaks from Smith-Shimano; Saltmarsh Navy contract; Dunmore Rifles formed.", "regions": ["tallis", "gloam"] },
+    { "year": 5022, "text": "Growth Directive; Assay House chartered; Ostrom Standard founded; Riverlands Combine reorganized; Synod settles Pennant; the Gloam Understanding.", "regions": ["ostrom", "tallis", "pennant", "gloam"] },
+    { "year": 5023, "text": "The Allotment opens (the Rush); Mercer-Ibarra takes Halvard's Rest; Coldwell Claims filed on Gloam; Ferrous Consolidated formed; first Navy attempt on the Exchange board; Corvel charts the Lantern Reach.", "regions": ["halvard", "gloam", "ferrous", "lantern-reach"] },
+    { "year": 5024, "text": "The Compact forms; WAYMARK enters the Deeps; first Verdance landing; Bellows settled.", "regions": ["tallis", "deeps", "lantern-reach", "shoals"] },
+    { "year": 5025, "text": "Rimelight begins mining the Hollows; Absent shipyard found at Tarn; Stillwater settled; Verdance abandoned; first Navy attempt to put a council on Halvard's Rest.", "regions": ["hollows", "tarn", "lantern-reach", "halvard"] },
+    { "year": 5026, "text": "Thaw riots on the Marrow (212 dead); first landing at Ashlar and quarantine; the Gap Accord; Corvel files on Pennant's southern continent; Cormorants vs Saltmarsh on Scald; second Verdance landing; second Navy attempt on the Exchange board.", "regions": ["ostrom", "deeps", "halvard", "pennant", "scald", "lantern-reach"] },
+    { "year": 5027, "text": "The Glassfields War begins; killings at Dry Creek; the hull judgment; second Navy attempt on Halvard's Rest; Synod and Navy exchange fire over Pennant; second Verdance landing abandoned.", "regions": ["scald", "tallis", "halvard", "pennant"] },
+    { "year": 5028, "text": "Kettle Flats; Purview troops reach Scald; siege of Sallow Ford; CARILLON refuses; Gallowglass boardings; chart war begins; Corvel lands on Pennant; Coldwell clearances; Cairn charted; Listeners attack a Kerr-Varga refinery.", "regions": ["scald", "tallis", "pennant", "gloam", "cairn"] },
+    { "year": 5029, "text": "Synod destroys Corvel's dropships and besieges the landing; Cormorants destroy a Basin Office tender at the Halyard mouth; Cairn sapience report; Kerr-Varga turns back Bench inspectors; Kasprzak unseen; the gate opens for nine seconds and releases a courier drone dated 5371u; Saltmarsh pulls 200 frames to the Marrow.", "regions": ["pennant", "halyard", "cairn", "ostrom", "scald"] }
+  ]
+}

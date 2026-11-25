@@ -20,7 +20,8 @@ Status: setup only. Phase 1 (data preparation) has not started.
 
 ```
 data/
-  raw/        Source lists from the GM: systems, planets, moons, stations, factions
+  raw/        Source documents (source/*.docx), Markdown conversions, extracted images
+  parsed/     Structured JSON extracts of regions, lanes, factions, timeline
   schema/     JSON schema for the map data (Phase 1)
   map.json    The map data file (added in Phase 1)
 src/
