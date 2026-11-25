@@ -75,6 +75,12 @@ CASES = [
     ("complete: faction without color", lambda m: find(m, "factions", "kerr-varga").pop("color"), True, "color"),
     ("complete: unlocked region", lambda m: find(m, "regions", "scald").update(locked=False), True, "unlocked"),
     ("complete: body without orbit", lambda m: find(m, "bodies", "scald-planet").pop("orbit"), True, "orbit"),
+    ("giant world type on a planet", lambda m: find(m, "bodies", "scald-planet").update(world="cold-giant", habitability="none"), False, "world"),
+    ("rock world type on a gas giant", lambda m: m["bodies"].append({"id": "scald-v", "name": "Scald V (WIP)", "system": "scald-system", "type": "gas-giant", "world": "barren", "habitability": "lethal", "orbit": {"distance": 5, "unit": "au", "periodDays": 3000, "phaseDeg": 0}, "origin": "invented", "visibility": "all"}), False, "world"),
+    ("habitability none on a solid world", lambda m: find(m, "bodies", "scald-ii").update(habitability="none"), False, "world"),
+    ("world type on a station", lambda m: find(m, "bodies", "marrow").update(world="barren"), False, "world"),
+    ("schema: unknown world type", lambda m: find(m, "bodies", "scald-planet").update(world="jungle-planet"), False, "schema"),
+    ("complete: world without type", lambda m: find(m, "bodies", "scald-planet").pop("world"), True, "world"),
     ("structure check only warns on missing data", lambda m: find(m, "factions", "kerr-varga").pop("color"), False, None),
 ]
 
@@ -92,6 +98,11 @@ def main():
             print(f"FAIL {name}: expected {code or 'no errors'}, got {sorted(codes) or 'no errors'}")
             for e in r.errors[:5]:
                 print("     " + e)
+    import world_catalog
+    doc = world_catalog.DOC.read_text()
+    if world_catalog.render() not in doc:
+        failed += 1
+        print("FAIL docs/WORLDS.md catalog is out of date: run python3 tools/world_catalog.py")
     print(f"{len(CASES) - failed}/{len(CASES)} passed")
     return 1 if failed else 0
 
