@@ -41,7 +41,7 @@ Problems to fix during Phase 1:
 
 Each has a recommended default. The schema task (1.1) needs D1–D6. The others can wait until their task.
 
-**Decided Nov 25, 2026:** D1–D7 as recommended; D9, D10 and D12 applied as recommended in task 1.7; D8 applied as recommended in task 1.10; D11 applied as recommended in task 1.11 (40 unmapped stars); D13 and D14 decided as recommended in task 1.12, with the Synod in both the governments and the faiths layers (it holds Pennant and is worshipped across the Basin); D15 applied as recommended in task 1.13. All decisions are now settled.
+**Decided Nov 25, 2026:** D1–D7 as recommended; D9, D10 and D12 applied as recommended in task 1.7; D8 applied as recommended in task 1.10; D11 applied as recommended in task 1.11 (40 unmapped stars); D13 and D14 decided as recommended in task 1.12, with the Synod in both the governments and the faiths layers (it holds Pennant and is worshipped across the Basin); D15 applied as recommended in task 1.13. All decisions are now settled. At the close of Phase 1 the GM revised D5 (the build pipeline stays until Phase 5) and approved Vite (D19).
 
 | # | Question | Recommended |
 |---|---|---|
@@ -49,7 +49,7 @@ Each has a recommended default. The schema task (1.1) needs D1–D6. The others 
 | D2 | Silent Mouths | Three lane records, one per mouth, all into Ostrom from the Quiet, with their own unknown tidal cycle. |
 | D3 | Origin of a canon object with an invented name (e.g. Lumen's unnamed orange dwarf) | `origin: canon` for the object, `nameOrigin: invented` for the name. "(WIP)" follows the name: "Lumen B (WIP)". |
 | D4 | Control on a split planet (Scald, Tallis, Pennant, Gloam) | Control areas on the globe as lat/long polygons, each with one or more factions. Contested = more than one faction. |
-| D5 | Authoring format | Write one file per region in `data/src/regions/`, assembled into `data/map.json` by a script. After Phase 1, `map.json` is the only source (the app saves to it). |
+| D5 | Authoring format | Write one file per region in `data/src/regions/`, assembled into `data/map.json` by a script. **Revised at the end of Phase 1 (GM, Nov 25):** `data/src/` and `tools/build_map.py` stay the source until Phase 5. The app reads `map.json` and does not write it; when saving from the app arrives in Phase 5, `map.json` becomes the only source. |
 | D6 | Validator | Python with `jsonschema` (already installed here, dev use only, not part of the app). Asking because CLAUDE.md says no new libraries without asking. |
 | D7 | Tidal day index | Days 1–73, open on days 1–14. Day 5 → open 9 more days. Fix `reference.json`. |
 | D8 | Gloam's mouths (R4) | Ostrom and Halvard mouths at Gloam (under the guns). Shoals and Orison tide mouths at the orange dwarf. |
@@ -63,6 +63,7 @@ Each has a recommended default. The schema task (1.1) needs D1–D6. The others 
 | D16 | Stellar variety (raised by the GM, Nov 25) | Not every star a dwarf. Canon types stay; invented ones spread across the full range (see Stellar variety below). |
 | D17 | Variety in canon stars too (GM, Nov 25) | Decided: some canon star types change. Each change keeps the documents' wording in `type`, is marked `kindOrigin: invented`, and is listed under Departures from the documents. |
 | D18 | Variety in worlds (GM, Nov 25) | Decided: 71 world types in 9 families with 218 variants, 245 features in 15 groups, habitability and climate. All text except class descriptions is a template naming the world; `tools/describe_world.py` composes a world's entry. Catalog source: `data/schema/worlds.json` (the schema holds the id lists). Guide, canon assignments and catalog: [WORLDS.md](WORLDS.md). The Phase 1 test requires a world type on every planet, moon and giant. |
+| D19 | Build tool for the app (GM, Nov 25) | Decided: Vite, for the dev server and the production build from Phase 2 on. |
 
 ## Canon hints gathered from the documents
 
