@@ -7,9 +7,9 @@
       "heldBy": ["stewardship"],
       "alsoPresent": ["charter-bench", "survey-office", "assay-house", "basin-office", "ostrom-standard", "exchange", "captains-table", "saltmarsh", "gallowglass", "vigil"],
       "stars": [
-        { "name": "Ostrom", "type": "orange star", "notes": "Six planets, none habitable. The gate hangs beyond the outermost orbit. The colony hauler Anselm fell into this star at the Closing." },
-        { "name": "Cinder", "type": "white dwarf", "notes": "Burned out. Scatter of airless planets. Nine hours from Ostrom by local lane. Stewardship picket." },
-        { "name": "Marl", "type": "red dwarf", "notes": "Thick asteroid belt; source of the Marrow's raw material and Ostrom's lattice nodules." }
+        { "name": "Ostrom", "type": "orange star", "kind": "orange-dwarf", "notes": "Six planets, none habitable. The gate hangs beyond the outermost orbit. The colony hauler Anselm fell into this star at the Closing." },
+        { "name": "Cinder", "type": "white dwarf", "kind": "white-dwarf", "notes": "Burned out. Scatter of airless planets. Nine hours from Ostrom by local lane. Stewardship picket." },
+        { "name": "Marl", "type": "red dwarf", "kind": "red-dwarf", "notes": "Thick asteroid belt; source of the Marrow's raw material and Ostrom's lattice nodules." }
       ],
       "bodies": [
         { "name": "Ostrom IV", "type": "planet", "parent": "Ostrom", "notes": "Cold super-Earth, thin nitrogen atmosphere, nothing worth landing for." },
@@ -26,9 +26,9 @@
       "heldBy": ["stewardship"],
       "alsoPresent": ["landholders-league", "riverlands-combine", "compact", "vigil", "gardeners"],
       "stars": [
-        { "name": "Tallis", "type": "star", "notes": "Primary of the garden world Tallis." },
-        { "name": "Brace", "type": "red dwarf", "notes": "A few hours trailing. No habitable worlds. Holds the lane mouth to Halyard. Stewardship picket." },
-        { "name": "Marchwell", "type": "brown dwarf", "notes": "Coreward. Dim. Holds the mouth of the lane to Pennant." }
+        { "name": "Tallis", "type": "star", "kind": "yellow-dwarf", "kindOrigin": "invented", "notes": "Primary of the garden world Tallis." },
+        { "name": "Brace", "type": "red dwarf", "kind": "red-dwarf", "notes": "A few hours trailing. No habitable worlds. Holds the lane mouth to Halyard. Stewardship picket." },
+        { "name": "Marchwell", "type": "brown dwarf", "kind": "brown-dwarf", "notes": "Coreward. Dim. Holds the mouth of the lane to Pennant." }
       ],
       "bodies": [
         { "name": "Tallis", "type": "planet", "parent": "Tallis", "notes": "Largest garden world in the Basin. Mild, wet. Two continents, two small moons. River valleys on the larger continent's east side; the Reach is the dry interior upland. Eleven Absent climate structures mapped several km down (first found 5021u). Places: the Landing (east coast), Dry Creek, Sallow Ford." }
@@ -40,9 +40,9 @@
       "heldBy": ["synod"],
       "alsoPresent": ["corvel", "lantern-company"],
       "stars": [
-        { "name": "Pennant", "type": "star" },
-        { "name": "Tew", "type": "red dwarf", "notes": "Mining worlds." },
-        { "name": "Ashby", "type": "red dwarf", "notes": "Mining worlds." }
+        { "name": "Pennant", "type": "star", "kind": "orange-dwarf", "kindOrigin": "invented" },
+        { "name": "Tew", "type": "red dwarf", "kind": "red-dwarf", "notes": "Mining worlds." },
+        { "name": "Ashby", "type": "red dwarf", "kind": "red-dwarf", "notes": "Mining worlds." }
       ],
       "bodies": [
         { "name": "Pennant", "type": "planet", "parent": "Pennant", "notes": "Cool forested garden world, long winters. Northern continent (fjords, river valleys) holds the Synod settlements. Empty southern continent has the largest Absent climate structure: a 40 km ring of bare rock. Corvel's besieged landing is there." }
@@ -63,9 +63,9 @@
       "heldBy": ["lagoon-towns"],
       "alsoPresent": ["long-families"],
       "stars": [
-        { "name": "Wending", "type": "hot white star" },
-        { "name": "(unnamed)", "type": "dim star" },
-        { "name": "(unnamed)", "type": "dim star" }
+        { "name": "Wending", "type": "hot white star", "kind": "hot-white-star" },
+        { "name": "(unnamed)", "type": "dim star", "kind": "red-dwarf", "kindOrigin": "invented" },
+        { "name": "(unnamed)", "type": "dim star", "kind": "red-dwarf", "kindOrigin": "invented" }
       ],
       "bodies": [
         { "name": "Wending", "type": "planet", "parent": "Wending", "notes": "Ocean world, no continents, volcanic archipelagos. ~30 floating lagoon towns on cables. Two large moons, heavy tides." }
@@ -76,7 +76,7 @@
       "lattice": { "rating": "trace", "where": "A few airless moons" },
       "heldBy": [],
       "alsoPresent": ["reach-companies", "corvel", "synod"],
-      "stars": [ { "name": "Lantern stars", "type": "chain of nine stars", "count": 9, "notes": "Brighten and dim together every 73 days. Tidal lanes across the Basin follow this cycle." } ],
+      "stars": [ { "name": "Lantern stars", "type": "chain of nine stars", "kind": "yellow-dwarf", "kindOrigin": "invented", "count": 9, "notes": "Brighten and dim together every 73 days. Tidal lanes across the Basin follow this cycle." } ],
       "bodies": [
         { "name": "Verdance", "type": "planet", "notes": "Garden world, machinery runs hot. 200 m forests, frame-killing predators. Two settlement attempts abandoned (5024u, 5026u); Verdance Colonial Company preparing a third." },
         { "name": "Stillwater", "type": "planet", "notes": "Ocean world, no tides, almost no wind. City-sized Absent platforms float on it; one settled by the Long Families (5025u)." },
@@ -89,9 +89,10 @@
       "heldBy": [],
       "alsoPresent": ["survey-office", "corvel"],
       "stars": [
-        { "name": "(white dwarfs)", "type": "white dwarf" },
-        { "name": "(neutron star)", "type": "neutron star" },
-        { "name": "(remnant)", "type": "stellar remnant" }
+        { "name": "(white dwarf)", "type": "white dwarf", "kind": "white-dwarf" },
+        { "name": "(white dwarf)", "type": "white dwarf", "kind": "white-dwarf", "notes": "Second white dwarf: the source says white dwarfs, plural (R6)." },
+        { "name": "(neutron star)", "type": "neutron star", "kind": "neutron-star" },
+        { "name": "(remnant)", "type": "stellar remnant", "kind": "remnant" }
       ],
       "notes": "Dim, cold, airless worlds. A repeating Absent signal broadcasts every 41 hours from somewhere inside; source never found. Survey Office research station."
     },
@@ -100,7 +101,7 @@
       "lattice": { "rating": "rich", "where": "Veins in the central structure only" },
       "heldBy": [],
       "alsoPresent": ["survey-office", "hallorans-heirs"],
-      "stars": [ { "name": "(red dwarf)", "type": "red dwarf", "notes": "Several light-hours away; lights the worlds faintly." } ],
+      "stars": [ { "name": "(red dwarf)", "type": "red dwarf", "kind": "red-dwarf", "notes": "Several light-hours away; lights the worlds faintly." } ],
       "bodies": [
         { "name": "Central structure", "type": "structure", "notes": "Dark Absent object about the size of a small moon. No star at the center. Warms the worlds." },
         { "name": "(nine worlds)", "type": "planet", "count": 9, "notes": "Orbits in exact resonance; alignment never the same between visits." }
@@ -111,7 +112,7 @@
       "lattice": { "rating": "none", "where": "Nowhere workable" },
       "heldBy": ["free-lines"],
       "alsoPresent": ["cormorants"],
-      "stars": [ { "name": "(four small dim stars)", "type": "dim star", "count": 4 } ],
+      "stars": [ { "name": "(four small dim stars)", "type": "dim star", "kind": "red-dwarf", "kindOrigin": "invented", "count": 4 } ],
       "bodies": [
         { "name": "Halyard Station", "type": "station", "notes": "Anchored to a shattered ice moon in a wide orbit in the largest system. Free Lines home. Wending passage mouth nearby." }
       ],
@@ -123,9 +124,9 @@
       "heldBy": ["smith-shimano"],
       "alsoPresent": ["gatherers-guild"],
       "stars": [
-        { "name": "Lumen", "type": "brown dwarf", "notes": "Glows dull red." },
-        { "name": "(orange dwarf)", "type": "orange dwarf", "notes": "Metal-rich rocky planets." },
-        { "name": "(orange dwarf)", "type": "orange dwarf", "notes": "Metal-rich rocky planets." }
+        { "name": "Lumen", "type": "brown dwarf", "kind": "brown-dwarf", "notes": "Glows dull red." },
+        { "name": "(orange dwarf)", "type": "orange dwarf", "kind": "orange-dwarf", "notes": "Metal-rich rocky planets." },
+        { "name": "(orange dwarf)", "type": "orange dwarf", "kind": "orange-dwarf", "notes": "Metal-rich rocky planets." }
       ],
       "bodies": [
         { "name": "Lumen's moon", "type": "moon", "parent": "Lumen", "notes": "Single large rocky, tidally heated moon. Volcanic belts. Holds Lumen Station (Smith-Shimano)." }
@@ -136,7 +137,7 @@
       "lattice": { "rating": "none", "where": "Nowhere workable" },
       "heldBy": ["sable-harbor"],
       "alsoPresent": ["tallymen", "rimelight"],
-      "stars": [ { "name": "Sable", "type": "brown dwarf" } ],
+      "stars": [ { "name": "Sable", "type": "brown dwarf", "kind": "brown-dwarf" } ],
       "bodies": [
         { "name": "Sable Harbor", "type": "station", "notes": "Port built from moored hulls around the largest dark moonlet." }
       ]
@@ -161,8 +162,8 @@
       "heldBy": ["purview"],
       "alsoPresent": ["coldwell-claims"],
       "stars": [
-        { "name": "Gloam", "type": "red star", "notes": "Dim." },
-        { "name": "(orange dwarf)", "type": "orange dwarf", "notes": "Asteroid belt, little else." }
+        { "name": "Gloam", "type": "red star", "kind": "red-dwarf", "notes": "Dim." },
+        { "name": "(orange dwarf)", "type": "orange dwarf", "kind": "orange-dwarf", "notes": "Asteroid belt, little else." }
       ],
       "bodies": [
         { "name": "Gloam", "type": "planet", "parent": "Gloam", "notes": "Tidally locked. Desert day side, frozen night side full of lattice; settlements in the twilight band. Custodians below ~400 m. Orbital guns cover both lane mouths; Purview orbital yards. ~110,000 people." }
@@ -173,7 +174,7 @@
       "lattice": { "rating": "trace", "where": "Thin seams on a few moons" },
       "heldBy": ["mercer-ibarra"],
       "alsoPresent": ["purview", "ferrous-consolidated", "seventh"],
-      "stars": [ { "name": "Halvard", "type": "yellow star" } ],
+      "stars": [ { "name": "Halvard", "type": "yellow star", "kind": "yellow-dwarf" } ],
       "bodies": [
         { "name": "Halvard", "type": "gas giant", "parent": "Halvard", "notes": "A dozen moons. Storm larger than Tallis, stationary for 12 years. Halvard Gap mouth near its rings." },
         { "name": "Halvard's Rest", "type": "moon", "parent": "Halvard", "notes": "Largest moon. Ice world, thin atmosphere, subsurface ocean. Lattice refinery. ~25,000 people under Mercer-Ibarra." }
@@ -184,7 +185,7 @@
       "lattice": { "rating": "rich", "where": "Shallow seams on small worlds; Choir's rings (exceptional)" },
       "heldBy": [], "contested": true,
       "alsoPresent": ["seventh", "bellows-commune", "purview"],
-      "stars": [ { "name": "(dozens of small systems)", "type": "red dwarf", "notes": "Local lanes drift faster than anywhere else." } ],
+      "stars": [ { "name": "(dozens of small systems)", "type": "red dwarf", "kind": "red-dwarf", "notes": "Local lanes drift faster than anywhere else." } ],
       "bodies": [
         { "name": "Choir", "type": "gas giant", "notes": "Rings almost pure lattice. Local lane to it drifts very fast." },
         { "name": "Bellows", "type": "planet", "notes": "Cold rocky world; breathable 5 months a year. ~4,000 settlers in sealed towns (Bellows Commune)." }
@@ -196,9 +197,9 @@
       "heldBy": ["northern-concord", "southern-league"], "contested": true,
       "alsoPresent": ["kerr-varga", "stewardship", "purview", "listeners", "saltmarsh", "dunmore-rifles"],
       "stars": [
-        { "name": "Scald", "type": "white star" },
-        { "name": "(smaller star)", "type": "star", "notes": "Rocky planets partly glassed." },
-        { "name": "(smaller star)", "type": "star", "notes": "Rocky planets partly glassed." }
+        { "name": "Scald", "type": "white star", "kind": "white-star" },
+        { "name": "(smaller star)", "type": "star", "kind": "orange-dwarf", "kindOrigin": "invented", "notes": "Rocky planets partly glassed." },
+        { "name": "(smaller star)", "type": "star", "kind": "red-dwarf", "kindOrigin": "invented", "notes": "Rocky planets partly glassed." }
       ],
       "bodies": [
         { "name": "Scald", "type": "planet", "parent": "Scald", "notes": "Hot, dry, thin air. Nearly half the surface fused to glass. Custodians below ~400 m. Places: the Seam (600 km front), Kettle Flats (Northern Concord), Kerrtown (Kerr-Varga, southern edge of the glassfields)." }
@@ -209,7 +210,12 @@
       "lattice": { "rating": "small", "where": "Mixed through the asteroid belts" },
       "heldBy": ["ferrous-consolidated"],
       "alsoPresent": [],
-      "stars": [ { "name": "(four stars)", "type": "star", "count": 4 } ],
+      "stars": [
+        { "name": "(star)", "type": "star", "kind": "orange-dwarf", "kindOrigin": "invented" },
+        { "name": "(star)", "type": "star", "kind": "red-dwarf", "kindOrigin": "invented" },
+        { "name": "(star)", "type": "star", "kind": "red-dwarf", "kindOrigin": "invented" },
+        { "name": "(star)", "type": "star", "kind": "white-dwarf", "kindOrigin": "invented", "notes": "A white dwarf would explain worlds broken up long ago." }
+      ],
       "notes": "Almost no planets; dense metal-rich asteroid belts. The Basin's largest foundries are built into the biggest asteroids."
     },
     {
@@ -218,9 +224,9 @@
       "heldBy": [], "contested": true,
       "alsoPresent": ["basin-office", "ringwreckers", "rimelight", "smith-shimano"],
       "stars": [
-        { "name": "Tarn", "type": "star" },
-        { "name": "(star)", "type": "star" },
-        { "name": "(star)", "type": "star" }
+        { "name": "Tarn", "type": "star", "kind": "orange-dwarf", "kindOrigin": "invented" },
+        { "name": "(star)", "type": "star", "kind": "red-dwarf", "kindOrigin": "invented" },
+        { "name": "(star)", "type": "star", "kind": "red-dwarf", "kindOrigin": "invented" }
       ],
       "bodies": [
         { "name": "Tarn", "type": "planet", "notes": "Cold rocky planet with very broad rings. Ruined Absent shipyard inside the rings (found 5025u). Basin Office survey stations; Rimelight receiving station." }
@@ -241,7 +247,11 @@
       "lattice": { "rating": "unknown", "where": "Survey readings suggest rich" },
       "heldBy": [],
       "alsoPresent": ["unlit", "survey-office"],
-      "stars": [ { "name": "(at least seven stars)", "type": "star", "count": 7, "notes": "Several unusually old." } ],
+      "stars": [
+        { "name": "(old stars)", "type": "star", "kind": "white-dwarf", "kindOrigin": "invented", "count": 2, "notes": "Several unusually old." },
+        { "name": "(stars)", "type": "star", "kind": "red-dwarf", "kindOrigin": "invented", "count": 4 },
+        { "name": "(star)", "type": "star", "kind": "orange-dwarf", "kindOrigin": "invented", "count": 1 }
+      ],
       "bodies": [
         { "name": "Ashlar", "type": "planet", "notes": "Airless world; field of empty Absent stone towers, some over 1 km tall. Only known above-ground Absent construction. First crew lost 19 hours (5026u). Survey Office quarantine." }
       ],
@@ -252,7 +262,7 @@
       "lattice": { "rating": "moderate", "where": "Refined lattice in Absent wreckage" },
       "heldBy": ["ferrous-consolidated"], "heldNote": "by concession",
       "alsoPresent": ["unlit"],
-      "stars": [ { "name": "(three dim stars)", "type": "dim star", "count": 3 } ],
+      "stars": [ { "name": "(three dim stars)", "type": "dim star", "kind": "red-dwarf", "kindOrigin": "invented", "count": 3 } ],
       "notes": "Moon-sized Absent megastructures drifting in loose orbits. Custodians more common here than anywhere. Some wrecks still powered."
     },
     {

@@ -20,7 +20,7 @@ To adjust by hand, edit a region's `pos` and set `"locked": true`. Re-running th
 
 Lane days are not tied to distance, as decided. A 1-day lane can span 7 ly and an 18-day lane 10 ly.
 
-Stars inside each region are not placed yet. They come with the invented systems.
+Stars inside each region are not placed yet. Each star entry has `kind` (a schema star kind); `kindOrigin: "invented"` marks a kind the documents don't give. `tools/build_map.py` refuses to build if a kind is missing. They come with the invented systems.
 
 All IDs are kebab-case and cross-referenced (lanes → regions, regions → factions). A check confirmed every reference resolves.
 

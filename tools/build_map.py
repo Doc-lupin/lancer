@@ -112,6 +112,15 @@ def build_regions(parsed, positions):
     return out
 
 
+def check_stars(regions):
+    """Every star listed in parsed/regions.json needs a schema star kind (used in task 1.7)."""
+    kinds = set(json.loads((ROOT / "data/schema/map.schema.json").read_text())["$defs"]["starKind"]["enum"])
+    bad = [f"{r['id']}: {st['name']} ({st.get('kind')})" for r in regions for st in r.get("stars", [])
+           if st.get("kind") not in kinds or st.get("kindOrigin", "canon") not in ("canon", "invented")]
+    if bad:
+        sys.exit("parsed/regions.json: stars without a valid kind: " + "; ".join(bad))
+
+
 def build_lanes(parsed, bypasses):
     held = {}
     for b in bypasses:
@@ -158,9 +167,7 @@ def build_factions(parsed, src):
     for f in parsed["factions"]:
         align, note = f.get("alignment"), f.get("alignmentNote")
         if align is not None and align not in known:
-            # Not a defined alignment yet (fixed in task 1.4): keep the text as a note.
-            note = "; ".join(x for x in (align, note) if x)
-            align = None
+            sys.exit(f"parsed/factions.json: {f['id']} has alignment '{align}', which is not in the alignments list")
         factions.append(clean({
             "id": f["id"], "name": f["name"], **CANON,
             "category": f["category"], "layers": [by_cat[f["category"]]],
@@ -204,6 +211,7 @@ def build():
     positions = load(PARSED / "positions.json")["regions"]
     src_f = load(SRC / "factions.json")
 
+    check_stars(regions_p)
     regions = build_regions(regions_p, positions)
     lanes, pending_names = build_lanes(lanes_p, ref["bypasses"])
     layers, alignments, factions, feuds = build_factions(factions_p, src_f)

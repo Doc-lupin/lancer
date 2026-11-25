@@ -211,7 +211,7 @@
       "basinYear": 12
     },
     "tidalCycleDayAtStart": 5,
-    "tidalOpenDays": "0-13 of each 73-day cycle",
+    "tidalOpenDays": "Cycle days count 1-73. Tidal lanes are open on days 1-14 and closed on days 15-73 (decision D7).",
     "basis": "Sources put the present in late 5029u, four months after the drone. Day and cycle phase chosen by the GM, Nov 25, 2026."
   }
 }
