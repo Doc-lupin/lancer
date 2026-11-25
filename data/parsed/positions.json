@@ -8,7 +8,7 @@
         -0.11,
         -0.28
       ],
-      "locked": false
+      "locked": true
     },
     "tallis": {
       "pos": [
@@ -16,7 +16,7 @@
         6.73,
         1.8
       ],
-      "locked": false
+      "locked": true
     },
     "pennant": {
       "pos": [
@@ -24,7 +24,7 @@
         12.24,
         6.92
       ],
-      "locked": false
+      "locked": true
     },
     "orison": {
       "pos": [
@@ -32,7 +32,7 @@
         10.6,
         1.48
       ],
-      "locked": false
+      "locked": true
     },
     "wending": {
       "pos": [
@@ -40,7 +40,7 @@
         9.87,
         -4.11
       ],
-      "locked": false
+      "locked": true
     },
     "lantern-reach": {
       "pos": [
@@ -48,7 +48,7 @@
         17.24,
         -1.75
       ],
-      "locked": false
+      "locked": true
     },
     "pale": {
       "pos": [
@@ -56,7 +56,7 @@
         18.88,
         11.54
       ],
-      "locked": false
+      "locked": true
     },
     "orrery": {
       "pos": [
@@ -64,7 +64,7 @@
         17.57,
         8.73
       ],
-      "locked": false
+      "locked": true
     },
     "halyard": {
       "pos": [
@@ -72,7 +72,7 @@
         6.82,
         5.97
       ],
-      "locked": false
+      "locked": true
     },
     "lumen": {
       "pos": [
@@ -80,7 +80,7 @@
         9.14,
         5.85
       ],
-      "locked": false
+      "locked": true
     },
     "sable": {
       "pos": [
@@ -88,7 +88,7 @@
         1.32,
         1.05
       ],
-      "locked": false
+      "locked": true
     },
     "furnace": {
       "pos": [
@@ -96,7 +96,7 @@
         14.02,
         -1.64
       ],
-      "locked": false
+      "locked": true
     },
     "hollows": {
       "pos": [
@@ -104,7 +104,7 @@
         -4.76,
         1.13
       ],
-      "locked": false
+      "locked": true
     },
     "gloam": {
       "pos": [
@@ -112,7 +112,7 @@
         -0.59,
         -2.43
       ],
-      "locked": false
+      "locked": true
     },
     "halvard": {
       "pos": [
@@ -120,7 +120,7 @@
         -2.06,
         -7.14
       ],
-      "locked": false
+      "locked": true
     },
     "shoals": {
       "pos": [
@@ -128,7 +128,7 @@
         5.36,
         4.89
       ],
-      "locked": false
+      "locked": true
     },
     "scald": {
       "pos": [
@@ -136,7 +136,7 @@
         -5.62,
         -5.29
       ],
-      "locked": false
+      "locked": true
     },
     "ferrous": {
       "pos": [
@@ -144,7 +144,7 @@
         -11.55,
         -4.64
       ],
-      "locked": false
+      "locked": true
     },
     "tarn": {
       "pos": [
@@ -152,7 +152,7 @@
         -10.49,
         -0.39
       ],
-      "locked": false
+      "locked": true
     },
     "cairn": {
       "pos": [
@@ -160,7 +160,7 @@
         -12.85,
         6.63
       ],
-      "locked": false
+      "locked": true
     },
     "deeps": {
       "pos": [
@@ -168,7 +168,7 @@
         -20.39,
         7.57
       ],
-      "locked": false
+      "locked": true
     },
     "boneyard": {
       "pos": [
@@ -176,7 +176,7 @@
         -18.84,
         12.15
       ],
-      "locked": false
+      "locked": true
     },
     "mire": {
       "pos": [
@@ -184,7 +184,7 @@
         -21.26,
         6.02
       ],
-      "locked": false
+      "locked": true
     },
     "quiet": {
       "pos": [
@@ -192,7 +192,7 @@
         1.0,
         -31.0
       ],
-      "locked": false
+      "locked": true
     }
   }
 }

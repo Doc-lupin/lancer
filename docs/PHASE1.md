@@ -82,7 +82,7 @@ One task = one session's work, touching only the files listed. Do them in order.
 | 1.3 | (done) Assembler: parsed data + `data/src/` files → `data/map.json` | `tools/build_map.py` | Builds a map with 24 regions and no systems yet |
 | 1.4 | (done) Fix R1, R7 and D7 in the parsed data | `data/parsed/factions.json`, `data/parsed/regions.json`, `data/parsed/reference.json` | Validator alignment and star checks pass |
 | 1.5 | (done, approved by the GM Nov 25) Pilot: Ostrom and Tallis complete (systems, planets, moons, stations, lane mouths, surface places, control) | `data/src/regions/ostrom.json`, `tallis.json` | Validator passes; the GM reads the two regions and approves the level of detail |
-| 1.6 | (in progress) GM hand-adjusts region positions and locks them in the [Basin Plotting Table](https://claude.ai/artifact/7Wg1tkXL8K94xoD2ACeFLj); Claude then writes the saved positions to the file | `data/parsed/positions.json` | All regions `locked: true`; preview redrawn |
+| 1.6 | (done) GM approved the generated region positions as they stand; all 24 locked | `data/parsed/positions.json` | All regions `locked: true`; preview redrawn |
 | 1.7 | Canon systems for all other regions (from `regions.json`), with D8–D10 companions | `data/src/regions/*.json` | Every region has its systems and centers |
 | 1.8 | Bodies, inner arms first: coreward (Pennant, Orison, Wending), trailing (Halyard, Lumen, Sable), spinward (Gloam, Halvard), rimward (Scald, Ferrous, Tarn, Cairn). One task per arm. | `data/src/regions/<id>.json` | Validator passes after each arm |
 | 1.9 | Bodies, frontier, lighter detail: Lantern Reach, Pale, Orrery, Furnace, Hollows, Shoals, Deeps, Boneyard, Mire, the Quiet | same | Validator passes |
