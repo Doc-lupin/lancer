@@ -11,42 +11,207 @@
     "shape": "Rough sphere in physical space; the four-arm shape comes from the lanes, not positions.",
     "starCount": "More than a hundred; only a fraction charted",
     "localLaneHours": "A few hours between stars inside a region",
-    "primaryLaneDays": [1, 18],
+    "primaryLaneDays": [
+      1,
+      18
+    ],
     "unconfirmedRoutes": "300+"
   },
   "arms": [
-    { "id": "crossroads", "regions": ["ostrom", "tallis"] },
-    { "id": "coreward", "from": "tallis", "regions": ["pennant", "orison", "wending", "lantern-reach", "pale", "orrery"], "character": "Greenest, richest, most settled" },
-    { "id": "trailing", "from": "tallis", "regions": ["halyard", "lumen", "sable", "furnace", "hollows"], "character": "Tight commercial knot; the money" },
-    { "id": "spinward", "from": "ostrom", "regions": ["gloam", "halvard", "shoals"], "character": "Long, thin, lonely lanes" },
-    { "id": "rimward", "from": "ostrom", "regions": ["scald", "ferrous", "tarn", "cairn", "deeps", "boneyard", "mire"], "character": "Industrial; lattice and the war" },
-    { "id": "beyond", "regions": ["quiet"] }
+    {
+      "id": "crossroads",
+      "regions": [
+        "ostrom",
+        "tallis"
+      ]
+    },
+    {
+      "id": "coreward",
+      "from": "tallis",
+      "regions": [
+        "pennant",
+        "orison",
+        "wending",
+        "lantern-reach",
+        "pale",
+        "orrery"
+      ],
+      "character": "Greenest, richest, most settled"
+    },
+    {
+      "id": "trailing",
+      "from": "tallis",
+      "regions": [
+        "halyard",
+        "lumen",
+        "sable",
+        "furnace",
+        "hollows"
+      ],
+      "character": "Tight commercial knot; the money"
+    },
+    {
+      "id": "spinward",
+      "from": "ostrom",
+      "regions": [
+        "gloam",
+        "halvard",
+        "shoals"
+      ],
+      "character": "Long, thin, lonely lanes"
+    },
+    {
+      "id": "rimward",
+      "from": "ostrom",
+      "regions": [
+        "scald",
+        "ferrous",
+        "tarn",
+        "cairn",
+        "deeps",
+        "boneyard",
+        "mire"
+      ],
+      "character": "Industrial; lattice and the war"
+    },
+    {
+      "id": "beyond",
+      "regions": [
+        "quiet"
+      ]
+    }
   ],
   "laneTypes": [
-    { "id": "stable", "chartStyle": "solid grey", "text": "Holds its course and length year to year, give or take a day." },
-    { "id": "drifting", "chartStyle": "dashed grey", "text": "Length and exit point wander over weeks or months. Needs lattice-tuned navigation and a recent chart." },
-    { "id": "tidal", "chartStyle": "dotted blue", "text": "Open about two weeks in every 73 days, in step with the Lantern stars." },
-    { "id": "one-way", "chartStyle": "solid grey with arrow", "text": "Runs in one direction only." },
-    { "id": "silent", "chartStyle": "dotted blue with arrow, '? days'", "text": "Mouth charted; nothing that has gone in has come back." }
+    {
+      "id": "stable",
+      "chartStyle": "solid grey",
+      "text": "Holds its course and length year to year, give or take a day."
+    },
+    {
+      "id": "drifting",
+      "chartStyle": "dashed grey",
+      "text": "Length and exit point wander over weeks or months. Needs lattice-tuned navigation and a recent chart."
+    },
+    {
+      "id": "tidal",
+      "chartStyle": "dotted blue",
+      "text": "Open about two weeks in every 73 days, in step with the Lantern stars."
+    },
+    {
+      "id": "one-way",
+      "chartStyle": "solid grey with arrow",
+      "text": "Runs in one direction only."
+    },
+    {
+      "id": "silent",
+      "chartStyle": "dotted blue with arrow, '? days'",
+      "text": "Mouth charted; nothing that has gone in has come back."
+    }
   ],
   "tidalCycleDays": 73,
   "tidalOpenDays": 14,
   "latticeScale": [
-    { "id": "none", "text": "No workable lattice" },
-    { "id": "trace", "text": "Detectable, not worth mining" },
-    { "id": "small", "text": "Supplies local printers, not export" },
-    { "id": "moderate", "text": "Steady export in modest quantities" },
-    { "id": "rich", "text": "A major source for the Basin" },
-    { "id": "very rich", "text": "Among the largest easily reached deposits" },
-    { "id": "exceptional", "text": "Larger than anything in the inner Basin; hard to reach" },
-    { "id": "unknown", "text": "Not surveyed well enough" }
+    {
+      "id": "none",
+      "text": "No workable lattice"
+    },
+    {
+      "id": "trace",
+      "text": "Detectable, not worth mining"
+    },
+    {
+      "id": "small",
+      "text": "Supplies local printers, not export"
+    },
+    {
+      "id": "moderate",
+      "text": "Steady export in modest quantities"
+    },
+    {
+      "id": "rich",
+      "text": "A major source for the Basin"
+    },
+    {
+      "id": "very rich",
+      "text": "Among the largest easily reached deposits"
+    },
+    {
+      "id": "exceptional",
+      "text": "Larger than anything in the inner Basin; hard to reach"
+    },
+    {
+      "id": "unknown",
+      "text": "Not surveyed well enough"
+    }
   ],
   "bypasses": [
-    { "name": "The Orison tide", "arms": ["coreward", "spinward"], "lanes": ["orison-gloam"], "heldBy": "Contested: Synod vs Purview" },
-    { "name": "The Wending passage", "arms": ["coreward", "trailing"], "lanes": ["wending-halyard"], "heldBy": "long-families" },
-    { "name": "The Sable Run", "arms": ["trailing", "rimward"], "lanes": ["sable-tarn"], "heldBy": null },
-    { "name": "The Hollows loop", "arms": ["trailing", "rimward"], "lanes": ["sable-hollows", "hollows-tarn"], "heldBy": null },
-    { "name": "The Halvard Gap", "arms": ["spinward", "rimward"], "lanes": ["halvard-ferrous"], "heldBy": "mercer-ibarra" }
+    {
+      "name": "The Orison tide",
+      "arms": [
+        "coreward",
+        "spinward"
+      ],
+      "lanes": [
+        "orison-gloam"
+      ],
+      "heldBy": "Contested: Synod vs Purview"
+    },
+    {
+      "name": "The Wending passage",
+      "arms": [
+        "coreward",
+        "trailing"
+      ],
+      "lanes": [
+        "wending-halyard"
+      ],
+      "heldBy": "long-families"
+    },
+    {
+      "name": "The Sable Run",
+      "arms": [
+        "trailing",
+        "rimward"
+      ],
+      "lanes": [
+        "sable-tarn"
+      ],
+      "heldBy": null
+    },
+    {
+      "name": "The Hollows loop",
+      "arms": [
+        "trailing",
+        "rimward"
+      ],
+      "lanes": [
+        "sable-hollows",
+        "hollows-tarn"
+      ],
+      "heldBy": null
+    },
+    {
+      "name": "The Halvard Gap",
+      "arms": [
+        "spinward",
+        "rimward"
+      ],
+      "lanes": [
+        "halvard-ferrous"
+      ],
+      "heldBy": "mercer-ibarra"
+    }
   ],
-  "custodianDepthM": 400
+  "custodianDepthM": 400,
+  "clock": {
+    "format": "Union year + day of year, Basin year shown beside it (Basin year = Union year - 5017)",
+    "start": {
+      "year": 5029,
+      "day": 300,
+      "basinYear": 12
+    },
+    "tidalCycleDayAtStart": 5,
+    "tidalOpenDays": "0-13 of each 73-day cycle",
+    "basis": "Sources put the present in late 5029u, four months after the drone. Day and cycle phase chosen by the GM, Nov 25, 2026."
+  }
 }

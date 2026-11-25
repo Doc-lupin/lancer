@@ -12,6 +12,7 @@ https://claude.ai/artifact/MDzMcUZF9q7TRJi2YMVwLC. V1 is `3D_Universe_Map_Tool_O
 | Positions | Generated from the chart (`tools/generate_positions.py`), then hand-adjusted. Locked values survive regeneration. |
 | Lanes | Faded by default. Lanes mode makes them bright with day/type labels. |
 | Tidal lanes | Always drawn; bright when open (~14 of 73 days), dim when closed, driven by the dashboard clock. |
+| Clock | Union year + day, Basin year beside it. Starts at 5029u, day 300 (year 12), tidal cycle day 5 of 73 (open 9 more days). |
 | Unmapped stars | Drawn dimmer. |
 | Invented content | Origin tag on every object (`canon` / `invented`) to help with cuts. |
 | Affiliation layers | Swappable: governments, corporations, cultures, religions. One layer and one color per faction. |
@@ -38,10 +39,11 @@ https://claude.ai/artifact/MDzMcUZF9q7TRJi2YMVwLC. V1 is `3D_Universe_Map_Tool_O
 ## Data rules
 
 - Hierarchy: Basin → region → system → body (planet, moon, station, structure, lane mouth).
-- Region types: star system, nebula (Furnace), dust cloud (Mire), rogue worlds (Hollows), central structure (Orrery), wreck field (Boneyard).
+- Every region shows as stars at the Basin level. The Furnace and the Mire hold stars inside a nebula or dust cloud (region effect). In the Hollows and the Boneyard each "star" has a rogue planet or wreck at its center instead of a sun; the Orrery has its structure. A system's center can be a star, rogue planet, wreck or structure.
 - A lane connects two stars, not two regions. Known mouth stars: Brace, Marchwell. Invent the rest.
-- Control can be set at region, system or planet level (Scald is split on the planet).
+- Control can be set at every level down to the planet view: region, system, planet (Scald is split on the planet).
 - Every object has an origin tag and a visibility tag (`all` / `gm`).
+- New data can be created at any phase, not only Phase 1. Tag it `invented`.
 
 ## Phases
 
@@ -54,7 +56,7 @@ Do not start a phase until the previous phase's test passes.
 
 ### Phase 1: Complete the data
 - [ ] JSON schema: Basin, region, system, body, lane, faction, unit, text box, headline, clock
-- [ ] Region types; origin and visibility tags
+- [ ] System center types (star, rogue planet, wreck, structure); region effects (none, nebula, dust cloud); origin and visibility tags
 - [ ] Hand-adjust and lock region positions
 - [ ] Stars in each region, with positions
 - [ ] Unmapped stars
@@ -62,7 +64,7 @@ Do not start a phase until the previous phase's test passes.
 - [ ] Attach each lane to a star at each end
 - [ ] Layer and color for each faction
 - [ ] Add the five peoples; write presence for peoples and faiths
-- [ ] Clock start date and tidal cycle day
+- [ ] Clock start in the data: 5029u, day 300, tidal cycle day 5
 - [ ] Assemble `data/map.json`
 - **Test:** the file matches the schema; every reference resolves; every region has a star or special object.
 
@@ -70,7 +72,7 @@ Do not start a phase until the previous phase's test passes.
 - [ ] Regions and stars from JSON, instanced; unmapped stars dimmer
 - [ ] Camera controls, continuous zoom, floating origin
 - [ ] Faded lanes + lanes mode; one-way direction marks; drifting lanes broken
-- [ ] Special regions (nebula, dust cloud, rogue worlds, Orrery, wrecks)
+- [ ] Nebula and dust-cloud effects; systems with a planet, wreck or structure at the center
 - [ ] System level (star, planets, orbits); planet level (planet, moons, stations)
 - **Test:** zoom Basin → planet and back without a break; no shaking; smooth on a phone.
 
@@ -110,7 +112,6 @@ Do not start a phase until the previous phase's test passes.
 
 ## Open items
 
-- [ ] Clock format (e.g. 5029u, day 300; show Basin year 12?)
 - [ ] Do planet orbits follow the clock or move only for effect?
 - [ ] How players get the map: sent file, hosted page, or live data
 - [ ] Public hosting: the setting uses Lancer RPG names; read the Massif Press third-party license first
