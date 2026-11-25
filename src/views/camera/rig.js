@@ -3,7 +3,9 @@
 // Plain functions on a plain object, so they can be tested without a browser.
 //
 // The camera sits `distance` km from `target`, in the direction given by `yaw`
-// and `pitch`, looking at the target. `target` is a place (../origin.js), so
+// and `pitch`, looking at the target. `frame` (≥ 1) widens framing distances on
+// screens narrower than they are tall, so a portrait phone sees the same width
+// as a landscape screen; CameraRig keeps it up to date. `target` is a place (../origin.js), so
 // the camera keeps full precision anywhere in the Basin.
 
 import { place, offsetKm, KM_PER_LY } from '../origin.js';
@@ -19,9 +21,11 @@ const copy = (p) => place(p.anchor, p.offset);
 const clamp = (x, lo, hi) => Math.min(hi, Math.max(lo, x));
 const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
 
-export function createRig(targets, focusId, { distanceKm, yaw = 0.6, pitch = 0.35 } = {}) {
+export const frameFor = (aspect) => Math.max(1, 1 / aspect);
+
+export function createRig(targets, focusId, { distanceKm, yaw = 0.6, pitch = 0.35, frame = 1 } = {}) {
   const f = targets.get(focusId);
-  return { focusId, target: copy(f.place), distance: distanceKm ?? f.viewKm, yaw, pitch, fly: null, camera: null };
+  return { focusId, target: copy(f.place), distance: distanceKm ?? f.viewKm * frame, yaw, pitch, fly: null, camera: null, frame };
 }
 
 // Unit vector from the target towards the camera.
@@ -49,12 +53,12 @@ export function isDescendant(targets, id, ancestorId) {
 }
 
 // Zoomed out past this, the focus moves up to the parent.
-export function leaveDistance(targets, id) {
+export function leaveDistance(targets, id, frame = 1) {
   const f = targets.get(id);
   const p = f.parentId && targets.get(f.parentId);
   if (!p) return Infinity;
   const apart = Math.hypot(...offsetKm(p.place, f.place));
-  return Math.max(LEAVE_FACTOR * apart, 2 * p.minKm, 2 * f.viewKm);
+  return Math.max(LEAVE_FACTOR * apart, 2 * p.minKm, 2 * f.viewKm * frame);
 }
 
 // Multiply the distance by `factor` (above 1 = out). Stops at the focus's
@@ -64,7 +68,7 @@ export function zoom(rig, targets, factor, now) {
   const f = targets.get(rig.focusId);
   rig.distance = clamp(rig.distance * factor, f.minKm, MAX_DISTANCE_KM);
   if (rig.fly) rig.fly.d1 = null; // the user has taken over the distance
-  while (factor > 1 && rig.distance > leaveDistance(targets, rig.focusId)) {
+  while (factor > 1 && rig.distance > leaveDistance(targets, rig.focusId, rig.frame ?? 1)) {
     focusOn(rig, targets, targets.get(rig.focusId).parentId, now, null);
   }
 }
@@ -72,7 +76,7 @@ export function zoom(rig, targets, factor, now) {
 // Make `id` the focus and move the target there. With distanceKm (default:
 // the object's viewKm) the camera also zooms to that distance; with null it
 // keeps the current distance and only slides the target over.
-export function focusOn(rig, targets, id, now, distanceKm = targets.get(id).viewKm) {
+export function focusOn(rig, targets, id, now, distanceKm = targets.get(id).viewKm * (rig.frame ?? 1)) {
   const to = copy(targets.get(id).place);
   const from = copy(rig.target);
   const v = offsetKm(from, to);

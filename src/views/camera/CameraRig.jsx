@@ -8,7 +8,7 @@
 import { useEffect } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { view } from './view.js';
-import { orbit, zoom, focusOn, step, cameraPlace, viewDirection, isDescendant, WHEEL_STEP } from './rig.js';
+import { orbit, zoom, focusOn, step, cameraPlace, viewDirection, isDescendant, frameFor, WHEEL_STEP } from './rig.js';
 import { pickAt } from './pick.js';
 
 const CLICK_SLOP_PX = 6;
@@ -30,7 +30,7 @@ export default function CameraRig() {
     };
     const pick = (x, y, type) => {
       if (!view.rig.camera) return null;
-      return pickAt(view.targets, camera, view.rig.camera, x, y, el.clientWidth, el.clientHeight, PICK_PX[type] ?? 14);
+      return pickAt(view.targets, camera, view.rig.camera, x, y, el.clientWidth, el.clientHeight, PICK_PX[type] ?? 14, view.rig.focusId);
     };
     const spread = () => {
       const [a, b] = [...pointers.values()];
@@ -102,9 +102,10 @@ export default function CameraRig() {
   }, [gl, camera, invalidate]);
 
   // Runs before the views place their objects (priority -2, see useAnchored).
-  useFrame(() => {
+  useFrame(({ size }) => {
     const rig = view.rig;
     if (!rig) return;
+    rig.frame = frameFor(size.width / size.height);
     const moving = step(rig, performance.now());
     rig.camera = cameraPlace(rig);
     viewDirection(rig, dir);
