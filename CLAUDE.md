@@ -9,4 +9,4 @@ See `docs/PLAN.md` for the plan and current phase.
 - Follow the JSON schema in `data/schema/` for any data change.
 - Don't start a phase until the previous phase's test passes.
 - The zoom is continuous across all levels (no scene swaps). Use a floating origin and a logarithmic depth buffer for precision. Use instancing for stars and icons.
-- Every map object has an origin tag (`canon` / `invented`) and GM notes are kept separate from player-visible notes.
+- Every map object has an origin tag (`canon` / `invented`); invented objects also end their name with "(WIP)" and GM notes are kept separate from player-visible notes.

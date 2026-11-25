@@ -14,7 +14,9 @@ https://claude.ai/artifact/MDzMcUZF9q7TRJi2YMVwLC. V1 is `3D_Universe_Map_Tool_O
 | Tidal lanes | Always drawn; bright when open (~14 of 73 days), dim when closed, driven by the dashboard clock. |
 | Clock | Union year + day, Basin year beside it. Starts at 5029u, day 300 (year 12), tidal cycle day 5 of 73 (open 9 more days). |
 | Unmapped stars | Drawn dimmer. |
-| Invented content | Origin tag on every object (`canon` / `invented`) to help with cuts. |
+| Invented content | Origin tag on every object (`canon` / `invented`) to help with cuts. Invented objects also get "(WIP)" at the end of their name, e.g. "Tew II (WIP)". |
+| Orbits | Planet positions follow the dashboard clock. |
+| Use | Private use only. |
 | Affiliation layers | Swappable: governments, corporations, cultures, religions. One layer and one color per faction. |
 | Contested areas | Stripes in the colors of the factions involved. |
 | Player mode | Hides GM notes in the interface only. Players are trusted; no separate player file. |
@@ -73,7 +75,7 @@ Do not start a phase until the previous phase's test passes.
 - [ ] Camera controls, continuous zoom, floating origin
 - [ ] Faded lanes + lanes mode; one-way direction marks; drifting lanes broken
 - [ ] Nebula and dust-cloud effects; systems with a planet, wreck or structure at the center
-- [ ] System level (star, planets, orbits); planet level (planet, moons, stations)
+- [ ] System level (star, planets, orbits following the clock); planet level (planet, moons, stations)
 - **Test:** zoom Basin → planet and back without a break; no shaking; smooth on a phone.
 
 ### Phase 3: Interface
@@ -112,10 +114,7 @@ Do not start a phase until the previous phase's test passes.
 
 ## Open items
 
-- [ ] Do planet orbits follow the clock or move only for effect?
-- [ ] How players get the map: sent file, hosted page, or live data
-- [ ] Public hosting: the setting uses Lancer RPG names; read the Massif Press third-party license first
-- [ ] Naming style for invented objects, by arm or culture
+- [ ] How players get the map: sent file, hosted page, or live data (deferred to Phase 5)
 - [ ] Target number of unmapped stars ("more than a hundred")
 - [ ] Surface places (Kettle Flats, Sallow Ford, Kerrtown, the Reach, Dry Creek): pins on the sphere or notes only?
 
