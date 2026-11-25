@@ -12,10 +12,10 @@ The schema checks the shape of each object. It does not check that an id points 
 
 | Field | Meaning |
 |---|---|
-| `id` | Lowercase kebab-case, unique across the whole file. Regions use the bare name (`scald`). System ids always end in `-system` (`scald-system`). A body uses its name, plus its type when the id is taken (`scald-planet`). |
+| `id` | Lowercase kebab-case, unique across the whole file. Regions use the bare name (`scald`). System ids always end in `-system` (`scald-system`). A body uses its name, plus its type when the id is taken (`scald-planet`). A lane mouth is `<lane id>-at-<region>` (`ostrom-scald-at-ostrom`). |
 | `name` | Display name. Ends with " (WIP)" when the name is invented. |
 | `origin` | `canon` if the setting documents establish the object, `invented` if not. |
-| `nameOrigin` | Only when the name's origin differs from the object's, e.g. a canon star with an invented name. Defaults to `origin`. "(WIP)" follows this value. |
+| `nameOrigin` | Only when the name's origin differs from the object's, e.g. a canon star with an invented name, or "Ostrom II (WIP)": the documents say Ostrom has six planets but name only Ostrom IV. Defaults to `origin`. "(WIP)" follows this value. A name built from canon names ("Ostrom – Scald", "Scald mouth") counts as canon. |
 | `visibility` | `all`: players see the object. `gm`: hidden in player mode. |
 | `notes` | Player-visible text. |
 | `gmNotes` | GM-only text. Hidden in player mode even when the object is visible. |

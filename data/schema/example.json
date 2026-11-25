@@ -53,8 +53,8 @@
     { "id": "ostrom-iv", "name": "Ostrom IV", "system": "ostrom-system", "type": "planet", "class": "cold super-Earth", "orbit": { "distance": 1.4, "unit": "au", "periodDays": 640, "phaseDeg": 115 }, "radiusKm": 10200, "rotation": { "periodHours": 31 }, "appearance": { "atmosphere": true }, "notes": "Thin nitrogen atmosphere. Nothing on the surface worth landing for.", "origin": "canon", "visibility": "all" },
     { "id": "marrow", "name": "The Marrow", "system": "ostrom-system", "parent": "ostrom-iv", "type": "station", "orbit": { "distance": 36000, "unit": "km", "periodDays": 1.6, "phaseDeg": 0 }, "population": 200000, "control": { "status": "held", "holders": ["stewardship"] }, "notes": "Basin capital, built around the Bellwether.", "gmNotes": "Placeholder GM note: kept apart from player notes.", "origin": "canon", "visibility": "all" },
     { "id": "gate", "name": "The gate", "system": "ostrom-system", "type": "structure", "orbit": { "distance": 52, "unit": "au", "periodDays": null, "phaseDeg": 200 }, "radiusKm": 1000, "origin": "canon", "visibility": "all" },
-    { "id": "ostrom-scald-mouth-o", "name": "Scald mouth (WIP)", "nameOrigin": "invented", "system": "cinder-system", "type": "lane-mouth", "orbit": { "distance": 3, "unit": "au", "periodDays": null, "phaseDeg": 270 }, "origin": "canon", "visibility": "all" },
-    { "id": "ostrom-scald-mouth-s", "name": "Ostrom mouth (WIP)", "nameOrigin": "invented", "system": "scald-system", "type": "lane-mouth", "orbit": { "distance": 6, "unit": "au", "periodDays": null, "phaseDeg": 90 }, "origin": "canon", "visibility": "all" },
+    { "id": "ostrom-scald-at-ostrom", "name": "Scald mouth", "system": "cinder-system", "type": "lane-mouth", "orbit": { "distance": 3, "unit": "au", "periodDays": null, "phaseDeg": 270 }, "origin": "canon", "visibility": "all" },
+    { "id": "ostrom-scald-at-scald", "name": "Ostrom mouth", "system": "scald-system", "type": "lane-mouth", "orbit": { "distance": 6, "unit": "au", "periodDays": null, "phaseDeg": 90 }, "origin": "canon", "visibility": "all" },
     { "id": "scald-planet", "name": "Scald", "system": "scald-system", "type": "planet", "class": "hot, dry, half glassed", "orbit": { "distance": 1.9, "unit": "au", "periodDays": 520, "phaseDeg": 40 }, "radiusKm": 6100, "rotation": { "periodHours": 26, "axialTiltDeg": 12 }, "appearance": { "atmosphere": true }, "lattice": { "rating": "very rich", "where": "Seams beneath the glassfields" }, "origin": "canon", "visibility": "all" },
     { "id": "scald-ii", "name": "Scald II (WIP)", "system": "scald-system", "type": "moon", "parent": "scald-planet", "orbit": { "distance": 210000, "unit": "km", "periodDays": 9, "phaseDeg": 300 }, "radiusKm": 400, "gmNotes": "Invented filler moon.", "origin": "invented", "visibility": "gm" }
   ],
@@ -70,8 +70,8 @@
   "lanes": [
     {
       "id": "ostrom-scald", "name": "Ostrom – Scald",
-      "from": { "region": "ostrom", "system": "cinder-system", "mouth": "ostrom-scald-mouth-o" },
-      "to": { "region": "scald", "system": "scald-system", "mouth": "ostrom-scald-mouth-s" },
+      "from": { "region": "ostrom", "system": "cinder-system", "mouth": "ostrom-scald-at-ostrom" },
+      "to": { "region": "scald", "system": "scald-system", "mouth": "ostrom-scald-at-scald" },
       "days": 4, "drifting": false, "oneWay": false, "silent": false,
       "origin": "canon", "visibility": "all"
     }

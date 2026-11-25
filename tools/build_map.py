@@ -12,6 +12,9 @@ Inputs (all paths under data/):
   src/unmapped.json     Unmapped stars: "systems", "bodies".
   src/clock.json        Replaces the clock built from reference.json.
   src/content.json      "units", "textBoxes", "headlines".
+In a region file a system may give "offset" (light-years from the region
+center) instead of "pos"; the build turns it into an absolute "pos", so
+the stars move with the region when its center is hand-adjusted.
 All src files are optional. An edit is merged into the object with the
 same id, field by field; a field set to null is removed. An entry with a
 new id is added.
@@ -227,6 +230,13 @@ def build():
         places += d.get("places", [])
         areas += d.get("areas", [])
     regions = merge(regions, region_edits, "src/regions")
+    centers = {r["id"]: r["pos"] for r in regions}
+    for st in systems:
+        if "offset" in st:
+            if "pos" in st or st.get("region") not in centers:
+                sys.exit(f"src/regions: system {st['id']} needs a known region and offset or pos, not both")
+            off = st.pop("offset")
+            st["pos"] = [round(c + o, 3) for c, o in zip(centers[st["region"]], off)]
     unmapped = load(SRC / "unmapped.json", {})
     systems += unmapped.get("systems", [])
     bodies += unmapped.get("bodies", [])

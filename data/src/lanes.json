@@ -1,0 +1,13 @@
+{
+  "_comment": "Lane ends attached so far (task 1.5 pilot: Ostrom and Tallis sides). The rest come in task 1.10.",
+  "lanes": [
+    {"id": "ostrom-tallis", "from": {"region": "ostrom", "system": "ostrom-system", "mouth": "ostrom-tallis-at-ostrom"}, "to": {"region": "tallis", "system": "tallis-system", "mouth": "ostrom-tallis-at-tallis"}},
+    {"id": "ostrom-gloam", "from": {"region": "ostrom", "system": "cinder-system", "mouth": "ostrom-gloam-at-ostrom"}},
+    {"id": "ostrom-scald", "from": {"region": "ostrom", "system": "cinder-system", "mouth": "ostrom-scald-at-ostrom"}},
+    {"id": "silent-mouth-1", "to": {"region": "ostrom", "system": "ostrom-system", "mouth": "silent-mouth-1-at-ostrom"}},
+    {"id": "silent-mouth-2", "to": {"region": "ostrom", "system": "ostrom-system", "mouth": "silent-mouth-2-at-ostrom"}},
+    {"id": "silent-mouth-3", "to": {"region": "ostrom", "system": "ostrom-system", "mouth": "silent-mouth-3-at-ostrom"}},
+    {"id": "tallis-pennant", "from": {"region": "tallis", "system": "marchwell-system", "mouth": "tallis-pennant-at-tallis"}},
+    {"id": "tallis-halyard", "from": {"region": "tallis", "system": "brace-system", "mouth": "tallis-halyard-at-tallis"}}
+  ]
+}
