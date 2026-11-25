@@ -65,7 +65,7 @@ Task breakdown, review findings and open decisions: [PHASE1.md](PHASE1.md).
 - [x] Stars in each region, with positions
 - [ ] Unmapped stars
 - [x] Missing planets, moons and stations (invented tag)
-- [ ] Attach each lane to a star at each end
+- [x] Attach each lane to a star at each end
 - [ ] Layer and color for each faction
 - [ ] Add the five peoples; write presence for peoples and faiths
 - [ ] Clock start in the data: 5029u, day 300, tidal cycle day 5
