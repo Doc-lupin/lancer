@@ -8,8 +8,8 @@
       "alsoPresent": ["charter-bench", "survey-office", "assay-house", "basin-office", "ostrom-standard", "exchange", "captains-table", "saltmarsh", "gallowglass", "vigil"],
       "stars": [
         { "name": "Ostrom", "type": "orange star", "kind": "orange-dwarf", "notes": "Six planets, none habitable. The gate hangs beyond the outermost orbit. The colony hauler Anselm fell into this star at the Closing." },
-        { "name": "Cinder", "type": "white dwarf", "kind": "white-dwarf", "notes": "Burned out. Scatter of airless planets. Nine hours from Ostrom by local lane. Stewardship picket." },
-        { "name": "Marl", "type": "red dwarf", "kind": "red-dwarf", "notes": "Thick asteroid belt; source of the Marrow's raw material and Ostrom's lattice nodules." }
+        { "name": "Cinder", "type": "white dwarf", "kind": "pulsar", "kindOrigin": "invented", "notes": "D17: a pulsar, the burned-out core of a star that died violently; its airless planets are pulsar worlds. Burned out. Scatter of airless planets. Nine hours from Ostrom by local lane. Stewardship picket." },
+        { "name": "Marl", "type": "red dwarf", "kind": "red-dwarf", "features": ["flares"], "notes": "D17: a flare star; belt crews shelter when it flares. Thick asteroid belt; source of the Marrow's raw material and Ostrom's lattice nodules." }
       ],
       "bodies": [
         { "name": "Ostrom IV", "type": "planet", "parent": "Ostrom", "notes": "Cold super-Earth, thin nitrogen atmosphere, nothing worth landing for." },
@@ -27,8 +27,8 @@
       "alsoPresent": ["landholders-league", "riverlands-combine", "compact", "vigil", "gardeners"],
       "stars": [
         { "name": "Tallis", "type": "star", "kind": "yellow-dwarf", "kindOrigin": "invented", "notes": "Primary of the garden world Tallis." },
-        { "name": "Brace", "type": "red dwarf", "kind": "red-dwarf", "notes": "A few hours trailing. No habitable worlds. Holds the lane mouth to Halyard. Stewardship picket." },
-        { "name": "Marchwell", "type": "brown dwarf", "kind": "brown-dwarf", "notes": "Coreward. Dim. Holds the mouth of the lane to Pennant." }
+        { "name": "Brace", "type": "red dwarf", "kind": "red-giant", "kindOrigin": "invented", "notes": "D17: a swollen red giant that stripped its worlds airless, filling the sky of the trailing side. A few hours trailing. No habitable worlds. Holds the lane mouth to Halyard. Stewardship picket." },
+        { "name": "Marchwell", "type": "brown dwarf", "kind": "white-dwarf", "kindOrigin": "invented", "notes": "D17: a dim white dwarf. Coreward. Dim. Holds the mouth of the lane to Pennant." }
       ],
       "bodies": [
         { "name": "Tallis", "type": "planet", "parent": "Tallis", "notes": "Largest garden world in the Basin. Mild, wet. Two continents, two small moons. River valleys on the larger continent's east side; the Reach is the dry interior upland. Eleven Absent climate structures mapped several km down (first found 5021u). Places: the Landing (east coast), Dry Creek, Sallow Ford." }
@@ -41,8 +41,8 @@
       "alsoPresent": ["corvel", "lantern-company"],
       "stars": [
         { "name": "Pennant", "type": "star", "kind": "yellow-white-star", "kindOrigin": "invented", "notes": "Bright F-type star; Pennant orbits far out on a long, slightly eccentric year, which gives it its long winters." },
-        { "name": "Tew", "type": "red dwarf", "kind": "red-dwarf", "notes": "Mining worlds." },
-        { "name": "Ashby", "type": "red dwarf", "kind": "red-dwarf", "notes": "Mining worlds." }
+        { "name": "Tew", "type": "red dwarf", "kind": "orange-giant", "kindOrigin": "invented", "notes": "D17: an orange giant; its mining worlds are baked bare. Mining worlds." },
+        { "name": "Ashby", "type": "red dwarf", "kind": "brown-dwarf", "kindOrigin": "invented", "notes": "D17: a brown dwarf. Mining worlds." }
       ],
       "bodies": [
         { "name": "Pennant", "type": "planet", "parent": "Pennant", "notes": "Cool forested garden world, long winters. Northern continent (fjords, river valleys) holds the Synod settlements. Empty southern continent has the largest Absent climate structure: a 40 km ring of bare rock. Corvel's besieged landing is there." }
@@ -94,10 +94,10 @@
       "heldBy": [],
       "alsoPresent": ["survey-office", "corvel"],
       "stars": [
-        { "name": "(white dwarf)", "type": "white dwarf", "kind": "white-dwarf" },
+        { "name": "(white dwarf)", "type": "white dwarf", "kind": "white-dwarf", "features": ["planetary-nebula"], "notes": "D17: dying, still inside the glowing shell it shed." },
         { "name": "(white dwarf)", "type": "white dwarf", "kind": "white-dwarf", "notes": "Second white dwarf: the source says white dwarfs, plural (R6)." },
-        { "name": "(neutron star)", "type": "neutron star", "kind": "neutron-star" },
-        { "name": "(remnant)", "type": "stellar remnant", "kind": "remnant" }
+        { "name": "(neutron star)", "type": "neutron star", "kind": "magnetar", "kindOrigin": "invented", "notes": "D17: a magnetar, the strongest magnetic field in the Basin." },
+        { "name": "(remnant)", "type": "stellar remnant", "kind": "black-hole", "kindOrigin": "invented", "features": ["accretion-disk"], "notes": "D17: the cold remnant of something larger is a black hole, with a faint accretion disk." }
       ],
       "notes": "Dim, cold, airless worlds. A repeating Absent signal broadcasts every 41 hours from somewhere inside; source never found. Survey Office research station."
     },
@@ -135,7 +135,7 @@
       "stars": [
         { "name": "Lumen", "type": "brown dwarf", "kind": "brown-dwarf", "notes": "Glows dull red." },
         { "name": "(orange dwarf)", "type": "orange dwarf", "kind": "orange-dwarf", "notes": "Metal-rich rocky planets." },
-        { "name": "(orange dwarf)", "type": "orange dwarf", "kind": "orange-dwarf", "notes": "Metal-rich rocky planets." }
+        { "name": "(orange dwarf)", "type": "orange dwarf", "kind": "yellow-white-star", "kindOrigin": "invented", "notes": "D17: a yellow-white star. Metal-rich rocky planets." }
       ],
       "bodies": [
         { "name": "Lumen's moon", "type": "moon", "parent": "Lumen", "notes": "Single large rocky, tidally heated moon. Volcanic belts. Holds Lumen Station (Smith-Shimano)." }
@@ -171,8 +171,8 @@
       "heldBy": ["purview"],
       "alsoPresent": ["coldwell-claims"],
       "stars": [
-        { "name": "Gloam", "type": "red star", "kind": "red-dwarf", "notes": "Dim." },
-        { "name": "(orange dwarf)", "type": "orange dwarf", "kind": "orange-dwarf", "notes": "Asteroid belt, little else." }
+        { "name": "Gloam", "type": "red star", "kind": "red-dwarf", "features": ["starspots"], "notes": "Dim. D17: heavily spotted; its light wavers over weeks." },
+        { "name": "(orange dwarf)", "type": "orange dwarf", "kind": "orange-giant", "kindOrigin": "invented", "notes": "D17: a cool orange giant. Asteroid belt, little else." }
       ],
       "bodies": [
         { "name": "Gloam", "type": "planet", "parent": "Gloam", "notes": "Tidally locked. Desert day side, frozen night side full of lattice; settlements in the twilight band. Custodians below ~400 m. Orbital guns cover both lane mouths; Purview orbital yards. ~110,000 people." }
@@ -183,7 +183,7 @@
       "lattice": { "rating": "trace", "where": "Thin seams on a few moons" },
       "heldBy": ["mercer-ibarra"],
       "alsoPresent": ["purview", "ferrous-consolidated", "seventh"],
-      "stars": [ { "name": "Halvard", "type": "yellow star", "kind": "yellow-dwarf" } ],
+      "stars": [ { "name": "Halvard", "type": "yellow star", "kind": "yellow-giant", "kindOrigin": "invented", "notes": "D17: a yellow giant; Halvard orbits far out." } ],
       "bodies": [
         { "name": "Halvard", "type": "gas giant", "parent": "Halvard", "notes": "A dozen moons. Storm larger than Tallis, stationary for 12 years. Halvard Gap mouth near its rings." },
         { "name": "Halvard's Rest", "type": "moon", "parent": "Halvard", "notes": "Largest moon. Ice world, thin atmosphere, subsurface ocean. Lattice refinery. ~25,000 people under Mercer-Ibarra." }

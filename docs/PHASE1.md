@@ -49,6 +49,7 @@ Each has a recommended default. The schema task (1.1) needs D1–D6. The others 
 | D14 | Faction colors | One palette per layer; colors only need to be distinct inside a layer. |
 | D15 | Calendar | Union year of 365 days; Basin year = Union year − 5017. |
 | D16 | Stellar variety (raised by the GM, Nov 25) | Not every star a dwarf. Canon types stay; invented ones spread across the full range (see Stellar variety below). |
+| D17 | Variety in canon stars too (GM, Nov 25) | Decided: some canon star types change. Each change keeps the documents' wording in `type`, is marked `kindOrigin: invented`, and is listed under Departures from the documents. |
 
 ## Canon hints gathered from the documents
 
@@ -103,12 +104,34 @@ Canon types stay as written; several regions are canonically dwarf-heavy (Ostrom
 | Where | Plan |
 |---|---|
 | The Furnace (1.7) | The hot end: protostars with protoplanetary disks, young blue (O) and blue-white (B) stars, one Wolf-Rayet star with jets. Its radiation is why sensors fail there. |
-| The Pale (1.7) | Its "cold remnant of something larger" could be a black hole. GM to decide; it stays `remnant` until then. |
+| The Pale (1.7) | Decided under D17: a black hole with a faint accretion disk, a magnetar, and a white dwarf inside its planetary nebula. |
 | The Mire (1.7) | Stars hidden in the dust: one red supergiant glowing through the cloud, the rest unseen. |
 | The Shoals (1.7) | "Mostly red dwarfs": add flare stars, brown dwarfs and a few orange dwarfs among the 24. |
 | Orison, Cairn, Sable, Halvard companions (D9) | One distant companion each, not all dwarfs. |
 | Companion stars | Some inner systems get a binary partner as a `star` body. |
 | Unmapped stars (1.11) | Most of the spread: giants, a supergiant visible from everywhere in the Basin, binaries, a planetary nebula, a magnetar. |
+
+### Departures from the documents (D17)
+
+The setting documents should be updated to match these, or the changes reverted. Features alone (flares, starspots, nebulae) add to the documents without contradicting them.
+
+| Star | Documents say | Now |
+|---|---|---|
+| Cinder (Ostrom) | burned-out white dwarf | pulsar with jets; its airless planets are pulsar worlds; the picket is shielded |
+| Marl (Ostrom) | red dwarf | red dwarf, flare star |
+| Brace (Tallis) | red dwarf | red giant that stripped its worlds; its planets, picket and Halyard mouth moved out to 2.4–6 AU |
+| Marchwell (Tallis) | dim brown dwarf | dim white dwarf |
+| Tew (Pennant) | red dwarf | orange giant; its mining worlds baked bare |
+| Ashby (Pennant) | red dwarf | brown dwarf |
+| The Pale's neutron star | neutron star | magnetar |
+| The Pale's remnant | cold remnant of something larger | black hole with a faint accretion disk |
+| One of the Pale's white dwarfs | white dwarf | white dwarf inside a planetary nebula |
+| Lumen's second orange dwarf | orange dwarf | yellow-white (F) star |
+| Gloam | dim red star | red dwarf, heavily spotted; its light wavers over weeks |
+| Gloam's companion | cool orange dwarf | cool orange giant |
+| Halvard | yellow star | yellow giant; Halvard orbits far out |
+
+Unchanged: Ostrom (the quiet orange star at the crossroads), Wending, Scald, Lumen's brown dwarf, Sable, the Orrery's red dwarf, and the Shoals' "mostly red dwarfs" (varied in 1.7 within that wording).
 
 Rough target for the whole Basin (~130 stars): about half red and brown dwarfs, a fifth orange and yellow dwarfs, a tenth F, A, B and O stars, a tenth giants and supergiants, a tenth remnants, plus a few rarities.
 
