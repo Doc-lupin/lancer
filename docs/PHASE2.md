@@ -27,6 +27,8 @@ The smallest thing the GM will look at closely is a station a few hundred metres
 
 Each has a recommended default. Task 2.1 needs P1 and P2; task 2.4 needs P3 and P4. The others can wait until their task.
 
+**Decided Nov 25, 2026 (GM):** P1, P2, P6 and P10 as recommended. The others stand at their recommended default until their task.
+
 | # | Question | Recommended |
 |---|---|---|
 | P1 | Language | Plain JavaScript with JSX. TypeScript would be a new tool. |
