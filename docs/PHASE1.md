@@ -85,7 +85,7 @@ One task = one session's work, touching only the files listed. Do them in order.
 | 1.6 | (done) GM approved the generated region positions as they stand; all 24 locked | `data/parsed/positions.json` | All regions `locked: true`; preview redrawn |
 | 1.7 | (done) Canon systems for all other regions, with D9 companions and 24 Shoals systems (D10) | `data/src/regions/*.json` | Every region has its systems and centers |
 | 1.8 | (done) Bodies, inner arms: coreward (Pennant, Orison, Wending), trailing (Halyard, Lumen, Sable), spinward (Gloam, Halvard), rimward (Scald, Ferrous, Tarn, Cairn), one commit per arm | `data/src/regions/<id>.json` | Validator passes after each arm |
-| 1.9 | Bodies, frontier, lighter detail: Lantern Reach, Pale, Orrery, Furnace, Hollows, Shoals, Deeps, Boneyard, Mire, the Quiet | same | Validator passes |
+| 1.9 | (done) Bodies, frontier, at full detail (GM request): Lantern Reach, Pale, Orrery, Furnace, Hollows, Shoals, Deeps, Boneyard, Mire; the Quiet stays empty | `data/src/regions/<id>.json` | Validator passes |
 | 1.10 | Lane mouths: attach each lane end to a system (D2, D8) | `data/parsed/lanes.json` or `data/src/lanes.json` | Every lane end resolves to a system |
 | 1.11 | Unmapped stars (D11, D12) | `data/src/unmapped.json` | Count matches D11; all inside the sphere |
 | 1.12 | Factions: layers, colors, five peoples, presence for peoples and faiths, control at region/system/planet level | `data/src/factions.json` | Each layer ≤15; every region and split planet has control set |
@@ -163,5 +163,17 @@ Second pass over the 14 finished regions (GM request, Nov 25), stepping beyond t
 - 73 new places, among them the Marrow's offices and decks, Tallis's river towns, Compact districts and League market town, Pennant's Pilgrim Guard fortress, Reach staging yards and siege lines, Orison's evacuation port, Wending's further lagoon towns and the burned copy-house, Gloam's twilight towns and Noonpoint, Scald's company camps along the Seam, and the Great Ring on Cairn.
 - GM-only additions: the Tallymen's anchorage and berth, the Ringwreckers' hold, the Coldwell landing field, Mercer-Ibarra's quiet dock for the Seventh, and Hob.
 - Totals after the pass: 109 systems, 160 bodies, 129 places, 10 control areas.
+
+Notes from 1.9 (full detail, at the GM's request):
+- Six new systems where the documents fix no count: Smelt (Furnace), Hoar and Floe (Hollows), Vestige (Deeps), the Bier (a third drifting wreck in the Boneyard) and Morass (Mire). The Lantern Reach keeps its nine stars and the Boneyard its three dim stars.
+- The Lantern Reach's six garden worlds: Verdance (Taper) with its two abandoned landings and the Verdance Colonial Company's staging station; Stillwater (Wick) with the settled platform and unsettled ones; and four seen only from orbit, Verdigris, Halcyon (where a Synod survey party has landed), Meridian and Nocturne, each claimed by Corvel against the Synod. Also Wickless, a cold moon whose seas freeze and thaw with the Lantern cycle.
+- The Orrery's nine worlds (Pinion, Arbor, Pallet, Ratchet, Detent, Mainspring, Balance, Fusee, Escapement), each a different type, with periods of 20 to 180 days in exact 1:2:...:9 resonance.
+- The Pale's crystalline worlds at Shroud and Wane, the Survey Office station and Corvel's signal tender; Horizon, a frozen world circling the Well. The source of the 41-hour signal, the Caller, is GM-only.
+- The Hollows: a heat engine on every rogue world, Rimelight's four stations on Gelid, Rime and Cistern, and the ruin of the fifth on Sump.
+- The Shoals: a small lattice world in every system; Choir and its rings, Bellows with the towns Firstbreath and Sealhold, three Purview prospecting stations, and the Seventh's anchorage at Skerry (GM-only).
+- The Deeps: Ashlar with its tower field, first landing site and quarantine picket; Elder I with a buried biosphere; Soot's carbon and diamond worlds. WAYMARK's ship and an Unlit den are GM-only.
+- The Boneyard: named wrecks (Sepulchre, Reliquary, Catafalque, Ribcage, the Lantern Hulk), Ferrous Consolidated's concession station and salvage camps.
+- The Mire: lattice dust lanes, the hidden marsh world Bogland, and an Unlit anchorage (GM-only).
+- Totals: 115 systems, 264 bodies, 163 places. Thirteen items are GM-only.
 
 The pilot in 1.5 exists to catch schema problems on two regions before data goes into the other twenty-two. Change the schema there if needed, not later.
