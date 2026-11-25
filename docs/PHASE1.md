@@ -1,5 +1,17 @@
 # Phase 1: Complete the data — work plan
 
+**Status: complete. The Phase 1 test passed on Nov 25, 2026.**
+
+| Check | Result |
+|---|---|
+| `data/map.json` matches the schema | 0 errors |
+| Every reference resolves | 1,447 references, 0 unresolved |
+| Every region has a star or special object | All 23 charted regions (the Quiet, beyond the map, is exempt) |
+| Complete check (`tools/validate_map.py --complete`) | 0 errors, 0 warnings |
+| Validator tests, catalog and template checks | 51/51 tests; catalog, schema and WORLDS.md agree; 547 templates fill |
+
+Contents of the finished map: 24 regions; 155 systems (115 charted, 40 unmapped) holding 148 stars of 23 kinds; 329 bodies, among them 118 planets, 27 giants, 20 moons, 39 stations, 9 Absent wrecks and 71 lane mouths; 182 worlds of 53 types (8 garden, 4 habitable, 18 marginal, 100 hostile, 25 lethal, 27 giants); 163 places and 10 control areas; 37 lanes with every end attached; 50 factions in 5 layers. 389 objects are canon and 268 invented; 13 are GM-only.
+
 Prepared Nov 25, 2026, after a full review of `data/raw/`, `data/parsed/`, `tools/` and both plans.
 Phase 1 checklist and test are in [PLAN.md](PLAN.md). This file breaks them into small tasks and lists what must be decided first.
 
@@ -90,7 +102,7 @@ One task = one session's work, touching only the files listed. Do them in order.
 | 1.11 | (done) 40 unmapped stars (D11, D12) | `data/src/unmapped.json` | Count matches D11; all inside the sphere |
 | 1.12 | (done) Factions: layers, colors, five peoples, presence for peoples and faiths, control at region/system/planet level | `data/src/factions.json`, `data/src/regions/*.json`, `tools/build_map.py` | Each layer ≤15; every region and split planet has control set |
 | 1.13 | (done) Clock start | `data/src/clock.json` | 5029u, day 300 (Basin year 12), tidal day 5 of 73, open 9 more days |
-| 1.14 | Assemble `data/map.json`, run the Phase 1 test, tick the boxes in PLAN.md | `data/map.json`, `docs/PLAN.md` | Exit test passes |
+| 1.14 | (done) Assemble `data/map.json`, run the Phase 1 test, tick the boxes in PLAN.md | `data/map.json`, `docs/PLAN.md` | Exit test passes |
 
 Fixed in 1.4: R1 (stray alignments mapped to `independent` with the source wording kept as `alignmentNote`; the Glass Syndicate and the three faiths have no alignment), R6 (the Pale has two white dwarfs), R7 (every star in `data/parsed/regions.json` has a schema `kind`; `kindOrigin: invented` marks the ones the documents don't give, listed below), D7 (cycle days 1–73, open 1–14).
 

@@ -69,8 +69,9 @@ Task breakdown, review findings and open decisions: [PHASE1.md](PHASE1.md).
 - [x] Layer and color for each faction
 - [x] Add the five peoples; write presence for peoples and faiths
 - [x] Clock start in the data: 5029u, day 300, tidal cycle day 5
-- [ ] Assemble `data/map.json`
+- [x] Assemble `data/map.json`
 - **Test:** the file matches the schema; every reference resolves; every region has a star or special object.
+- **Result (Nov 25, 2026): passed.** `python3 tools/validate_map.py --complete` reports 0 errors and 0 warnings; 1,447 references resolve; every charted region has a system. Details in [PHASE1.md](PHASE1.md).
 
 ### Phase 2: 3D view
 - [ ] Regions and stars from JSON, instanced; unmapped stars dimmer

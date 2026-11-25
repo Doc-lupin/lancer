@@ -4,7 +4,7 @@ An interactive 3D map of a fictional universe, built as a web page (no installat
 
 The full plan is in [docs/PLAN.md](docs/PLAN.md). The original document is in `docs/`.
 
-Status: Phase 1 (complete the data) in progress on branch `phase-1`. Schema, validator and build script are done (`python3 tools/build_map.py` builds `data/map.json`); see [docs/PHASE1.md](docs/PHASE1.md) for the task list and the decisions it needs.
+Status: Phase 1 (complete the data) is done and its test passes, on branch `phase-1`. `data/map.json` holds the whole Basin: 155 systems, 329 bodies, 163 places, 37 lanes and 50 factions. Phase 2 (the 3D view) is next. See [docs/PHASE1.md](docs/PHASE1.md) and [docs/WORLDS.md](docs/WORLDS.md).
 
 ## Stack
 
