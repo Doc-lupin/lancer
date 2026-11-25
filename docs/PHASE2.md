@@ -1,6 +1,6 @@
 # Phase 2: 3D view — work plan
 
-**Status: not started.** Branch `phase-2`, cut from `main` on Nov 25, 2026. The Phase 1 test still passes on it (`python3 tools/validate_map.py --complete`: 0 errors, 0 warnings).
+**Status: in progress. Task 2.1 done.** Branch `phase-2`, cut from `main` on Nov 25, 2026. The Phase 1 test still passes on it (`python3 tools/validate_map.py --complete`: 0 errors, 0 warnings).
 
 Phase 2 checklist and test are in [PLAN.md](PLAN.md). This file breaks them into small tasks and lists what must be decided first.
 
@@ -52,7 +52,7 @@ One task = one session's work, touching only the files listed. Do them in order.
 | # | Task | Function | Files | Done when |
 |---|---|---|---|---|
 | 2.0 | Settle P1–P13 | — | `docs/PHASE2.md` | Answers recorded here |
-| 2.1 | App scaffold: Vite + React + R3F, one empty canvas filling the page | Continuous zoom | `package.json`, `package-lock.json`, `vite.config.js`, `index.html`, `src/main.jsx`, `src/views/Scene.jsx` | `npm run dev` shows a black canvas; `npm run build` passes |
+| 2.1 | (done) App scaffold: Vite + React + R3F, one empty canvas filling the page | Continuous zoom | `package.json`, `package-lock.json`, `vite.config.js`, `index.html`, `src/main.jsx`, `src/views/Scene.jsx` | `npm run dev` shows a black canvas; `npm run build` passes |
 | 2.2 | Store: load `map.json` once into Zustand; lookups by id; parent chain (body → system → region); "(WIP)" stripped for display, as in `tools/describe_world.py`; `playerMode` flag (P13) | Data storage | `src/storage/loadMap.js`, `src/data/store.js`, `src/data/names.js`, `src/data/store.test.js` | `node --test` loads the file and finds 24 regions, 155 systems, 329 bodies; every parent chain resolves |
 | 2.3 | Star kinds table (P8) | Continuous zoom | `src/data/starKinds.js`, `tools/check_star_kinds.py` | Every `kind` in `map.json` has a color and luminosity; the check passes |
 | 2.4 | Precision test, first, as the risk table asks: floating origin and log depth (P3, P4) with three test objects, one at each scale (ly, AU, km), and a scripted zoom from 50 ly to 1 km above a station | Continuous zoom | `src/views/origin.js`, `src/views/PrecisionTest.jsx`, `tools/check_jitter.mjs` | With the camera still, no test object moves more than half a pixel between frames at any step; no depth flicker. The GM looks at the screenshots |
@@ -75,3 +75,10 @@ Tasks 2.1–2.5 have no map content worth showing; the first look at the Basin c
 | 745 KB `map.json` on a phone connection | Fine for private use. If start-up is slow, gzip on the host serves it at about a tenth. |
 | Labels at every level crowd the screen | Labels only for the level in view and its children, fading with distance. |
 | Clicking small objects on a phone | Pick by screen distance to the icon, not by ray hit on the true-size mesh. |
+
+Notes from 2.1:
+- Pinned versions: three 0.187.0, react and react-dom 19.3.1, @react-three/fiber 9.8.2, @react-three/drei 10.7.9, zustand 5.1.0; dev tools vite 8.3.8 and @vitejs/plugin-react 6.3.0. Each was at least two weeks old when chosen, and the peer dependencies agree.
+- Checked with Playwright: on desktop (1280 × 800) and on Pixel 7 emulation the canvas fills the window at the device's pixel ratio and the page does not scroll. `touch-action: none` on the root sends touch gestures to the map (needed for pinch in 2.5).
+- The build is 1.1 MB (311 KB gzipped) with an empty scene, because React Three Fiber pulls in all of Three.js. Vite warns about chunks over 500 kB; the warning is left on for now. Fine for private use; revisit in Phase 5 if loading on a phone is slow.
+- The console shows one warning, "THREE.Clock: This module has been deprecated", coming from React Three Fiber 9.8.2 itself. Harmless; it goes away when R3F moves to `THREE.Timer`.
+
