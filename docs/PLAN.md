@@ -40,7 +40,7 @@ https://claude.ai/artifact/MDzMcUZF9q7TRJi2YMVwLC. V1 is `3D_Universe_Map_Tool_O
 
 ## Data rules
 
-- Hierarchy: Basin → region → system → body (planet, moon, station, structure, lane mouth).
+- Hierarchy: Basin → region → system → body (planet, moon, station, structure, lane mouth). A planet or moon can have surface places (towns, fronts, sites) with latitude and longitude.
 - Every region shows as stars at the Basin level. The Furnace and the Mire hold stars inside a nebula or dust cloud (region effect). In the Hollows and the Boneyard each "star" has a rogue planet or wreck at its center instead of a sun; the Orrery has its structure. A system's center can be a star, rogue planet, wreck or structure.
 - A lane connects two stars, not two regions. Known mouth stars: Brace, Marchwell. Invent the rest.
 - Control can be set at every level down to the planet view: region, system, planet (Scald is split on the planet).
@@ -75,7 +75,7 @@ Do not start a phase until the previous phase's test passes.
 - [ ] Camera controls, continuous zoom, floating origin
 - [ ] Faded lanes + lanes mode; one-way direction marks; drifting lanes broken
 - [ ] Nebula and dust-cloud effects; systems with a planet, wreck or structure at the center
-- [ ] System level (star, planets, orbits following the clock); planet level (planet, moons, stations)
+- [ ] System level (star, planets, orbits following the clock); planet level (planet, moons, stations, surface places on the globe)
 - **Test:** zoom Basin → planet and back without a break; no shaking; smooth on a phone.
 
 ### Phase 3: Interface
@@ -116,7 +116,6 @@ Do not start a phase until the previous phase's test passes.
 
 - [ ] How players get the map: sent file, hosted page, or live data (deferred to Phase 5)
 - [ ] Target number of unmapped stars ("more than a hundred")
-- [ ] Surface places (Kettle Flats, Sallow Ford, Kerrtown, the Reach, Dry Creek): pins on the sphere or notes only?
 
 ## Out of scope for the first release
 
