@@ -83,6 +83,8 @@ CASES = [
     ("complete: world without type", lambda m: find(m, "bodies", "scald-planet").pop("world"), True, "world"),
     ("variant of another world type", lambda m: find(m, "bodies", "scald-planet").update(variant="river-valley"), False, "world"),
     ("variant without a world type", lambda m: find(m, "bodies", "ostrom-iv").pop("world") and find(m, "bodies", "ostrom-iv").update(variant="cold"), False, "world"),
+    ("features that exclude each other", lambda m: find(m, "bodies", "scald-planet").update(worldFeatures=["moonless", "many-moons"]), False, "world"),
+    ("moon-only feature on a planet warns only", lambda m: find(m, "bodies", "scald-planet").update(worldFeatures=["dominant-parent"]), False, None),
     ("structure check only warns on missing data", lambda m: find(m, "factions", "kerr-varga").pop("color"), False, None),
 ]
 
@@ -104,6 +106,10 @@ def main():
     if world_catalog.render() not in world_catalog.DOC.read_text():
         failed += 1
         print("FAIL docs/WORLDS.md catalog is out of date: run python3 tools/world_catalog.py")
+    import describe_world
+    for problem in describe_world.check(world_catalog.load()):
+        failed += 1
+        print(f"FAIL template: {problem}")
     for k in world_catalog.schema_mismatches():
         failed += 1
         print(f"FAIL schema $defs.{k} enum differs from data/schema/worlds.json")

@@ -255,16 +255,18 @@ def check_hierarchy(m, ids, r, strict):
 
 
 def world_catalog():
-    """Type -> family, family -> usual habitability, type -> variant ids (data/schema/worlds.json)."""
+    """Families, usual habitability, variants and feature rules from data/schema/worlds.json."""
     cat = json.loads(CATALOG.read_text())
     family = {t["id"]: t["family"] for t in cat["types"]}
     usual = {f["id"]: set(f["habitability"]) for f in cat["families"]}
     variants = {t["id"]: {v["id"] for v in t["variants"]} for t in cat["types"]}
-    return family, usual, variants
+    features = {f["id"]: {"excludes": set(f.get("excludes", [])), "bodies": f.get("bodies") or g.get("bodies")}
+                for g in cat["featureGroups"] for f in g["features"]}
+    return family, usual, variants, features
 
 
 def check_worlds(m, r, strict):
-    family, usual, variants = world_catalog()
+    family, usual, variants, features = world_catalog()
     for b in m["bodies"]:
         w = f"bodies/{b['id']}"
         t, hab = b.get("world"), b.get("habitability")
@@ -286,6 +288,15 @@ def check_worlds(m, r, strict):
         v = b.get("variant")
         if v is not None and (t is None or v not in variants.get(t, set())):
             r.error("world", w, f"variant '{v}' is not a variant of world type '{t}' (see docs/WORLDS.md)")
+        for f in b.get("worldFeatures", []):
+            info = features.get(f)
+            if info is None:
+                continue
+            clash = [x for x in info["excludes"] if x in b.get("worldFeatures", []) and x > f]
+            for x in clash:
+                r.error("world", w, f"features '{f}' and '{x}' exclude each other")
+            if info["bodies"] and b["type"] not in info["bodies"]:
+                r.warn("world", w, f"feature '{f}' is meant for {', '.join(info['bodies'])}, not a {b['type']}")
         if hab == "none" and b["type"] != "gas-giant":
             r.error("world", w, "habitability 'none' is for gas giants; a solid world is at least 'lethal'")
 

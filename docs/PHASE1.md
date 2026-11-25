@@ -50,7 +50,7 @@ Each has a recommended default. The schema task (1.1) needs D1–D6. The others 
 | D15 | Calendar | Union year of 365 days; Basin year = Union year − 5017. |
 | D16 | Stellar variety (raised by the GM, Nov 25) | Not every star a dwarf. Canon types stay; invented ones spread across the full range (see Stellar variety below). |
 | D17 | Variety in canon stars too (GM, Nov 25) | Decided: some canon star types change. Each change keeps the documents' wording in `type`, is marked `kindOrigin: invented`, and is listed under Departures from the documents. |
-| D18 | Variety in worlds (GM, Nov 25) | Decided: 71 world types in 9 families with 218 variants, 56 features, habitability and climate. Catalog source: `data/schema/worlds.json` (the schema holds the id lists). Guide, canon assignments and catalog: [WORLDS.md](WORLDS.md). The Phase 1 test requires a world type on every planet, moon and giant. |
+| D18 | Variety in worlds (GM, Nov 25) | Decided: 71 world types in 9 families with 218 variants, 245 features in 15 groups, habitability and climate. All text except class descriptions is a template naming the world; `tools/describe_world.py` composes a world's entry. Catalog source: `data/schema/worlds.json` (the schema holds the id lists). Guide, canon assignments and catalog: [WORLDS.md](WORLDS.md). The Phase 1 test requires a world type on every planet, moon and giant. |
 
 ## Canon hints gathered from the documents
 
