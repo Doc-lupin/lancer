@@ -1,106 +1,129 @@
-# 3D Universe Map Tool: Plan
+# 3D Universe Map Tool: Action Plan V2
 
-Condensed from `3D_Universe_Map_Tool_Overview_and_Action_Plan.docx` (Nov 24, 2026).
+Repository copy of the V2 plan (Nov 25, 2026). The shared document is at
+https://claude.ai/artifact/MDzMcUZF9q7TRJi2YMVwLC. V1 is `3D_Universe_Map_Tool_Overview_and_Action_Plan.docx`.
 
-## View levels
+## Design decisions
 
-One continuous zoom, with no cuts or scene changes between levels:
-
-- **Basin**: the whole bubble, with regions as clusters of stars.
-- **Region**: the 2 to 12 stars of one region and their local lanes.
-- **System**: one star, its planets and their orbits.
-- **Planet**: one planet, its moons and its stations.
-
-## Design decisions (Nov 25, 2026)
-
-- **Continuous zoom.** The camera flies smoothly from the whole Basin down to one planet. The "Back" buttons become "zoom out to the parent level".
-- **Real distance.** Stars sit at plausible physical positions in a rough sphere about 50 ly across. Lanes are drawn faded by default. A **lanes mode** makes the lanes bright and clear and labels them with days and type.
-- **Unmapped systems.** Stars that exist but aren't charted are drawn dimmer. The Basin has more than 100 stars and only a fraction are on the official map.
-- **Missing systems and planets** will be invented to fill out each region. Every object carries an origin tag (`canon` / `invented`) during production to help with cuts. The tag can be dropped before release.
-- **Affiliation layers.** Swappable map overlays: governments, corporations, cultures (peoples), religions, and possibly outlaws and armed companies. Each faction gets a layer category and a color.
-- **Contested control** is drawn as stripes in the colors of the factions involved.
-- **Player mode** only hides GM notes in the interface. Players are trusted, so there is no separate player file.
-- **Positions** are generated from the chart layout and then adjusted by hand (`tools/generate_positions.py`; locked values survive regeneration).
-- **Instancing** for stars and icons, as planned.
-- **Tidal lanes are always drawn.** Their brightness fades with the 73-day tidal cycle: bright while open (about 14 days), dim while closed. The cycle is driven by the dashboard's current system time, so the GM sets or advances a single in-game clock.
-
-## Open questions
-
-- Data needed for the cultures and religions layers: which regions each people or faith is present in, and how strongly.
-- Where the dashboard clock starts: the in-game date of the opening session, and which day of the 73-day cycle it falls on.
+| Subject | Decision |
+|---|---|
+| Zoom | One continuous zoom: Basin → region → system → planet. Click flies to an object; zoom out goes to the parent level. No scene changes, no Back buttons. |
+| Distance | Real 3D positions in a ~50 ly sphere. Lane days are not tied to distance. |
+| Positions | Generated from the chart (`tools/generate_positions.py`), then hand-adjusted. Locked values survive regeneration. |
+| Lanes | Faded by default. Lanes mode makes them bright with day/type labels. |
+| Tidal lanes | Always drawn; bright when open (~14 of 73 days), dim when closed, driven by the dashboard clock. |
+| Unmapped stars | Drawn dimmer. |
+| Invented content | Origin tag on every object (`canon` / `invented`) to help with cuts. |
+| Affiliation layers | Swappable: governments, corporations, cultures, religions. One layer and one color per faction. |
+| Contested areas | Stripes in the colors of the factions involved. |
+| Player mode | Hides GM notes in the interface only. Players are trusted; no separate player file. |
+| Performance | Instancing for stars and icons. |
 
 ## Functions
 
-| Function                 | Description                                                              | Priority |
-|--------------------------|--------------------------------------------------------------------------|----------|
-| View control             | Turn, move and zoom the camera. Click an object to move the camera to it. | 1 |
-| Level change             | Sector → system → planet, and back.                                       | 1 |
-| Object data              | Panel with name, type and notes of the selected object.                   | 1 |
-| Data storage             | All map data in one JSON file. Save and load it.                          | 1 |
-| Regional control         | A faction for each system; faction borders in faction color.              | 2 |
-| Units                    | Unit icon on a system with owner, size, notes.                            | 2 |
-| Unit movement            | Line for each move order; unit moves along the lane.                      | 2 |
-| Text boxes               | Attached to an object, or placed on the screen.                           | 2 |
-| News ticker              | Headlines scrolling along the bottom of the screen.                       | 2 |
-| GM mode / player mode    | GM edits data; GM notes hidden from players.                              | 2 |
-| Search                   | Find an object by name.                                                   | 3 |
-| Timeline                 | Record of changes; show the map at an earlier date.                       | 3 |
+| Function | Priority |
+|---|---|
+| Continuous zoom | 1 |
+| Object data panel | 1 |
+| Data storage (one JSON file) | 1 |
+| Lanes mode | 1 |
+| Dashboard clock | 2 |
+| Tidal fade | 2 |
+| Affiliation layers + contested stripes | 2 |
+| Units, unit movement | 2 |
+| Text boxes, news ticker | 2 |
+| GM mode / player mode | 2 |
+| Search, timeline | 3 |
+
+## Data rules
+
+- Hierarchy: Basin → region → system → body (planet, moon, station, structure, lane mouth).
+- Region types: star system, nebula (Furnace), dust cloud (Mire), rogue worlds (Hollows), central structure (Orrery), wreck field (Boneyard).
+- A lane connects two stars, not two regions. Known mouth stars: Brace, Marchwell. Invent the rest.
+- Control can be set at region, system or planet level (Scald is split on the planet).
+- Every object has an origin tag and a visibility tag (`all` / `gm`).
 
 ## Phases
 
 Do not start a phase until the previous phase's test passes.
 
-### Phase 1: Prepare the data
-- [ ] List star systems, planets, moons and stations (name, type, position, notes, origin tag)
-- [ ] Invent the missing systems and planets; place all stars in 3D
-- [ ] List factions (name, color, layer category)
-- [ ] Write the JSON schema
-- [ ] Fill `data/map.json` with a small set (5–10 systems)
-- **Test:** the JSON file opens without errors; every object has all its fields.
+### Phase 0: Setup (done)
+- [x] Work directory and layout
+- [x] Parse the five source documents into `data/parsed/`
+- [x] Generate first 3D region positions
 
-### Phase 2: Make the 3D views
-- [ ] Sector view from the JSON file
-- [ ] Camera controls (OrbitControls)
-- [ ] Continuous zoom through Basin → region → system → planet
-- [ ] Faded lanes by default; lanes mode toggle
-- [ ] Dim rendering for unmapped stars
-- [ ] Tidal lanes fade with the cycle, driven by the dashboard clock
-- [ ] System view (click a system)
-- [ ] Orbits, with planets moving along them
-- [ ] Planet view (click a planet)
-- [ ] Back button on each view
-- **Test:** sector → planet → back works; no jitter when zooming.
+### Phase 1: Complete the data
+- [ ] JSON schema: Basin, region, system, body, lane, faction, unit, text box, headline, clock
+- [ ] Region types; origin and visibility tags
+- [ ] Hand-adjust and lock region positions
+- [ ] Stars in each region, with positions
+- [ ] Unmapped stars
+- [ ] Missing planets, moons and stations (invented tag)
+- [ ] Attach each lane to a star at each end
+- [ ] Layer and color for each faction
+- [ ] Add the five peoples; write presence for peoples and faiths
+- [ ] Clock start date and tidal cycle day
+- [ ] Assemble `data/map.json`
+- **Test:** the file matches the schema; every reference resolves; every region has a star or special object.
 
-### Phase 3: Add the interface
+### Phase 2: 3D view
+- [ ] Regions and stars from JSON, instanced; unmapped stars dimmer
+- [ ] Camera controls, continuous zoom, floating origin
+- [ ] Faded lanes + lanes mode; one-way direction marks; drifting lanes broken
+- [ ] Special regions (nebula, dust cloud, rogue worlds, Orrery, wrecks)
+- [ ] System level (star, planets, orbits); planet level (planet, moons, stations)
+- **Test:** zoom Basin → planet and back without a break; no shaking; smooth on a phone.
+
+### Phase 3: Interface
 - [ ] Data panel
-- [ ] Text boxes
-- [ ] News ticker
-- [ ] Search box
-- **Test:** panels show correct data and don't cover too much of the 3D view.
+- [ ] Dashboard clock; tidal lanes fade from it
+- [ ] Text boxes, news ticker, search
+- **Test:** panels show correct data; a clock change updates tidal lanes immediately; panels don't hide too much of the view.
 
-### Phase 4: Add the strategy functions
-- [ ] Regional control (GM sets faction per system)
-- [ ] Faction borders, with stripes for contested areas
-- [ ] Swappable affiliation layers (governments, corporations, cultures, religions)
-- [ ] Units placed by the GM
-- [ ] Move orders and unit movement
+### Phase 4: Strategy functions
+- [ ] Affiliation layers and selector
+- [ ] Control areas; stripes for contested areas
+- [ ] Units, move orders, unit movement
 - [ ] GM mode and player mode
-- **Test:** a control change redraws the border immediately; player mode hides GM notes.
+- **Test:** a control change redraws immediately; each layer shows the right factions; player mode hides GM notes.
 
-### Phase 5: Save, test and release
+### Phase 5: Save, test, release
 - [ ] Save/load via JSON export
-- [ ] Database storage, if players need live changes
-- [ ] Test on a computer and a phone
-- [ ] Test session with one player; fix what it shows
-- **Test:** data stays correct after closing and reopening the tool.
+- [ ] Decide how players get the map
+- [ ] Remove or hide origin tags if wanted
+- [ ] Test on computer and phone; test session with one player; fix findings
+- **Test:** data stays correct after closing and reopening.
 
 ## Risks
 
-| Risk                     | Result                                   | Corrective action |
-|--------------------------|------------------------------------------|-------------------|
-| Large distances          | Objects shake when zoomed near           | Continuous zoom rules out separate scenes. Use a floating origin (re-center the world on the focused object), a logarithmic depth buffer, and per-level unit scales |
-| Too many objects         | Slow view, mostly on phones              | Instancing for stars and icons |
-| Code file too large      | LLM loses track; changes break other parts | Small files: data, views, interface, storage |
-| Data in several places   | Panels and 3D view disagree              | One Zustand store |
-| Planet surfaces          | Flyable terrain is a lot of work         | Textured sphere with clouds and atmosphere; no terrain in first release |
-| Data loss                | Changes lost when the page closes        | Export the JSON file after each session |
+| Risk | Corrective action |
+|---|---|
+| Large range of scale (~10^13) | Floating origin, logarithmic depth buffer, units per level (ly / AU / km). Test first in Phase 2. |
+| Too many objects | Instancing; less detail at a distance. |
+| Special regions need volume effects | Simple glow or particle cloud first. |
+| 45 faction colors | One layer at a time (<15 factions each); stripes and labels. |
+| Invented data volume | Inner regions first; less detail at the frontier. |
+| Large code files | Small files: data, views, interface, storage. |
+| Data in several places | One Zustand store. |
+| Planet surfaces | Textured sphere with clouds and atmosphere. |
+| Data loss | Export JSON after each session; keep it in Git. |
+
+## Open items
+
+- [ ] Clock format (e.g. 5029u, day 300; show Basin year 12?)
+- [ ] Do planet orbits follow the clock or move only for effect?
+- [ ] How players get the map: sent file, hosted page, or live data
+- [ ] Public hosting: the setting uses Lancer RPG names; read the Massif Press third-party license first
+- [ ] Naming style for invented objects, by arm or culture
+- [ ] Target number of unmapped stars ("more than a hundred")
+- [ ] Surface places (Kettle Flats, Sallow Ford, Kerrtown, the Reach, Dry Creek): pins on the sphere or notes only?
+
+## Out of scope for the first release
+
+- Flyable terrain
+- Full volume effects for nebula and dust cloud
+- Full local lanes (show a few in region view)
+- Lane drift animation
+- Route planning and travel-time calculation
+- Drag-to-move positions in 3D (edit the JSON)
+- Ship-level combat or tactical maps
