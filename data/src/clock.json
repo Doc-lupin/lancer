@@ -1,0 +1,8 @@
+{
+  "_comment": "Task 1.13. The dashboard clock's starting state. Union calendar of 365 days (D15); Basin year = Union year - 5017, so 5029u is Basin year 12. Orbit phases are given at the epoch, 5029u day 1. The Lantern tide runs 73 days, open on cycle days 1-14 (D7); on day 300 it is on cycle day 5, so tidal lanes are open for 9 more days. Late 5029u fits the sources: the drone came through about four months earlier, and Kasprzak was last seen in early summer.",
+  "daysPerYear": 365,
+  "basinYearOffset": 5017,
+  "epoch": {"year": 5029, "day": 1},
+  "current": {"year": 5029, "day": 300},
+  "lanternTide": {"cycleDays": 73, "openDays": 14, "anchor": {"date": {"year": 5029, "day": 300}, "cycleDay": 5}}
+}

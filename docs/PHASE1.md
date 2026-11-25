@@ -29,7 +29,7 @@ Problems to fix during Phase 1:
 
 Each has a recommended default. The schema task (1.1) needs D1–D6. The others can wait until their task.
 
-**Decided Nov 25, 2026:** D1–D7 as recommended; D9, D10 and D12 applied as recommended in task 1.7; D8 applied as recommended in task 1.10; D11 applied as recommended in task 1.11 (40 unmapped stars); D13 and D14 decided as recommended in task 1.12, with the Synod in both the governments and the faiths layers (it holds Pennant and is worshipped across the Basin). D15 is still open.
+**Decided Nov 25, 2026:** D1–D7 as recommended; D9, D10 and D12 applied as recommended in task 1.7; D8 applied as recommended in task 1.10; D11 applied as recommended in task 1.11 (40 unmapped stars); D13 and D14 decided as recommended in task 1.12, with the Synod in both the governments and the faiths layers (it holds Pennant and is worshipped across the Basin); D15 applied as recommended in task 1.13. All decisions are now settled.
 
 | # | Question | Recommended |
 |---|---|---|
@@ -89,7 +89,7 @@ One task = one session's work, touching only the files listed. Do them in order.
 | 1.10 | (done) Lane mouths: every lane end attached to a system and a lane-mouth body (D2, D8) | `data/src/lanes.json`, `data/src/regions/*.json` | Every lane end resolves to a system |
 | 1.11 | (done) 40 unmapped stars (D11, D12) | `data/src/unmapped.json` | Count matches D11; all inside the sphere |
 | 1.12 | (done) Factions: layers, colors, five peoples, presence for peoples and faiths, control at region/system/planet level | `data/src/factions.json`, `data/src/regions/*.json`, `tools/build_map.py` | Each layer ≤15; every region and split planet has control set |
-| 1.13 | Clock start | `data/src/clock.json` | 5029u, day 300, tidal day 5 |
+| 1.13 | (done) Clock start | `data/src/clock.json` | 5029u, day 300 (Basin year 12), tidal day 5 of 73, open 9 more days |
 | 1.14 | Assemble `data/map.json`, run the Phase 1 test, tick the boxes in PLAN.md | `data/map.json`, `docs/PLAN.md` | Exit test passes |
 
 Fixed in 1.4: R1 (stray alignments mapped to `independent` with the source wording kept as `alignmentNote`; the Glass Syndicate and the three faiths have no alignment), R6 (the Pale has two white dwarfs), R7 (every star in `data/parsed/regions.json` has a schema `kind`; `kindOrigin: invented` marks the ones the documents don't give, listed below), D7 (cycle days 1–73, open 1–14).

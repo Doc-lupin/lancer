@@ -68,7 +68,7 @@ Task breakdown, review findings and open decisions: [PHASE1.md](PHASE1.md).
 - [x] Attach each lane to a star at each end
 - [x] Layer and color for each faction
 - [x] Add the five peoples; write presence for peoples and faiths
-- [ ] Clock start in the data: 5029u, day 300, tidal cycle day 5
+- [x] Clock start in the data: 5029u, day 300, tidal cycle day 5
 - [ ] Assemble `data/map.json`
 - **Test:** the file matches the schema; every reference resolves; every region has a star or special object.
 
