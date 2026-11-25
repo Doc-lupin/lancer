@@ -1,5 +1,6 @@
 {
   "_comment": "Task 1.9 (frontier). Lattice crusts lie thickest on the hemispheres facing the white dwarfs.",
+  "region": {"presence": [{"faction": "survey-office"}, {"faction": "corvel"}, {"faction": "charter-folk", "strength": "minor", "note": "Survey Office scientists"}]},
   "systems": [
     {"id": "shroud-system", "name": "Shroud (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "pale", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "white-dwarf", "features": ["planetary-nebula"]}, "notes": "Dying white dwarf, still inside the glowing shell it shed. Airless worlds near it carry lattice crusts."},
     {"id": "wane-system", "name": "Wane (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "pale", "charted": true, "offset": [-0.67, 0.04, -0.07], "center": {"type": "star", "kind": "white-dwarf"}, "notes": "Cold white dwarf. Airless worlds near it carry lattice crusts. The Survey Office station is here."},

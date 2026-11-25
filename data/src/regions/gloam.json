@@ -1,5 +1,6 @@
 {
   "_comment": "Task 1.8 (spinward). Gloam faces its star at lon 0; the twilight band runs along lon 90 and -90, the night side beyond.",
+  "region": {"presence": [{"faction": "coldwell-claims"}, {"faction": "charter-folk", "strength": "minor", "note": "Armory officers who came with the garrison"}, {"faction": "tail", "strength": "minor", "note": "The Coldwell miners"}, {"faction": "basin-born", "strength": "minor"}, {"faction": "seam-crews", "strength": "major", "note": "The night-side workings"}, {"faction": "listeners", "strength": "minor"}]},
   "systems": [
     {"id": "gloam-system", "name": "Gloam", "origin": "canon", "visibility": "all", "region": "gloam", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "red-dwarf", "features": ["starspots"]}, "notes": "Dim red star, heavily spotted; its light wavers over weeks. Gloam is tidally locked to it."},
     {"id": "ember-system", "name": "Ember (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "gloam", "charted": true, "offset": [0.61, -0.39, -0.4], "center": {"type": "star", "kind": "orange-giant"}, "notes": "Cool orange giant a few hours from Gloam, with an asteroid belt and little else.", "_comment": "Departs from the documents (D17); see docs/PHASE1.md."}

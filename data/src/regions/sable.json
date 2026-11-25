@@ -1,5 +1,6 @@
 {
   "_comment": "Task 1.8 (trailing). No worlds worth the name: moonlets, the port and the staging yards.",
+  "region": {"presence": [{"faction": "tallymen"}, {"faction": "rimelight"}, {"faction": "tail", "strength": "major", "note": "Harbormasters, brokers and captains"}]},
   "systems": [
     {"id": "sable-system", "name": "Sable", "origin": "canon", "visibility": "all", "region": "sable", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "brown-dwarf"}, "notes": "Dim brown dwarf with a handful of dark moonlets. Sable Harbor is moored around the largest."},
     {"id": "jet-system", "name": "Jet (WIP)", "origin": "invented", "visibility": "all", "region": "sable", "charted": true, "offset": [-0.09, -0.31, -0.15], "center": {"type": "star", "kind": "white-dwarf"}, "notes": "Faint white dwarf a few hours from Sable.", "_comment": "D9 companion."},

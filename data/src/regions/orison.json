@@ -1,9 +1,10 @@
 {
   "_comment": "Task 1.8 (coreward). Orison's settled coast faces east around lon 30.",
+  "region": {"presence": [{"faction": "gardeners", "strength": "major", "note": "Numerous on Orison; they oppose mining of any kind"}, {"faction": "hallorans-heirs"}, {"faction": "tail", "strength": "major", "note": "Tail colonists who paid for a garden world"}, {"faction": "basin-born", "strength": "minor"}]},
   "systems": [
     {"id": "orison-system", "name": "Orison", "origin": "canon", "visibility": "all", "region": "orison", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "orange-dwarf"}, "notes": "Primary of the failing garden world Orison.", "_comment": "Star kind not given in the documents (R7, D16)."},
     {"id": "vesper-system", "name": "Vesper (WIP)", "origin": "invented", "visibility": "all", "region": "orison", "charted": true, "offset": [-0.27, 0.48, 1.09], "center": {"type": "star", "kind": "white-star"}, "notes": "Bright white star at the edge of the region. The tidal mouth to Gloam opens here.", "_comment": "D9 companion."},
-    {"id": "matins-system", "name": "Matins (WIP)", "origin": "invented", "visibility": "all", "region": "orison", "charted": true, "offset": [0.9, -0.6, -0.4], "center": {"type": "star", "kind": "yellow-dwarf"}, "notes": "Yellow dwarf a few hours from Orison, surveyed by the Assembly as a possible refuge."},
+    {"id": "matins-system", "name": "Matins (WIP)", "origin": "invented", "visibility": "all", "region": "orison", "charted": true, "offset": [0.9, -0.6, -0.4], "center": {"type": "star", "kind": "yellow-dwarf"}, "notes": "Yellow dwarf a few hours from Orison, surveyed by the Assembly as a possible refuge.", "control": {"status": "held", "holders": ["orison-assembly"]}},
     {"id": "compline-system", "name": "Compline (WIP)", "origin": "invented", "visibility": "all", "region": "orison", "charted": true, "offset": [-0.7, -0.5, 0.7], "center": {"type": "star", "kind": "red-dwarf", "features": ["flares"]}, "notes": "Flaring red dwarf at the quiet edge of the region."}
   ],
   "bodies": [

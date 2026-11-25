@@ -1,5 +1,6 @@
 {
   "_comment": "Task 1.8 (trailing). Russet is tidally locked to Lumen; its sub-Lumen point is lon 0.",
+  "region": {"presence": [{"faction": "gatherers-guild"}, {"faction": "tail", "strength": "major"}, {"faction": "basin-born", "strength": "minor"}]},
   "systems": [
     {"id": "lumen-system", "name": "Lumen", "origin": "canon", "visibility": "all", "region": "lumen", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "brown-dwarf"}, "notes": "Brown dwarf glowing dull red; it lights its single large moon, home of Lumen Station, in shades of rust."},
     {"id": "kiln-system", "name": "Kiln (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "lumen", "charted": true, "offset": [-0.26, 0.48, 0.09], "center": {"type": "star", "kind": "orange-dwarf"}, "notes": "Orange dwarf a few hours from Lumen with metal-rich rocky planets."},

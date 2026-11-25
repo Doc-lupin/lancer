@@ -1,5 +1,6 @@
 {
   "_comment": "Task 1.8 (spinward). Halvard orbits far out from its yellow giant (D17).",
+  "region": {"presence": [{"faction": "purview"}, {"faction": "ferrous-consolidated"}, {"faction": "seventh"}, {"faction": "tail", "strength": "major", "note": "Mercer-Ibarra came through with the tail"}, {"faction": "basin-born", "strength": "minor"}, {"faction": "seam-crews", "strength": "minor"}]},
   "systems": [
     {"id": "halvard-system", "name": "Halvard", "origin": "canon", "visibility": "all", "region": "halvard", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "yellow-giant"}, "notes": "Yellow giant. The gas giant Halvard orbits far out.", "_comment": "Departs from the documents (D17); see docs/PHASE1.md."},
     {"id": "gaff-system", "name": "Gaff (WIP)", "origin": "invented", "visibility": "all", "region": "halvard", "charted": true, "offset": [-0.44, 0.03, 0.63], "center": {"type": "star", "kind": "orange-dwarf"}, "notes": "Orange dwarf a few hours from Halvard.", "_comment": "D9 companion."},

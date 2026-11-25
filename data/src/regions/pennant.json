@@ -1,5 +1,6 @@
 {
   "_comment": "Task 1.8 (coreward). Pennant's continents: northern lat 22 to 72, southern lat -8 to -62.",
+  "region": {"presence": [{"faction": "corvel"}, {"faction": "lantern-company"}, {"faction": "tail", "strength": "major", "note": "The Synod's congregations came out of the tail"}, {"faction": "basin-born", "strength": "minor"}, {"faction": "synod", "strength": "major", "note": "The Synod's home and seat"}, {"faction": "gardeners", "strength": "minor"}]},
   "systems": [
     {"id": "pennant-system", "name": "Pennant", "origin": "canon", "visibility": "all", "region": "pennant", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "yellow-white-star"}, "notes": "Bright yellow-white star, primary of the garden world Pennant, which orbits far out on a long, slightly eccentric year.", "_comment": "Star kind not given in the documents (R7, D16)."},
     {"id": "tew-system", "name": "Tew", "origin": "canon", "visibility": "all", "region": "pennant", "charted": true, "offset": [0.13, 0.3, -0.13], "center": {"type": "star", "kind": "orange-giant"}, "notes": "Orange giant a few hours from Pennant. Its mining worlds are baked bare.", "_comment": "Departs from the documents (D17); see docs/PHASE1.md."},

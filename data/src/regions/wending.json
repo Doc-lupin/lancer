@@ -1,5 +1,6 @@
 {
   "_comment": "Task 1.8 (coreward). Wending's settled lagoons lie in an archipelago around lon 120 to 170.",
+  "region": {"presence": [{"faction": "long-families"}, {"faction": "tail", "strength": "major", "note": "Lagoon towns and the Long Families"}, {"faction": "basin-born", "strength": "minor"}, {"faction": "synod", "strength": "minor", "note": "Cosmopolitan crews of the Long Families"}]},
   "systems": [
     {"id": "wending-system", "name": "Wending", "origin": "canon", "visibility": "all", "region": "wending", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "blue-white-star"}, "notes": "Hot blue-white star, primary of the ocean world Wending."},
     {"id": "neap-system", "name": "Neap (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "wending", "charted": true, "offset": [-0.1, -0.34, -0.1], "center": {"type": "star", "kind": "red-dwarf"}, "notes": "Dim red dwarf, seen from Wending's surface only at night.", "_comment": "Star kind not given in the documents (R7, D16)."},

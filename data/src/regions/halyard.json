@@ -1,5 +1,6 @@
 {
   "_comment": "Task 1.8 (trailing). Ice and comets; Halyard Station anchored to Splinter.",
+  "region": {"presence": [{"faction": "cormorants"}, {"faction": "tail", "strength": "major", "note": "The Free Lines' crews"}, {"faction": "basin-born", "strength": "minor"}, {"faction": "synod", "strength": "minor", "note": "Cosmopolitan crews among the convoys"}]},
   "systems": [
     {"id": "halyard-system", "name": "Halyard", "origin": "canon", "visibility": "all", "region": "halyard", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "red-dwarf"}, "notes": "Small dim star of the largest system, where Halyard Station is anchored to a shattered ice moon.", "_comment": "Star kind not given in the documents (R7, D16)."},
     {"id": "sheet-system", "name": "Sheet (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "halyard", "charted": true, "offset": [-0.43, 0.25, 0.51], "center": {"type": "star", "kind": "red-dwarf"}, "notes": "Small dim star; comets and ice moons.", "_comment": "Star kind not given in the documents (R7, D16)."},

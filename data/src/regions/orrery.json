@@ -1,5 +1,6 @@
 {
   "_comment": "Task 1.9 (frontier). The nine worlds have periods of 20 to 180 days in exact 1:2:...:9 ratios.",
+  "region": {"presence": [{"faction": "survey-office"}, {"faction": "hallorans-heirs"}, {"faction": "charter-folk", "strength": "minor", "note": "Survey Office scientists"}]},
   "systems": [
     {"id": "orrery-system", "name": "The Orrery", "origin": "canon", "visibility": "all", "region": "orrery", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "structure", "body": "orrery-structure"}, "notes": "Nine worlds circle a single Absent structure. A red dwarf several light-hours away lights them faintly."}
   ],

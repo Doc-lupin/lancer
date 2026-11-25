@@ -1,7 +1,8 @@
 {
   "_comment": "Task 1.8 (rimward). Tarn far out from a bright white star; rings at 150,000 to 250,000 km.",
+  "region": {"presence": [{"faction": "rimelight"}, {"faction": "tail", "strength": "minor", "note": "Ringwreckers and salvagers"}, {"faction": "seam-crews", "strength": "minor", "note": "Ice-melters in the rings"}]},
   "systems": [
-    {"id": "tarn-system", "name": "Tarn", "origin": "canon", "visibility": "all", "region": "tarn", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "white-star"}, "notes": "Bright white star. Tarn orbits far out and stays cold, but its rings catch enough light to be seen from neighboring stars.", "_comment": "Star kind not given in the documents (R7, D16)."},
+    {"id": "tarn-system", "name": "Tarn", "origin": "canon", "visibility": "all", "region": "tarn", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "white-star"}, "notes": "Bright white star. Tarn orbits far out and stays cold, but its rings catch enough light to be seen from neighboring stars.", "_comment": "Star kind not given in the documents (R7, D16).", "control": {"status": "contested", "holders": ["basin-office", "smith-shimano", "ringwreckers"]}},
     {"id": "mere-system", "name": "Mere (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "tarn", "charted": true, "offset": [-0.1, 0.12, -0.37], "center": {"type": "star", "kind": "red-dwarf"}, "notes": "Red dwarf a few hours from Tarn.", "_comment": "Star kind not given in the documents (R7, D16)."},
     {"id": "lough-system", "name": "Lough (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "tarn", "charted": true, "offset": [0.87, -0.16, -0.01], "center": {"type": "star", "kind": "brown-dwarf"}, "notes": "Brown dwarf a few hours from Tarn.", "_comment": "Star kind not given in the documents (R7, D16)."}
   ],

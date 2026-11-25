@@ -1,9 +1,10 @@
 {
   "_comment": "Task 1.8 (rimward). Cairn's worked ground lies around lat -10, lon 30.",
+  "region": {"presence": [{"faction": "southern-league"}, {"faction": "listeners"}, {"faction": "seam-crews", "strength": "minor", "note": "Kerr-Varga's mine crews"}]},
   "systems": [
     {"id": "cairn-system", "name": "Cairn", "origin": "canon", "visibility": "all", "region": "cairn", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "orange-dwarf"}, "notes": "Primary of the cold, cloudy world Cairn.", "_comment": "Star kind not given in the documents (R7, D16)."},
     {"id": "barrow-system", "name": "Barrow (WIP)", "origin": "invented", "visibility": "all", "region": "cairn", "charted": true, "offset": [-0.8, -1.06, -0.33], "center": {"type": "star", "kind": "subgiant"}, "notes": "Subgiant at the edge of the region. The one-way lane to the Deeps opens here.", "_comment": "D9 companion."},
-    {"id": "dolmen-system", "name": "Dolmen (WIP)", "origin": "invented", "visibility": "all", "region": "cairn", "charted": true, "offset": [0.7, 0.6, 0.5], "center": {"type": "star", "kind": "red-dwarf"}, "notes": "Red dwarf a few hours from Cairn."}
+    {"id": "dolmen-system", "name": "Dolmen (WIP)", "origin": "invented", "visibility": "all", "region": "cairn", "charted": true, "offset": [0.7, 0.6, 0.5], "center": {"type": "star", "kind": "red-dwarf"}, "notes": "Red dwarf a few hours from Cairn.", "control": {"status": "held", "holders": ["southern-league"]}}
   ],
   "bodies": [
     {"id": "cairn-i", "name": "Cairn I (WIP)", "origin": "invented", "visibility": "all", "system": "cairn-system", "type": "planet", "class": "iron world", "world": "iron", "variant": "rust", "habitability": "hostile", "climate": "hot", "orbit": {"distance": 0.3, "unit": "au", "periodDays": 71.7, "phaseDeg": 40}, "radiusKm": 2500, "appearance": {"color": "#5a5048"}},

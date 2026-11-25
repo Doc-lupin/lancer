@@ -1,5 +1,6 @@
 {
   "_comment": "Task 1.9 (frontier). The garden worlds: Verdance (Taper), Stillwater (Wick), Verdigris (Sconce), Halcyon (Votive), Meridian (Beacon), Nocturne (Glimmer).",
+  "region": {"presence": [{"faction": "reach-companies"}, {"faction": "corvel"}, {"faction": "synod"}, {"faction": "tail", "strength": "minor", "note": "Reach company colonists"}, {"faction": "gardeners", "strength": "minor"}]},
   "systems": [
     {"id": "cresset-system", "name": "Cresset (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "lantern-reach", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "orange-giant", "variable": {"cycle": "lantern", "amplitude": 0.4}}, "notes": "The brightest of the nine Lantern stars; its pulse is visible from Pennant.", "_comment": "Star kind not given in the documents (R7, D16)."},
     {"id": "taper-system", "name": "Taper (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "lantern-reach", "charted": true, "offset": [-0.42, -0.45, 0.51], "center": {"type": "star", "kind": "yellow-dwarf", "variable": {"cycle": "lantern", "amplitude": 0.4}}, "notes": "One of the nine Lantern stars. Primary of the garden world Verdance.", "_comment": "Star kind not given in the documents (R7, D16)."},

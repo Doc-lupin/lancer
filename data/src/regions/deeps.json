@@ -1,5 +1,6 @@
 {
   "_comment": "Task 1.9 (frontier). Ashlar at Relict under quarantine; WAYMARK and the Unlit are GM-only.",
+  "region": {"presence": [{"faction": "unlit"}, {"faction": "survey-office"}, {"faction": "charter-folk", "strength": "minor", "note": "Survey Office quarantine picket"}]},
   "systems": [
     {"id": "elder-system", "name": "Elder (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "deeps", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "red-giant"}, "notes": "One of the Deeps' unusually old stars.", "_comment": "Star kind not given in the documents (R7, D16)."},
     {"id": "sere-system", "name": "Sere (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "deeps", "charted": true, "offset": [0.21, 0.37, -0.19], "center": {"type": "star", "kind": "orange-giant"}, "notes": "One of the Deeps' unusually old stars.", "_comment": "Star kind not given in the documents (R7, D16)."},

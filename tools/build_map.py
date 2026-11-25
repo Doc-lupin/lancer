@@ -39,11 +39,11 @@ CANON = {"origin": "canon", "visibility": "all"}
 EFFECTS = {"furnace": "nebula", "mire": "dust-cloud"}
 
 # Regions the Factions doc marks "Contested" without naming a holder.
-# Contenders come from the canon feuds and region text; review in task 1.12.
+# Contenders come from the canon feuds and region text (reviewed in task 1.12).
 CONTENDERS = {
-    "tarn": (["basin-office", "smith-shimano", "ringwreckers"], "The Tarn yards feud"),
-    "cairn": (["kerr-varga", "charter-bench"], "Cairn feud over the native-life protections"),
-    "shoals": (["purview", "seventh"], "Purview prospecting against the Seventh"),
+    "tarn": (["basin-office", "smith-shimano", "ringwreckers"], "Contested over the Absent yards"),
+    "cairn": (["kerr-varga", "charter-bench"], "Contested over the native-life protections"),
+    "shoals": (["purview", "seventh", "bellows-commune"], "Purview prospectors against the Seventh and the settlements that pay it"),
 }
 SILENT_MOUTHS = 3
 

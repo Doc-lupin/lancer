@@ -1,5 +1,6 @@
 {
   "_comment": "Task 1.9 (frontier). Worlds still forming; the nebula blinds sensors throughout.",
+  "region": {"presence": [{"faction": "gatherers-guild"}, {"faction": "tail", "strength": "minor", "note": "Gatherers' Guild crews"}]},
   "systems": [
     {"id": "crucible-system", "name": "Crucible (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "furnace", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "blue-star"}, "notes": "Young blue star at the heart of the nebula. Its radiation blinds sensors and burns out unshielded electronics."},
     {"id": "anvil-system", "name": "Anvil (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "furnace", "charted": true, "offset": [-0.18, 0.59, 0.77], "center": {"type": "star", "kind": "wolf-rayet", "features": ["jets", "strong-wind"]}, "notes": "Wolf-Rayet star shedding its outer layers in fierce winds and jets."},

@@ -1,5 +1,6 @@
 {
   "_comment": "Task 1.8 (rimward). Ferrous has almost no planets: belts and foundry asteroids.",
+  "region": {"presence": [{"faction": "tail", "strength": "major", "note": "Ferrous Consolidated grew out of tail salvage outfits"}, {"faction": "basin-born", "strength": "minor"}]},
   "systems": [
     {"id": "ferrous-system", "name": "Ferrous", "origin": "canon", "visibility": "all", "region": "ferrous", "charted": true, "offset": [0.0, 0.0, 0.0], "center": {"type": "star", "kind": "red-giant"}, "notes": "Red giant that swelled late and broke up its inner worlds; much of the region's rock may be what is left of them.", "_comment": "Star kind not given in the documents (R7, D16)."},
     {"id": "billet-system", "name": "Billet (WIP)", "nameOrigin": "invented", "origin": "canon", "visibility": "all", "region": "ferrous", "charted": true, "offset": [-0.47, -0.25, 0.59], "center": {"type": "star", "kind": "white-dwarf", "features": ["debris-disk"]}, "notes": "White dwarf ringed by a debris disk.", "_comment": "Star kind not given in the documents (R7, D16)."},
