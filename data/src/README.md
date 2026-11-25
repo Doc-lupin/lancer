@@ -22,4 +22,5 @@ An entry whose id already exists changes only the fields it lists. A field set t
 - **Notes.** `notes` are what players may read. `gmNotes` are secrets only. Editor remarks, such as "location invented", go in `_comment`.
 - **Control.** Set `control` on systems, key bodies, places and areas. Planets split between factions get `areas` (lat/lon polygons).
 - **Variety (D16, D18).** Don't default to dwarfs and barren rock. Use the full range of star kinds and features (docs/PHASE1.md, Stellar variety) and companion stars. Every planet, moon and giant gets a `world` type, `variant`, `habitability`, `climate` and `worldFeatures` from [docs/WORLDS.md](../../docs/WORLDS.md), which also has the canon world types and the variety rules.
+- **Climate on airless worlds.** The cool, cold, temperate and warm climate texts describe seasons and weather. Give airless worlds (barren, iron, ice, moonlets and the like) `frozen`, `hot` or `scorching`; the validator warns otherwise.
 - **Surface coordinates.** Each region file's `_comment` says where the continents are, so later places stay consistent.

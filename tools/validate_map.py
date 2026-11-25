@@ -28,6 +28,9 @@ ARRAYS = ["layers", "alignments", "factions", "feuds", "regions", "systems", "bo
 NAMED = [a for a in ARRAYS if a not in ("textBoxes", "headlines")]
 NO_SURFACE = {"star", "gas-giant", "asteroid-belt", "field", "lane-mouth"}
 WORLD_BODIES = {"planet", "gas-giant", "moon", "rogue-planet", "asteroid"}
+# Airless world types: climate text for cool, cold, temperate and warm describes seasons and weather.
+AIRLESS = {"barren", "iron", "moonlet", "dwarf-planet", "shattered", "pulsar-world", "diamond", "chthonian", "carbon",
+           "crystalline", "comet", "ice"}
 CATALOG = ROOT / "data/schema/worlds.json"
 LAYER_MAX = 15
 WIP = " (WIP)"
@@ -285,6 +288,8 @@ def check_worlds(m, r, strict):
                 r.error("world", w, f"an asteroid needs a small-body world type, not '{t}'")
             if hab is not None and hab not in usual[fam]:
                 r.warn("world", w, f"habitability '{hab}' is unusual for a {fam} world ('{t}')")
+        if t in AIRLESS and b.get("climate") in ("cool", "cold", "temperate", "warm"):
+            r.warn("world", w, f"climate '{b['climate']}' describes weather; an airless {t} world reads better as frozen, hot or scorching")
         v = b.get("variant")
         if v is not None and (t is None or v not in variants.get(t, set())):
             r.error("world", w, f"variant '{v}' is not a variant of world type '{t}' (see docs/WORLDS.md)")

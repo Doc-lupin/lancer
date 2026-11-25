@@ -84,7 +84,7 @@ One task = one session's work, touching only the files listed. Do them in order.
 | 1.5 | (done, approved by the GM Nov 25) Pilot: Ostrom and Tallis complete (systems, planets, moons, stations, lane mouths, surface places, control) | `data/src/regions/ostrom.json`, `tallis.json` | Validator passes; the GM reads the two regions and approves the level of detail |
 | 1.6 | (done) GM approved the generated region positions as they stand; all 24 locked | `data/parsed/positions.json` | All regions `locked: true`; preview redrawn |
 | 1.7 | (done) Canon systems for all other regions, with D9 companions and 24 Shoals systems (D10) | `data/src/regions/*.json` | Every region has its systems and centers |
-| 1.8 | Bodies, inner arms first: coreward (Pennant, Orison, Wending), trailing (Halyard, Lumen, Sable), spinward (Gloam, Halvard), rimward (Scald, Ferrous, Tarn, Cairn). One task per arm. | `data/src/regions/<id>.json` | Validator passes after each arm |
+| 1.8 | (done) Bodies, inner arms: coreward (Pennant, Orison, Wending), trailing (Halyard, Lumen, Sable), spinward (Gloam, Halvard), rimward (Scald, Ferrous, Tarn, Cairn), one commit per arm | `data/src/regions/<id>.json` | Validator passes after each arm |
 | 1.9 | Bodies, frontier, lighter detail: Lantern Reach, Pale, Orrery, Furnace, Hollows, Shoals, Deeps, Boneyard, Mire, the Quiet | same | Validator passes |
 | 1.10 | Lane mouths: attach each lane end to a system (D2, D8) | `data/parsed/lanes.json` or `data/src/lanes.json` | Every lane end resolves to a system |
 | 1.11 | Unmapped stars (D11, D12) | `data/src/unmapped.json` | Count matches D11; all inside the sphere |
@@ -150,5 +150,11 @@ Notes from 1.7:
 - New names (all marked "(WIP)") follow a theme per region: tidal words at Wending (Neap, Slack), lamp words in the Lantern Reach (Cresset, Taper, Wick, Sconce, Votive, Tallow, Beacon, Glimmer, Brand), forge words in the Furnace (Crucible, Anvil, Tuyere, Quench, Clinker, Bloom), shoal words in the Shoals, rope words at Halyard (Sheet, Bight, Cleat), glassmaking at Scald (Frit, Cullet), metalworking at Ferrous (Billet, Ingot, Temper), water words at Tarn (Mere, Lough), old things in the Deeps (Elder, Sere, Soot, Relict, Lees, Umber, Dregs), burial words in the Boneyard (Ossuary, Charnel, Knell, the Spine, the Keel), marsh words in the Mire (Murk, Slough, Fen, Quag), cold words in the Hollows (Gelid, Rime, Cistern, Sump, Coldharbour) and dead-star words in the Pale (Shroud, Wane, Pyre, the Well).
 - D9 companions: Vesper (Orison, region edge, Gloam tidal mouth), Jet (Sable), Gaff (Halvard), Barrow (Cairn, region edge, Deeps mouth).
 - Placed for later tasks: Verdance at Taper, Stillwater at Wick, the four unseen Lantern garden worlds at Sconce, Votive, Beacon and Glimmer; Choir at Riffle and Bellows at Eddy in the Shoals; Ashlar at Relict in the Deeps; Rimelight's stations on Gelid, Rime (two) and Cistern, and the lost one on Sump.
+
+Notes from 1.8:
+- 86 bodies in the twelve inner regions (37 planets, 16 giants, 8 moons, 8 large asteroids, 8 stations, 5 belts, 3 fields and the Tarn yards), using 33 world types, with 34 surface places and 8 control areas.
+- Split planets: Pennant (Synod north, Corvel's besieged south), Gloam (Purview twilight band, night side contested with the Coldwell Claims), Scald (Concord and League glassfields either side of the Seam).
+- New named bodies follow the region themes: Wending's moons Ebb and Flood, Halyard Station's moon Splinter, Lumen's moon Russet, Sable's moonlet Mooring, the Ferrous foundry asteroids Hearth and Bloomery; Waymeet, Harbourage, Anchorhold, Brinemoor, Longfall, Terminus and Mercer's Hold are invented settlement names.
+- Locations the documents do not give (the Syndicate registry, Purview camp on Scald, the Tallis garrison and similar) are placed where they fit the canon and can be moved.
 
 The pilot in 1.5 exists to catch schema problems on two regions before data goes into the other twenty-two. Change the schema there if needed, not later.
