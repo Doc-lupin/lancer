@@ -1,6 +1,7 @@
 // Builds the camera targets (camera/view.js) from the map: the Basin, its
-// regions and its star systems. Non-star centers come with task 2.8, bodies
-// with 2.9 and 2.10.
+// regions and its systems, whether a star or a rogue planet, wreck or
+// structure is at the center (the center body's radius is used for those).
+// Bodies come with tasks 2.9 and 2.10.
 //
 // Distances: a target is framed when the camera stands far enough back for its
 // radius to fill most of the view (FRAME). Its closest distance is 2.5 × its
@@ -14,6 +15,12 @@ const FRAME = 1.3 / Math.tan((CAMERA.fov * Math.PI) / 360); // distance per km o
 const MIN_REGION_LY = 0.5;
 
 export const starRadiusKm = (kind) => (STAR_KINDS[kind]?.radius ?? 1) * SUN_RADIUS_KM;
+
+// Radius of whatever is at a system's center: its star, or its center body.
+export function centerRadiusKm(system, index) {
+  if (system.center.type === 'star') return starRadiusKm(system.center.kind);
+  return index.byId.get(system.center.body)?.radiusKm ?? 1000;
+}
 
 export function buildTargets(map, index, { playerMode = false } = {}) {
   const hidden = (id) => isHidden(index, id, playerMode);
@@ -32,8 +39,8 @@ export function buildTargets(map, index, { playerMode = false } = {}) {
   }
 
   for (const s of map.systems) {
-    if (s.center.type !== 'star' || hidden(s.id)) continue;
-    const radiusKm = starRadiusKm(s.center.kind);
+    if (hidden(s.id)) continue;
+    const radiusKm = centerRadiusKm(s, index);
     const orbits = (index.childrenOf.get(s.id) ?? [])
       .map((id) => index.byId.get(id).orbit)
       .filter((o) => o && o.unit === 'au')

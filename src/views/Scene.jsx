@@ -7,6 +7,7 @@ import { Canvas, useThree } from '@react-three/fiber';
 import { useMap } from '../data/store.js';
 import { CAMERA, place } from './origin.js';
 import { laneEnds } from '../data/lanes.js';
+import { STAR_KINDS } from '../data/starKinds.js';
 import { view } from './camera/view.js';
 import { createRig, frameFor, focusOn } from './camera/rig.js';
 import { screenPos } from './camera/pick.js';
@@ -15,6 +16,8 @@ import { buildTargets } from './mapTargets.js';
 import Stars from './Stars.jsx';
 import { RegionLabels, RegionLabelsUpdater } from './RegionLabels.jsx';
 import Lanes from './Lanes.jsx';
+import RegionEffects from './RegionEffects.jsx';
+import Centers from './Centers.jsx';
 import { LaneLabels, LaneLabelsUpdater } from './LaneLabels.jsx';
 import LanesToggle from '../interface/LanesToggle.jsx';
 
@@ -32,6 +35,19 @@ function DebugHook() {
         return screenPos(camera, view.rig.camera, place(a.map((v, i) => v + (b[i] - v) * t)), size.width, size.height);
       },
       focus: (id) => { focusOn(view.rig, view.targets, id, performance.now()); invalidate(); },
+      centerOf: (id) => useMap.getState().index.byId.get(id)?.center?.type,
+      centerTypes: () => {
+        const icons = scene.children.find((o) => o.userData.layer === 'icons');
+        const counts = {};
+        for (const t of icons.userData.types) counts[t] = (counts[t] ?? 0) + 1;
+        return counts;
+      },
+      brightestIn: (regionId) => {
+        const { map } = useMap.getState();
+        const stars = map.systems.filter((s) => s.region === regionId && s.center.type === 'star');
+        const best = stars.sort((a, b) => STAR_KINDS[b.center.kind].luminosity - STAR_KINDS[a.center.kind].luminosity)[0];
+        return screenPos(camera, view.rig.camera, view.targets.get(best.id).place, size.width, size.height);
+      },
       view, scene, invalidate,
     };
     return () => delete window.__lancer;
@@ -69,6 +85,8 @@ export default function Scene() {
             <CameraRig />
             <Lanes />
             <Stars />
+            <Centers />
+            <RegionEffects />
             <RegionLabelsUpdater />
             <LaneLabelsUpdater />
             <DebugHook />

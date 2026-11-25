@@ -51,11 +51,11 @@ async function run(browser, base, name, options) {
   await page.waitForTimeout(400);
 
   const info = await page.evaluate(() => {
-    const meshes = window.__lancer.scene.children.filter((o) => o.isInstancedMesh);
+    const meshes = window.__lancer.scene.children.filter((o) => o.userData.layer === 'stars');
     return { calls: window.__lancer.render().calls, counts: meshes.map((m) => m.count), stars: window.__lancer.view.targets.size };
   });
-  // Two instanced meshes, one draw call each; the lanes (task 2.7) add two more.
-  check('all 144 star systems drawn in two draw calls', info.counts.length === 2 && info.counts.every((c) => c === 144) && info.calls === 4, `2 star meshes (instances ${info.counts.join(' + ')}), ${info.calls} calls with the lanes`);
+  // Two instanced meshes, one draw call each. (Lanes, icons and effects add their own.)
+  check('all 144 star systems drawn in two draw calls', info.counts.length === 2 && info.counts.every((c) => c === 144), `2 star meshes, instances ${info.counts.join(' + ')}; ${info.calls} calls in all`);
 
   const ls = await labels(page);
   const shown = ls.filter((l) => l.shown);

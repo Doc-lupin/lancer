@@ -146,8 +146,8 @@ export default function Stars() {
 
   return (
     <>
-      <instancedMesh ref={setCoreColors} args={[CORE_GEOMETRY, coreMaterial, stars.length]} frustumCulled={false} />
-      <instancedMesh ref={glow} args={[glowGeometry, glowMaterial, stars.length]} frustumCulled={false} />
+      <instancedMesh ref={setCoreColors} args={[CORE_GEOMETRY, coreMaterial, stars.length]} frustumCulled={false} userData={{ layer: 'stars' }} />
+      <instancedMesh ref={glow} args={[glowGeometry, glowMaterial, stars.length]} frustumCulled={false} userData={{ layer: 'stars' }} />
     </>
   );
 }

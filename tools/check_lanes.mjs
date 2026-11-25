@@ -74,11 +74,12 @@ async function run(browser, base, name, options) {
   await page.waitForTimeout(400);
 
   const counts = await page.evaluate(() => {
-    const [strips, marks] = window.__lancer.scene.children.filter((o) => o.isMesh && o.geometry.isInstancedBufferGeometry);
-    return { pieces: strips.geometry.instanceCount, marks: marks.geometry.instanceCount, calls: window.__lancer.render().calls };
+    const lanes = window.__lancer.scene.children.filter((o) => o.userData.layer === 'lanes');
+    const [strips, marks] = lanes;
+    return { meshes: lanes.filter((o) => o.visible).length, pieces: strips.geometry.instanceCount, marks: marks.geometry.instanceCount, calls: window.__lancer.render().calls };
   });
   check('37 lanes: 31 whole + 6 drifting × 18 dashes, 9 one-way × 3 chevrons', counts.pieces === 31 + 6 * 18 && counts.marks === 27, `${counts.pieces} pieces, ${counts.marks} chevrons`);
-  check('stars and lanes in four draw calls', counts.calls === 4, `${counts.calls}`);
+  check('lanes in two instanced meshes (one draw call each)', counts.meshes === 2, `${counts.meshes} meshes; ${counts.calls} calls in all`);
 
   const mid = await laneScreen(page, 'ostrom-tallis', 0.5);
   const faint = await brightness(page, mid[0], mid[1]);
@@ -99,7 +100,7 @@ async function run(browser, base, name, options) {
   });
   check('the Orison tide reads open, 9 more days', tide.includes('tide open, 9 more days'), tide);
   const openStyle = await page.evaluate(() => {
-    const strips = window.__lancer.scene.children.find((o) => o.isMesh && o.geometry.isInstancedBufferGeometry);
+    const strips = window.__lancer.scene.children.find((o) => o.userData.layer === 'lanes');
     const c = strips.geometry.attributes.aColor;
     const teal = [];
     for (let i = 0; i < c.count; i++) if (c.getX(i) < 0.3 && c.getY(i) > 0.7 && c.getW(i) === 1) teal.push(i);

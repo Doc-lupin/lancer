@@ -265,8 +265,8 @@ export default function Lanes() {
 
   return (
     <>
-      <mesh ref={strips} geometry={stripGeometry} material={stripMaterial} frustumCulled={false} renderOrder={-1} />
-      <mesh ref={marks} geometry={markGeometry} material={markMaterial} frustumCulled={false} renderOrder={-1} />
+      <mesh ref={strips} geometry={stripGeometry} material={stripMaterial} frustumCulled={false} renderOrder={-1} userData={{ layer: 'lanes' }} />
+      <mesh ref={marks} geometry={markGeometry} material={markMaterial} frustumCulled={false} renderOrder={-1} userData={{ layer: 'lanes' }} />
     </>
   );
 }
