@@ -157,4 +157,11 @@ Notes from 1.8:
 - New named bodies follow the region themes: Wending's moons Ebb and Flood, Halyard Station's moon Splinter, Lumen's moon Russet, Sable's moonlet Mooring, the Ferrous foundry asteroids Hearth and Bloomery; Waymeet, Harbourage, Anchorhold, Brinemoor, Longfall, Terminus and Mercer's Hold are invented settlement names.
 - Locations the documents do not give (the Syndicate registry, Purview camp on Scald, the Tallis garrison and similar) are placed where they fit the canon and can be moved.
 
+Second pass over the 14 finished regions (GM request, Nov 25), stepping beyond the documents; everything added is `origin: invented` and named "(WIP)":
+- Five new systems where the documents fix no star count: Matins and Compline at Orison, Onyx at Sable, Spar at Halvard, Dolmen at Cairn. Regions whose star count the documents state got planets, moons, stations and places instead.
+- Notable invented worlds with proper names: Sanctum (Orison's candidate refuge, a thawing tundra world with diseases that have killed two survey crews), Litany (a storm-sea world where Halloran's Heirs rest), Menhir (a cold karst world of crystal caverns), Mirage (a thin-air moon where Syndicate crews rest from the war), Hob (a warm moon at Cairn that nobody has looked at, GM-only), Canticle (an ice moon with a Synod hermitage), Warden, Ropewalk, Spark. Renamed: Censer, Iris, Anthracite, Brimstone, Lethe, Brackwater, Cauldron.
+- 73 new places, among them the Marrow's offices and decks, Tallis's river towns, Compact districts and League market town, Pennant's Pilgrim Guard fortress, Reach staging yards and siege lines, Orison's evacuation port, Wending's further lagoon towns and the burned copy-house, Gloam's twilight towns and Noonpoint, Scald's company camps along the Seam, and the Great Ring on Cairn.
+- GM-only additions: the Tallymen's anchorage and berth, the Ringwreckers' hold, the Coldwell landing field, Mercer-Ibarra's quiet dock for the Seventh, and Hob.
+- Totals after the pass: 109 systems, 160 bodies, 129 places, 10 control areas.
+
 The pilot in 1.5 exists to catch schema problems on two regions before data goes into the other twenty-two. Change the schema there if needed, not later.
