@@ -3,6 +3,8 @@
 Repository copy of the V2 plan (Nov 25, 2026). The shared document is at
 https://claude.ai/artifact/MDzMcUZF9q7TRJi2YMVwLC. V1 is `3D_Universe_Map_Tool_Overview_and_Action_Plan.docx`.
 
+**Current phase: Phase 2 (3D view), not started.** Phase 1 passed its test and is merged into `main`.
+
 ## Design decisions
 
 | Subject | Decision |
@@ -56,7 +58,7 @@ Do not start a phase until the previous phase's test passes.
 - [x] Parse the five source documents into `data/parsed/`
 - [x] Generate first 3D region positions
 
-### Phase 1: Complete the data
+### Phase 1: Complete the data (done)
 Task breakdown, review findings and open decisions: [PHASE1.md](PHASE1.md).
 
 - [x] JSON schema: Basin, region, system, body, lane, faction, unit, text box, headline, clock
@@ -70,6 +72,7 @@ Task breakdown, review findings and open decisions: [PHASE1.md](PHASE1.md).
 - [x] Add the five peoples; write presence for peoples and faiths
 - [x] Clock start in the data: 5029u, day 300, tidal cycle day 5
 - [x] Assemble `data/map.json`
+- [x] World datablock: stats, setting profile, routed trade, gazetteer (task 1.15, added at the GM's request after the test passed)
 - **Test:** the file matches the schema; every reference resolves; every region has a star or special object.
 - **Result (Nov 25, 2026): passed.** `python3 tools/validate_map.py --complete` reports 0 errors and 0 warnings; 1,447 references resolve; every charted region has a system. Details in [PHASE1.md](PHASE1.md).
 
@@ -82,6 +85,17 @@ Built with Vite (D19). The app reads `data/map.json`; the data is still authored
 - [ ] Nebula and dust-cloud effects; systems with a planet, wreck or structure at the center
 - [ ] System level (star, planets, orbits following the clock); planet level (planet, moons, stations, surface places on the globe)
 - **Test:** zoom Basin → planet and back without a break; no shaking; smooth on a phone.
+
+**Notes for starting Phase 2** (what the data gives the view):
+
+- Load `data/map.json` once into the Zustand store; every view reads from the store.
+- Units: region `pos` and system `pos` are absolute positions in light-years (+x trailing, +y coreward, z depth, origin near Ostrom; the Basin is about 50 ly across). Planet orbits are in AU around the system center; moon and station orbits are in km around their parent. These are the three scales the floating origin and logarithmic depth buffer must cover.
+- Orbits: `orbit.distance`, `unit`, `periodDays` and `phaseDeg` at the epoch (5029u day 1). Angle on a given day = `phaseDeg + 360 × days since epoch / periodDays`. The clock's current date is in `clock.current`.
+- System centers: `center.type` is star, rogue planet, wreck or structure; stars carry a `kind` (24 kinds). Colors and luminosities for each kind are in the `STAR` table of `tools/derive_stats.py`; the view needs the same table in `src/data/`. Region `effect` is none, nebula or dust cloud (the Furnace, the Mire).
+- Unmapped systems have `charted: false` and are drawn dimmer. Bodies with `appearance.color` give a planet's tint; `rings` appear in `appearance` or the `rings` feature.
+- Lanes join lane-mouth bodies (`from.mouth`, `to.mouth`); flags `oneWay`, `drifting`, `silent`, and `tidal` with its cycle. The Silent Mouths start in the Quiet, which has no systems.
+- Hide objects with `visibility: "gm"` in player mode. Names ending " (WIP)" are invented; the interface strips the marker the way `tools/describe_world.py` does.
+- `units`, `textBoxes` and `headlines` are empty; they are filled from Phase 3.
 
 ### Phase 3: Interface
 - [ ] Data panel

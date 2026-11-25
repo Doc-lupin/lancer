@@ -1,6 +1,6 @@
 # Phase 1: Complete the data — work plan
 
-**Status: complete. The Phase 1 test passed on Nov 25, 2026.**
+**Status: complete. The Phase 1 test passed on Nov 25, 2026, and the work is merged into `main`. Task 1.15 (world datablock) was added after the test and keeps it passing.**
 
 | Check | Result |
 |---|---|
@@ -8,7 +8,7 @@
 | Every reference resolves | 1,447 references, 0 unresolved |
 | Every region has a star or special object | All 23 charted regions (the Quiet, beyond the map, is exempt) |
 | Complete check (`tools/validate_map.py --complete`) | 0 errors, 0 warnings |
-| Validator tests, catalog and template checks | 51/51 tests; catalog, schema and WORLDS.md agree; 547 templates fill |
+| Validator tests, catalog and template checks | 59/59 tests (after 1.15); catalog, schema and WORLDS.md agree; 547 templates fill |
 
 Contents of the finished map: 24 regions; 155 systems (115 charted, 40 unmapped) holding 148 stars of 23 kinds; 329 bodies, among them 118 planets, 27 giants, 20 moons, 39 stations, 9 Absent wrecks and 71 lane mouths; 182 worlds of 53 types (8 garden, 4 habitable, 18 marginal, 100 hostile, 25 lethal, 27 giants); 163 places and 10 control areas; 37 lanes with every end attached; 50 factions in 5 layers. 389 objects are canon and 268 invented; 13 are GM-only.
 

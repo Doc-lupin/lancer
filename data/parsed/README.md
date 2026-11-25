@@ -26,6 +26,9 @@ All IDs are kebab-case and cross-referenced (lanes → regions, regions → fact
 
 ## Gaps to settle before Phase 1
 
+All settled during Phase 1 (see [docs/PHASE1.md](../../docs/PHASE1.md)): factions have colors (D14); region positions are locked and every region has placed stars (tasks 1.3–1.5); unnamed stars and worlds were invented and tagged; the later chronology comes from the narrative (R10); variable lanes use `daysRange` and the Silent Mouths follow D2. The list below is kept as it was written.
+
+
 1. **No faction colors.** The plan needs a color for each faction.
 2. **3D positions are generated, not canon.** The docs give only the 2D chart. Region centers are generated (see below); stars inside regions are still to do.
 3. **Most stars and planets are unnamed.** Only key worlds are named (Tallis, Pennant, Gloam, Halvard's Rest, Choir, Bellows, Verdance, Stillwater, Ashlar, etc.). System and planet views will need placeholder or invented bodies, orbits and moons.
