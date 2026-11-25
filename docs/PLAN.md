@@ -21,12 +21,13 @@ One continuous zoom, with no cuts or scene changes between levels:
 - **Contested control** is drawn as stripes in the colors of the factions involved.
 - **Player mode** only hides GM notes in the interface. Players are trusted, so there is no separate player file.
 - **Instancing** for stars and icons, as planned.
+- **Tidal lanes are always drawn.** Their brightness fades with the 73-day tidal cycle: bright while open (about 14 days), dim while closed. The cycle is driven by the dashboard's current system time, so the GM sets or advances a single in-game clock.
 
 ## Open questions
 
 - How region positions in 3D are chosen: hand-placed, generated, or generated and then adjusted.
 - Data needed for the cultures and religions layers: which regions each people or faith is present in, and how strongly.
-- A current game date for the tidal lane cycle (73 days, about 14 open).
+- Where the dashboard clock starts: the in-game date of the opening session, and which day of the 73-day cycle it falls on.
 
 ## Functions
 
@@ -63,6 +64,7 @@ Do not start a phase until the previous phase's test passes.
 - [ ] Continuous zoom through Basin → region → system → planet
 - [ ] Faded lanes by default; lanes mode toggle
 - [ ] Dim rendering for unmapped stars
+- [ ] Tidal lanes fade with the cycle, driven by the dashboard clock
 - [ ] System view (click a system)
 - [ ] Orbits, with planets moving along them
 - [ ] Planet view (click a planet)
