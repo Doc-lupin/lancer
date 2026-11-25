@@ -1,6 +1,6 @@
 # Phase 2: 3D view — work plan
 
-**Status: in progress. Task 2.1 done.** Branch `phase-2`, cut from `main` on Nov 25, 2026. The Phase 1 test still passes on it (`python3 tools/validate_map.py --complete`: 0 errors, 0 warnings).
+**Status: in progress. Tasks 2.1–2.2 done.** Branch `phase-2`, cut from `main` on Nov 25, 2026. The Phase 1 test still passes on it (`python3 tools/validate_map.py --complete`: 0 errors, 0 warnings).
 
 Phase 2 checklist and test are in [PLAN.md](PLAN.md). This file breaks them into small tasks and lists what must be decided first.
 
@@ -53,7 +53,7 @@ One task = one session's work, touching only the files listed. Do them in order.
 |---|---|---|---|---|
 | 2.0 | Settle P1–P13 | — | `docs/PHASE2.md` | Answers recorded here |
 | 2.1 | (done) App scaffold: Vite + React + R3F, one empty canvas filling the page | Continuous zoom | `package.json`, `package-lock.json`, `vite.config.js`, `index.html`, `src/main.jsx`, `src/views/Scene.jsx` | `npm run dev` shows a black canvas; `npm run build` passes |
-| 2.2 | Store: load `map.json` once into Zustand; lookups by id; parent chain (body → system → region); "(WIP)" stripped for display, as in `tools/describe_world.py`; `playerMode` flag (P13) | Data storage | `src/storage/loadMap.js`, `src/data/store.js`, `src/data/names.js`, `src/data/store.test.js` | `node --test` loads the file and finds 24 regions, 155 systems, 329 bodies; every parent chain resolves |
+| 2.2 | (done) Store: load `map.json` once into Zustand; lookups by id; parent chain (body → system → region); "(WIP)" stripped for display, as in `tools/describe_world.py`; `playerMode` flag (P13) | Data storage | `src/storage/loadMap.js`, `src/data/store.js`, `src/data/names.js`, `src/data/store.test.js`; one line each in `src/main.jsx` (start the load) and `package.json` (`npm test`) | `node --test` loads the file and finds 24 regions, 155 systems, 329 bodies; every parent chain resolves |
 | 2.3 | Star kinds table (P8) | Continuous zoom | `src/data/starKinds.js`, `tools/check_star_kinds.py` | Every `kind` in `map.json` has a color and luminosity; the check passes |
 | 2.4 | Precision test, first, as the risk table asks: floating origin and log depth (P3, P4) with three test objects, one at each scale (ly, AU, km), and a scripted zoom from 50 ly to 1 km above a station | Continuous zoom | `src/views/origin.js`, `src/views/PrecisionTest.jsx`, `tools/check_jitter.mjs` | With the camera still, no test object moves more than half a pixel between frames at any step; no depth flicker. The GM looks at the screenshots |
 | 2.5 | Camera controller (P6): orbit, zoom by ratio, pinch and drag on touch, click to fly to an object, zoom out to the parent | Continuous zoom | `src/views/camera/*.js` | One wheel or pinch gesture covers Basin to station; the fly-to ends on the object with no overshoot |
@@ -81,4 +81,12 @@ Notes from 2.1:
 - Checked with Playwright: on desktop (1280 × 800) and on Pixel 7 emulation the canvas fills the window at the device's pixel ratio and the page does not scroll. `touch-action: none` on the root sends touch gestures to the map (needed for pinch in 2.5).
 - The build is 1.1 MB (311 KB gzipped) with an empty scene, because React Three Fiber pulls in all of Three.js. Vite warns about chunks over 500 kB; the warning is left on for now. Fine for private use; revisit in Phase 5 if loading on a phone is slow.
 - The console shows one warning, "THREE.Clock: This module has been deprecated", coming from React Three Fiber 9.8.2 itself. Harmless; it goes away when R3F moves to `THREE.Timer`.
+
+Notes from 2.2:
+- The store is `useMap` in `src/data/store.js`: `status` (empty, loading, ready, error), `map` (the file as loaded), `index` and `playerMode`. `index` holds `byId`, `kindOf`, `parentOf` and `childrenOf` over regions, systems, bodies, places, areas, lanes, factions and layers: 773 ids, none repeated. A repeated id or a parent that isn't in the map stops the load with an error.
+- Parent chain: place or area → body → parent body (for a moon or a station around a planet) → system → region. The 40 unmapped stars have `region: null`, as the schema allows, so their chains stop at the system; views treat them as children of the Basin.
+- Player mode hides an object if it, or anything above it, is GM-only. No visible object sits under a GM-only one today; the rule stops a later edit from leaking one.
+- `displayName()` drops a trailing " (WIP)", the same rule as `clean_name()` in `tools/describe_world.py`.
+- `npm test` runs `node --test "src/**/*.test.js"`: 6 tests pass.
+- `npm run build` copies `map.json` into `dist/assets/` under a hashed name (745 KB, 102 KB gzipped). Checked in the browser on the dev server and the built preview: one fetch, store `ready`, no console errors. The first dev start after installing reloads the page once while Vite prepares zustand; later starts fetch once.
 
