@@ -1,0 +1,1855 @@
+{
+ "_comment": "World catalog: the single source for world types, variants, features, habitability and climate. The schema's enums must match these ids (checked by tools/world_catalog.py --check); docs/WORLDS.md is generated from this file.",
+ "habitability": [
+  {
+   "id": "garden",
+   "description": "Open air and open ground. A native or Absent-maintained biosphere supports unassisted settlement and agriculture."
+  },
+  {
+   "id": "habitable",
+   "description": "Open air with hardship. Settlement is possible without sealed habitats but is limited by season, latitude, a narrow climatic band or a deteriorating climate."
+  },
+  {
+   "id": "marginal",
+   "description": "Settlement depends on masks, sealed towns or seasonal occupation. Populations are usually small and supplied from elsewhere."
+  },
+  {
+   "id": "hostile",
+   "description": "Sealed habitats only. The surface does not support unprotected life at any season."
+  },
+  {
+   "id": "lethal",
+   "description": "Hardened habitats only, where practical at all. Temperature, pressure or radiation exceeds the tolerance of standard environmental equipment."
+  },
+  {
+   "id": "none",
+   "description": "No solid surface. Applies to gas giants, ice giants and mini-Neptunes; settlement is limited to orbital or floating stations."
+  }
+ ],
+ "climate": [
+  {
+   "id": "scorching",
+   "description": "Surface temperatures high enough to melt lead or rock."
+  },
+  {
+   "id": "hot",
+   "description": "Persistently above the limits of unprotected human tolerance at low latitudes."
+  },
+  {
+   "id": "warm",
+   "description": "Warmer than temperate on average; tropical conditions at low latitudes."
+  },
+  {
+   "id": "temperate",
+   "description": "Mean temperatures within the range of most settled Union worlds."
+  },
+  {
+   "id": "cool",
+   "description": "Below temperate on average; long winters or short growing seasons."
+  },
+  {
+   "id": "cold",
+   "description": "Persistent frost outside a limited band or season."
+  },
+  {
+   "id": "frozen",
+   "description": "Permanently below the freezing point of water across the surface."
+  }
+ ],
+ "families": [
+  {
+   "id": "habitable-wet",
+   "name": "Habitable: wet",
+   "habitability": [
+    "garden",
+    "habitable",
+    "marginal"
+   ],
+   "description": "Worlds with abundant surface water and an established open-air biosphere. Wet worlds account for most of the Basin's garden worlds and most of its population."
+  },
+  {
+   "id": "habitable-dry",
+   "name": "Habitable: dry",
+   "habitability": [
+    "garden",
+    "habitable",
+    "marginal"
+   ],
+   "description": "Worlds on which liquid water is scarce at the surface but life is established. Settlement concentrates where water can be reached."
+  },
+  {
+   "id": "habitable-cold",
+   "name": "Habitable: cold",
+   "habitability": [
+    "garden",
+    "habitable",
+    "marginal"
+   ],
+   "description": "Worlds whose habitable area is limited by low temperatures. Growing seasons are short and settlement favors coasts and lowlands."
+  },
+  {
+   "id": "habitable-special",
+   "name": "Habitable: special",
+   "habitability": [
+    "garden",
+    "habitable",
+    "marginal"
+   ],
+   "description": "Habitable worlds classed by an unusual physical condition (size, geology or rotation) rather than by climate. Each type occurs with any climate."
+  },
+  {
+   "id": "marginal",
+   "name": "Marginal",
+   "habitability": [
+    "habitable",
+    "marginal",
+    "hostile"
+   ],
+   "description": "Worlds on which people live, but against the environment: behind masks, inside sealed towns or for part of the year. Most marginal settlements in the Basin exist for mining."
+  },
+  {
+   "id": "rocky",
+   "name": "Hostile rock",
+   "habitability": [
+    "hostile",
+    "lethal"
+   ],
+   "description": "Terrestrial bodies with no open-air habitability. They are the commonest solid worlds in the Basin and the main source of metals, carbon and, in places, lattice."
+  },
+  {
+   "id": "icy",
+   "name": "Ice",
+   "habitability": [
+    "marginal",
+    "hostile",
+    "lethal"
+   ],
+   "description": "Bodies dominated by water ice or other volatiles, usually beyond the snow line of their star. Several hold liquid oceans beneath their crust."
+  },
+  {
+   "id": "giant",
+   "name": "Giants",
+   "habitability": [
+    "none"
+   ],
+   "description": "Worlds without a solid surface, classed by mass and by the chemistry of their visible cloud deck, which follows temperature. Giants dominate the outer parts of most Basin systems."
+  },
+  {
+   "id": "small",
+   "name": "Small bodies",
+   "habitability": [
+    "hostile",
+    "lethal"
+   ],
+   "description": "Bodies below the size at which they are usually counted as planets. Most are catalogued only by number."
+  }
+ ],
+ "types": [
+  {
+   "id": "continental",
+   "family": "habitable-wet",
+   "name": "Continental world",
+   "description": "A terrestrial world divided between two or more large landmasses and connected oceans, with a moderate axial tilt and a full water cycle. Continental worlds support the widest range of biomes of any class and are the preferred target for agricultural settlement. The type example in the Basin is Tallis, whose air and rainfall are regulated by Absent machinery several kilometers below the surface.",
+   "variants": [
+    {
+     "id": "river-valley",
+     "description": "Long drainage basins carry most of the rainfall; settlement follows the rivers."
+    },
+    {
+     "id": "highland-interior",
+     "description": "Continental interiors rise into dry uplands, as in the Reach on Tallis."
+    },
+    {
+     "id": "maritime",
+     "description": "Narrow continents and a mild oceanic climate with little seasonal range."
+    },
+    {
+     "id": "grassland",
+     "description": "Broad interior plains dominated by grasses and grazing fauna."
+    },
+    {
+     "id": "moss",
+     "description": "Low ground cover with few trees; slow-growing and easily damaged."
+    },
+    {
+     "id": "twin-continent",
+     "description": "Two landmasses of similar size facing each other across a single ocean."
+    }
+   ]
+  },
+  {
+   "id": "forest",
+   "family": "habitable-wet",
+   "name": "Forest world",
+   "description": "A world on which closed-canopy forest covers most land below the tree line. Soils are deep and rivers long; open ground is limited to coasts, uplands and burn scars. Clearing land for agriculture is slow, and forest settlement tends toward forestry, trapping and small cleared holdings.",
+   "variants": [
+    {
+     "id": "temperate-broadleaf",
+     "description": "Deciduous forest with a pronounced autumn."
+    },
+    {
+     "id": "rainforest-cold",
+     "description": "Wet, mossy conifer forest on cool coasts."
+    },
+    {
+     "id": "petrified",
+     "description": "Large stands of mineralized trees from an earlier biosphere."
+    },
+    {
+     "id": "canopy-dwellers",
+     "description": "Most fauna lives above the ground; the forest floor is quiet."
+    },
+    {
+     "id": "bamboo-analog",
+     "description": "Fast-growing grass-like stands that regrow cleared land within a season."
+    }
+   ]
+  },
+  {
+   "id": "lake",
+   "family": "habitable-wet",
+   "name": "Lake world",
+   "description": "A world whose land has been scoured by past glaciation into a dense network of lakes, channels and eskers. Standing water may cover a third of the land surface. Travel is easier by boat than overland, and freshwater fisheries are the main source of food.",
+   "variants": [
+    {
+     "id": "glacial-scour",
+     "description": "Thousands of small lakes in hard rock, with thin soils between."
+    },
+    {
+     "id": "great-lakes",
+     "description": "A few inland seas large enough to have tides and storms."
+    },
+    {
+     "id": "crater-lakes",
+     "description": "Lakes filling impact or volcanic basins, often deep and round."
+    },
+    {
+     "id": "oxbow-country",
+     "description": "Meandering lowland rivers and the lakes they leave behind."
+    }
+   ]
+  },
+  {
+   "id": "marsh",
+   "family": "habitable-wet",
+   "name": "Marsh world",
+   "description": "A low-relief world with poor drainage, where fens, peat bogs and slow rivers cover much of the land. Methane and sulfur compounds from decay are common near the surface. Firm ground is scarce, and settlements are built on raised ground, pilings or floating platforms.",
+   "variants": [
+    {
+     "id": "peatland",
+     "description": "Deep peat that burns for years once lit."
+    },
+    {
+     "id": "mangrove-coast",
+     "description": "Salt-tolerant forest on tidal flats along every coastline."
+    },
+    {
+     "id": "reed-sea",
+     "description": "Vast shallow reed beds with channels kept open by fauna."
+    },
+    {
+     "id": "mire",
+     "description": "Acidic bog with preserved remains of older life in its depths."
+    }
+   ]
+  },
+  {
+   "id": "ocean",
+   "family": "habitable-wet",
+   "name": "Ocean world",
+   "description": "A world on which ocean covers more than nine-tenths of the surface, with land limited to islands and shoals. Ocean worlds carry large heat reservoirs and tend to have mild, stable climates. Settlement relies on floating towns, island holdings and sea farming. Stillwater, in the Lantern Reach, is an ocean world without tides and with almost no wind.",
+   "variants": [
+    {
+     "id": "shoal-sea",
+     "description": "Wide continental shelves and shallow seas over most of the world."
+    },
+    {
+     "id": "deep-ocean",
+     "description": "Abyssal depths with almost no shallow water."
+    },
+    {
+     "id": "kelp-forest",
+     "description": "Dense floating or anchored vegetation over large areas of open sea."
+    },
+    {
+     "id": "doldrum",
+     "description": "Little wind and few waves; the sea is flat for weeks at a time."
+    },
+    {
+     "id": "storm-sea",
+     "description": "Strong winds and permanent long-period swell."
+    },
+    {
+     "id": "algal",
+     "description": "Seas colored by algal blooms; green, red or brown by season."
+    }
+   ]
+  },
+  {
+   "id": "archipelago",
+   "family": "habitable-wet",
+   "name": "Archipelago world",
+   "description": "An ocean world whose land occurs as long chains of volcanic or coral islands. Island arcs follow tectonic or hotspot lines, and large moons often raise strong tides between them. Wending is the Basin's type example: its archipelagos flood and drain twice a day, and its towns ride the tides on cables.",
+   "variants": [
+    {
+     "id": "volcanic-arc",
+     "description": "Island chains above subduction zones; frequent eruptions."
+    },
+    {
+     "id": "hotspot-chain",
+     "description": "Islands aging in a line away from an active hotspot."
+    },
+    {
+     "id": "tidal-flats",
+     "description": "Low islands exposed and drowned by large tides."
+    },
+    {
+     "id": "atoll",
+     "description": "Ring-shaped reefs around sunken volcanoes, enclosing lagoons."
+    }
+   ]
+  },
+  {
+   "id": "reef",
+   "family": "habitable-wet",
+   "name": "Reef world",
+   "description": "A world with shallow, warm seas in which reef-building organisms have constructed most of the land over geological time. The islands are biological in origin and continue to grow. Reef ecosystems are dense and productive but easily damaged by dredging and runoff.",
+   "variants": [
+    {
+     "id": "barrier-reef",
+     "description": "Long reef walls enclosing calm lagoons along every coast."
+    },
+    {
+     "id": "living-isles",
+     "description": "Islands still growing at their margins."
+    },
+    {
+     "id": "bleached",
+     "description": "Reefs dying back from a recent change in temperature or chemistry."
+    }
+   ]
+  },
+  {
+   "id": "tropical",
+   "family": "habitable-wet",
+   "name": "Tropical world",
+   "description": "A warm, humid world with little seasonal variation, on which rainforest extends from coast to mountain across most latitudes. Biomass and species diversity are high, as are rates of disease and decay. Equipment corrodes quickly and cleared land returns to forest within a few years.",
+   "variants": [
+    {
+     "id": "rainforest",
+     "description": "Multi-layered evergreen forest over most land."
+    },
+    {
+     "id": "cloud-forest",
+     "description": "Mountain forest in permanent mist."
+    },
+    {
+     "id": "tepui",
+     "description": "Isolated table mountains with their own ecosystems above the forest."
+    },
+    {
+     "id": "cenote",
+     "description": "Limestone lowlands with water reached through collapsed sinkholes."
+    },
+    {
+     "id": "thunderstorm",
+     "description": "Daily convective storms and extreme lightning frequency."
+    }
+   ]
+  },
+  {
+   "id": "monsoon",
+   "family": "habitable-wet",
+   "name": "Monsoon world",
+   "description": "A world with a strongly seasonal climate in which a wet season of heavy rain and flooding alternates with a long dry season. Rivers shift course from year to year and floodplains are rebuilt annually. Agriculture follows the flood.",
+   "variants": [
+    {
+     "id": "floodplain",
+     "description": "Broad lowlands inundated each wet season."
+    },
+    {
+     "id": "delta",
+     "description": "River mouths that rebuild and abandon their channels."
+    },
+    {
+     "id": "dry-forest",
+     "description": "Forest that sheds its leaves through the dry season."
+    }
+   ]
+  },
+  {
+   "id": "megaflora",
+   "family": "habitable-wet",
+   "name": "Megaflora world",
+   "description": "A world on which plant life reaches extreme size: trees hundreds of meters tall, root systems spanning kilometers and an understory that receives little light. Megaflora worlds usually combine high carbon dioxide, long growing seasons and low gravity or an exceptionally warm climate. Verdance, in the Lantern Reach, whose climate machinery runs hot, has defeated two attempts at settlement.",
+   "variants": [
+    {
+     "id": "giant-canopy",
+     "description": "A closed canopy at great height; the ground lies in permanent shade."
+    },
+    {
+     "id": "root-bridge",
+     "description": "Root systems that span rivers and ravines."
+    },
+    {
+     "id": "aerial-flora",
+     "description": "Lighter-than-air or epiphytic plants that live entirely above the ground."
+    }
+   ]
+  },
+  {
+   "id": "fungal",
+   "family": "habitable-wet",
+   "name": "Fungal world",
+   "description": "A world whose biosphere is dominated by fungi, molds and analogous decomposers rather than photosynthetic plants. Fungal worlds are usually dim or overcast. Spore fogs are common at dawn, and some spores are hazardous to human lungs.",
+   "variants": [
+    {
+     "id": "mycelial-mat",
+     "description": "A continuous underground network linking whole regions."
+    },
+    {
+     "id": "spore-fog",
+     "description": "Seasonal or daily spore releases that reduce visibility to meters."
+    },
+    {
+     "id": "giant-fungus",
+     "description": "Fruiting bodies the size of trees."
+    }
+   ]
+  },
+  {
+   "id": "bioluminescent",
+   "family": "habitable-wet",
+   "name": "Bioluminescent world",
+   "description": "A world on which a large proportion of organisms produce light, usually on a dim or long-night world where light is used for signaling, hunting or symbiosis. Night landscapes on these worlds can be brighter than overcast days. The glow follows seasonal and tidal cycles.",
+   "variants": [
+    {
+     "id": "glowing-sea",
+     "description": "Luminous plankton across whole ocean basins."
+    },
+    {
+     "id": "lantern-forest",
+     "description": "Forest whose canopy glows through the night."
+    },
+    {
+     "id": "cave-glow",
+     "description": "Light confined to cave systems and the deep sea."
+    }
+   ]
+  },
+  {
+   "id": "desert",
+   "family": "habitable-dry",
+   "name": "Desert world",
+   "description": "A world on which surface water is scarce outside the poles and deep aquifers, and sand seas, gravel plains and bare rock cover most of the land. Day-night temperature ranges are large. Life is sparse but well established, and settlement depends on wells, ice mining or imported water.",
+   "variants": [
+    {
+     "id": "erg",
+     "description": "Sand seas of moving dunes."
+    },
+    {
+     "id": "reg",
+     "description": "Flat gravel and stone plains."
+    },
+    {
+     "id": "ironsand",
+     "description": "Dark, iron-rich sand; hot underfoot and magnetic."
+    },
+    {
+     "id": "coastal-fog",
+     "description": "Cold currents bring fog to the coasts, which support most of the life."
+    },
+    {
+     "id": "polar-caps",
+     "description": "Water locked in polar ice, with dry equatorial lands between."
+    }
+   ]
+  },
+  {
+   "id": "oasis",
+   "family": "habitable-dry",
+   "name": "Oasis world",
+   "description": "A desert world on which life and settlement cluster around isolated sources of water: springs, artesian basins and the outflows of deep aquifers. Distances between oases are large, and routes between them are the basis of its economy and its politics.",
+   "variants": [
+    {
+     "id": "artesian",
+     "description": "Water rising under pressure from deep sandstone aquifers."
+    },
+    {
+     "id": "spring-line",
+     "description": "Oases strung along a fault where groundwater surfaces."
+    },
+    {
+     "id": "qanat",
+     "description": "Water drawn through long tunnels from distant highlands."
+    }
+   ]
+  },
+  {
+   "id": "arid",
+   "family": "habitable-dry",
+   "name": "Arid world",
+   "description": "A dry world with eroded relief: mesas, buttes, badlands and deep canyons cut by short, violent rains. Vegetation is sparse and seasonal. Flash floods are the principal hazard.",
+   "variants": [
+    {
+     "id": "mesa",
+     "description": "Flat-topped remnants of an old plateau standing above the plains."
+    },
+    {
+     "id": "badlands",
+     "description": "Gullied, soft sediment with almost no soil."
+    },
+    {
+     "id": "canyon",
+     "description": "Rivers cut kilometers deep into layered rock."
+    },
+    {
+     "id": "striped",
+     "description": "Banded rock formations of strongly contrasting color."
+    }
+   ]
+  },
+  {
+   "id": "mediterranean",
+   "family": "habitable-dry",
+   "name": "Mediterranean world",
+   "description": "A world with hot, dry summers and mild, wet winters. Vegetation is dominated by drought-tolerant shrubs and low woodland, and coastlines are rocky. Wildfire is a regular part of the cycle, and the climate suits orchards and terraced agriculture.",
+   "variants": [
+    {
+     "id": "scrubland",
+     "description": "Dense aromatic shrubland."
+    },
+    {
+     "id": "terraced-hills",
+     "description": "Steep coastal hills suited to terraced cultivation."
+    },
+    {
+     "id": "fire-climax",
+     "description": "Plant communities that depend on regular burning."
+    }
+   ]
+  },
+  {
+   "id": "savanna",
+   "family": "habitable-dry",
+   "name": "Savanna world",
+   "description": "A warm world of grassland with scattered trees, under a climate with a long dry season and a short wet one. Savanna worlds tend to support large grazing fauna and the predators that follow them.",
+   "variants": [
+    {
+     "id": "tree-savanna",
+     "description": "Open woodland with a grassy understory."
+    },
+    {
+     "id": "veld",
+     "description": "High, open grassland with few trees."
+    },
+    {
+     "id": "migration-plains",
+     "description": "Plains crossed annually by very large migratory herds."
+    }
+   ]
+  },
+  {
+   "id": "steppe",
+   "family": "habitable-dry",
+   "name": "Steppe world",
+   "description": "A cool, dry world dominated by grassland and low scrub, with large seasonal temperature ranges and persistent wind. Soils are deep and fertile where water allows cultivation. Distances are long and settlement is sparse.",
+   "variants": [
+    {
+     "id": "short-grass",
+     "description": "Low grass over very large areas."
+    },
+    {
+     "id": "loess",
+     "description": "Deep wind-blown soils, fertile and easily eroded."
+    },
+    {
+     "id": "salt-steppe",
+     "description": "Dry grassland with saline basins."
+    }
+   ]
+  },
+  {
+   "id": "supercontinent",
+   "family": "habitable-dry",
+   "name": "Supercontinent world",
+   "description": "A world whose land is assembled into a single landmass. Coastal margins are wet and green, but the interior lies thousands of kilometers from the sea and is dry, with extreme seasonal temperatures. Most life and settlement are confined to the coasts.",
+   "variants": [
+    {
+     "id": "green-rim",
+     "description": "Narrow fertile coasts around a desert core."
+    },
+    {
+     "id": "inland-sea",
+     "description": "A large saline sea in the continental interior."
+    },
+    {
+     "id": "rift",
+     "description": "The landmass is beginning to split along an active rift."
+    }
+   ]
+  },
+  {
+   "id": "tundra",
+   "family": "habitable-cold",
+   "name": "Tundra world",
+   "description": "A cold world on which permafrost underlies most land and vegetation is limited to mosses, lichens, sedges and dwarf shrubs. Summers are brief; the active soil layer thaws and becomes waterlogged. Construction requires care to avoid melting the ground beneath it.",
+   "variants": [
+    {
+     "id": "lichen-plain",
+     "description": "Dry, lichen-covered uplands."
+    },
+    {
+     "id": "polygon-ground",
+     "description": "Ice-wedge polygons patterning the ground for kilometers."
+    },
+    {
+     "id": "thermokarst",
+     "description": "Ground slumping and pocked with ponds as the permafrost thaws."
+    }
+   ]
+  },
+  {
+   "id": "boreal",
+   "family": "habitable-cold",
+   "name": "Boreal world",
+   "description": "A cool to cold world dominated by coniferous forest and bog, with long winters and a short, intense growing season. Rivers freeze for much of the year and serve as winter roads. Pennant, the seat of the Wayfarer Synod, is the Basin's principal boreal world.",
+   "variants": [
+    {
+     "id": "taiga",
+     "description": "Unbroken conifer forest across the mid-latitudes."
+    },
+    {
+     "id": "fjord-coast",
+     "description": "Glacier-cut coasts with forested valleys running inland."
+    },
+    {
+     "id": "muskeg",
+     "description": "Forest interrupted by wide peat bogs."
+    },
+    {
+     "id": "larch",
+     "description": "Deciduous conifers that turn gold before winter."
+    }
+   ]
+  },
+  {
+   "id": "alpine",
+   "family": "habitable-cold",
+   "name": "Alpine world",
+   "description": "A world with extensive high mountain ranges and plateaus, where most habitable land lies in valleys and on lower slopes. Air at altitude is thin and cold, and weather changes quickly. Mountain passes control communication between regions.",
+   "variants": [
+    {
+     "id": "high-plateau",
+     "description": "Extensive tablelands above the main cloud layer."
+    },
+    {
+     "id": "glacier-valley",
+     "description": "Steep valleys with glaciers at their heads."
+    },
+    {
+     "id": "volcanic-range",
+     "description": "Mountain ranges built by active volcanoes."
+    }
+   ]
+  },
+  {
+   "id": "fjord",
+   "family": "habitable-cold",
+   "name": "Fjord world",
+   "description": "A cold, wet world on which glaciers have cut long, deep inlets into mountainous coasts. Coastal valleys are forested and sheltered; interiors are often ice-covered. Settlement is coastal and travel is by sea.",
+   "variants": [
+    {
+     "id": "skerry-coast",
+     "description": "Coasts fringed by thousands of small rocky islands."
+    },
+    {
+     "id": "tidewater-glacier",
+     "description": "Glaciers that reach the sea and calve icebergs."
+    }
+   ]
+  },
+  {
+   "id": "arctic",
+   "family": "habitable-cold",
+   "name": "Arctic world",
+   "description": "A world on which ice sheets cover most of the land and sea ice much of the ocean, leaving habitable ground along coasts, in ice-free valleys and around geothermal areas. Marine life is often richer than life on land.",
+   "variants": [
+    {
+     "id": "ice-sheet",
+     "description": "Continental ice kilometers thick."
+    },
+    {
+     "id": "pack-ice",
+     "description": "Seas frozen over for most of the year."
+    },
+    {
+     "id": "ice-free-oases",
+     "description": "Dry valleys swept clear of ice by katabatic wind."
+    },
+    {
+     "id": "polynya",
+     "description": "Areas of open water kept clear by currents or upwelling heat."
+    }
+   ]
+  },
+  {
+   "id": "superhabitable",
+   "family": "habitable-special",
+   "name": "Superhabitable world",
+   "description": "A world more favorable to life than the homeworlds of its settlers: typically larger than Earth, warmer, with shallower seas, more land and a longer-lived biosphere. Surface gravity is higher than Union standard, which affects health and engineering over the long term.",
+   "variants": [
+    {
+     "id": "wet",
+     "description": "Shallow seas and archipelagos over much of the world."
+    },
+    {
+     "id": "dry",
+     "description": "Large, fertile continental interiors."
+    },
+    {
+     "id": "cold",
+     "description": "Cool climate offset by a deep atmosphere and long seasons."
+    }
+   ]
+  },
+  {
+   "id": "karst",
+   "family": "habitable-special",
+   "name": "Karst world",
+   "description": "A world on which soluble rock, chiefly limestone, dominates the crust, producing cave systems, sinkholes, disappearing rivers and tower landscapes. Surface water is scarce despite adequate rainfall, because it drains underground. Karst worlds are rich in mineral deposits and their caves are often extensively settled.",
+   "variants": [
+    {
+     "id": "wet",
+     "description": "Tower karst and flooded caves under heavy rain."
+    },
+    {
+     "id": "dry",
+     "description": "Bare limestone pavement and deep sinkholes."
+    },
+    {
+     "id": "cold",
+     "description": "Ice caves and frozen subterranean rivers."
+    }
+   ]
+  },
+  {
+   "id": "tidally-locked",
+   "family": "habitable-special",
+   "name": "Tidally locked world",
+   "description": "A world that keeps one face toward its star, with permanent day on one hemisphere and permanent night on the other. Habitable conditions occur in a terminator band between the two, or under a large sub-stellar ocean. Winds blow constantly from the night side toward the day side. Gloam, where the Purview's settlements occupy the twilight band, is the Basin's best-known example.",
+   "variants": [
+    {
+     "id": "twilight-band",
+     "description": "Habitable only in the band between day and night."
+    },
+    {
+     "id": "eyeball-ocean",
+     "description": "A single ice-free ocean on the day side, frozen elsewhere."
+    },
+    {
+     "id": "night-ice",
+     "description": "A frozen night hemisphere holding most of the world's water."
+    },
+    {
+     "id": "hot",
+     "description": "A scorched day side; life only near the terminator."
+    },
+    {
+     "id": "cold",
+     "description": "A frozen world habitable only beneath its star."
+    }
+   ]
+  },
+  {
+   "id": "geothermal",
+   "family": "habitable-special",
+   "name": "Geothermal world",
+   "description": "A cold or distant world warmed from below. Life concentrates around volcanic regions, vents and hot springs, and the habitable area is a patchwork of warm oases in otherwise frozen terrain. Geothermal power is plentiful.",
+   "variants": [
+    {
+     "id": "vent-field",
+     "description": "Life around hydrothermal vents on land and seafloor."
+    },
+    {
+     "id": "hot-spring-basin",
+     "description": "Warm basins of springs, terraces and steam."
+    },
+    {
+     "id": "lava-tube",
+     "description": "Settlement within warm volcanic tunnels."
+    }
+   ]
+  },
+  {
+   "id": "seasonal",
+   "family": "marginal",
+   "name": "Seasonal world",
+   "description": "A world whose atmosphere becomes breathable for part of the year and unbreathable for the rest, through eccentric orbit, biological cycles or artificial regulation. Settlement alternates between open-air work and sealed shelter. Bellows, in the Shoals, has breathable air for five months of each year, supplied by Absent machinery.",
+   "variants": [
+    {
+     "id": "oxygen-season",
+     "description": "Oxygen rises seasonally to breathable levels."
+    },
+    {
+     "id": "thaw-season",
+     "description": "Surface ice and volatiles melt for a short summer."
+    },
+    {
+     "id": "bloom-season",
+     "description": "A biological bloom alters the atmosphere for part of the year."
+    }
+   ]
+  },
+  {
+   "id": "dense-air",
+   "family": "marginal",
+   "name": "Dense-atmosphere world",
+   "description": "A world with an atmosphere several times Union standard pressure, usually under permanent cloud. The air may be breathable at reduced oxygen fractions but carries risks of nitrogen narcosis and oxygen toxicity. Light at the surface is diffuse and dim. Cairn, whose colonial organisms build moving stone structures, is a dense-atmosphere world.",
+   "variants": [
+    {
+     "id": "overcast",
+     "description": "Permanent cloud cover; the sun is never seen."
+    },
+    {
+     "id": "heavy-haze",
+     "description": "Visibility reduced to a few kilometers by haze."
+    },
+    {
+     "id": "high-pressure",
+     "description": "Pressures requiring careful gas mixtures for unprotected work."
+    }
+   ]
+  },
+  {
+   "id": "thin-air",
+   "family": "marginal",
+   "name": "Thin-atmosphere world",
+   "description": "A world whose atmosphere is too thin for unassisted breathing, though warm enough at the surface for work with masks and pressure clothing. Weather is weak, dust is persistent, and radiation at the surface is higher than on denser worlds.",
+   "variants": [
+    {
+     "id": "high-desert",
+     "description": "Cold, dry and wind-polished."
+    },
+    {
+     "id": "thin-canyon",
+     "description": "Air thick enough to breathe only in deep canyons and basins."
+    },
+    {
+     "id": "dust-veil",
+     "description": "Fine dust suspended in the thin air for months."
+    }
+   ]
+  },
+  {
+   "id": "toxic-air",
+   "family": "marginal",
+   "name": "Toxic-atmosphere world",
+   "description": "A world with a breathable pressure and oxygen content but with toxic components (sulfur compounds, chlorine, carbon monoxide or biological agents) that require filtration. Native life has adapted to the chemistry; settlers depend on filters and sealed buildings.",
+   "variants": [
+    {
+     "id": "sulfurous",
+     "description": "Sulfur compounds from volcanism."
+    },
+    {
+     "id": "chlorine",
+     "description": "Chlorine-cycle chemistry; pale green skies."
+    },
+    {
+     "id": "pollen-heavy",
+     "description": "Native pollens or spores that are toxic to humans."
+    }
+   ]
+  },
+  {
+   "id": "storm",
+   "family": "marginal",
+   "name": "Storm world",
+   "description": "A world with extreme and persistent weather: wind belts, hurricanes and storm surges that make the surface dangerous at all seasons. Settlement is built low, below ground or behind walls. Orison is trending toward this condition as its climate machinery fails.",
+   "variants": [
+    {
+     "id": "hurricane-belt",
+     "description": "Permanent cyclones in fixed latitude bands."
+    },
+    {
+     "id": "superrotation",
+     "description": "The atmosphere circles the world faster than it rotates."
+    },
+    {
+     "id": "surge-coast",
+     "description": "Coasts flooded by surges that never fully recede."
+    }
+   ]
+  },
+  {
+   "id": "dust",
+   "family": "marginal",
+   "name": "Dust world",
+   "description": "A dry world on which planet-wide dust storms occur regularly and can last for months. Dust is fine, electrostatically charged and abrasive. Solar power, optics and air filtration are all compromised during storm seasons.",
+   "variants": [
+    {
+     "id": "global-storm",
+     "description": "Storms that cover the entire world for a season."
+    },
+    {
+     "id": "dust-devil",
+     "description": "Constant local vortices across dry plains."
+    },
+    {
+     "id": "red-dust",
+     "description": "Iron-oxide dust that colors the sky."
+    }
+   ]
+  },
+  {
+   "id": "glassed",
+   "family": "marginal",
+   "name": "Glassed world",
+   "description": "A world on which large areas of the surface have been fused to glass by an extreme heating event: impact, stellar flare or something less natural. Glassfields are flat, cracked into plates and ridges, and offer almost no cover. Scald, nearly half of whose surface is glass, is the type example; its companion stars' planets show the same glassing.",
+   "variants": [
+    {
+     "id": "glassfield",
+     "description": "Continuous fused plains cracked into plates."
+    },
+    {
+     "id": "tektite-plain",
+     "description": "Scattered glass beads and fragments over sand."
+    },
+    {
+     "id": "partial",
+     "description": "Glass in patches among unaltered desert and highland."
+    }
+   ]
+  },
+  {
+   "id": "salt",
+   "family": "marginal",
+   "name": "Salt world",
+   "description": "A world on which evaporation has left extensive salt pans, evaporite basins and brine lakes. Halophilic life is common. Salt worlds are often former ocean worlds that have lost much of their water.",
+   "variants": [
+    {
+     "id": "salt-pan",
+     "description": "Flat, white evaporite plains."
+    },
+    {
+     "id": "brine-lake",
+     "description": "Dense, colored brines in closed basins."
+    },
+    {
+     "id": "evaporite-dome",
+     "description": "Salt domes and glaciers of flowing salt."
+    }
+   ]
+  },
+  {
+   "id": "high-gravity",
+   "family": "marginal",
+   "name": "High-gravity world",
+   "description": "A large terrestrial world with surface gravity well above Union standard, typically one and a half to three times. Air is dense and low-lying, mountains are low and life is squat. Long residence has health costs, and launches to orbit are expensive.",
+   "variants": [
+    {
+     "id": "crushed-relief",
+     "description": "Low relief; mountains rarely exceed a few kilometers."
+    },
+    {
+     "id": "dense-sea",
+     "description": "A heavy atmosphere over shallow, wind-driven seas."
+    }
+   ]
+  },
+  {
+   "id": "flare-scoured",
+   "family": "marginal",
+   "name": "Flare-scoured world",
+   "description": "A world orbiting an active flare star close enough that flares strip the upper atmosphere and sterilize exposed surfaces. Life, native or settled, survives underground, underwater or on a night side. Flare warnings govern all surface work.",
+   "variants": [
+    {
+     "id": "burrow-life",
+     "description": "Native life concentrated below the surface."
+    },
+    {
+     "id": "night-side",
+     "description": "Habitable only on the hemisphere facing away from the star."
+    },
+    {
+     "id": "aurora-world",
+     "description": "Constant aurorae from the stellar wind."
+    }
+   ]
+  },
+  {
+   "id": "water-world",
+   "family": "marginal",
+   "name": "Water world",
+   "description": "A world with a global ocean hundreds of kilometers deep, no exposed land and a seafloor of high-pressure ice rather than rock. Without land or seabed minerals, life is sparse. Settlement is possible only on floating structures.",
+   "variants": [
+    {
+     "id": "abyssal",
+     "description": "No reachable seafloor."
+    },
+    {
+     "id": "steam-mantle",
+     "description": "Hot, high-pressure water at depth."
+    }
+   ]
+  },
+  {
+   "id": "barren",
+   "family": "rocky",
+   "name": "Barren world",
+   "description": "An airless or nearly airless rocky world with a cratered surface, no liquid water and no life. Barren worlds are the commonest solid bodies in the Basin. They are used for mining, pickets and storage, and occasionally hold Absent constructions, as at Ashlar in the Deeps.",
+   "variants": [
+    {
+     "id": "cratered",
+     "description": "Ancient surface saturated with impact craters."
+    },
+    {
+     "id": "maria",
+     "description": "Dark basaltic plains filling old impact basins."
+    },
+    {
+     "id": "regolith",
+     "description": "Deep dust over bedrock; poor footing."
+    },
+    {
+     "id": "tower-field",
+     "description": "Surface structures of non-natural origin."
+    }
+   ]
+  },
+  {
+   "id": "super-earth",
+   "family": "rocky",
+   "name": "Super-Earth",
+   "description": "A rocky world between about two and ten times the mass of Earth with no native life. Atmospheres range from thin to crushing depending on temperature and history. Ostrom IV, the cold super-Earth over which the Marrow orbits, has a thin nitrogen atmosphere and nothing on the surface worth landing for.",
+   "variants": [
+    {
+     "id": "cold",
+     "description": "Thin, cold atmosphere over frozen plains."
+    },
+    {
+     "id": "thick-air",
+     "description": "A deep, cloudy atmosphere over a hidden surface."
+    },
+    {
+     "id": "stagnant-lid",
+     "description": "A single unbroken crust with no plate tectonics."
+    }
+   ]
+  },
+  {
+   "id": "iron",
+   "family": "rocky",
+   "name": "Iron world",
+   "description": "A dense world composed mostly of metallic core, having lost most of its rocky mantle to impact or stripping. Surface rock is dark and metal-rich. Iron worlds are valued for ore and are a common source of printer feed.",
+   "variants": [
+    {
+     "id": "exposed-core",
+     "description": "Metal visible at the surface in large areas."
+    },
+    {
+     "id": "rust",
+     "description": "Surface iron oxidized red by a thin atmosphere."
+    }
+   ]
+  },
+  {
+   "id": "carbon",
+   "family": "rocky",
+   "name": "Carbon world",
+   "description": "A world formed in a carbon-rich environment, with a crust of graphite, carbides and hydrocarbon deposits instead of silicate rock. Surfaces are dark and tar pits and graphite plains are common. Carbon worlds are associated with carbon stars and with certain stripped systems.",
+   "variants": [
+    {
+     "id": "graphite-plain",
+     "description": "Dark, slippery plains of graphite."
+    },
+    {
+     "id": "tar-pit",
+     "description": "Hydrocarbon seeps and tar lakes."
+    },
+    {
+     "id": "carbide-range",
+     "description": "Mountains of silicon and titanium carbides."
+    }
+   ]
+  },
+  {
+   "id": "diamond",
+   "family": "rocky",
+   "name": "Diamond world",
+   "description": "A carbon world whose interior pressure has converted much of its carbon to diamond. Such worlds may be the remnants of carbon-rich stellar companions stripped by a pulsar or a white dwarf. Extraction is straightforward but value in the Basin is industrial rather than ornamental.",
+   "variants": [
+    {
+     "id": "diamond-mantle",
+     "description": "Diamond at depth beneath a graphite crust."
+    },
+    {
+     "id": "stripped-companion",
+     "description": "Remnant of a star stripped to its carbon core."
+    }
+   ]
+  },
+  {
+   "id": "chthonian",
+   "family": "rocky",
+   "name": "Chthonian world",
+   "description": "The remnant core of a gas giant that migrated close to its star and lost its atmosphere to heating. Chthonian worlds are dense, hot and rocky or metallic, sometimes with a residual atmosphere streaming away from the day side.",
+   "variants": [
+    {
+     "id": "stripped-core",
+     "description": "Bare core rock, recently exposed."
+    },
+    {
+     "id": "comet-tail",
+     "description": "A residual atmosphere escaping in a tail."
+    }
+   ]
+  },
+  {
+   "id": "lava",
+   "family": "rocky",
+   "name": "Lava world",
+   "description": "A world close enough to its star, or heated enough by tides, to have a molten or partly molten surface. Lava oceans may cover the day side, with a solid crust on the night side. Rock vapor atmospheres and silicate rain occur on the hottest examples.",
+   "variants": [
+    {
+     "id": "magma-ocean",
+     "description": "Molten rock over most of the surface."
+    },
+    {
+     "id": "dayside-melt",
+     "description": "Molten on the day side only."
+    },
+    {
+     "id": "crusted",
+     "description": "A thin, renewing crust over molten interior."
+    }
+   ]
+  },
+  {
+   "id": "volcanic",
+   "family": "rocky",
+   "name": "Volcanic world",
+   "description": "A world with intense, ongoing volcanism, usually driven by tidal heating from a giant parent or a close companion. Surfaces are young and resurfaced continually; sulfur and silicate plains, lava lakes and plumes are characteristic. Lumen's moon, home to Lumen Station, is a tidally heated volcanic world settled near its volcanic belts.",
+   "variants": [
+    {
+     "id": "sulfur-plains",
+     "description": "Yellow and red sulfur deposits over most of the surface."
+    },
+    {
+     "id": "lava-lakes",
+     "description": "Persistent lakes of molten rock."
+    },
+    {
+     "id": "plume",
+     "description": "Eruption plumes reaching hundreds of kilometers."
+    },
+    {
+     "id": "obsidian",
+     "description": "Black volcanic glass fields."
+    }
+   ]
+  },
+  {
+   "id": "hothouse",
+   "family": "rocky",
+   "name": "Hothouse world",
+   "description": "A world in a runaway greenhouse state, with a dense carbon dioxide atmosphere, surface temperatures hot enough to melt lead and clouds of sulfuric acid. The surface is permanently hidden. Hothouse worlds may once have had oceans.",
+   "variants": [
+    {
+     "id": "acid-cloud",
+     "description": "Thick sulfuric acid cloud decks."
+    },
+    {
+     "id": "superrotating",
+     "description": "Upper winds circling the world in days."
+    },
+    {
+     "id": "lost-ocean",
+     "description": "Geological traces of a former ocean."
+    }
+   ]
+  },
+  {
+   "id": "pulsar-world",
+   "family": "rocky",
+   "name": "Pulsar world",
+   "description": "A world orbiting a pulsar, either a survivor of the supernova or formed afterward from its debris. Surfaces are glassy and heavily irradiated, and the pulsar's beam sweeps the system at its rotation period. Cinder's airless planets, outside Ostrom, are of this type; the Stewardship's picket there is heavily shielded.",
+   "variants": [
+    {
+     "id": "survivor",
+     "description": "Predates the supernova; scorched and stripped."
+    },
+    {
+     "id": "second-generation",
+     "description": "Formed from supernova debris after the event."
+    }
+   ]
+  },
+  {
+   "id": "shattered",
+   "family": "rocky",
+   "name": "Shattered world",
+   "description": "A body broken by impact or tidal stress into a loose aggregate of fragments held together by its own gravity. Shattered worlds have low density, irregular shapes and unstable surfaces. Halyard Station is anchored to a shattered ice moon, and Ferrous's belts may be the remains of shattered worlds.",
+   "variants": [
+    {
+     "id": "rubble-pile",
+     "description": "Loosely bound fragments with large voids."
+    },
+    {
+     "id": "split",
+     "description": "Two large fragments still in contact."
+    },
+    {
+     "id": "debris-halo",
+     "description": "Surrounded by a cloud of its own debris."
+    }
+   ]
+  },
+  {
+   "id": "crystalline",
+   "family": "rocky",
+   "name": "Crystalline world",
+   "description": "A world whose surface carries a crust of lattice or similar crystal, apparently deposited from outside rather than grown from the crust beneath. The type is known only in the Basin. On the airless worlds closest to the white dwarfs of the Pale, the crusts are thin, easy to strip and slow to replace.",
+   "variants": [
+    {
+     "id": "lattice-crust",
+     "description": "Thin lattice deposits over dark rock."
+    },
+    {
+     "id": "crystal-field",
+     "description": "Crystalline growths standing above the surface."
+    },
+    {
+     "id": "glitter",
+     "description": "Fine crystal dust that reflects starlight."
+    }
+   ]
+  },
+  {
+   "id": "steam",
+   "family": "rocky",
+   "name": "Steam world",
+   "description": "A hot water world whose surface is a supercritical mixture of water and steam under a dense atmosphere. There is no boundary between ocean and sky. Steam worlds are water worlds that have migrated too close to their star.",
+   "variants": [
+    {
+     "id": "supercritical",
+     "description": "No distinct ocean surface."
+    },
+    {
+     "id": "boiling-sea",
+     "description": "A boiling ocean under a dense steam atmosphere."
+    }
+   ]
+  },
+  {
+   "id": "ice",
+   "family": "icy",
+   "name": "Ice world",
+   "description": "A world whose surface is composed mainly of water ice, often mixed with rock and other ices. Ice worlds are common beyond the snow line of every Basin system. Surfaces range from heavily cratered to smooth and recently resurfaced.",
+   "variants": [
+    {
+     "id": "dirty-ice",
+     "description": "Ice darkened by rock and organic material."
+    },
+    {
+     "id": "bright-ice",
+     "description": "Clean, highly reflective ice."
+    },
+    {
+     "id": "chaos-terrain",
+     "description": "Ice broken into rafts and refrozen."
+    }
+   ]
+  },
+  {
+   "id": "subglacial-ocean",
+   "family": "icy",
+   "name": "Subglacial ocean world",
+   "description": "A world with a liquid water ocean beneath a shell of ice kilometers thick, kept liquid by tidal heating, radioactive decay or an outside source. Settlements are built on the ice or within it, and access to the ocean is by shaft. Halvard's Rest and the rogue worlds of the Hollows, which are warmed by Absent heat engines, are of this type.",
+   "variants": [
+    {
+     "id": "thin-shell",
+     "description": "Ice a few kilometers thick; the ocean is reachable."
+    },
+    {
+     "id": "thick-shell",
+     "description": "Ice tens of kilometers thick."
+    },
+    {
+     "id": "vent-ocean",
+     "description": "Hydrothermal vents on the ocean floor."
+    },
+    {
+     "id": "rogue-warmed",
+     "description": "Kept liquid by heat from outside the natural system."
+    }
+   ]
+  },
+  {
+   "id": "cryovolcanic",
+   "family": "icy",
+   "name": "Cryovolcanic world",
+   "description": "An icy world with active volcanism of water, ammonia or methane instead of molten rock. Cryovolcanoes and geysers resurface the world and may vent material to orbit. Plumes carry samples of subsurface oceans to the surface.",
+   "variants": [
+    {
+     "id": "geyser-field",
+     "description": "Fields of erupting jets near tidal stress zones."
+    },
+    {
+     "id": "ice-dome",
+     "description": "Large domes of extruded ice."
+    },
+    {
+     "id": "ammonia-flows",
+     "description": "Ammonia-water lavas."
+    }
+   ]
+  },
+  {
+   "id": "methane-sea",
+   "family": "icy",
+   "name": "Methane-sea world",
+   "description": "A cold world with a thick nitrogen atmosphere, an orange organic haze and lakes and seas of liquid methane and ethane. Rain, rivers and erosion occur, but in hydrocarbons. The chemistry is of long-standing scientific interest.",
+   "variants": [
+    {
+     "id": "polar-seas",
+     "description": "Hydrocarbon seas concentrated at the poles."
+    },
+    {
+     "id": "haze-world",
+     "description": "Haze so thick the surface is seldom seen from orbit."
+    },
+    {
+     "id": "dune-belt",
+     "description": "Equatorial dunes of organic sand."
+    }
+   ]
+  },
+  {
+   "id": "hydrocarbon",
+   "family": "icy",
+   "name": "Hydrocarbon world",
+   "description": "A cold world on which heavier hydrocarbons predominate: tar seas, waxy dunes and bitumen plains. Hydrocarbon worlds are a potential source of chemical feedstock, though extraction in the cold is difficult.",
+   "variants": [
+    {
+     "id": "tar-sea",
+     "description": "Viscous hydrocarbon seas."
+    },
+    {
+     "id": "wax-dunes",
+     "description": "Dunes of solid paraffin-like compounds."
+    }
+   ]
+  },
+  {
+   "id": "snowball",
+   "family": "icy",
+   "name": "Snowball world",
+   "description": "A world that once had a temperate climate and has frozen over entirely, often after a change in its star, orbit or atmosphere. Traces of former oceans, rivers and life may lie under the ice.",
+   "variants": [
+    {
+     "id": "frozen-ocean",
+     "description": "An ocean frozen to great depth."
+    },
+    {
+     "id": "buried-life",
+     "description": "Remains of a former biosphere under the ice."
+    },
+    {
+     "id": "slushball",
+     "description": "A narrow band of open water at the equator."
+    }
+   ]
+  },
+  {
+   "id": "hycean",
+   "family": "icy",
+   "name": "Hydrogen-ocean world",
+   "description": "A world with a deep water ocean under a thick hydrogen atmosphere. The hydrogen blanket can keep the ocean liquid far from the star. Hydrogen-ocean worlds are candidates for exotic marine life but are not breathable.",
+   "variants": [
+    {
+     "id": "cold-hycean",
+     "description": "Liquid ocean far beyond the normal habitable zone."
+    },
+    {
+     "id": "dark-hycean",
+     "description": "Ocean warmed by internal heat on a starless world."
+    }
+   ]
+  },
+  {
+   "id": "hot-giant",
+   "family": "giant",
+   "name": "Hot giant",
+   "description": "A gas giant orbiting close to its star, with an atmosphere heated to well above a thousand degrees. Hot giants are often inflated and may be losing atmosphere. Their day sides lack cloud and their night sides glow.",
+   "variants": [
+    {
+     "id": "inflated",
+     "description": "Radius larger than its mass would suggest."
+    },
+    {
+     "id": "evaporating",
+     "description": "Atmosphere escaping in a visible tail."
+    }
+   ]
+  },
+  {
+   "id": "silicate-giant",
+   "family": "giant",
+   "name": "Silicate-cloud giant",
+   "description": "A very hot giant whose cloud deck consists of silicate and iron vapor condensates. Such giants are dark by day and faintly red by night. They are among the least reflective objects of their size.",
+   "variants": [
+    {
+     "id": "iron-rain",
+     "description": "Iron droplets falling through the deep atmosphere."
+    },
+    {
+     "id": "dark-day",
+     "description": "Very low reflectivity on the day side."
+    }
+   ]
+  },
+  {
+   "id": "cloudless-giant",
+   "family": "giant",
+   "name": "Cloudless giant",
+   "description": "A giant too warm for ammonia cloud and too cool for water cloud, with a clear upper atmosphere that scatters blue light. Cloudless giants appear deep azure. Their upper atmospheres are used as references for long-range survey.",
+   "variants": [
+    {
+     "id": "azure",
+     "description": "A deep, uniform blue."
+    },
+    {
+     "id": "alkali-haze",
+     "description": "Traces of sodium and potassium haze."
+    }
+   ]
+  },
+  {
+   "id": "warm-giant",
+   "family": "giant",
+   "name": "Warm giant",
+   "description": "A giant at moderate distance from its star with bright clouds of water vapor. Warm giants are highly reflective and appear white. They often lie close to the habitable zone of their star and may have temperate moons.",
+   "variants": [
+    {
+     "id": "water-cloud",
+     "description": "Bright white water-vapor cloud decks."
+    },
+    {
+     "id": "habitable-moons",
+     "description": "Orbits within the star's habitable zone."
+    }
+   ]
+  },
+  {
+   "id": "cold-giant",
+   "family": "giant",
+   "name": "Cold giant",
+   "description": "A gas giant in the outer system, with banded clouds of ammonia and ammonium compounds and large, long-lived storms. This is the commonest giant class in the Basin. Halvard, which carries a stationary storm larger than Tallis, is a cold giant.",
+   "variants": [
+    {
+     "id": "banded",
+     "description": "Distinct zones and belts in tan and cream."
+    },
+    {
+     "id": "storm-giant",
+     "description": "Dominated by one or more storms larger than worlds."
+    },
+    {
+     "id": "pale",
+     "description": "Muted bands and weak storms."
+    }
+   ]
+  },
+  {
+   "id": "puffy-giant",
+   "family": "giant",
+   "name": "Low-density giant",
+   "description": "A giant with an unusually low density, its atmosphere extended far beyond what its mass would normally hold. Low-density giants are typically losing atmosphere and may be young.",
+   "variants": [
+    {
+     "id": "super-puff",
+     "description": "Density comparable to foam."
+    },
+    {
+     "id": "young",
+     "description": "Still contracting after formation."
+    }
+   ]
+  },
+  {
+   "id": "helium-giant",
+   "family": "giant",
+   "name": "Helium giant",
+   "description": "A giant depleted in hydrogen, its atmosphere dominated by helium. Helium giants lack the methane absorption that colors most giants and appear grey or white. They are believed to form when hydrogen is lost to stellar heating over a long period.",
+   "variants": [
+    {
+     "id": "grey",
+     "description": "Featureless grey-white cloud decks."
+    },
+    {
+     "id": "residual",
+     "description": "A depleted former hot giant."
+    }
+   ]
+  },
+  {
+   "id": "ice-giant",
+   "family": "giant",
+   "name": "Ice giant",
+   "description": "A giant composed mostly of water, ammonia and methane ices above a rocky core, with a hydrogen and helium envelope. Methane absorption gives ice giants a blue to blue-green color. They are common in the outer reaches of Basin systems.",
+   "variants": [
+    {
+     "id": "blue",
+     "description": "Deep blue methane color."
+    },
+    {
+     "id": "cyan",
+     "description": "Paler, hazier blue-green."
+    },
+    {
+     "id": "tilted",
+     "description": "Rotation axis lying close to the orbital plane."
+    }
+   ]
+  },
+  {
+   "id": "mini-neptune",
+   "family": "giant",
+   "name": "Mini-Neptune",
+   "description": "A small gas world, between about two and four Earth radii, with a deep atmosphere over a rocky or icy core and no accessible surface. Mini-Neptunes are among the commonest planets in the galaxy and in the Basin.",
+   "variants": [
+    {
+     "id": "hazy",
+     "description": "High-altitude photochemical haze."
+    },
+    {
+     "id": "water-rich",
+     "description": "A deep water-rich layer beneath the envelope."
+    }
+   ]
+  },
+  {
+   "id": "dwarf-planet",
+   "family": "small",
+   "name": "Dwarf planet",
+   "description": "A body massive enough to be rounded by its own gravity but too small to clear its orbit. Dwarf planets are common in the outer belts of Basin systems and sometimes hold thin, seasonal atmospheres.",
+   "variants": [
+    {
+     "id": "icy-dwarf",
+     "description": "Ice and rock, often with nitrogen frost."
+    },
+    {
+     "id": "rocky-dwarf",
+     "description": "Rock and metal in an inner belt."
+    }
+   ]
+  },
+  {
+   "id": "comet",
+   "family": "small",
+   "name": "Comet",
+   "description": "A small body of ice, dust and rock. When close to its star a comet develops a coma and tails as volatiles sublimate. Captured comets in stable orbits are a common source of water in systems without ice moons, notably in Halyard.",
+   "variants": [
+    {
+     "id": "active",
+     "description": "Venting jets and developing a tail."
+    },
+    {
+     "id": "dormant",
+     "description": "Volatiles exhausted near the surface; a dark crust."
+    },
+    {
+     "id": "captured",
+     "description": "Held in a stable orbit around a planet."
+    }
+   ]
+  },
+  {
+   "id": "moonlet",
+   "family": "small",
+   "name": "Moonlet",
+   "description": "A small, irregular moon or rock, usually a captured asteroid or a fragment of a larger body. Moonlets lack the gravity to be rounded. The port at Sable is built from hulls moored around the largest of its dark moonlets.",
+   "variants": [
+    {
+     "id": "captured-asteroid",
+     "description": "An irregular captured body."
+    },
+    {
+     "id": "shepherd",
+     "description": "A small moon maintaining the edge of a ring."
+    },
+    {
+     "id": "dark",
+     "description": "Very low reflectivity; carbon-rich surface."
+    }
+   ]
+  }
+ ],
+ "featureGroups": [
+  {
+   "name": "Orbit and rotation",
+   "features": [
+    {
+     "id": "tidally-locked-to-parent",
+     "description": "Keeps one face to the planet it orbits; common among close moons."
+    },
+    {
+     "id": "eccentric-orbit",
+     "description": "An elongated orbit that produces strong seasonal change in received light."
+    },
+    {
+     "id": "retrograde-orbit",
+     "description": "Orbits against the rotation of its parent; often a captured body."
+    },
+    {
+     "id": "resonant-orbit",
+     "description": "Period in a simple ratio with a neighbor's. The Orrery's nine worlds are in exact mutual resonance."
+    },
+    {
+     "id": "binary-planet",
+     "description": "Two bodies of comparable size orbiting a common center outside either."
+    },
+    {
+     "id": "trojan",
+     "description": "Shares an orbit with a larger body, sixty degrees ahead of or behind it."
+    },
+    {
+     "id": "captured-body",
+     "description": "Originated elsewhere and was captured into its present orbit."
+    },
+    {
+     "id": "high-obliquity",
+     "description": "Axial tilt so large that the poles take turns facing the star."
+    },
+    {
+     "id": "slow-rotation",
+     "description": "A day lasting weeks or longer."
+    },
+    {
+     "id": "fast-rotation",
+     "description": "A day of a few hours; flattened at the poles."
+    }
+   ]
+  },
+  {
+   "name": "Rings and near space",
+   "features": [
+    {
+     "id": "rings",
+     "description": "A ring system of ice, rock or dust."
+    },
+    {
+     "id": "radiation",
+     "description": "Exposure to intense radiation from a star, belt or remnant; surface work needs shielding."
+    },
+    {
+     "id": "strong-magnetosphere",
+     "description": "A magnetic field strong enough to trap radiation belts around the world."
+    },
+    {
+     "id": "aurorae",
+     "description": "Frequent, bright aurorae."
+    },
+    {
+     "id": "atmospheric-escape",
+     "description": "Atmosphere being lost to space, sometimes visibly as a tail."
+    },
+    {
+     "id": "debris-field",
+     "description": "Orbital debris from impacts, broken moons or wrecks."
+    }
+   ]
+  },
+  {
+   "name": "Atmosphere and weather",
+   "features": [
+    {
+     "id": "great-storm",
+     "description": "A storm larger than many worlds, stable for years. Halvard's has not moved in twelve years of observation."
+    },
+    {
+     "id": "permanent-overcast",
+     "description": "Cloud that never breaks."
+    },
+    {
+     "id": "superrotation",
+     "description": "Upper winds circling the world faster than it turns."
+    },
+    {
+     "id": "dust-storms",
+     "description": "Recurring regional or global dust storms."
+    },
+    {
+     "id": "acid-rain",
+     "description": "Acidic precipitation that attacks metal and stone."
+    },
+    {
+     "id": "extreme-lightning",
+     "description": "Lightning at many times the rate of temperate worlds."
+    },
+    {
+     "id": "haze",
+     "description": "A persistent photochemical or volcanic haze."
+    },
+    {
+     "id": "katabatic-winds",
+     "description": "Cold winds pouring off high ice."
+    }
+   ]
+  },
+  {
+   "name": "Surface and interior",
+   "features": [
+    {
+     "id": "tidal-heating",
+     "description": "Internal heat from tidal flexing by a parent or companion."
+    },
+    {
+     "id": "active-volcanism",
+     "description": "Ongoing eruptions."
+    },
+    {
+     "id": "cryovolcanoes",
+     "description": "Volcanoes of water, ammonia or methane."
+    },
+    {
+     "id": "geysers",
+     "description": "Erupting jets of water or volatiles."
+    },
+    {
+     "id": "subsurface-ocean",
+     "description": "Liquid water beneath the surface."
+    },
+    {
+     "id": "extreme-tides",
+     "description": "Tides of many meters from a large moon or close parent."
+    },
+    {
+     "id": "impact-basin",
+     "description": "A dominant impact scar hundreds of kilometers across."
+    },
+    {
+     "id": "mega-canyon",
+     "description": "A canyon system on a continental scale."
+    },
+    {
+     "id": "quakes",
+     "description": "Frequent strong seismic activity."
+    },
+    {
+     "id": "caves",
+     "description": "Extensive natural cave systems."
+    },
+    {
+     "id": "low-gravity",
+     "description": "Surface gravity well below Union standard."
+    },
+    {
+     "id": "glassed-areas",
+     "description": "Fused glass surfaces from an extreme heating event."
+    }
+   ]
+  },
+  {
+   "name": "Life",
+   "features": [
+    {
+     "id": "native-life",
+     "description": "An indigenous biosphere of any complexity."
+    },
+    {
+     "id": "microbial-only",
+     "description": "Native life limited to microorganisms."
+    },
+    {
+     "id": "megafauna",
+     "description": "Native animals large enough to threaten a frame. Verdance's predators are the standard example."
+    },
+    {
+     "id": "dangerous-biosphere",
+     "description": "Native pathogens, toxins or predators that limit settlement."
+    },
+    {
+     "id": "builder-organisms",
+     "description": "Native organisms that construct large structures. Cairn's colonial organisms build stone works that move."
+    },
+    {
+     "id": "possible-sapience",
+     "description": "Native life under review for sapience under the Charter's native-life protections."
+    }
+   ]
+  },
+  {
+   "name": "Absent works",
+   "features": [
+    {
+     "id": "climate-engine",
+     "description": "Absent machinery below the surface regulating air and climate; found on the Basin's garden worlds."
+    },
+    {
+     "id": "failing-climate-engine",
+     "description": "Climate machinery that has partly stopped or runs erratically, as on Orison."
+    },
+    {
+     "id": "heat-engine",
+     "description": "Absent machinery warming a world from outside the natural energy budget, as in the Hollows."
+    },
+    {
+     "id": "absent-ruins",
+     "description": "Absent structures on or near the world: towers, platforms, shipyards or stranger things."
+    },
+    {
+     "id": "absent-signal",
+     "description": "A repeating Absent transmission received from the world or its vicinity."
+    },
+    {
+     "id": "custodians",
+     "description": "Active Absent machines that defend deep workings, usually below about four hundred meters."
+    }
+   ]
+  },
+  {
+   "name": "Lattice",
+   "features": [
+    {
+     "id": "lattice-seams",
+     "description": "Lattice in seams through rock, worked by seam crews."
+    },
+    {
+     "id": "lattice-crust",
+     "description": "Lattice deposited as surface crusts."
+    },
+    {
+     "id": "lattice-dust",
+     "description": "Lattice grains suspended in air, ice or rings."
+    },
+    {
+     "id": "lattice-rings",
+     "description": "A ring system composed largely of lattice, as at Choir in the Shoals."
+    }
+   ]
+  },
+  {
+   "name": "Settlement and history",
+   "features": [
+    {
+     "id": "abandoned-settlement",
+     "description": "Remains of a failed or evacuated settlement."
+    },
+    {
+     "id": "quarantine",
+     "description": "Closed by Survey Office or other quarantine."
+    },
+    {
+     "id": "battlefield",
+     "description": "Site of recent or ongoing fighting."
+    },
+    {
+     "id": "wreck-field",
+     "description": "Wrecked ships or structures on the surface or in orbit."
+    }
+   ]
+  }
+ ]
+}

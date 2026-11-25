@@ -28,13 +28,7 @@ ARRAYS = ["layers", "alignments", "factions", "feuds", "regions", "systems", "bo
 NAMED = [a for a in ARRAYS if a not in ("textBoxes", "headlines")]
 NO_SURFACE = {"star", "gas-giant", "asteroid-belt", "field", "lane-mouth"}
 WORLD_BODIES = {"planet", "gas-giant", "moon", "rogue-planet", "asteroid"}
-# Habitability that fits each world family; anything else is a warning, not an error.
-FAMILY_HABITABILITY = {
-    "habitable-wet": {"garden", "habitable", "marginal"}, "habitable-dry": {"garden", "habitable", "marginal"},
-    "habitable-cold": {"garden", "habitable", "marginal"}, "habitable-special": {"garden", "habitable", "marginal"},
-    "marginal": {"habitable", "marginal", "hostile"}, "rocky": {"hostile", "lethal"}, "icy": {"marginal", "hostile", "lethal"},
-    "giant": {"none"}, "small": {"hostile", "lethal"},
-}
+CATALOG = ROOT / "data/schema/worlds.json"
 LAYER_MAX = 15
 WIP = " (WIP)"
 
@@ -260,18 +254,22 @@ def check_hierarchy(m, ids, r, strict):
                     r.error("route", f"units/{u['id']}.orders[{n}]", f"lanes '{a[1]['id']}' and '{b[1]['id']}' do not meet")
 
 
-def world_families():
-    defs = json.loads(SCHEMA.read_text())["$defs"]["worldType"]["oneOf"]
-    return {d["const"]: d["title"] for d in defs}
+def world_catalog():
+    """Type -> family, family -> usual habitability, type -> variant ids (data/schema/worlds.json)."""
+    cat = json.loads(CATALOG.read_text())
+    family = {t["id"]: t["family"] for t in cat["types"]}
+    usual = {f["id"]: set(f["habitability"]) for f in cat["families"]}
+    variants = {t["id"]: {v["id"] for v in t["variants"]} for t in cat["types"]}
+    return family, usual, variants
 
 
 def check_worlds(m, r, strict):
-    family = world_families()
+    family, usual, variants = world_catalog()
     for b in m["bodies"]:
         w = f"bodies/{b['id']}"
         t, hab = b.get("world"), b.get("habitability")
         if b["type"] not in WORLD_BODIES:
-            for k in ("world", "habitability", "climate", "worldFeatures"):
+            for k in ("world", "variant", "habitability", "climate", "worldFeatures"):
                 if k in b:
                     r.error("world", w, f"a {b['type']} cannot have '{k}'")
             continue
@@ -283,8 +281,11 @@ def check_worlds(m, r, strict):
                 r.error("world", w, f"world type '{t}' ({fam}) does not fit a body of type {b['type']}")
             if b["type"] == "asteroid" and fam != "small":
                 r.error("world", w, f"an asteroid needs a small-body world type, not '{t}'")
-            if hab is not None and hab not in FAMILY_HABITABILITY[fam]:
+            if hab is not None and hab not in usual[fam]:
                 r.warn("world", w, f"habitability '{hab}' is unusual for a {fam} world ('{t}')")
+        v = b.get("variant")
+        if v is not None and (t is None or v not in variants.get(t, set())):
+            r.error("world", w, f"variant '{v}' is not a variant of world type '{t}' (see docs/WORLDS.md)")
         if hab == "none" and b["type"] != "gas-giant":
             r.error("world", w, "habitability 'none' is for gas giants; a solid world is at least 'lethal'")
 

@@ -81,6 +81,8 @@ CASES = [
     ("world type on a station", lambda m: find(m, "bodies", "marrow").update(world="barren"), False, "world"),
     ("schema: unknown world type", lambda m: find(m, "bodies", "scald-planet").update(world="jungle-planet"), False, "schema"),
     ("complete: world without type", lambda m: find(m, "bodies", "scald-planet").pop("world"), True, "world"),
+    ("variant of another world type", lambda m: find(m, "bodies", "scald-planet").update(variant="river-valley"), False, "world"),
+    ("variant without a world type", lambda m: find(m, "bodies", "ostrom-iv").pop("world") and find(m, "bodies", "ostrom-iv").update(variant="cold"), False, "world"),
     ("structure check only warns on missing data", lambda m: find(m, "factions", "kerr-varga").pop("color"), False, None),
 ]
 
@@ -99,10 +101,12 @@ def main():
             for e in r.errors[:5]:
                 print("     " + e)
     import world_catalog
-    doc = world_catalog.DOC.read_text()
-    if world_catalog.render() not in doc:
+    if world_catalog.render() not in world_catalog.DOC.read_text():
         failed += 1
         print("FAIL docs/WORLDS.md catalog is out of date: run python3 tools/world_catalog.py")
+    for k in world_catalog.schema_mismatches():
+        failed += 1
+        print(f"FAIL schema $defs.{k} enum differs from data/schema/worlds.json")
     print(f"{len(CASES) - failed}/{len(CASES)} passed")
     return 1 if failed else 0
 
