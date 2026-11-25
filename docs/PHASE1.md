@@ -29,7 +29,7 @@ Problems to fix during Phase 1:
 
 Each has a recommended default. The schema task (1.1) needs D1–D6. The others can wait until their task.
 
-**Decided Nov 25, 2026:** D1–D7 as recommended; D9, D10 and D12 applied as recommended in task 1.7; D8 applied as recommended in task 1.10. D11 and D13–D15 are still open.
+**Decided Nov 25, 2026:** D1–D7 as recommended; D9, D10 and D12 applied as recommended in task 1.7; D8 applied as recommended in task 1.10; D11 applied as recommended in task 1.11 (40 unmapped stars). D13–D15 are still open.
 
 | # | Question | Recommended |
 |---|---|---|
@@ -87,7 +87,7 @@ One task = one session's work, touching only the files listed. Do them in order.
 | 1.8 | (done) Bodies, inner arms: coreward (Pennant, Orison, Wending), trailing (Halyard, Lumen, Sable), spinward (Gloam, Halvard), rimward (Scald, Ferrous, Tarn, Cairn), one commit per arm | `data/src/regions/<id>.json` | Validator passes after each arm |
 | 1.9 | (done) Bodies, frontier, at full detail (GM request): Lantern Reach, Pale, Orrery, Furnace, Hollows, Shoals, Deeps, Boneyard, Mire; the Quiet stays empty | `data/src/regions/<id>.json` | Validator passes |
 | 1.10 | (done) Lane mouths: every lane end attached to a system and a lane-mouth body (D2, D8) | `data/src/lanes.json`, `data/src/regions/*.json` | Every lane end resolves to a system |
-| 1.11 | Unmapped stars (D11, D12) | `data/src/unmapped.json` | Count matches D11; all inside the sphere |
+| 1.11 | (done) 40 unmapped stars (D11, D12) | `data/src/unmapped.json` | Count matches D11; all inside the sphere |
 | 1.12 | Factions: layers, colors, five peoples, presence for peoples and faiths, control at region/system/planet level | `data/src/factions.json` | Each layer ≤15; every region and split planet has control set |
 | 1.13 | Clock start | `data/src/clock.json` | 5029u, day 300, tidal day 5 |
 | 1.14 | Assemble `data/map.json`, run the Phase 1 test, tick the boxes in PLAN.md | `data/map.json`, `docs/PLAN.md` | Exit test passes |
@@ -180,5 +180,9 @@ Notes from 1.10:
 - 62 lane ends attached in 21 regions, each with a lane-mouth body whose notes give the lane's length, behavior and direction. With the 11 from the pilot, every end is attached except the Quiet's three, which lie beyond the map.
 - Placement follows the documents where they speak: the Wending passage opens near Halyard Station, the Tallis lane's Halyard mouth is where the Basin Office tender was destroyed, the Halvard Gap opens near Halvard's rings, Orison's tidal mouth and Cairn's Deeps mouth sit at the edge companions Vesper and Barrow, and all four of Tarn's mouths are at Tarn. Gloam per D8: Ostrom and Halvard mouths at Gloam under the guns, Shoals and Orison tide mouths at Ember. Elsewhere a region's mouths are spread across its systems.
 - After 1.10 the Phase 1 test fails only on faction colors (task 1.12).
+
+Notes from 1.11:
+- 40 unmapped stars, seen at long range and never charted, with no known lanes. Most are named from the Calder probe catalog (Calder 117 and so on); three notable ones are named: the Watchfire, a blue supergiant 22 ly out that is visible from every world in the Basin and that spacers steer by; Lodestar, a blue giant; and Howl, a magnetar. One white dwarf sits in a planetary nebula, three red dwarfs flare, and three are wide binaries with their companions recorded as star bodies.
+- With them the Basin holds about 148 stars, using every star kind in the schema.
 
 The pilot in 1.5 exists to catch schema problems on two regions before data goes into the other twenty-two. Change the schema there if needed, not later.

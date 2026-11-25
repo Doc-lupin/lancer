@@ -63,7 +63,7 @@ Task breakdown, review findings and open decisions: [PHASE1.md](PHASE1.md).
 - [x] System center types (star, rogue planet, wreck, structure); region effects (none, nebula, dust cloud); origin and visibility tags
 - [x] Hand-adjust and lock region positions
 - [x] Stars in each region, with positions
-- [ ] Unmapped stars
+- [x] Unmapped stars
 - [x] Missing planets, moons and stations (invented tag)
 - [x] Attach each lane to a star at each end
 - [ ] Layer and color for each faction
@@ -117,7 +117,7 @@ Task breakdown, review findings and open decisions: [PHASE1.md](PHASE1.md).
 ## Open items
 
 - [ ] How players get the map: sent file, hosted page, or live data (deferred to Phase 5)
-- [ ] Target number of unmapped stars ("more than a hundred")
+- [x] Target number of unmapped stars: 40, about 148 stars in all (D11)
 
 ## Out of scope for the first release
 
