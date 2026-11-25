@@ -9,7 +9,7 @@ import { useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useMap, isHidden } from '../data/store.js';
-import { offsetKm } from './origin.js';
+import { offsetKm, KM_PER_LY } from './origin.js';
 import { view } from './camera/view.js';
 import { spriteVertex, spriteFragmentHead, spriteUniforms, spriteGeometry, updateViewport } from './sprite.js';
 
@@ -18,7 +18,15 @@ export const CENTER_ICONS = {
   wreck: { type: 1, color: '#d4a466' },
   structure: { type: 2, color: '#efd77e' },
 };
-const ICON_PX = 11;
+// Sized like a mid-sized star (an orange dwarf's glow is about 6 px): 6 px
+// from far off, growing to 8 px within a couple of light-years, where the
+// shape needs to read.
+const ICON_FAR_PX = 6;
+const ICON_NEAR_PX = 8;
+export function iconPx(distanceLy) {
+  const k = Math.min(1, Math.max(0, Math.log(8 / distanceLy) / Math.log(4))); // 0 at 8 ly, 1 at 2 ly
+  return ICON_FAR_PX + (ICON_NEAR_PX - ICON_FAR_PX) * k;
+}
 
 const fragment = /* glsl */ `
 ${spriteFragmentHead}
@@ -27,7 +35,7 @@ void main() {
   #include <logdepthbuf_fragment>
   vec2 q = gl_FragCoord.xy - vCenter;
   float r = vRadius;
-  float hw = 0.8 * uPixelRatio;              // half the stroke width
+  float hw = 0.55 * uPixelRatio;             // half the stroke width
   float ring = abs(length(q) - 0.72 * r);
   float stroke = ring;
   float fill = 0.0;
@@ -63,7 +71,6 @@ export default function Centers() {
     centers.forEach((it, i) => {
       c.set(it.icon.color);
       g.attributes.aColor.setXYZW(i, c.r, c.g, c.b, 1);
-      g.attributes.aSize.setX(i, ICON_PX);
       g.attributes.aType.setX(i, it.icon.type);
     });
     const m = new THREE.ShaderMaterial({
@@ -89,11 +96,14 @@ export default function Centers() {
     const cam = view.rig?.camera;
     if (!cam) return;
     updateViewport(mesh.material, size, viewport);
+    const sizes = mesh.geometry.attributes.aSize;
     centers.forEach((it, i) => {
       offsetKm(cam, it.place, rel);
       mesh.setMatrixAt(i, mat.makeTranslation(rel[0], rel[1], rel[2]));
+      sizes.setX(i, iconPx(Math.hypot(rel[0], rel[1], rel[2]) / KM_PER_LY));
     });
     mesh.instanceMatrix.needsUpdate = true;
+    sizes.needsUpdate = true;
   }, -1);
 
   return <primitive object={mesh} />;
