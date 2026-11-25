@@ -40,7 +40,7 @@
       "heldBy": ["synod"],
       "alsoPresent": ["corvel", "lantern-company"],
       "stars": [
-        { "name": "Pennant", "type": "star", "kind": "orange-dwarf", "kindOrigin": "invented" },
+        { "name": "Pennant", "type": "star", "kind": "yellow-white-star", "kindOrigin": "invented", "notes": "Bright F-type star; Pennant orbits far out on a long, slightly eccentric year, which gives it its long winters." },
         { "name": "Tew", "type": "red dwarf", "kind": "red-dwarf", "notes": "Mining worlds." },
         { "name": "Ashby", "type": "red dwarf", "kind": "red-dwarf", "notes": "Mining worlds." }
       ],
@@ -63,9 +63,9 @@
       "heldBy": ["lagoon-towns"],
       "alsoPresent": ["long-families"],
       "stars": [
-        { "name": "Wending", "type": "hot white star", "kind": "hot-white-star" },
+        { "name": "Wending", "type": "hot white star", "kind": "blue-white-star" },
         { "name": "(unnamed)", "type": "dim star", "kind": "red-dwarf", "kindOrigin": "invented" },
-        { "name": "(unnamed)", "type": "dim star", "kind": "red-dwarf", "kindOrigin": "invented" }
+        { "name": "(unnamed)", "type": "dim star", "kind": "white-dwarf", "kindOrigin": "invented" }
       ],
       "bodies": [
         { "name": "Wending", "type": "planet", "parent": "Wending", "notes": "Ocean world, no continents, volcanic archipelagos. ~30 floating lagoon towns on cables. Two large moons, heavy tides." }
@@ -76,7 +76,12 @@
       "lattice": { "rating": "trace", "where": "A few airless moons" },
       "heldBy": [],
       "alsoPresent": ["reach-companies", "corvel", "synod"],
-      "stars": [ { "name": "Lantern stars", "type": "chain of nine stars", "kind": "yellow-dwarf", "kindOrigin": "invented", "count": 9, "notes": "Brighten and dim together every 73 days. Tidal lanes across the Basin follow this cycle." } ],
+      "stars": [ { "name": "Lantern stars", "type": "chain of nine stars", "kind": "yellow-dwarf", "kindOrigin": "invented", "count": 3, "variable": "lantern", "notes": "Brighten and dim together every 73 days. Tidal lanes across the Basin follow this cycle." },
+        { "name": "Lantern stars", "type": "chain of nine stars", "kind": "orange-dwarf", "kindOrigin": "invented", "count": 2, "variable": "lantern" },
+        { "name": "Lantern stars", "type": "chain of nine stars", "kind": "yellow-white-star", "kindOrigin": "invented", "count": 2, "variable": "lantern" },
+        { "name": "Lantern stars", "type": "chain of nine stars", "kind": "white-star", "kindOrigin": "invented", "count": 1, "variable": "lantern" },
+        { "name": "Lantern stars", "type": "chain of nine stars", "kind": "orange-giant", "kindOrigin": "invented", "count": 1, "variable": "lantern", "notes": "The brightest of the nine; its pulse is visible from Pennant." }
+       ],
       "bodies": [
         { "name": "Verdance", "type": "planet", "notes": "Garden world, machinery runs hot. 200 m forests, frame-killing predators. Two settlement attempts abandoned (5024u, 5026u); Verdance Colonial Company preparing a third." },
         { "name": "Stillwater", "type": "planet", "notes": "Ocean world, no tides, almost no wind. City-sized Absent platforms float on it; one settled by the Long Families (5025u)." },
@@ -112,7 +117,11 @@
       "lattice": { "rating": "none", "where": "Nowhere workable" },
       "heldBy": ["free-lines"],
       "alsoPresent": ["cormorants"],
-      "stars": [ { "name": "(four small dim stars)", "type": "dim star", "kind": "red-dwarf", "kindOrigin": "invented", "count": 4 } ],
+      "stars": [
+        { "name": "(small dim star)", "type": "dim star", "kind": "red-dwarf", "kindOrigin": "invented", "count": 2 },
+        { "name": "(small dim star)", "type": "dim star", "kind": "brown-dwarf", "kindOrigin": "invented" },
+        { "name": "(small dim star)", "type": "dim star", "kind": "white-dwarf", "kindOrigin": "invented" }
+      ],
       "bodies": [
         { "name": "Halyard Station", "type": "station", "notes": "Anchored to a shattered ice moon in a wide orbit in the largest system. Free Lines home. Wending passage mouth nearby." }
       ],
@@ -199,7 +208,7 @@
       "stars": [
         { "name": "Scald", "type": "white star", "kind": "white-star" },
         { "name": "(smaller star)", "type": "star", "kind": "orange-dwarf", "kindOrigin": "invented", "notes": "Rocky planets partly glassed." },
-        { "name": "(smaller star)", "type": "star", "kind": "red-dwarf", "kindOrigin": "invented", "notes": "Rocky planets partly glassed." }
+        { "name": "(smaller star)", "type": "star", "kind": "red-dwarf", "kindOrigin": "invented", "features": ["flares"], "notes": "Rocky planets partly glassed. A violent flare star." }
       ],
       "bodies": [
         { "name": "Scald", "type": "planet", "parent": "Scald", "notes": "Hot, dry, thin air. Nearly half the surface fused to glass. Custodians below ~400 m. Places: the Seam (600 km front), Kettle Flats (Northern Concord), Kerrtown (Kerr-Varga, southern edge of the glassfields)." }
@@ -211,10 +220,10 @@
       "heldBy": ["ferrous-consolidated"],
       "alsoPresent": [],
       "stars": [
+        { "name": "(star)", "type": "star", "kind": "red-giant", "kindOrigin": "invented", "notes": "Swelled late and broke up its inner worlds; much of Ferrous's rock may be what is left of them." },
+        { "name": "(star)", "type": "star", "kind": "white-dwarf", "kindOrigin": "invented", "features": ["debris-disk"] },
         { "name": "(star)", "type": "star", "kind": "orange-dwarf", "kindOrigin": "invented" },
-        { "name": "(star)", "type": "star", "kind": "red-dwarf", "kindOrigin": "invented" },
-        { "name": "(star)", "type": "star", "kind": "red-dwarf", "kindOrigin": "invented" },
-        { "name": "(star)", "type": "star", "kind": "white-dwarf", "kindOrigin": "invented", "notes": "A white dwarf would explain worlds broken up long ago." }
+        { "name": "(star)", "type": "star", "kind": "yellow-white-star", "kindOrigin": "invented" }
       ],
       "notes": "Almost no planets; dense metal-rich asteroid belts. The Basin's largest foundries are built into the biggest asteroids."
     },
@@ -224,9 +233,9 @@
       "heldBy": [], "contested": true,
       "alsoPresent": ["basin-office", "ringwreckers", "rimelight", "smith-shimano"],
       "stars": [
-        { "name": "Tarn", "type": "star", "kind": "orange-dwarf", "kindOrigin": "invented" },
+        { "name": "Tarn", "type": "star", "kind": "white-star", "kindOrigin": "invented", "notes": "Bright A-type star. Tarn orbits far out and stays cold, but its rings catch enough light to be seen from neighboring stars." },
         { "name": "(star)", "type": "star", "kind": "red-dwarf", "kindOrigin": "invented" },
-        { "name": "(star)", "type": "star", "kind": "red-dwarf", "kindOrigin": "invented" }
+        { "name": "(star)", "type": "star", "kind": "brown-dwarf", "kindOrigin": "invented" }
       ],
       "bodies": [
         { "name": "Tarn", "type": "planet", "notes": "Cold rocky planet with very broad rings. Ruined Absent shipyard inside the rings (found 5025u). Basin Office survey stations; Rimelight receiving station." }
@@ -248,9 +257,11 @@
       "heldBy": [],
       "alsoPresent": ["unlit", "survey-office"],
       "stars": [
-        { "name": "(old stars)", "type": "star", "kind": "white-dwarf", "kindOrigin": "invented", "count": 2, "notes": "Several unusually old." },
-        { "name": "(stars)", "type": "star", "kind": "red-dwarf", "kindOrigin": "invented", "count": 4 },
-        { "name": "(star)", "type": "star", "kind": "orange-dwarf", "kindOrigin": "invented", "count": 1 }
+        { "name": "(old star)", "type": "star", "kind": "red-giant", "kindOrigin": "invented", "notes": "One of the several unusually old stars." },
+        { "name": "(old star)", "type": "star", "kind": "orange-giant", "kindOrigin": "invented" },
+        { "name": "(old star)", "type": "star", "kind": "carbon-star", "kindOrigin": "invented", "features": ["strong-wind"], "notes": "Deep red, shedding soot-dark dust." },
+        { "name": "(old star)", "type": "star", "kind": "white-dwarf", "kindOrigin": "invented", "count": 2 },
+        { "name": "(star)", "type": "star", "kind": "red-dwarf", "kindOrigin": "invented", "count": 2 }
       ],
       "bodies": [
         { "name": "Ashlar", "type": "planet", "notes": "Airless world; field of empty Absent stone towers, some over 1 km tall. Only known above-ground Absent construction. First crew lost 19 hours (5026u). Survey Office quarantine." }
@@ -262,7 +273,11 @@
       "lattice": { "rating": "moderate", "where": "Refined lattice in Absent wreckage" },
       "heldBy": ["ferrous-consolidated"], "heldNote": "by concession",
       "alsoPresent": ["unlit"],
-      "stars": [ { "name": "(three dim stars)", "type": "dim star", "kind": "red-dwarf", "kindOrigin": "invented", "count": 3 } ],
+      "stars": [
+        { "name": "(dim star)", "type": "dim star", "kind": "white-dwarf", "kindOrigin": "invented" },
+        { "name": "(dim star)", "type": "dim star", "kind": "brown-dwarf", "kindOrigin": "invented" },
+        { "name": "(dim star)", "type": "dim star", "kind": "red-dwarf", "kindOrigin": "invented" }
+      ],
       "notes": "Moon-sized Absent megastructures drifting in loose orbits. Custodians more common here than anywhere. Some wrecks still powered."
     },
     {

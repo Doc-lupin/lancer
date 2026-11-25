@@ -117,9 +117,11 @@ def build_regions(parsed, positions):
 
 def check_stars(regions):
     """Every star listed in parsed/regions.json needs a schema star kind (used in task 1.7)."""
-    kinds = set(json.loads((ROOT / "data/schema/map.schema.json").read_text())["$defs"]["starKind"]["enum"])
+    defs = json.loads((ROOT / "data/schema/map.schema.json").read_text())["$defs"]
+    kinds, feats = set(defs["starKind"]["enum"]), set(defs["starFeature"]["enum"])
     bad = [f"{r['id']}: {st['name']} ({st.get('kind')})" for r in regions for st in r.get("stars", [])
-           if st.get("kind") not in kinds or st.get("kindOrigin", "canon") not in ("canon", "invented")]
+           if st.get("kind") not in kinds or st.get("kindOrigin", "canon") not in ("canon", "invented")
+           or not set(st.get("features", [])) <= feats]
     if bad:
         sys.exit("parsed/regions.json: stars without a valid kind: " + "; ".join(bad))
 

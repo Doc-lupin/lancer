@@ -215,15 +215,29 @@
       "unevaluatedProperties": false
     },
 
-    "starKind": { "enum": ["yellow-dwarf", "orange-dwarf", "red-dwarf", "brown-dwarf", "white-dwarf", "white-star", "hot-white-star", "young-hot-star", "neutron-star", "remnant"] },
+    "starKind": {
+      "description": "Main sequence, coolest to hottest; young; evolved; remnants; substellar.",
+      "enum": [
+        "red-dwarf", "orange-dwarf", "yellow-dwarf", "yellow-white-star", "white-star", "blue-white-star", "blue-star",
+        "protostar",
+        "subgiant", "red-giant", "orange-giant", "yellow-giant", "blue-giant", "red-supergiant", "blue-supergiant", "carbon-star", "wolf-rayet",
+        "white-dwarf", "neutron-star", "pulsar", "magnetar", "black-hole", "remnant",
+        "brown-dwarf"
+      ]
+    },
+    "starFeature": { "enum": ["flares", "starspots", "debris-disk", "protoplanetary-disk", "accretion-disk", "planetary-nebula", "jets", "strong-wind"] },
     "variability": {
       "type": "object",
       "required": ["cycle"],
       "properties": {
-        "cycle": { "enum": ["lantern"] },
+        "cycle": { "enum": ["lantern", "natural"] },
+        "periodDays": { "type": "number", "exclusiveMinimum": 0 },
         "amplitude": { "type": "number", "minimum": 0, "maximum": 1 }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "if": { "properties": { "cycle": { "const": "natural" } } },
+      "then": { "required": ["periodDays"] },
+      "else": { "not": { "required": ["periodDays"] } }
     },
     "system": {
       "allOf": [{ "$ref": "#/$defs/named" }],
@@ -239,12 +253,13 @@
             "type": { "enum": ["star", "rogue-planet", "wreck", "structure"] },
             "kind": { "$ref": "#/$defs/starKind" },
             "body": { "$ref": "#/$defs/id" },
-            "variable": { "$ref": "#/$defs/variability" }
+            "variable": { "$ref": "#/$defs/variability" },
+            "features": { "type": "array", "items": { "$ref": "#/$defs/starFeature" }, "uniqueItems": true }
           },
           "additionalProperties": false,
           "if": { "properties": { "type": { "const": "star" } } },
           "then": { "required": ["kind"], "not": { "required": ["body"] } },
-          "else": { "required": ["body"], "not": { "required": ["kind"] } }
+          "else": { "required": ["body"], "not": { "anyOf": [{ "required": ["kind"] }, { "required": ["variable"] }, { "required": ["features"] }] } }
         },
         "lattice": { "$ref": "#/$defs/lattice" },
         "control": { "$ref": "#/$defs/control" },
@@ -274,6 +289,8 @@
         "parent": { "$ref": "#/$defs/id" },
         "type": { "enum": ["star", "planet", "gas-giant", "moon", "rogue-planet", "asteroid", "asteroid-belt", "field", "station", "structure", "wreck", "lane-mouth"] },
         "kind": { "$ref": "#/$defs/starKind" },
+        "variable": { "$ref": "#/$defs/variability" },
+        "features": { "type": "array", "items": { "$ref": "#/$defs/starFeature" }, "uniqueItems": true },
         "class": { "type": "string" },
         "orbit": { "$ref": "#/$defs/orbit" },
         "radiusKm": { "type": "number", "exclusiveMinimum": 0 },
@@ -304,7 +321,7 @@
       },
       "if": { "properties": { "type": { "const": "star" } } },
       "then": { "required": ["kind"] },
-      "else": { "not": { "required": ["kind"] } },
+      "else": { "not": { "anyOf": [{ "required": ["kind"] }, { "required": ["variable"] }, { "required": ["features"] }] } },
       "unevaluatedProperties": false
     },
 

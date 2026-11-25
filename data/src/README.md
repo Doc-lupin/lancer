@@ -21,4 +21,5 @@ An entry whose id already exists changes only the fields it lists. A field set t
 - **Orbits.** AU around a star, km around a planet. Periods follow Kepler's third law from the parent's mass. `periodDays: null` holds a body still (lane mouths, the gate). The orbit epoch is 5029u day 1.
 - **Notes.** `notes` are what players may read. `gmNotes` are secrets only. Editor remarks, such as "location invented", go in `_comment`.
 - **Control.** Set `control` on systems, key bodies, places and areas. Planets split between factions get `areas` (lat/lon polygons).
+- **Variety (D16).** Don't default to dwarfs and barren rock. Use the full range of star kinds and features (docs/PHASE1.md, Stellar variety), companion stars, and a spread of planet classes: lava, iron, carbon and desert worlds, ocean and ice worlds, super-Earths, mini-Neptunes, hot and ringed giants, tidally locked and eccentric worlds, captured comets.
 - **Surface coordinates.** Each region file's `_comment` says where the continents are, so later places stay consistent.
