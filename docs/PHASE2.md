@@ -1,6 +1,6 @@
 # Phase 2: 3D view — work plan
 
-**Status: in progress. Tasks 2.1–2.2 done.** Branch `phase-2`, cut from `main` on Nov 25, 2026. The Phase 1 test still passes on it (`python3 tools/validate_map.py --complete`: 0 errors, 0 warnings).
+**Status: in progress. Tasks 2.1–2.3 done.** Branch `phase-2`, cut from `main` on Nov 25, 2026. The Phase 1 test still passes on it (`python3 tools/validate_map.py --complete`: 0 errors, 0 warnings).
 
 Phase 2 checklist and test are in [PLAN.md](PLAN.md). This file breaks them into small tasks and lists what must be decided first.
 
@@ -54,7 +54,7 @@ One task = one session's work, touching only the files listed. Do them in order.
 | 2.0 | Settle P1–P13 | — | `docs/PHASE2.md` | Answers recorded here |
 | 2.1 | (done) App scaffold: Vite + React + R3F, one empty canvas filling the page | Continuous zoom | `package.json`, `package-lock.json`, `vite.config.js`, `index.html`, `src/main.jsx`, `src/views/Scene.jsx` | `npm run dev` shows a black canvas; `npm run build` passes |
 | 2.2 | (done) Store: load `map.json` once into Zustand; lookups by id; parent chain (body → system → region); "(WIP)" stripped for display, as in `tools/describe_world.py`; `playerMode` flag (P13) | Data storage | `src/storage/loadMap.js`, `src/data/store.js`, `src/data/names.js`, `src/data/store.test.js`; one line each in `src/main.jsx` (start the load) and `package.json` (`npm test`) | `node --test` loads the file and finds 24 regions, 155 systems, 329 bodies; every parent chain resolves |
-| 2.3 | Star kinds table (P8) | Continuous zoom | `src/data/starKinds.js`, `tools/check_star_kinds.py` | Every `kind` in `map.json` has a color and luminosity; the check passes |
+| 2.3 | (done) Star kinds table (P8) | Continuous zoom | `src/data/starKinds.js`, `tools/check_star_kinds.py` | Every `kind` in `map.json` has a color and luminosity; the check passes |
 | 2.4 | Precision test, first, as the risk table asks: floating origin and log depth (P3, P4) with three test objects, one at each scale (ly, AU, km), and a scripted zoom from 50 ly to 1 km above a station | Continuous zoom | `src/views/origin.js`, `src/views/PrecisionTest.jsx`, `tools/check_jitter.mjs` | With the camera still, no test object moves more than half a pixel between frames at any step; no depth flicker. The GM looks at the screenshots |
 | 2.5 | Camera controller (P6): orbit, zoom by ratio, pinch and drag on touch, click to fly to an object, zoom out to the parent | Continuous zoom | `src/views/camera/*.js` | One wheel or pinch gesture covers Basin to station; the fly-to ends on the object with no overshoot |
 | 2.6 | Regions and stars from the store, instanced; star color and brightness from `starKinds`; unmapped stars dimmer; region labels at the Basin level (P5) | Continuous zoom | `src/views/Stars.jsx`, `src/views/RegionLabels.jsx` | 155 systems drawn in one or two draw calls; labels readable on a phone |
@@ -89,4 +89,10 @@ Notes from 2.2:
 - `displayName()` drops a trailing " (WIP)", the same rule as `clean_name()` in `tools/describe_world.py`.
 - `npm test` runs `node --test "src/**/*.test.js"`: 6 tests pass.
 - `npm run build` copies `map.json` into `dist/assets/` under a hashed name (745 KB, 102 KB gzipped). Checked in the browser on the dev server and the built preview: one fetch, store `ready`, no console errors. The first dev start after installing reloads the page once while Vite prepares zustand; later starts fetch once.
+
+Notes from 2.3:
+- `STAR` in `tools/derive_stats.py` gives a color word ("swollen red"), not a color the screen can use. `src/data/starKinds.js` copies luminosity, temperature and the word, and adds two columns for the view: `color`, a display color picked by hand to match the word, a little stronger than true star colors so kinds stay apart on a dark map; and `radius` (Sun = 1), worked out from luminosity and temperature with the same formula `derive_stats.py` uses for its stats.
+- The formula doesn't fit four groups, so their radius is set by hand: neutron stars, pulsars and magnetars at 10 km; the black hole at its event horizon for 8 Suns (23.6 km, mass from `MASS`); brown dwarfs at 0.1, about Jupiter's size (the formula gives 0.4 because the table's brown-dwarf luminosity is high for 1200 K). The black hole's display color is its accretion disk's glow.
+- `python3 tools/check_star_kinds.py` compares the two tables through Node: same 24 kinds as `STAR` and the schema; the three copied columns exact; every color `#rrggbb`; radii within 1% of the formula except the hand-set ones; all 23 kinds used in `map.json` present. Tried against a broken copy (a changed luminosity, a wrong radius, a color word in place of a hex, a missing kind): all four reported, exit code 1.
+- If `STAR` changes in Python, run the check; it names the rows to update in `starKinds.js`.
 
