@@ -37,7 +37,7 @@ const KIND_COLOR = {
   landing: '#d8dde6', other: '#d8dde6',
 };
 const MARKER_PX = 8;
-const LIFT = 0.002; // markers sit just above the ground
+const LIFT = 0.006; // markers sit above the ground, mountains included (relief ≤ 0.5% of the radius, planet/terrain.js)
 const PATH_STEPS = 12; // pieces between two points of a front's path
 const LABEL_GLOBE_PX = 160; // diameter on screen before place names show
 
