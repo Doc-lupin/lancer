@@ -70,6 +70,19 @@ async function settle(page) {
   await page.waitForFunction(() => !window.__lancer.view.rig.fly, null, { timeout: 10000 });
   await page.waitForTimeout(300);
 }
+// Name labels try their spot from the last frame first (labelPlace.js), so
+// which names fit depended on the frames flown. Forget those spots and draw
+// two frames, so the names depend on the view only (decision BQ2).
+async function steadyLabels(page) {
+  await ev(page, async () => {
+    for (const el of document.querySelectorAll('body *')) { delete el._spot; delete el._shown; }
+    for (let i = 0; i < 2; i++) {
+      window.__lancer.invalidate();
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    }
+  });
+  await page.waitForTimeout(300);
+}
 async function focus(page, id) {
   await ev(page, (i) => window.__lancer.focus(i), id);
   await settle(page);
@@ -120,6 +133,7 @@ async function run(browser, base, name, options) {
     const peaks = [];
     for (const { id, p } of shown) { const v = await peak(page, p[0], p[1]); peaks.push(`${id} ${v}`); if (v > 60) drawn++; }
     check(`${label}: every planet shown is drawn at its orbital place`, drawn === shown.length, `${drawn} of ${shown.length}: ${peaks.join(', ')}`);
+    await steadyLabels(page);
     const labels = await shownLabels(page);
     const named = shown.filter(({ id }) => labels.includes(id)).length;
     check(`${label}: the system and its planets are named`, labels.includes(sys) && named >= shown.length - (options.hasTouch ? 1 : 0), `${named} of ${shown.length} shown planets named`);
