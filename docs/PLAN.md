@@ -1,9 +1,11 @@
 # 3D Universe Map Tool: Action Plan V2
 
+This plan has two sections. **Section A** is the original project: this file, Phases 0 to 5. **Section B** is the visual overhaul: [SECTION_B.md](SECTION_B.md), Phases B0 to B11.
+
 Repository copy of the V2 plan (Nov 25, 2026). The shared document is at
 https://claude.ai/artifact/MDzMcUZF9q7TRJi2YMVwLC. V1 is `3D_Universe_Map_Tool_Overview_and_Action_Plan.docx`.
 
-**Current phase: Phase 2 (3D view) is complete: accepted by the GM (Nov 26, 2026) and merged into `main`, as Phase 1 was. Phase 3 has not started.** A procedural planet overhaul (level-of-detail globes, tectonic terrain, climate and biomes, scattering atmospheres) is in progress but on hold, on branch `ccr-23ad96e8-4fi4vg`.
+**Current phase: Phase 2 (3D view) is complete: accepted by the GM (Nov 26, 2026) and merged into `main`, as Phase 1 was. Phase 3 has not started.** Section B (visual overhaul) is planned in [SECTION_B.md](SECTION_B.md) and waits for the GM's decisions BD1 to BD8; its first procedural planet work is on hold on branch `ccr-23ad96e8-4fi4vg`.
 
 ## Design decisions
 
@@ -49,9 +51,9 @@ https://claude.ai/artifact/MDzMcUZF9q7TRJi2YMVwLC. V1 is `3D_Universe_Map_Tool_O
 - Every object has an origin tag and a visibility tag (`all` / `gm`).
 - New data can be created at any phase, not only Phase 1. Tag it `invented`.
 
-## Phases
+## Section A phases
 
-Do not start a phase until the previous phase's test passes.
+Do not start a phase until the previous phase's test passes. Section B has its own phases (B0 to B11); decision BD5 in [SECTION_B.md](SECTION_B.md) sets their order with Phases 3 to 5.
 
 ### Phase 0: Setup (done)
 - [x] Work directory and layout
@@ -141,8 +143,8 @@ Built with Vite (D19). The app reads `data/map.json`; the data is still authored
 
 ## Out of scope for the first release
 
-- Flyable terrain
-- Full volume effects for nebula and dust cloud
+- Flyable terrain (Section B takes surfaces down to low altitude, not to ground level)
+- Full volume effects for nebula and dust cloud (planned in Section B, Phase B9)
 - Full local lanes (show a few in region view)
 - Lane drift animation
 - Route planning and travel-time calculation

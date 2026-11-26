@@ -1,0 +1,406 @@
+# Section B: Visual Overhaul — Action Plan
+
+Written in ASD-STE100 Simplified Technical English (short sentences, active
+voice, one instruction in each sentence). Technical names stay as they are.
+
+**Section A** is the original project: Phases 0 to 5 in [PLAN.md](PLAN.md).
+**Section B** is this plan. It changes the map from simple shapes to a
+dynamic visual database. Every world, star and orbit gets its look from its
+data and from physical models.
+
+**Status (Nov 26, 2026): planned, not started.** Earlier work for Section B is
+on branch `ccr-23ad96e8-4fi4vg`, commit `828e8d0` (procedural planets, on
+hold). Phase B2 and Phase B5 continue from that work.
+
+## 1. Objective
+
+Make the map visually stunning and correct. The output must:
+
+1. Show each world as a unique place, made from its data.
+2. Show the full range of alien biospheres, not only Earth copies.
+3. Move the bodies on true orbits: eccentric, inclined, retrograde and irregular.
+4. Show stars, stellar remnants and black holes with their physical properties.
+5. Keep the map readable. Labels, lanes and data stay clear at all times.
+6. Run smoothly on a phone and on a computer.
+
+## 2. Rules for Section B
+
+1. Obey the rules in `CLAUDE.md`. Do one small task at a time. Tie each task to one function in Table 4.
+2. Do not break Section A. All Section A checks must pass after each task.
+3. Do not start a phase until the previous phase's test passes.
+4. The data is the authority. A generated world must agree with its data (water share, ice share, temperature, places, notes).
+5. Make all generation deterministic. The same seed must give the same world on each device.
+6. Tag each new data value with its origin. Invented values get the `invented` tag. Follow the schema in `data/schema/`.
+7. Give each effect a quality tier (Table 6). The map must work at the lowest tier.
+8. Do not add a library without the GM's approval (Table 7).
+9. Record each decision in [SECTION_B_DECISIONS.md](SECTION_B_DECISIONS.md) when it is made (file to be made in Phase B0).
+
+## 3. Scope
+
+In scope:
+
+- Orbits and motion for all bodies, with time controls.
+- World generation: tectonics, erosion, hydrology, climate, weather, biospheres.
+- Planet surfaces from orbit down to low altitude.
+- Gas giants, ice giants and ring systems.
+- Stars of all 24 kinds, stellar remnants, black holes.
+- Asteroids, belts, comets, rogue planets, wrecks, stations, structures, lane mouths.
+- Nebulae, dust clouds and the galactic sky.
+- The render pipeline: high dynamic range, bloom, tone mapping, shadows.
+
+Out of scope:
+
+- Walking or flying on the ground at human scale.
+- Physics for ships or combat.
+- Sound.
+- Editing of terrain by hand in the map (the GM edits the data and the seed).
+
+## 4. Functions
+
+| ID | Function | Priority |
+|---|---|---|
+| F1 | Render pipeline and quality tiers | 1 |
+| F2 | Orbits and motion | 1 |
+| F3 | World generation: tectonics, terrain, erosion, hydrology | 1 |
+| F4 | Climate and weather | 1 |
+| F5 | Biospheres | 1 |
+| F6 | Surfaces up close (materials, water, lights, shadows) | 2 |
+| F7 | Gas giants, ice giants and rings | 2 |
+| F8 | Stars, stellar remnants and black holes | 2 |
+| F9 | Small bodies, stations and structures | 3 |
+| F10 | Deep space: nebulae, dust, sky | 3 |
+| F11 | Review, measurement and regression checks | 1 |
+
+## 5. Phases
+
+Each phase has an objective, tasks, a test and the tools it uses.
+
+### Phase B0: Foundation and measurement (F1, F11)
+
+Objective: make the base for all later work. Measure before change.
+
+Tasks:
+
+- B0.1 Record a baseline. Take reference screenshots of 40 fixed views (desktop and phone). Record frame time and memory for each view.
+- B0.2 Make a visual regression check (`tools/check_visuals.mjs`). Compare each view to its reference image. Report the difference as a number.
+- B0.3 Make a performance check. Set a budget for each view: frame time, draw calls, GPU memory, bake time.
+- B0.4 Change the render pipeline to high dynamic range. Use linear color for all light. Apply one tone map at the end. Add exposure control.
+- B0.5 Add bloom for stars, glow and lava (needs decision BD1, Table 7).
+- B0.6 Add quality tiers (Table 6). Select the tier from the device. Let the user change it.
+- B0.7 Make a "World Lab" debug panel (development builds only). Show height, plates, temperature, moisture, wind, biome and normal maps for the world in view. The WIP code already has a first debug view (`uDebug` in `planet/terrain.js`).
+- B0.8 Make a shared shader library: noise, cell noise, curl noise, scattering, color science (blackbody color, spectra).
+- B0.9 Make a GPU job queue. Divide long bakes into small parts across frames. The view must not stop during a bake.
+- B0.10 Make a cache for baked worlds in IndexedDB. Use the data hash and the generator version as the key.
+- B0.11 Make `SECTION_B_DECISIONS.md`. Record decisions BD1 to BD8.
+
+Test:
+
+- All Section A checks pass.
+- The regression and performance checks run on desktop and on phone emulation.
+- The tone map and bloom do not change label or lane contrast below the WCAG AA contrast ratio (4.5:1) for labels.
+- A bake never holds a frame for more than 50 ms on desktop.
+
+### Phase B1: Orbits and motion (F2)
+
+Objective: move all bodies on true Keplerian orbits. Show irregular motion.
+
+Tasks:
+
+- B1.1 Extend the orbit schema. Add: eccentricity, inclination, longitude of the ascending node, argument of periapsis, mean anomaly at epoch, retrograde flag, reference plane (parent equator or system plane). The schema already has `inclinationDeg` and `eccentricity`.
+- B1.2 Fill the new values in `data/src/`. Keep canon values. Generate the others with `tools/` from the system's history (for example, captured moons get high inclination). Tag them `invented`.
+- B1.3 Solve Kepler's equation for all orbits (`src/data/orbits.js`). Use double precision. Use a robust solver for high eccentricity (e up to 0.97).
+- B1.4 Add binary and multiple stars. Put both stars on orbits around the barycenter. Support circumbinary planets (P-type) and planets around one star (S-type).
+- B1.5 Add irregular motion. Use precomputed perturbation terms for resonant and chaotic bodies. Add Trojan bodies at L4 and L5. Add tumbling rotation for small irregular moons.
+- B1.6 Add axial precession and seasons. Seasons must follow the dashboard clock and the axial tilt.
+- B1.7 Draw orbits as true 3D ellipses. Mark periapsis, apoapsis and the ascending node. Show the inclination against the reference plane when the user selects a body.
+- B1.8 Draw orbit lines with a fade along the path ("trail" from the body). Show the orbit direction.
+- B1.9 Add time controls: pause, play, faster, slower, jump to date. The clock stays the source of truth (Section A Phase 3 clock).
+- B1.10 Make a Python reference (`tools/ephemeris.py`). Compute positions for test dates.
+
+Test:
+
+- Positions in the view match `tools/ephemeris.py` to 1 part in 10^9 of the orbit size, for 200 dates.
+- Each body sits on its drawn orbit line to within 0.5 px.
+- Retrograde, inclined and eccentric orbits show correctly in 10 reference views.
+- `check_system`, `check_zoom` and `check_jitter` pass.
+
+### Phase B2: World generation — tectonics and terrain (F3)
+
+Objective: make the shape of each world from a physical process, not only from noise.
+
+Tasks:
+
+- B2.1 Continue from the WIP code: cube-sphere level of detail (`planet/cubeSphere.js`), fields baked in cube maps (`planet/fields.js`).
+- B2.2 Simulate plate tectonics over time. Make plates from seeds. Move each plate about its own Euler pole for N steps. At each step:
+  1. Find the boundaries and their type (convergent, divergent, transform).
+  2. Raise mountains where continents collide.
+  3. Make trenches and volcanic arcs where ocean crust subducts.
+  4. Make ridges and rift valleys where plates separate.
+  5. Make hotspot chains (island chains) under moving plates.
+  6. Grow continents from accreted terranes.
+- B2.3 Run the simulation on the GPU (render-to-texture passes) or in a Web Worker. Use the job queue (B0.9).
+- B2.4 Add erosion. Use hydraulic erosion (water flow and sediment) and thermal erosion (slope collapse). Run it on the cube map. Keep the cube faces seamless.
+- B2.5 Add crater history for airless worlds. Use crater size and age distributions. Old craters are softer. Young craters have rays.
+- B2.6 Add special terrain sets: dunes from wind (B3 winds), karst, chaos terrain, cryovolcanoes, ice lineae, crystal fields, glassed plains, shattered crust.
+- B2.7 Fit the world to its data. Set sea level from the stated water share. Put places on the right ground (towns on land, ports at coasts). Use the notes where the generator can read them (for example "two continents").
+- B2.8 Let the GM lock a world. Store the seed and the main settings in the data (`generation` block, tagged `invented`).
+- B2.9 Make a height export for each world (`tools/`), for print maps and for checks.
+
+Test:
+
+- Water share within 2% of the data for all worlds with water.
+- 100% of towns, cities and bases on land. 100% of ports within 1° of a coast.
+- Mountain belts lie along convergent boundaries (measured in the World Lab).
+- Bake time per world: less than 300 ms on desktop, less than 1.5 s on phone, without a held frame (B0.9).
+- No seams at cube faces (pixel check along all 12 edges).
+
+### Phase B3: Climate and weather (F4)
+
+Objective: give each world a climate from physics, and weather that moves with time.
+
+Tasks:
+
+- B3.1 Calculate insolation from the star's luminosity, the orbit distance (with eccentricity), the axial tilt and the date.
+- B3.2 Calculate temperature from insolation, height (lapse rate), albedo (ice, cloud, desert) and heat transport (ocean and air). Calibrate to the data (`tempMeanC`, `tempRangeC`).
+- B3.3 Model the general circulation. Set the number of cells from the rotation rate (fast rotation: more cells and bands). Use a special model for tidally locked worlds (flow from night side to day side).
+- B3.4 Carry moisture with the winds. Calculate rain, rain shadows and deserts.
+- B3.5 Make rivers and lakes. Calculate flow direction and flow accumulation. Fill closed basins as lakes or salt flats.
+- B3.6 Make seasons. Snow lines, sea ice and vegetation change with the clock.
+- B3.7 Make weather move. Advect cloud fields with the winds over time. Make cyclones and fronts. Make dust storms on dry worlds.
+- B3.8 Make weather on other chemistry: methane rain (Titan type), sulfuric acid clouds (Venus type), steam worlds, iron rain on hot worlds.
+- B3.9 Add lightning on night sides for storm worlds. Add aurorae for worlds with magnetic fields.
+
+Test:
+
+- Mean and range of temperature within 3 °C of the data for 95% of worlds.
+- Wind belts and rain shadows visible in the World Lab for 10 reference worlds.
+- All rivers end in a sea, a lake or a closed basin.
+- Weather moves without jumps when the clock runs (pixel difference between frames below a limit).
+
+### Phase B4: Biospheres (F5)
+
+Objective: show the full range of life. Each living world must look different.
+
+Tasks:
+
+- B4.1 Make a biosphere model from the data: `biosphere` (complex, simple, microbial, extinct, with megafauna), `nativeLife`, world features, climate and star type. 31 worlds have a biosphere entry now.
+- B4.2 Calculate the color of photosynthesis from the star's spectrum. Under red dwarfs (47 systems), plants are dark: black, deep red or purple. Under hot stars, plants can be pale, yellow or blue-green.
+- B4.3 Make biome sets for each biochemistry:
+  1. Water and carbon (Earth-like, with alien colors).
+  2. Chemosynthetic life at vents and hot springs.
+  3. Cryo-life on ice worlds (colored ice, pigmented melt pools).
+  4. Crystal or mineral life (glittering fields).
+  5. Ocean life only (blooms, colored seas, reefs).
+  6. Floating life in the clouds of gas giants.
+  7. Megaflora and burrow-life (from the data variants).
+- B4.4 Show life at all scales: color of continents from orbit, patterns (forest bands, blooms) at middle range, texture up close.
+- B4.5 Add bioluminescence on night sides and in seas where the data supports it.
+- B4.6 Show dead and dying biospheres: extinct worlds, "dying garden" worlds, terraformed and climate-engine worlds (Tallis).
+- B4.7 Let the GM set a palette and a biochemistry for each world in the data.
+
+Test:
+
+- Each biosphere type has a distinct palette. Measure the color distance between types in the review gallery.
+- Plant colors follow the star type for all living worlds.
+- The GM approves the review gallery (B11.3).
+
+### Phase B5: Surfaces up close (F6)
+
+Objective: keep detail and beauty from orbit down to low altitude.
+
+Tasks:
+
+- B5.1 Use splat materials for the ground: rock, sand, soil, vegetation, snow, ice, lava. Blend them by height, slope, climate and biome.
+- B5.2 Add procedural detail textures with triplanar projection. Add detail normals that grow with zoom.
+- B5.3 Make water: waves, sun glint, foam at coasts, color by depth, sea ice.
+- B5.4 Replace the ray-marched air with precomputed scattering tables (Bruneton model). Include aerial perspective and multiple scattering.
+- B5.5 Add shadows: cloud shadows, ring shadows, eclipse shadows from moons, terrain self-shadow near the terminator.
+- B5.6 Add night lights from population data: cities, roads between towns, lights on stations.
+- B5.7 Make level-of-detail changes invisible. Morph vertices between levels.
+- B5.8 Keep places correct on raised terrain. Put each marker on the real ground height.
+
+Test:
+
+- No visible pop during a zoom from orbit to low altitude (frame-to-frame pixel check).
+- Frame time within budget at each quality tier.
+- Each marker within 1 px of its ground point.
+
+### Phase B6: Gas giants, ice giants and rings (F7)
+
+Objective: make giants dynamic, varied and alive.
+
+Tasks:
+
+- B6.1 Make bands from zonal jets. Set the jet count and speed from the rotation and the giant type.
+- B6.2 Advect the cloud pattern with the jets over time (flow maps). Add turbulence at the band edges.
+- B6.3 Add storms with lifetimes: great storms, white ovals, dark spots, polar vortices, hexagons.
+- B6.4 Add depth: cloud layers at different heights, haze, deep color.
+- B6.5 Add lightning and aurorae. Add the thermal glow of hot giants.
+- B6.6 Make ring systems from data: gaps from moon resonances, color, opacity. Light the rings by forward and back scattering. Show the planet shadow on the rings and the ring shadow on the planet.
+- B6.7 Show moon shadows that move across the giant (transits).
+
+Test:
+
+- All 27 giants look different in the review gallery (color distance and band count).
+- Bands move without jumps when the clock runs.
+- Ring gaps match the resonance positions of the moons.
+
+### Phase B7: Stars, remnants and black holes (F8)
+
+Objective: show each of the 24 star kinds with its physical character.
+
+Tasks:
+
+- B7.1 Calculate star color from temperature (blackbody spectrum to sRGB). Use luminosity for glow size and exposure.
+- B7.2 Make the star surface up close: limb darkening, granulation, spots, faculae. Animate the surface with the clock.
+- B7.3 Make the corona, prominences and flares. Red dwarfs flare often (data `variable` and `features`).
+- B7.4 Make giants and supergiants: large convection cells, a soft edge, mass loss. Make the Watchfire (blue supergiant) a landmark.
+- B7.5 Make remnants: white dwarfs (small, hot, blue-white), neutron stars, pulsars (sweeping beams with their spin), magnetars (field lines, flares).
+- B7.6 Make protostars with disks and jets, Wolf-Rayet stars with wind shells, carbon stars with dust shells.
+- B7.7 Make binary interaction: mass transfer streams and accretion disks where the data says so.
+- B7.8 Make the black hole: an accretion disk with Doppler beaming, gravitational lensing of the disk and the background sky (ray tracing in the shader), the photon ring, jets.
+- B7.9 Add lens flare and star spikes at the correct quality tiers. Keep them off over labels.
+
+Test:
+
+- Star colors match the blackbody reference for each temperature (measured in the gallery).
+- The black hole's lensing matches a reference image from a Schwarzschild ray tracer (`tools/`), within a set pixel tolerance.
+- `check_stars` passes. Stars stay identifiable by kind at the Basin level.
+
+### Phase B8: Small bodies, stations and structures (F9)
+
+Objective: give every small object its own shape.
+
+Tasks:
+
+- B8.1 Make asteroids as irregular shapes (deformed meshes with craters). Tumble them.
+- B8.2 Make belts and fields as instanced clouds of rocks with level of detail. Show collisional families and gaps.
+- B8.3 Make comets: nucleus, coma, dust tail and ion tail. The tails point away from the star. Their length changes with distance.
+- B8.4 Make rogue planets: dark, with geothermal glow and thin starlight.
+- B8.5 Make wrecks and megastructures from procedural parts. Use the data for size and type (the Orrery, the Spine, the Absent wrecks).
+- B8.6 Make stations from procedural modules: rings, spines, docks, lights.
+- B8.7 Make lane mouths as a visual effect that shows lane state (open, closed, tidal, silent).
+
+Test:
+
+- Each object type has a distinct look in the review gallery.
+- 10,000 belt rocks on screen stay within the frame budget at the medium tier.
+
+### Phase B9: Deep space (F10)
+
+Objective: make nebulae and dust real volumes.
+
+Tasks:
+
+- B9.1 Make nebulae as ray-marched volumes: emission (hydrogen red, oxygen teal), absorption, and light from the stars inside.
+- B9.2 Make dust clouds absorb the light of stars behind them. The Mire hides its stars.
+- B9.3 Improve the galactic sky: more stars at higher tiers, the coreward bulge, dust lanes (from the current `Backdrop.jsx`).
+- B9.4 Add a far view mode for the whole Basin with soft depth of field (high tier only).
+
+Test:
+
+- Frame time within budget inside the Furnace at each tier.
+- `check_effects` passes, with updated values where the look changes on purpose.
+
+### Phase B10: Integration and release (F1, F11)
+
+Objective: join all parts. Make the full system stable.
+
+Tasks:
+
+- B10.1 Tune all light to one exposure model. Check each level: Basin, region, system, planet, surface.
+- B10.2 Add options: reduce motion, effects off, a "chart" mode with flat colors for players and print.
+- B10.3 Tune the phone tier on real phones (the GM's phone and one low-end phone).
+- B10.4 Update the docs: `PHASE2.md` notes, data documentation for the new schema fields, World Lab guide.
+- B10.5 Run all checks. Fix all findings.
+- B10.6 Get the GM's approval. Merge Section B into `main`.
+
+Test:
+
+- All Section A and Section B checks pass.
+- The GM approves the final review gallery and the phone test.
+
+### Phase B11: Review (continuous, all phases)
+
+- B11.1 After each phase, update the phone link (private artifact) for the GM.
+- B11.2 Keep a gallery page of reference views. Update it after each phase.
+- B11.3 Ask the GM to approve the gallery before the next phase starts.
+
+## 6. Quality tiers
+
+| Tier | For | Examples |
+|---|---|---|
+| Low | Old phones | No bloom; clouds baked; 4 scattering steps; 1,000 belt rocks; no volumes. |
+| Medium | Most phones | Bloom; moving clouds; scattering tables; 5,000 rocks; simple volumes. |
+| High | Computers | All effects; lensing; 10,000+ rocks; full volumes; detail textures. |
+| Ultra | Strong GPUs | Higher bake sizes; more ray-march steps; depth of field. |
+
+## 7. Tools
+
+Use all tools that are available. Get approval before a new library.
+
+**Tools in the project now:**
+
+| Tool | Use in Section B |
+|---|---|
+| Three.js, React Three Fiber, drei | Rendering, render-to-texture bakes, cube maps, instancing. |
+| Zustand | One store for all state: time controls, quality tier, World Lab settings. |
+| Vite | Build; shader files as modules. |
+| `node --test` | Unit tests for orbit math, level of detail, recipes, tectonics steps. |
+| Playwright (pre-installed) | Visual regression, performance budgets, gallery screenshots. |
+| Python tools in `tools/` | Ephemeris reference, data generation for orbits and generation blocks, schema validation, lensing reference, height exports. |
+| Web Workers, OffscreenCanvas | CPU parts of the simulations away from the main thread. |
+| IndexedDB | Cache of baked worlds. |
+| WebGL2 | Float render targets, cube maps, instancing, parallel shader compile. |
+
+**Libraries and features that need the GM's approval (decisions BD1 to BD4):**
+
+| Item | Purpose |
+|---|---|
+| `postprocessing` and `@react-three/postprocessing` | Bloom, tone mapping, lens effects (B0.5). |
+| Three.js WebGPU renderer and TSL compute | Faster simulation and volumes on devices with WebGPU. WebGL2 stays the fallback. |
+| `leva` | Sliders for the World Lab (development builds only). |
+| KTX2 textures (Three.js loader, Basis transcoder) | Smaller detail textures. |
+
+**Tools for planning, research and review:**
+
+| Tool | Use |
+|---|---|
+| Web research | Scientific references: plate tectonics models, Bruneton scattering, Kepler solvers, photosynthesis under other stars, black hole imaging. Record the sources in the decisions file. |
+| Parallel agents | Independent reviews of shaders and math; research in parallel. |
+| Private artifacts | Phone link after each phase; the review gallery; this plan as a shared page if the GM wants one. |
+| The artifact viewer check | Check the phone link before each update. |
+| Memory notes | Keep the GM's preferences for the look between sessions. |
+
+## 8. Decisions needed
+
+| ID | Subject | Options | Recommendation |
+|---|---|---|---|
+| BD1 | Bloom and post-processing library | Add `postprocessing`; or write our own passes | Add the library: it is mature and fast. |
+| BD2 | WebGPU | WebGL2 only; or WebGPU with WebGL2 fallback | WebGL2 first. Add WebGPU in Phase B9 if budgets need it. |
+| BD3 | World Lab sliders | `leva`; or our own panel | `leva`, development builds only. |
+| BD4 | Texture compression | KTX2; or plain PNG | KTX2 only if detail textures exceed 20 MB. |
+| BD5 | Order with Section A | Section B now, Section A Phases 3–5 after; or alternate | Do B0 and B1 now, then Section A Phase 3 (the clock that B1.9 needs), then continue B. |
+| BD6 | Data changes | New schema fields for orbits, generation and biospheres | Add them with `invented` tags; keep canon values. |
+| BD7 | Realism and readability | Strict physics; or physics with tuned exaggeration | Physics with tuned exaggeration (relief, air height, glow). Labels always win. |
+| BD8 | Time | Real clock only; or a time-lapse mode | Both. The clock stays the source of truth. |
+
+## 9. Risks
+
+| Risk | Corrective action |
+|---|---|
+| Phones are too slow | Quality tiers; budgets in checks; bakes divided across frames. |
+| Long bake times | GPU bakes; Web Workers; IndexedDB cache; small bake sizes at low tiers. |
+| Shader compile stalls | Parallel shader compile; warm-up during the flight; fewer shader variants. |
+| Worlds disagree with the data | Fit checks in B2 and B3; the GM can lock a world. |
+| The map gets hard to read | Labels and lanes on top; contrast checks; "chart" mode. |
+| Scope grows without end | One function for each task; a test for each phase; the GM approves each phase. |
+| Checks are slow in headless software rendering | Small test sizes in checks; full sizes in the gallery only. |
+| Different results on different GPUs | Deterministic seeds; integer hashes in shaders; tolerances in regression checks. |
+| GPU memory | Least-recently-used caches for worlds (8 now); compressed textures at low tiers. |
+
+## 10. First steps
+
+1. The GM answers decisions BD1 to BD8.
+2. Start Phase B0 with task B0.1 (baseline screenshots and budgets).
+3. Keep the WIP planet work on branch `ccr-23ad96e8-4fi4vg` until Phase B2.
