@@ -28,6 +28,7 @@ import { stripVertex, stripFragment, screenMaterial, quadGeometry, clipToView, S
 import { displayColor } from './color.js';
 import { regionLabelBoxes } from './RegionLabels.jsx';
 import { FADE, spotOrder, wasShown, settle } from './labelPlace.js';
+import { WIP_WORLDS } from './planet/switch.js';
 
 const KIND_COLOR = {
   city: '#ffe6b0', town: '#ffe6b0', settlement: '#ffe6b0', port: '#ffe6b0',
@@ -37,7 +38,9 @@ const KIND_COLOR = {
   landing: '#d8dde6', other: '#d8dde6',
 };
 const MARKER_PX = 8;
-const LIFT = 0.006; // markers sit above the ground, mountains included (relief ≤ 0.5% of the radius, planet/terrain.js)
+// Markers sit just above the ground; with the WIP worlds, above their mountains
+// too (relief ≤ 0.5% of the radius, planet/terrain.js).
+const LIFT = WIP_WORLDS ? 0.006 : 0.002;
 const PATH_STEPS = 12; // pieces between two points of a front's path
 const LABEL_GLOBE_PX = 160; // diameter on screen before place names show
 

@@ -1,8 +1,8 @@
 // The planet level (task 2.10): a real globe for any round body that is large
 // on screen (planets, giants, moons, asteroids, rogue planets, wrecks, the
 // Orrery's structure), crossfading with the flat disc System.jsx draws below
-// that size (globeBlend). Planets, moons, giants and rogue planets are
-// procedural worlds (planet/ProceduralGlobe.jsx: terrain from plates, climate,
+// that size (globeBlend). With the WIP switch on (planet/switch.js, decision
+// BQ1), planets, moons, giants and rogue planets are procedural worlds (planet/ProceduralGlobe.jsx: terrain from plates, climate,
 // biomes, clouds, scattering air, level of detail) unless maps are imported or
 // registered for them; those, and asteroids, wrecks and structures, get the
 // globe below.
@@ -40,6 +40,8 @@ import { surfaceMaps, random, whenTexturesLoad, setBaker } from './surfaces.js';
 import { ringMaterial, RING } from './planet/rings.js';
 import ProceduralGlobe from './planet/ProceduralGlobe.jsx';
 import { hasRecipe } from './planet/recipes.js';
+import { WIP_WORLDS } from './planet/switch.js';
+import './procedural.js'; // the Phase 2 surfaces, while WIP_WORLDS is off
 import { globes } from './occlusion.js';
 
 // Radius on screen (CSS px) over which the flat disc hands over to the globe.
@@ -269,8 +271,9 @@ export default function Planets() {
       {shown.map((id) => {
         const info = byId.get(id);
         if (!info) return null;
-        // Imported or registered maps win; otherwise worlds are procedural.
-        return hasRecipe(info.body) && !surfaceMaps(info.body, { builtIn: false })
+        // Imported or registered maps win; otherwise worlds are procedural
+        // when the WIP switch is on (planet/switch.js).
+        return WIP_WORLDS && hasRecipe(info.body) && !surfaceMaps(info.body, { builtIn: false })
           ? <ProceduralGlobe key={id} info={info} blend={blend} places={map.places} index={index} />
           : <Globe key={id} info={info} blend={blend} />;
       })}

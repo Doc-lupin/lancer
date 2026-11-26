@@ -8,12 +8,13 @@
 // places' [lat, lon].
 //
 // Where a body's maps come from, first match wins:
-//   1. a registered provider, e.g. a generator by world type:
+//   1. a registered provider, e.g. the Phase 2 generator by world type
+//      (procedural.js, off while the WIP worlds are on, planet/switch.js):
 //        registerSurface((body, tools) => body.world === 'ocean' ? { map, heightMap, heightScale: 0.004 } : null);
 //   2. an image file named in the data, appearance.texture, loaded from
 //      public/textures/ (the schema already has this field);
-//   3. for planets, moons, giants and rogue planets: the procedural worlds of
-//      src/views/planet/ (terrain, climate, biomes, clouds, air), which don't
+//   3. with the WIP switch on, for planets, moons, giants and rogue planets:
+//      the procedural worlds of src/views/planet/ (terrain, climate, biomes, clouds, air), which don't
 //      go through maps at all;
 //   4. otherwise (asteroids, wrecks, structures) the built-in look: faint
 //      mottling.

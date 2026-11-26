@@ -1,6 +1,6 @@
 // Task B0.1: record a baseline before Section B changes the look.
 //
-//   node tools/record_baseline.mjs [--out DIR] [--device desktop|phone] [--only NAME,NAME]
+//   node tools/record_baseline.mjs [--out DIR] [--device desktop|phone] [--only NAME,NAME] [--worlds wip]
 //
 // Goes to each view in tools/baseline/views.json (40 fixed views; fields in
 // tools/views.mjs) on a 1280 × 800 desktop window and on Pixel 7 emulation
@@ -12,7 +12,8 @@
 // texture counts, an estimate of GPU memory, and the JS heap.
 //
 // Writes DIR/<device>/<view>.jpg and DIR/baseline.json (default DIR:
-// docs/section-b/baseline). Headless Chromium draws in software, so frame
+// docs/section-b/baseline). --worlds wip turns on the WIP procedural worlds
+// (decision BQ1). Headless Chromium draws in software, so frame
 // times here are far slower than on a graphics chip; they are a reference
 // for later changes on this machine, not a measure of a phone.
 
@@ -34,7 +35,9 @@ out.recorded = new Date().toISOString().slice(0, 10);
 out.commit = execFileSync('git', ['rev-parse', '--short', 'HEAD'], { cwd: new URL('..', import.meta.url) }).toString().trim();
 out.note = 'Headless Chromium, software rendering. workMs: our CPU work per frame; frameMs: frame to frame; gpuBytesEstimate: geometry and textures reachable from the scene.';
 
-const app = await startApp(5187);
+const worlds = arg('--worlds') ?? undefined;
+out.worlds = worlds ?? 'phase2';
+const app = await startApp(5187, { worlds });
 let failed = 0;
 try {
   for (const device of devices) {

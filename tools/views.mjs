@@ -28,12 +28,14 @@ export const DEVICES = {
   phone: { context: devices['Pixel 7'], cpuSlowdown: 4 },
 };
 
-export async function startApp(port) {
+// worlds: 'wip' opens the app with the WIP procedural worlds on (?worlds=wip,
+// decision BQ1); otherwise the default, Phase 2 globes.
+export async function startApp(port, { worlds } = {}) {
   const server = await createServer({ logLevel: 'error', server: { port, strictPort: true } });
   await server.listen();
   const browser = await chromium.launch({ args: ['--enable-precise-memory-info'] });
   return {
-    base: `http://localhost:${port}/`,
+    base: `http://localhost:${port}/${worlds ? `?worlds=${worlds}` : ''}`,
     browser,
     close: async () => { await browser.close(); await server.close(); },
   };
