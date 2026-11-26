@@ -182,4 +182,5 @@ Notes from 2.11:
 - The debug helpers moved out of `Scene.jsx` into `src/views/DebugHook.jsx`, mounted only in development; the built app doesn't include them.
 - The build now uses relative paths (`base: './'` in `vite.config.js`), so `dist/` works from any folder or address; checked by serving it from a subfolder on phone emulation.
 - Left for the GM: try it on a phone, zooming Basin → a planet and back. Then the Phase 2 test is complete and Phase 3 can start.
+- Test build for the phone (Nov 26): a private claude.ai link, https://claude.ai/artifact/K9tk8ckJppNExxZyuMYquM, made from `npm run build`: a small page that loads `dist/assets/index-*.js`, with `map-*.json` beside it (the test-scene files left out). Checked in the artifact viewer first: it loads and draws with no errors. To update it, rebuild and publish the same files to that link.
 
