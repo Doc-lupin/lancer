@@ -28,6 +28,11 @@ const FULL_BRIGHTNESS = new Set(['watchfire-system']);
 
 // Glow width in CSS pixels from luminosity (Sun = 1): 8 px for the Sun,
 // 3.2 px more per factor of ten, from 5 px (dim dwarfs, remnants) to 26 px.
+// How bright a star's core is in linear light (task B0.5): from 2.2 for dim
+// dwarfs (under the bloom threshold of 2 for all but white ones) up to 8 for
+// giants, so the bright stars bloom (Output.jsx). Chart marks stay under 2.
+export const coreLight = (L) => Math.min(8, Math.max(2.2, 2.2 + 1.2 * Math.log10(Math.max(L, 1e-6))));
+
 export const glowPx = (L) => Math.min(26, Math.max(5, 8 + 3.2 * Math.log10(Math.max(L, 1e-6))));
 
 const CORE_GEOMETRY = new THREE.IcosahedronGeometry(1, 3);
@@ -90,6 +95,7 @@ export default function Stars() {
         glow: glowPx(k.luminosity) * (charted || FULL_BRIGHTNESS.has(id) ? 1 : 0.75),
         dim: !charted && !FULL_BRIGHTNESS.has(id),
         dark: kind === 'black-hole',
+        light: coreLight(k.luminosity),
       };
     };
     const systems = map.systems
@@ -124,7 +130,7 @@ export default function Stars() {
     if (!mesh) return;
     core.current = mesh;
     const c = new THREE.Color();
-    stars.forEach((s, i) => mesh.setColorAt(i, s.dark ? c.set(0x000000) : c.copy(s.color).multiplyScalar(s.dim ? UNMAPPED_CORE : 1)));
+    stars.forEach((s, i) => mesh.setColorAt(i, s.dark ? c.set(0x000000) : c.copy(s.color).multiplyScalar(s.light * (s.dim ? UNMAPPED_CORE : 1))));
     mesh.instanceColor.needsUpdate = true;
   };
 

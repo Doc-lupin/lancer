@@ -76,6 +76,9 @@ export function globeInfo(body, index, clock) {
   };
 }
 
+// Emissive (lava) strength in linear light: the hottest lava reaches a
+// luminance of about 2.6, over the bloom threshold of 2 (task B0.5).
+const LAVA_GLOW = 4;
 const ATMOSPHERE_SHELL = 1.06;
 const CLOUD_SHELL = 1.01;
 const atmosphereVertex = /* glsl */ `
@@ -183,6 +186,9 @@ function Globe({ info, blend }) {
     const b = blend.current.get(body.id) ?? 0;
     g.visible = b > 0;
     surface.opacity = b;
+    // Lava is light from the world: it takes exposure, and its hottest parts
+    // pass the bloom threshold (Output.jsx, task B0.5).
+    surface.emissiveIntensity = LAVA_GLOW * EXPOSURE.value;
     surface.transparent = b < 1;
     if (clouds) clouds.opacity = b;
     if (rings) {
