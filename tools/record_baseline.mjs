@@ -18,6 +18,7 @@
 
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join, resolve } from 'node:path';
+import { execFileSync } from 'node:child_process';
 import { startApp, openPage, goTo, measure, shoot } from './views.mjs';
 
 const arg = (k) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : null; };
@@ -30,6 +31,7 @@ const views = JSON.parse(readFileSync(new URL('./baseline/views.json', import.me
 const file = join(OUT, 'baseline.json');
 const out = existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : { views: {} };
 out.recorded = new Date().toISOString().slice(0, 10);
+out.commit = execFileSync('git', ['rev-parse', '--short', 'HEAD'], { cwd: new URL('..', import.meta.url) }).toString().trim();
 out.note = 'Headless Chromium, software rendering. workMs: our CPU work per frame; frameMs: frame to frame; gpuBytesEstimate: geometry and textures reachable from the scene.';
 
 const app = await startApp(5187);
