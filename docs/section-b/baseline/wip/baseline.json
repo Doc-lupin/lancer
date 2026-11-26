@@ -1,0 +1,2177 @@
+{
+ "views": {
+  "01-basin": {
+   "view": {
+    "name": "01-basin"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 0,
+     "worstGapMs": 0
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 1.1,
+     "p95": 2,
+     "max": 3.9
+    },
+    "frameMs": {
+     "median": 52.1,
+     "p95": 68.9,
+     "max": 72.6
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 31598273,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 0,
+     "worstGapMs": 0
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 5.9,
+     "p95": 11.6,
+     "max": 11.9
+    },
+    "frameMs": {
+     "median": 92.2,
+     "p95": 115,
+     "max": 124.3
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 34463532,
+    "errors": []
+   }
+  },
+  "02-basin-lanes-bright": {
+   "view": {
+    "name": "02-basin-lanes-bright",
+    "press": [
+     "l"
+    ]
+   },
+   "desktop": {
+    "flight": {
+     "frames": 0,
+     "worstGapMs": 0
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 1.6,
+     "p95": 3.5,
+     "max": 4.1
+    },
+    "frameMs": {
+     "median": 54.6,
+     "p95": 70.2,
+     "max": 75.8
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 35509266,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 0,
+     "worstGapMs": 0
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 6.6,
+     "p95": 12,
+     "max": 13
+    },
+    "frameMs": {
+     "median": 91.6,
+     "p95": 119.6,
+     "max": 157.9
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 32762818,
+    "errors": []
+   }
+  },
+  "03-basin-lanes-off": {
+   "view": {
+    "name": "03-basin-lanes-off",
+    "press": [
+     "l",
+     "l"
+    ]
+   },
+   "desktop": {
+    "flight": {
+     "frames": 0,
+     "worstGapMs": 0
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 0.8,
+     "p95": 1.6,
+     "max": 1.7
+    },
+    "frameMs": {
+     "median": 49.7,
+     "p95": 61.1,
+     "max": 61.3
+    },
+    "drawCalls": 7,
+    "triangles": 52146,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 34307724,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 0,
+     "worstGapMs": 0
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 4.6,
+     "p95": 7.4,
+     "max": 8.1
+    },
+    "frameMs": {
+     "median": 91,
+     "p95": 121.1,
+     "max": 122.8
+    },
+    "drawCalls": 7,
+    "triangles": 52146,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 33692544,
+    "errors": []
+   }
+  },
+  "04-basin-face-on": {
+   "view": {
+    "name": "04-basin-face-on",
+    "pitch": 1.45
+   },
+   "desktop": {
+    "flight": {
+     "frames": 0,
+     "worstGapMs": 0
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 0.9,
+     "p95": 1.7,
+     "max": 2.2
+    },
+    "frameMs": {
+     "median": 53.6,
+     "p95": 65,
+     "max": 65.9
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 32958836,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 0,
+     "worstGapMs": 0
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 5.9,
+     "p95": 10.2,
+     "max": 13.7
+    },
+    "frameMs": {
+     "median": 101.8,
+     "p95": 123.1,
+     "max": 138.9
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 31078431,
+    "errors": []
+   }
+  },
+  "05-basin-coreward": {
+   "view": {
+    "name": "05-basin-coreward",
+    "pitch": -1.3
+   },
+   "desktop": {
+    "flight": {
+     "frames": 0,
+     "worstGapMs": 0
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 0.9,
+     "p95": 1.7,
+     "max": 1.7
+    },
+    "frameMs": {
+     "median": 54.5,
+     "p95": 68.2,
+     "max": 74.4
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 36653136,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 0,
+     "worstGapMs": 0
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 5.8,
+     "p95": 11.5,
+     "max": 12.1
+    },
+    "frameMs": {
+     "median": 94.5,
+     "p95": 116.8,
+     "max": 128.5
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 29232274,
+    "errors": []
+   }
+  },
+  "06-basin-far": {
+   "view": {
+    "name": "06-basin-far",
+    "dist": 3
+   },
+   "desktop": {
+    "flight": {
+     "frames": 0,
+     "worstGapMs": 0
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 1,
+     "p95": 1.9,
+     "max": 2.1
+    },
+    "frameMs": {
+     "median": 52.3,
+     "p95": 69.3,
+     "max": 69.7
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 32310376,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 0,
+     "worstGapMs": 0
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 4.7,
+     "p95": 8.7,
+     "max": 12.4
+    },
+    "frameMs": {
+     "median": 83.5,
+     "p95": 103.5,
+     "max": 109.1
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 30469789,
+    "errors": []
+   }
+  },
+  "07-region-tallis": {
+   "view": {
+    "name": "07-region-tallis",
+    "focus": "tallis"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 16,
+     "worstGapMs": 74.8
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 1,
+     "p95": 1.8,
+     "max": 3.3
+    },
+    "frameMs": {
+     "median": 46.7,
+     "p95": 63.2,
+     "max": 65
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 32299325,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 9,
+     "worstGapMs": 171.2
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 4.9,
+     "p95": 9.4,
+     "max": 10.8
+    },
+    "frameMs": {
+     "median": 83.2,
+     "p95": 96.4,
+     "max": 97.3
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 28383310,
+    "errors": []
+   }
+  },
+  "08-region-furnace": {
+   "view": {
+    "name": "08-region-furnace",
+    "focus": "furnace"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 12,
+     "worstGapMs": 428.8
+    },
+    "frames": 18,
+    "workMs": {
+     "median": 1.1,
+     "p95": 1.6,
+     "max": 1.6
+    },
+    "frameMs": {
+     "median": 443.5,
+     "p95": 524.8,
+     "max": 524.8
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 30194025,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 7,
+     "worstGapMs": 444.5
+    },
+    "frames": 17,
+    "workMs": {
+     "median": 5.4,
+     "p95": 12.3,
+     "max": 12.3
+    },
+    "frameMs": {
+     "median": 470.7,
+     "p95": 541.1,
+     "max": 541.1
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 31553037,
+    "errors": []
+   }
+  },
+  "09-region-furnace-inside": {
+   "view": {
+    "name": "09-region-furnace-inside",
+    "focus": "furnace",
+    "dist": 0.3
+   },
+   "desktop": {
+    "flight": {
+     "frames": 11,
+     "worstGapMs": 426.3
+    },
+    "frames": 25,
+    "workMs": {
+     "median": 0.9,
+     "p95": 1.6,
+     "max": 1.8
+    },
+    "frameMs": {
+     "median": 317.6,
+     "p95": 340.7,
+     "max": 379.7
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 26790699,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 6,
+     "worstGapMs": 355.5
+    },
+    "frames": 9,
+    "workMs": {
+     "median": 6.5,
+     "p95": 11.5,
+     "max": 11.5
+    },
+    "frameMs": {
+     "median": 833,
+     "p95": 1231.7,
+     "max": 1231.7
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 27677860,
+    "errors": []
+   }
+  },
+  "10-region-mire": {
+   "view": {
+    "name": "10-region-mire",
+    "focus": "mire"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 12,
+     "worstGapMs": 346.8
+    },
+    "frames": 23,
+    "workMs": {
+     "median": 0.9,
+     "p95": 1.2,
+     "max": 1.4
+    },
+    "frameMs": {
+     "median": 359.7,
+     "p95": 383.7,
+     "max": 391.9
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 31932916,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 7,
+     "worstGapMs": 401.5
+    },
+    "frames": 20,
+    "workMs": {
+     "median": 5.3,
+     "p95": 7.7,
+     "max": 7.7
+    },
+    "frameMs": {
+     "median": 402.2,
+     "p95": 473.2,
+     "max": 473.2
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 27807920,
+    "errors": []
+   }
+  },
+  "11-region-hollows": {
+   "view": {
+    "name": "11-region-hollows",
+    "focus": "hollows"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 14,
+     "worstGapMs": 79
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 1.1,
+     "p95": 1.7,
+     "max": 3.1
+    },
+    "frameMs": {
+     "median": 45.9,
+     "p95": 62.8,
+     "max": 66.3
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 31700123,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 8,
+     "worstGapMs": 131.2
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 4.5,
+     "p95": 7.9,
+     "max": 11.5
+    },
+    "frameMs": {
+     "median": 73.9,
+     "p95": 93.8,
+     "max": 100.9
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 30677958,
+    "errors": []
+   }
+  },
+  "12-region-boneyard": {
+   "view": {
+    "name": "12-region-boneyard",
+    "focus": "boneyard"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 16,
+     "worstGapMs": 66.5
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 1,
+     "p95": 1.6,
+     "max": 1.6
+    },
+    "frameMs": {
+     "median": 48.9,
+     "p95": 58.2,
+     "max": 59.1
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 28149478,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 9,
+     "worstGapMs": 123.7
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 4.8,
+     "p95": 8.5,
+     "max": 10.4
+    },
+    "frameMs": {
+     "median": 72,
+     "p95": 82.4,
+     "max": 94.1
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 30396306,
+    "errors": []
+   }
+  },
+  "13-region-orrery": {
+   "view": {
+    "name": "13-region-orrery",
+    "focus": "orrery"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 18,
+     "worstGapMs": 67
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 0.9,
+     "p95": 1.3,
+     "max": 1.9
+    },
+    "frameMs": {
+     "median": 47.8,
+     "p95": 58.1,
+     "max": 60.1
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 33424343,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 9,
+     "worstGapMs": 153.1
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 4.3,
+     "p95": 10.7,
+     "max": 11.6
+    },
+    "frameMs": {
+     "median": 73.5,
+     "p95": 87.4,
+     "max": 89.7
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 33382587,
+    "errors": []
+   }
+  },
+  "14-region-scald-lanes": {
+   "view": {
+    "name": "14-region-scald-lanes",
+    "focus": "scald",
+    "press": [
+     "l"
+    ]
+   },
+   "desktop": {
+    "flight": {
+     "frames": 15,
+     "worstGapMs": 76.4
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 1,
+     "p95": 1.5,
+     "max": 2.1
+    },
+    "frameMs": {
+     "median": 47.1,
+     "p95": 62,
+     "max": 62.5
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 36609585,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 8,
+     "worstGapMs": 160.3
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 5.2,
+     "p95": 8,
+     "max": 8.1
+    },
+    "frameMs": {
+     "median": 77.2,
+     "p95": 112.1,
+     "max": 116
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 28298037,
+    "errors": []
+   }
+  },
+  "15-system-tallis": {
+   "view": {
+    "name": "15-system-tallis",
+    "focus": "tallis-system"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 30,
+     "worstGapMs": 80.4
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 1.1,
+     "p95": 1.8,
+     "max": 1.8
+    },
+    "frameMs": {
+     "median": 48.4,
+     "p95": 55.5,
+     "max": 64
+    },
+    "drawCalls": 11,
+    "triangles": 53756,
+    "geometries": 14,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 34009353,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 16,
+     "worstGapMs": 139.1
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 6.2,
+     "p95": 10.6,
+     "max": 11.8
+    },
+    "frameMs": {
+     "median": 81.1,
+     "p95": 92.7,
+     "max": 101.8
+    },
+    "drawCalls": 11,
+    "triangles": 53628,
+    "geometries": 14,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 33442569,
+    "errors": []
+   }
+  },
+  "16-system-ostrom": {
+   "view": {
+    "name": "16-system-ostrom",
+    "focus": "ostrom-system"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 28,
+     "worstGapMs": 103.5
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 1.4,
+     "p95": 2,
+     "max": 2
+    },
+    "frameMs": {
+     "median": 47.8,
+     "p95": 64.2,
+     "max": 66.8
+    },
+    "drawCalls": 11,
+    "triangles": 54012,
+    "geometries": 14,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 37089801,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 15,
+     "worstGapMs": 157.9
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 7,
+     "p95": 10.5,
+     "max": 11.2
+    },
+    "frameMs": {
+     "median": 88.2,
+     "p95": 111.1,
+     "max": 128.9
+    },
+    "drawCalls": 11,
+    "triangles": 53756,
+    "geometries": 14,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 34722587,
+    "errors": []
+   }
+  },
+  "17-system-watchfire": {
+   "view": {
+    "name": "17-system-watchfire",
+    "focus": "watchfire-system"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 31,
+     "worstGapMs": 117
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 0.9,
+     "p95": 1.5,
+     "max": 3
+    },
+    "frameMs": {
+     "median": 49.8,
+     "p95": 60.9,
+     "max": 60.9
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 32893028,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 19,
+     "worstGapMs": 157.3
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 4.5,
+     "p95": 8.8,
+     "max": 9.9
+    },
+    "frameMs": {
+     "median": 75.5,
+     "p95": 105.9,
+     "max": 117.1
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 32303507,
+    "errors": []
+   }
+  },
+  "18-system-well": {
+   "view": {
+    "name": "18-system-well",
+    "focus": "well-system"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 27,
+     "worstGapMs": 106.9
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 1,
+     "p95": 1.8,
+     "max": 2
+    },
+    "frameMs": {
+     "median": 47.9,
+     "p95": 61.8,
+     "max": 62.7
+    },
+    "drawCalls": 11,
+    "triangles": 53244,
+    "geometries": 14,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 31581551,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 19,
+     "worstGapMs": 163.3
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 4.6,
+     "p95": 7.2,
+     "max": 11.5
+    },
+    "frameMs": {
+     "median": 72.6,
+     "p95": 85.8,
+     "max": 89.5
+    },
+    "drawCalls": 11,
+    "triangles": 53244,
+    "geometries": 14,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 29353044,
+    "errors": []
+   }
+  },
+  "19-system-cinder": {
+   "view": {
+    "name": "19-system-cinder",
+    "focus": "cinder-system"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 32,
+     "worstGapMs": 86
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 1.2,
+     "p95": 2,
+     "max": 2.1
+    },
+    "frameMs": {
+     "median": 48.5,
+     "p95": 60.6,
+     "max": 67.3
+    },
+    "drawCalls": 11,
+    "triangles": 53756,
+    "geometries": 14,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 36418665,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 17,
+     "worstGapMs": 136.8
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 5.6,
+     "p95": 9.2,
+     "max": 12.9
+    },
+    "frameMs": {
+     "median": 80.6,
+     "p95": 96.9,
+     "max": 101.5
+    },
+    "drawCalls": 11,
+    "triangles": 53628,
+    "geometries": 14,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 33505209,
+    "errors": []
+   }
+  },
+  "20-system-murk": {
+   "view": {
+    "name": "20-system-murk",
+    "focus": "murk-system"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 12,
+     "worstGapMs": 520.8
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 1,
+     "p95": 1.7,
+     "max": 1.9
+    },
+    "frameMs": {
+     "median": 106.4,
+     "p95": 117,
+     "max": 123.2
+    },
+    "drawCalls": 11,
+    "triangles": 53372,
+    "geometries": 14,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 32623755,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 7,
+     "worstGapMs": 696.7
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 5.8,
+     "p95": 8.1,
+     "max": 8.5
+    },
+    "frameMs": {
+     "median": 153.2,
+     "p95": 181.5,
+     "max": 189.2
+    },
+    "drawCalls": 11,
+    "triangles": 53372,
+    "geometries": 14,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 28272199,
+    "errors": []
+   }
+  },
+  "21-system-anvil": {
+   "view": {
+    "name": "21-system-anvil",
+    "focus": "anvil-system"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 12,
+     "worstGapMs": 425.8
+    },
+    "frames": 22,
+    "workMs": {
+     "median": 1,
+     "p95": 1.7,
+     "max": 1.7
+    },
+    "frameMs": {
+     "median": 359,
+     "p95": 402,
+     "max": 408
+    },
+    "drawCalls": 11,
+    "triangles": 53372,
+    "geometries": 14,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 32366254,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 8,
+     "worstGapMs": 674.7
+    },
+    "frames": 15,
+    "workMs": {
+     "median": 5.8,
+     "p95": 19.7,
+     "max": 19.7
+    },
+    "frameMs": {
+     "median": 542.9,
+     "p95": 582,
+     "max": 582
+    },
+    "drawCalls": 11,
+    "triangles": 53372,
+    "geometries": 14,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 28319658,
+    "errors": []
+   }
+  },
+  "22-system-quench": {
+   "view": {
+    "name": "22-system-quench",
+    "focus": "quench-system"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 14,
+     "worstGapMs": 332.3
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 1,
+     "p95": 1.5,
+     "max": 1.5
+    },
+    "frameMs": {
+     "median": 201.2,
+     "p95": 223.2,
+     "max": 229.7
+    },
+    "drawCalls": 11,
+    "triangles": 53372,
+    "geometries": 14,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 27562649,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 7,
+     "worstGapMs": 872.7
+    },
+    "frames": 26,
+    "workMs": {
+     "median": 7.1,
+     "p95": 12.9,
+     "max": 13.9
+    },
+    "frameMs": {
+     "median": 302.1,
+     "p95": 343.6,
+     "max": 388.1
+    },
+    "drawCalls": 11,
+    "triangles": 53372,
+    "geometries": 14,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 31466522,
+    "errors": []
+   }
+  },
+  "23-system-calder-147": {
+   "view": {
+    "name": "23-system-calder-147",
+    "focus": "calder-147-system"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 37,
+     "worstGapMs": 72.7
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 0.8,
+     "p95": 1.3,
+     "max": 1.6
+    },
+    "frameMs": {
+     "median": 45.5,
+     "p95": 62.8,
+     "max": 68.6
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 28477118,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 19,
+     "worstGapMs": 156.2
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 5.2,
+     "p95": 7.9,
+     "max": 8.2
+    },
+    "frameMs": {
+     "median": 83.2,
+     "p95": 105.3,
+     "max": 109.7
+    },
+    "drawCalls": 9,
+    "triangles": 52478,
+    "geometries": 13,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 30132604,
+    "errors": []
+   }
+  },
+  "24-system-gelid": {
+   "view": {
+    "name": "24-system-gelid",
+    "focus": "gelid-system"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 44,
+     "worstGapMs": 1880.8
+    },
+    "frames": 23,
+    "workMs": {
+     "median": 1,
+     "p95": 4.2,
+     "max": 6.7
+    },
+    "frameMs": {
+     "median": 357.5,
+     "p95": 404.8,
+     "max": 415.1
+    },
+    "drawCalls": 10,
+    "triangles": 80126,
+    "geometries": 15,
+    "textures": 7,
+    "gpuBytesEstimate": 29858275,
+    "jsHeapBytes": 27943903,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 26,
+     "worstGapMs": 2403
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 4.6,
+     "p95": 7.2,
+     "max": 8
+    },
+    "frameMs": {
+     "median": 267.9,
+     "p95": 301.1,
+     "max": 313.2
+    },
+    "drawCalls": 10,
+    "triangles": 66302,
+    "geometries": 15,
+    "textures": 7,
+    "gpuBytesEstimate": 29858275,
+    "jsHeapBytes": 35385343,
+    "errors": []
+   }
+  },
+  "25-planet-tallis": {
+   "view": {
+    "name": "25-planet-tallis",
+    "focus": "tallis-planet"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 41,
+     "worstGapMs": 86.8
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 2.3,
+     "p95": 2.9,
+     "max": 4.1
+    },
+    "frameMs": {
+     "median": 47.7,
+     "p95": 50.1,
+     "max": 50.2
+    },
+    "drawCalls": 11,
+    "triangles": 53738,
+    "geometries": 14,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 33026360,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 22,
+     "worstGapMs": 147.8
+    },
+    "frames": 29,
+    "workMs": {
+     "median": 8.4,
+     "p95": 19.2,
+     "max": 19.2
+    },
+    "frameMs": {
+     "median": 85.5,
+     "p95": 121,
+     "max": 121.5
+    },
+    "drawCalls": 11,
+    "triangles": 53554,
+    "geometries": 14,
+    "textures": 3,
+    "gpuBytesEstimate": 21394981,
+    "jsHeapBytes": 30025435,
+    "errors": []
+   }
+  },
+  "26-close-tallis": {
+   "view": {
+    "name": "26-close-tallis",
+    "close": "tallis-planet"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 40,
+     "worstGapMs": 659.8
+    },
+    "frames": 7,
+    "workMs": {
+     "median": 2.3,
+     "p95": 3.7,
+     "max": 3.7
+    },
+    "frameMs": {
+     "median": 1197.5,
+     "p95": 1256.3,
+     "max": 1256.3
+    },
+    "drawCalls": 15,
+    "triangles": 226734,
+    "geometries": 17,
+    "textures": 7,
+    "gpuBytesEstimate": 30427267,
+    "jsHeapBytes": 36918901,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 23,
+     "worstGapMs": 816.7
+    },
+    "frames": 9,
+    "workMs": {
+     "median": 14.8,
+     "p95": 19.5,
+     "max": 19.5
+    },
+    "frameMs": {
+     "median": 889,
+     "p95": 950.6,
+     "max": 950.6
+    },
+    "drawCalls": 15,
+    "triangles": 143442,
+    "geometries": 17,
+    "textures": 7,
+    "gpuBytesEstimate": 30427267,
+    "jsHeapBytes": 35717672,
+    "errors": []
+   }
+  },
+  "27-close-tallis-height": {
+   "view": {
+    "name": "27-close-tallis-height",
+    "close": "tallis-planet",
+    "debug": 1
+   },
+   "desktop": {
+    "flight": {
+     "frames": 38,
+     "worstGapMs": 590.4
+    },
+    "frames": 7,
+    "workMs": {
+     "median": 2.3,
+     "p95": 4.1,
+     "max": 4.1
+    },
+    "frameMs": {
+     "median": 1202.1,
+     "p95": 1337.2,
+     "max": 1337.2
+    },
+    "drawCalls": 15,
+    "triangles": 226734,
+    "geometries": 17,
+    "textures": 7,
+    "gpuBytesEstimate": 30427267,
+    "jsHeapBytes": 34661408,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 23,
+     "worstGapMs": 834.9
+    },
+    "frames": 10,
+    "workMs": {
+     "median": 12.2,
+     "p95": 24.4,
+     "max": 24.4
+    },
+    "frameMs": {
+     "median": 843.8,
+     "p95": 895.3,
+     "max": 895.3
+    },
+    "drawCalls": 15,
+    "triangles": 143442,
+    "geometries": 17,
+    "textures": 7,
+    "gpuBytesEstimate": 30427267,
+    "jsHeapBytes": 38836868,
+    "errors": []
+   }
+  },
+  "28-close-tallis-temperature": {
+   "view": {
+    "name": "28-close-tallis-temperature",
+    "close": "tallis-planet",
+    "debug": 3
+   },
+   "desktop": {
+    "flight": {
+     "frames": 37,
+     "worstGapMs": 747
+    },
+    "frames": 7,
+    "workMs": {
+     "median": 4,
+     "p95": 5.8,
+     "max": 5.8
+    },
+    "frameMs": {
+     "median": 1224.4,
+     "p95": 1281.6,
+     "max": 1281.6
+    },
+    "drawCalls": 15,
+    "triangles": 226734,
+    "geometries": 17,
+    "textures": 7,
+    "gpuBytesEstimate": 30427267,
+    "jsHeapBytes": 35076296,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 21,
+     "worstGapMs": 831.7
+    },
+    "frames": 9,
+    "workMs": {
+     "median": 10.8,
+     "p95": 15.3,
+     "max": 15.3
+    },
+    "frameMs": {
+     "median": 917,
+     "p95": 1118.6,
+     "max": 1118.6
+    },
+    "drawCalls": 15,
+    "triangles": 143442,
+    "geometries": 17,
+    "textures": 7,
+    "gpuBytesEstimate": 30427267,
+    "jsHeapBytes": 30117040,
+    "errors": []
+   }
+  },
+  "29-close-tallis-iii": {
+   "view": {
+    "name": "29-close-tallis-iii",
+    "close": "tallis-iii"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 34,
+     "worstGapMs": 555.5
+    },
+    "frames": 11,
+    "workMs": {
+     "median": 1.7,
+     "p95": 3,
+     "max": 3
+    },
+    "frameMs": {
+     "median": 746.9,
+     "p95": 804.9,
+     "max": 804.9
+    },
+    "drawCalls": 14,
+    "triangles": 201406,
+    "geometries": 17,
+    "textures": 5,
+    "gpuBytesEstimate": 22042691,
+    "jsHeapBytes": 33651978,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 19,
+     "worstGapMs": 666.6
+    },
+    "frames": 15,
+    "workMs": {
+     "median": 8.6,
+     "p95": 13.6,
+     "max": 13.6
+    },
+    "frameMs": {
+     "median": 522.9,
+     "p95": 641.2,
+     "max": 641.2
+    },
+    "drawCalls": 14,
+    "triangles": 120348,
+    "geometries": 17,
+    "textures": 5,
+    "gpuBytesEstimate": 22042691,
+    "jsHeapBytes": 32943716,
+    "errors": []
+   }
+  },
+  "30-close-scald": {
+   "view": {
+    "name": "30-close-scald",
+    "close": "scald-planet"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 39,
+     "worstGapMs": 678.8
+    },
+    "frames": 5,
+    "workMs": {
+     "median": 2.7,
+     "p95": 3.4,
+     "max": 3.4
+    },
+    "frameMs": {
+     "median": 1593.1,
+     "p95": 1641.5,
+     "max": 1641.5
+    },
+    "drawCalls": 15,
+    "triangles": 201682,
+    "geometries": 18,
+    "textures": 7,
+    "gpuBytesEstimate": 30427267,
+    "jsHeapBytes": 34990935,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 23,
+     "worstGapMs": 780.4
+    },
+    "frames": 8,
+    "workMs": {
+     "median": 9,
+     "p95": 16,
+     "max": 16
+    },
+    "frameMs": {
+     "median": 1040.6,
+     "p95": 1206.7,
+     "max": 1206.7
+    },
+    "drawCalls": 15,
+    "triangles": 118460,
+    "geometries": 18,
+    "textures": 7,
+    "gpuBytesEstimate": 30427267,
+    "jsHeapBytes": 31077815,
+    "errors": []
+   }
+  },
+  "31-close-cairn": {
+   "view": {
+    "name": "31-close-cairn",
+    "close": "cairn-planet"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 40,
+     "worstGapMs": 1080.1
+    },
+    "frames": 13,
+    "workMs": {
+     "median": 2.1,
+     "p95": 3,
+     "max": 3
+    },
+    "frameMs": {
+     "median": 635.8,
+     "p95": 730.5,
+     "max": 730.5
+    },
+    "drawCalls": 14,
+    "triangles": 203884,
+    "geometries": 17,
+    "textures": 4,
+    "gpuBytesEstimate": 22027736,
+    "jsHeapBytes": 37065995,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 23,
+     "worstGapMs": 679.4
+    },
+    "frames": 17,
+    "workMs": {
+     "median": 10,
+     "p95": 24.4,
+     "max": 24.4
+    },
+    "frameMs": {
+     "median": 475.5,
+     "p95": 670.9,
+     "max": 670.9
+    },
+    "drawCalls": 14,
+    "triangles": 120648,
+    "geometries": 17,
+    "textures": 4,
+    "gpuBytesEstimate": 22027736,
+    "jsHeapBytes": 35209249,
+    "errors": []
+   }
+  },
+  "32-close-halvards-rest": {
+   "view": {
+    "name": "32-close-halvards-rest",
+    "close": "halvards-rest"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 34,
+     "worstGapMs": 543.2
+    },
+    "frames": 5,
+    "workMs": {
+     "median": 2.3,
+     "p95": 3.1,
+     "max": 3.1
+    },
+    "frameMs": {
+     "median": 1953.5,
+     "p95": 1956.5,
+     "max": 1956.5
+    },
+    "drawCalls": 14,
+    "triangles": 185960,
+    "geometries": 19,
+    "textures": 8,
+    "gpuBytesEstimate": 30503253,
+    "jsHeapBytes": 36662447,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 21,
+     "worstGapMs": 653.9
+    },
+    "frames": 7,
+    "workMs": {
+     "median": 10.4,
+     "p95": 20.8,
+     "max": 20.8
+    },
+    "frameMs": {
+     "median": 1164,
+     "p95": 1209,
+     "max": 1209
+    },
+    "drawCalls": 14,
+    "triangles": 104448,
+    "geometries": 17,
+    "textures": 7,
+    "gpuBytesEstimate": 30503253,
+    "jsHeapBytes": 30613441,
+    "errors": []
+   }
+  },
+  "33-close-slagfall": {
+   "view": {
+    "name": "33-close-slagfall",
+    "close": "slagfall"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 19,
+     "worstGapMs": 752
+    },
+    "frames": 9,
+    "workMs": {
+     "median": 1.4,
+     "p95": 2,
+     "max": 2
+    },
+    "frameMs": {
+     "median": 966.6,
+     "p95": 1014.3,
+     "max": 1014.3
+    },
+    "drawCalls": 12,
+    "triangles": 171030,
+    "geometries": 15,
+    "textures": 7,
+    "gpuBytesEstimate": 29858275,
+    "jsHeapBytes": 30897124,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 9,
+     "worstGapMs": 1061.3
+    },
+    "frames": 11,
+    "workMs": {
+     "median": 7.2,
+     "p95": 11.6,
+     "max": 11.6
+    },
+    "frameMs": {
+     "median": 728.3,
+     "p95": 835.9,
+     "max": 835.9
+    },
+    "drawCalls": 12,
+    "triangles": 94646,
+    "geometries": 15,
+    "textures": 7,
+    "gpuBytesEstimate": 29858275,
+    "jsHeapBytes": 32307521,
+    "errors": []
+   }
+  },
+  "34-close-stillwater": {
+   "view": {
+    "name": "34-close-stillwater",
+    "close": "stillwater"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 36,
+     "worstGapMs": 672.9
+    },
+    "frames": 8,
+    "workMs": {
+     "median": 2.4,
+     "p95": 8.4,
+     "max": 8.4
+    },
+    "frameMs": {
+     "median": 1125.2,
+     "p95": 1241.4,
+     "max": 1241.4
+    },
+    "drawCalls": 14,
+    "triangles": 228088,
+    "geometries": 17,
+    "textures": 7,
+    "gpuBytesEstimate": 30427267,
+    "jsHeapBytes": 28735284,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 22,
+     "worstGapMs": 871.8
+    },
+    "frames": 11,
+    "workMs": {
+     "median": 5.9,
+     "p95": 14.1,
+     "max": 14.1
+    },
+    "frameMs": {
+     "median": 797.5,
+     "p95": 833.3,
+     "max": 833.3
+    },
+    "drawCalls": 14,
+    "triangles": 145056,
+    "geometries": 17,
+    "textures": 7,
+    "gpuBytesEstimate": 30427267,
+    "jsHeapBytes": 32243111,
+    "errors": []
+   }
+  },
+  "35-close-verdance": {
+   "view": {
+    "name": "35-close-verdance",
+    "close": "verdance"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 34,
+     "worstGapMs": 3335.9
+    },
+    "frames": 7,
+    "workMs": {
+     "median": 2.6,
+     "p95": 4.8,
+     "max": 4.8
+    },
+    "frameMs": {
+     "median": 1202.2,
+     "p95": 1254.4,
+     "max": 1254.4
+    },
+    "drawCalls": 15,
+    "triangles": 228790,
+    "geometries": 17,
+    "textures": 7,
+    "gpuBytesEstimate": 30427267,
+    "jsHeapBytes": 31665374,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 22,
+     "worstGapMs": 834.8
+    },
+    "frames": 10,
+    "workMs": {
+     "median": 9.6,
+     "p95": 15.2,
+     "max": 15.2
+    },
+    "frameMs": {
+     "median": 851.9,
+     "p95": 893.1,
+     "max": 893.1
+    },
+    "drawCalls": 15,
+    "triangles": 145648,
+    "geometries": 17,
+    "textures": 7,
+    "gpuBytesEstimate": 30427267,
+    "jsHeapBytes": 29077435,
+    "errors": []
+   }
+  },
+  "36-close-nocturne": {
+   "view": {
+    "name": "36-close-nocturne",
+    "close": "nocturne"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 37,
+     "worstGapMs": 588.8
+    },
+    "frames": 6,
+    "workMs": {
+     "median": 2.2,
+     "p95": 5.3,
+     "max": 5.3
+    },
+    "frameMs": {
+     "median": 1590.9,
+     "p95": 1667.3,
+     "max": 1667.3
+    },
+    "drawCalls": 12,
+    "triangles": 200148,
+    "geometries": 16,
+    "textures": 7,
+    "gpuBytesEstimate": 30427267,
+    "jsHeapBytes": 28465303,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 22,
+     "worstGapMs": 985.5
+    },
+    "frames": 8,
+    "workMs": {
+     "median": 6.4,
+     "p95": 9,
+     "max": 9
+    },
+    "frameMs": {
+     "median": 1078.7,
+     "p95": 1199,
+     "max": 1199
+    },
+    "drawCalls": 12,
+    "triangles": 121542,
+    "geometries": 16,
+    "textures": 7,
+    "gpuBytesEstimate": 30427267,
+    "jsHeapBytes": 36451507,
+    "errors": []
+   }
+  },
+  "37-close-umber-i": {
+   "view": {
+    "name": "37-close-umber-i",
+    "close": "umber-i"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 38,
+     "worstGapMs": 746.6
+    },
+    "frames": 9,
+    "workMs": {
+     "median": 1.5,
+     "p95": 4.1,
+     "max": 4.1
+    },
+    "frameMs": {
+     "median": 985.3,
+     "p95": 1383.4,
+     "max": 1383.4
+    },
+    "drawCalls": 13,
+    "triangles": 200776,
+    "geometries": 16,
+    "textures": 7,
+    "gpuBytesEstimate": 30427267,
+    "jsHeapBytes": 28618581,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 23,
+     "worstGapMs": 808.5
+    },
+    "frames": 13,
+    "workMs": {
+     "median": 4.8,
+     "p95": 25.2,
+     "max": 25.2
+    },
+    "frameMs": {
+     "median": 629.2,
+     "p95": 679.1,
+     "max": 679.1
+    },
+    "drawCalls": 13,
+    "triangles": 119912,
+    "geometries": 16,
+    "textures": 7,
+    "gpuBytesEstimate": 30427267,
+    "jsHeapBytes": 34716975,
+    "errors": []
+   }
+  },
+  "38-close-brand-i": {
+   "view": {
+    "name": "38-close-brand-i",
+    "close": "brand-i"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 32,
+     "worstGapMs": 543.3
+    },
+    "frames": 11,
+    "workMs": {
+     "median": 1.9,
+     "p95": 6.3,
+     "max": 6.3
+    },
+    "frameMs": {
+     "median": 756.7,
+     "p95": 814.5,
+     "max": 814.5
+    },
+    "drawCalls": 12,
+    "triangles": 204724,
+    "geometries": 16,
+    "textures": 4,
+    "gpuBytesEstimate": 22027736,
+    "jsHeapBytes": 29589806,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 23,
+     "worstGapMs": 950.3
+    },
+    "frames": 13,
+    "workMs": {
+     "median": 7.9,
+     "p95": 12.8,
+     "max": 12.8
+    },
+    "frameMs": {
+     "median": 610.9,
+     "p95": 687.5,
+     "max": 687.5
+    },
+    "drawCalls": 12,
+    "triangles": 119274,
+    "geometries": 16,
+    "textures": 4,
+    "gpuBytesEstimate": 22027736,
+    "jsHeapBytes": 29106256,
+    "errors": []
+   }
+  },
+  "39-close-halyard-ii": {
+   "view": {
+    "name": "39-close-halyard-ii",
+    "close": "halyard-ii"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 33,
+     "worstGapMs": 530.9
+    },
+    "frames": 11,
+    "workMs": {
+     "median": 2.5,
+     "p95": 3.5,
+     "max": 3.5
+    },
+    "frameMs": {
+     "median": 769.4,
+     "p95": 894.9,
+     "max": 894.9
+    },
+    "drawCalls": 13,
+    "triangles": 199140,
+    "geometries": 16,
+    "textures": 4,
+    "gpuBytesEstimate": 22027736,
+    "jsHeapBytes": 31555943,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 22,
+     "worstGapMs": 757.1
+    },
+    "frames": 15,
+    "workMs": {
+     "median": 12.1,
+     "p95": 18.7,
+     "max": 18.7
+    },
+    "frameMs": {
+     "median": 558.2,
+     "p95": 650,
+     "max": 650
+    },
+    "drawCalls": 13,
+    "triangles": 120212,
+    "geometries": 16,
+    "textures": 4,
+    "gpuBytesEstimate": 22027736,
+    "jsHeapBytes": 36601019,
+    "errors": []
+   }
+  },
+  "40-station-tallis-relay": {
+   "view": {
+    "name": "40-station-tallis-relay",
+    "focus": "tallis-relay"
+   },
+   "desktop": {
+    "flight": {
+     "frames": 37,
+     "worstGapMs": 4137.2
+    },
+    "frames": 4,
+    "workMs": {
+     "median": 4.9,
+     "p95": 5.6,
+     "max": 5.6
+    },
+    "frameMs": {
+     "median": 2101.8,
+     "p95": 2429.4,
+     "max": 2429.4
+    },
+    "drawCalls": 12,
+    "triangles": 2133628,
+    "geometries": 16,
+    "textures": 7,
+    "gpuBytesEstimate": 30503253,
+    "jsHeapBytes": 28317787,
+    "errors": []
+   },
+   "phone": {
+    "flight": {
+     "frames": 22,
+     "worstGapMs": 671.6
+    },
+    "frames": 5,
+    "workMs": {
+     "median": 14.8,
+     "p95": 23.1,
+     "max": 23.1
+    },
+    "frameMs": {
+     "median": 2010.9,
+     "p95": 2042.2,
+     "max": 2042.2
+    },
+    "drawCalls": 12,
+    "triangles": 2133628,
+    "geometries": 16,
+    "textures": 7,
+    "gpuBytesEstimate": 30503253,
+    "jsHeapBytes": 32081504,
+    "errors": []
+   }
+  }
+ },
+ "recorded": "2026-11-26",
+ "commit": "bcc3eb8",
+ "note": "Headless Chromium, software rendering. workMs: our CPU work per frame; frameMs: frame to frame; gpuBytesEstimate: geometry and textures reachable from the scene."
+}

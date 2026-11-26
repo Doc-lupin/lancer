@@ -43,7 +43,7 @@ were toned down after them. `wip-close-ups.jpg` is the latest.
 
 ### Known issues and open work
 
-1. **Not checked.** Run all checks first (`npm test`, then every `tools/check_*.mjs`). Place markers were lifted from 0.002 to 0.006 R (`Places.jsx`, `LIFT`) to clear raised ground. `check_planet` may need new expectations.
+1. **Checked Nov 26:** every check passes except `check_zoom` (3 of 24 fail: held frames from bakes, and CPU work per frame on phone). Details and decision BQ1 in [PHASE_B0.md](PHASE_B0.md). Place markers were lifted from 0.002 to 0.006 R (`Places.jsx`, `LIFT`); `check_planet` still passes.
 2. **Bakes stop the view.** A world's fields bake when its globe first shows: two cube maps (256² a face), with three 48-step upwind marches for each climate texel. Phase B0.9 (job queue) and B0.10 (IndexedDB cache) fix this. Frame time and bake time are not measured yet.
 3. **Tectonics are static.** Plates are Voronoi cells with a motion each, not a simulation over time (B2.2). Coasts come from noise, so they don't follow plate edges.
 4. **One biome table per world.** B4.9 replaces it with a biome map and a catalog.
@@ -51,6 +51,7 @@ were toned down after them. `wip-close-ups.jpg` is the latest.
 6. **Moisture** still shows faint streaks along the winds. A per-pixel jitter of the climate lookup hides the grid.
 7. **Labels behind a globe** were seen once over the globe at a very close camera (`occlusion.js`). Not yet reproduced.
 8. **Hazy worlds** (hothouse, steam, toxic, dense air, methane sea) use the gas shader. Their surfaces are never shown.
+9. **Grid instead of a surface.** From the Tallis relay, Tallis's globe draws as bright patch edges with no surface (baseline view 40, `docs/section-b/baseline/wip/`).
 
 ## 3. Tools added for Section B
 

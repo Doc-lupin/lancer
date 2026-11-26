@@ -5,7 +5,7 @@ This plan has two sections. **Section A** is the original project: this file, Ph
 Repository copy of the V2 plan (Nov 25, 2026). The shared document is at
 https://claude.ai/artifact/MDzMcUZF9q7TRJi2YMVwLC. V1 is `3D_Universe_Map_Tool_Overview_and_Action_Plan.docx`.
 
-**Current phase: Phase 2 (3D view) is complete: accepted by the GM (Nov 26, 2026) and merged into `main`, as Phase 1 was. Phase 3 has not started.** Section B (visual overhaul) is planned in [SECTION_B.md](SECTION_B.md); its decisions BD1 to BD8 are made. **Next: Section B Phase B0, then B1, then Section A Phase 3 (BD5).** Section B work is on branch `section-b` ([SECTION_B_HANDOFF.md](SECTION_B_HANDOFF.md)).
+**Current phase: Phase 2 (3D view) is complete: accepted by the GM (Nov 26, 2026) and merged into `main`, as Phase 1 was. Phase 3 has not started.** Section B (visual overhaul) is planned in [SECTION_B.md](SECTION_B.md); its decisions BD1 to BD8 are made. **Next: Section B Phase B0, then B1, then Section A Phase 3 (BD5).** Section B work is on branch `section-b` ([SECTION_B_HANDOFF.md](SECTION_B_HANDOFF.md)); Phase B0 is in progress ([PHASE_B0.md](PHASE_B0.md)).
 
 ## Design decisions
 
