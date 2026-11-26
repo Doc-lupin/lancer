@@ -8,7 +8,8 @@ voice, one instruction in each sentence). Technical names stay as they are.
 dynamic visual database. Every world, star and orbit gets its look from its
 data and from physical models.
 
-**Status (Nov 26, 2026): planned, not started.** Earlier work for Section B is
+**Status (Nov 26, 2026): planned; decisions BD1 to BD8 made (Section 8). Next:
+Phase B0.** Earlier work for Section B is
 on branch `ccr-23ad96e8-4fi4vg`, commit `828e8d0` (procedural planets, on
 hold). Phase B2 and Phase B5 continue from that work.
 
@@ -16,7 +17,7 @@ hold). Phase B2 and Phase B5 continue from that work.
 
 Make the map visually stunning and correct. The output must:
 
-1. Show each world as a unique place, made from its data.
+1. Show each world as a unique place, made from its data, with many biomes on each world.
 2. Show the full range of alien biospheres, not only Earth copies.
 3. Move the bodies on true orbits: eccentric, inclined, retrograde and irregular.
 4. Show stars, stellar remnants and black holes with their physical properties.
@@ -33,7 +34,7 @@ Make the map visually stunning and correct. The output must:
 6. Tag each new data value with its origin. Invented values get the `invented` tag. Follow the schema in `data/schema/`.
 7. Give each effect a quality tier (Table 6). The map must work at the lowest tier.
 8. Do not add a library without the GM's approval (Table 7).
-9. Record each decision in [SECTION_B_DECISIONS.md](SECTION_B_DECISIONS.md) when it is made (file to be made in Phase B0).
+9. Record each new decision in Section 8 of this file when it is made.
 
 ## 3. Scope
 
@@ -41,6 +42,7 @@ In scope:
 
 - Orbits and motion for all bodies, with time controls.
 - World generation: tectonics, erosion, hydrology, climate, weather, biospheres.
+- A catalog of biomes and world types in the data, with views to visit each biome.
 - Planet surfaces from orbit down to low altitude.
 - Gas giants, ice giants and ring systems.
 - Stars of all 24 kinds, stellar remnants, black holes.
@@ -70,6 +72,7 @@ Out of scope:
 | F9 | Small bodies, stations and structures | 3 |
 | F10 | Deep space: nebulae, dust, sky | 3 |
 | F11 | Review, measurement and regression checks | 1 |
+| F12 | Biome and world-type catalog: visit biomes, add biomes and world types | 1 |
 
 ## 5. Phases
 
@@ -91,7 +94,7 @@ Tasks:
 - B0.8 Make a shared shader library: noise, cell noise, curl noise, scattering, color science (blackbody color, spectra).
 - B0.9 Make a GPU job queue. Divide long bakes into small parts across frames. The view must not stop during a bake.
 - B0.10 Make a cache for baked worlds in IndexedDB. Use the data hash and the generator version as the key.
-- B0.11 Make `SECTION_B_DECISIONS.md`. Record decisions BD1 to BD8.
+- B0.11 Record each new decision and its research sources in Section 8.
 
 Test:
 
@@ -177,11 +180,17 @@ Test:
 - All rivers end in a sea, a lake or a closed basin.
 - Weather moves without jumps when the clock runs (pixel difference between frames below a limit).
 
-### Phase B4: Biospheres (F5)
+### Phase B4: Biospheres and the biome catalog (F5, F12)
 
-Objective: show the full range of life. Each living world must look different.
+Objective: show the full range of life and land. Each world shows many
+biomes, not one color. Exotic world types and alien biomes look as different
+as the data says. The GM can visit each biome and add new biomes and new world
+types without a code change.
 
-Tasks:
+Dependency: the visit tasks (B4.12 to B4.15) use the data panel of Section A
+Phase 3. Decision BD5 puts Phase 3 before this phase.
+
+Tasks, biospheres:
 
 - B4.1 Make a biosphere model from the data: `biosphere` (complex, simple, microbial, extinct, with megafauna), `nativeLife`, world features, climate and star type. 31 worlds have a biosphere entry now.
 - B4.2 Calculate the color of photosynthesis from the star's spectrum. Under red dwarfs (47 systems), plants are dark: black, deep red or purple. Under hot stars, plants can be pale, yellow or blue-green.
@@ -196,11 +205,38 @@ Tasks:
 - B4.4 Show life at all scales: color of continents from orbit, patterns (forest bands, blooms) at middle range, texture up close.
 - B4.5 Add bioluminescence on night sides and in seas where the data supports it.
 - B4.6 Show dead and dying biospheres: extinct worlds, "dying garden" worlds, terraformed and climate-engine worlds (Tallis).
-- B4.7 Let the GM set a palette and a biochemistry for each world in the data.
+
+Tasks, the biome catalog (adding biomes):
+
+- B4.7 Define a biome in the schema (`data/schema/`). A biome has:
+  1. An id, a name, an origin tag and a visibility tag.
+  2. A biochemistry (from B4.3), or none for lifeless ground.
+  3. A climate envelope: temperature, moisture, pressure, light level, star types.
+  4. Ground preferences: height, slope, distance to sea, soil or rock type.
+  5. A palette for each season, and night colors (bioluminescence).
+  6. A material for close views (rock, sand, soil, vegetation, ice, crystal, liquid, mat).
+  7. A pattern (forest, grass, reef, crystal field, fungal mat, dunes, salt flat, lava field).
+  8. A short description for the data panel.
+- B4.8 Make the first catalog in `data/src/biomes/`. Include all Earth-type biomes (Whittaker set: ice, tundra, taiga, temperate forest, grassland, desert, savanna, rainforest, wetland, alpine, beach, reef) and the alien sets of B4.3. Tag the alien biomes `invented`.
+- B4.9 Replace the single biome lookup table (`planet/biomes.js`) with a biome map for each world. Store the two strongest biomes and their blend weight at each point. Support any number of biomes in the catalog.
+- B4.10 Choose each world's biomes from its climate, its world type, its biosphere and its star. Let the GM add, remove or weight biomes for one world in the data (`biomes` list on the body).
+- B4.11 Make the world types a catalog too (`data/src/worldTypes/`). Move the recipes of `planet/recipes.js` into it: terrain, climate, surface, air and the biome sets that each type allows. Cover all world types in `map.json` (about 40) and add exotic types: hycean (ocean under hydrogen air), eyeball, lava ocean, iron rain, ammonia sea, cloud forest, salt world, sand-sea world, ring-shadowed world. The GM adds a world type with a new file. The code does not change.
+
+Tasks, visiting biomes:
+
+- B4.12 Show the biome under the pointer on a globe. Show its name, its description and the local climate values in the data panel.
+- B4.13 Add a biome legend for the world in view: each biome, its color and its share of the surface. Highlight a biome's area when the user points to it in the legend.
+- B4.14 Add "Visit": the camera flies down to a low-altitude view over a typical place of the selected biome, with the sun at a good angle. A second "Visit" goes to the next place of that biome.
+- B4.15 Add a biome tour for each world: the camera visits each biome in turn. The GM can save a view as a bookmark in the data.
+- B4.16 Make a biome preview in the World Lab: show a new biome on a test world before it goes into the catalog.
 
 Test:
 
-- Each biosphere type has a distinct palette. Measure the color distance between types in the review gallery.
+- Each living or wet world shows all biomes that its climate allows (at least 5 on Earth-type worlds with water).
+- Biome shares on each world match the biome map to within 1%.
+- A new biome file and a new world-type file show in the map after a rebuild, with no code change. The validator accepts them and checks their fields.
+- "Visit" puts the camera over ground of the selected biome in 20 of 20 tries (checked by the biome id under the screen center).
+- Each biosphere type and each world type has a distinct palette. Measure the color distance between types in the review gallery.
 - Plant colors follow the star type for all living worlds.
 - The GM approves the review gallery (B11.3).
 
@@ -353,14 +389,14 @@ Use all tools that are available. Get approval before a new library.
 | IndexedDB | Cache of baked worlds. |
 | WebGL2 | Float render targets, cube maps, instancing, parallel shader compile. |
 
-**Libraries and features that need the GM's approval (decisions BD1 to BD4):**
+**Libraries and features decided by BD1 to BD4 (Section 8):**
 
 | Item | Purpose |
 |---|---|
-| `postprocessing` and `@react-three/postprocessing` | Bloom, tone mapping, lens effects (B0.5). |
-| Three.js WebGPU renderer and TSL compute | Faster simulation and volumes on devices with WebGPU. WebGL2 stays the fallback. |
-| `leva` | Sliders for the World Lab (development builds only). |
-| KTX2 textures (Three.js loader, Basis transcoder) | Smaller detail textures. |
+| `postprocessing` and `@react-three/postprocessing` | Approved. Bloom, tone mapping, lens effects (B0.5). |
+| Three.js WebGPU renderer and TSL compute | Deferred. Add in Phase B9 only if the budgets need it. WebGL2 stays the base. |
+| `leva` | Approved for development builds only. Sliders for the World Lab. |
+| KTX2 textures (Three.js loader, Basis transcoder) | Only if detail textures exceed 20 MB. |
 
 **Tools for planning, research and review:**
 
@@ -372,7 +408,10 @@ Use all tools that are available. Get approval before a new library.
 | The artifact viewer check | Check the phone link before each update. |
 | Memory notes | Keep the GM's preferences for the look between sessions. |
 
-## 8. Decisions needed
+## 8. Decisions
+
+BD1 to BD8: the GM accepted all eight recommendations on Nov 26, 2026. The
+"Recommendation" column is now the decision.
 
 | ID | Subject | Options | Recommendation |
 |---|---|---|---|
@@ -401,6 +440,7 @@ Use all tools that are available. Get approval before a new library.
 
 ## 10. First steps
 
-1. The GM answers decisions BD1 to BD8.
+1. Decisions BD1 to BD8 are made (Section 8).
 2. Start Phase B0 with task B0.1 (baseline screenshots and budgets).
-3. Keep the WIP planet work on branch `ccr-23ad96e8-4fi4vg` until Phase B2.
+3. Then Phase B1, then Section A Phase 3 (BD5), then Phases B2 onward.
+4. Keep the WIP planet work on branch `ccr-23ad96e8-4fi4vg` until Phase B2. It is not on `main`.
