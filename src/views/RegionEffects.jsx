@@ -24,12 +24,13 @@ import { EXPOSURE } from './exposure.js';
 const STYLES = {
   nebula: {
     // Inner colors first: glowing hydrogen pink at the heart, violet and blue outward.
-    puffs: 140, colors: ['#ff4f7a', '#ff3d8b', '#ff6a4d', '#d455ff', '#9a5cff', '#4f7bff', '#3fa0ff'], alpha: [0.2, 0.45],
+    puffs: 140, colors: ['#ff4f7a', '#ff3d8b', '#ff6a4d', '#d455ff', '#9a5cff', '#5a62ff', '#4a86ff'], alpha: [0.2, 0.45],
     blending: { blending: THREE.AdditiveBlending }, renderOrder: 1,
   },
   'dust-cloud': {
     puffs: 110, colors: ['#47241a', '#3b1d11', '#4d2a1c', '#301912', '#2a150e'], alpha: [0.34, 0.58],
     blending: { blending: THREE.CustomBlending, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor }, renderOrder: 2,
+    over: true,
   },
 };
 
@@ -37,7 +38,7 @@ const STYLES = {
 const fragment = /* glsl */ `
 ${spriteFragmentHead}
 uniform sampler2D uShapes;
-uniform float uExposure;
+uniform float uExposure, uOver;
 void main() {
   #include <logdepthbuf_fragment>
   vec2 q = (gl_FragCoord.xy - vCenter) / max(vRadius, 0.5);
@@ -51,7 +52,11 @@ void main() {
   float shape = mix(exp(-d * d * 2.5), texture2D(uShapes, uv).r, smoothstep(4.0, 24.0, vRadius));
   float a = vColor.a * shape * (1.0 - smoothstep(0.85, 1.0, d));
   if (a < 0.002) discard;
-  gl_FragColor = vec4(fromDisplay(vColor.rgb * a) * uExposure, a);
+  // Light (the nebula, added): converted with its alpha, so a puff over dark
+  // space looks as written. Dust (laid over): converted before its alpha, so
+  // thick dust settles to its own color, as it did before linear light (B0.4).
+  vec3 rgb = uOver > 0.5 ? fromDisplay(vColor.rgb) * a : fromDisplay(vColor.rgb * a);
+  gl_FragColor = vec4(rgb * uExposure, a);
 }`;
 
 // Four cloud shapes in a 2 × 2 atlas: swirled noise with bright filaments,
@@ -135,7 +140,7 @@ function Effect({ kind, puffs }) {
     const m = new THREE.ShaderMaterial({
       vertexShader: spriteVertex,
       fragmentShader: fragment,
-      uniforms: spriteUniforms({ uWorldSize: { value: 1 }, uFadeFrom: { value: 0.25 }, uFadeTo: { value: 0.9 }, uShapes: { value: cloudShapes() }, uExposure: EXPOSURE }),
+      uniforms: spriteUniforms({ uWorldSize: { value: 1 }, uFadeFrom: { value: 0.25 }, uFadeTo: { value: 0.9 }, uShapes: { value: cloudShapes() }, uExposure: EXPOSURE, uOver: { value: style.over ? 1 : 0 } }),
       transparent: true,
       depthWrite: false,
       ...style.blending,
