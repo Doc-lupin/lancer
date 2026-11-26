@@ -91,13 +91,16 @@ async function centroid(page, half) {
   const { width, height } = page.viewportSize();
   const png = await page.screenshot({ clip: { x: width / 2 - half, y: height / 2 - half, width: 2 * half, height: 2 * half } });
   const img = decode(png);
-  let sx = 0, sy = 0, sw = 0;
+  let sx = 0, sy = 0, sw = 0, n = 0;
   for (let y = 0; y < img.height; y++) for (let x = 0; x < img.width; x++) {
     const k = (y * img.width + x) * img.bpp;
     const v = Math.max(img.px[k], img.px[k + 1], img.px[k + 2]);
-    if (v > 50) { sx += (x + 0.5) * v; sy += (y + 0.5) * v; sw += v; }
+    if (v > 50) { sx += (x + 0.5) * v; sy += (y + 0.5) * v; sw += v; n++; }
   }
-  return sw ? [sx / sw - img.width / 2, sy / sw - img.height / 2] : null;
+  // At least 4 bright pixels: one faint background dot crossing the threshold
+  // is not the focus object (it moved the 'center' by 2 px at the Tallis
+  // relay, which draws nothing bright at the center; task B0.4).
+  return n >= 4 ? [sx / sw - img.width / 2, sy / sw - img.height / 2] : null;
 }
 
 const ev = (page, fn, arg) => page.evaluate(fn, arg);
