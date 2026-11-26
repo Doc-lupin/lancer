@@ -3,7 +3,7 @@
 Repository copy of the V2 plan (Nov 25, 2026). The shared document is at
 https://claude.ai/artifact/MDzMcUZF9q7TRJi2YMVwLC. V1 is `3D_Universe_Map_Tool_Overview_and_Action_Plan.docx`.
 
-**Current phase: Phase 2 (3D view), built; its test passes in emulation and waits for the GM's phone. Work on branch `phase-2`.** Phase 1 passed its test and is merged into `main`.
+**Current phase: Phase 2 (3D view) is complete: accepted by the GM (Nov 26, 2026) and merged into `main`, as Phase 1 was. Phase 3 has not started.** A procedural planet overhaul (level-of-detail globes, tectonic terrain, climate and biomes, scattering atmospheres) is in progress but on hold, on branch `ccr-23ad96e8-4fi4vg`.
 
 ## Design decisions
 
@@ -87,7 +87,7 @@ Built with Vite (D19). The app reads `data/map.json`; the data is still authored
 - [x] Nebula and dust-cloud effects; systems with a planet, wreck or structure at the center
 - [x] System level (star, planets, orbits following the clock); planet level (planet, moons, stations, surface places on the globe)
 - **Test:** zoom Basin → planet and back without a break; no shaking; smooth on a phone.
-- **Result (Nov 26, 2026): passes on desktop and in phone emulation; waiting for the GM's own phone.** `node tools/check_zoom.mjs` flies Basin → Tallis → Tallis system → Tallis → its globe → Tallis relay station, then wheels back out to the Basin, on desktop and on Pixel 7 emulation with the CPU slowed 4×: no break (the camera's distance and target change smoothly every frame, the scene is never rebuilt, no blank frames), no shaking (still frames pixel-identical, the focus within 0.15 px of the center while circling, at every stop), and our own work per frame at most 4.9 ms with the slowed CPU. The headless browser draws in software, so how smooth it is on a real phone can only be judged on one. Details in [PHASE2.md](PHASE2.md).
+- **Result (Nov 26, 2026): passes on desktop and in phone emulation; accepted by the GM as complete.** `node tools/check_zoom.mjs` flies Basin → Tallis → Tallis system → Tallis → its globe → Tallis relay station, then wheels back out to the Basin, on desktop and on Pixel 7 emulation with the CPU slowed 4×: no break (the camera's distance and target change smoothly every frame, the scene is never rebuilt, no blank frames), no shaking (still frames pixel-identical, the focus within 0.15 px of the center while circling, at every stop), and our own work per frame at most 4.9 ms with the slowed CPU. The headless browser draws in software, so how smooth it is on a real phone can only be judged on one. Details in [PHASE2.md](PHASE2.md).
 
 **Notes for starting Phase 2** (what the data gives the view):
 
