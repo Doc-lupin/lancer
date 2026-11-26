@@ -12,8 +12,8 @@
 // frame (CPU), the frame time, draw calls, triangles, three.js's geometry and
 // texture counts, an estimate of GPU memory, and the JS heap.
 //
-// Writes DIR/<device>/<view>.jpg and DIR/baseline.json (default DIR:
-// docs/section-b/baseline). It also records machine.ms, this machine's speed
+// Writes DIR/<device>/<view>.jpg and DIR/baseline.json. Give --out: record
+// into docs/section-b/baseline/accepted only after the GM approves a look. It also records machine.ms, this machine's speed
 // (machineMs in tools/views.mjs), so time budgets can be scaled on another
 // machine; --machine-only records just that, for a baseline taken on this
 // machine before the field existed. --worlds wip turns on the WIP procedural worlds
@@ -27,7 +27,8 @@ import { execFileSync } from 'node:child_process';
 import { startApp, openPage, goTo, measure, shoot, machineMs } from './views.mjs';
 
 const arg = (k) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : null; };
-const OUT = resolve(arg('--out') ?? 'docs/section-b/baseline');
+if (!arg('--out')) { console.error('Give --out DIR (docs/section-b/baseline/accepted only after the GM approves a look).'); process.exit(2); }
+const OUT = resolve(arg('--out'));
 const devices = arg('--device') ? [arg('--device')] : ['desktop', 'phone'];
 const only = arg('--only')?.split(',');
 const views = JSON.parse(readFileSync(new URL('./baseline/views.json', import.meta.url), 'utf8'))

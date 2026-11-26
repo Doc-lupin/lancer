@@ -3,9 +3,8 @@
 Tasks, test and functions are in [SECTION_B.md](SECTION_B.md), Phase B0.
 Branch `section-b`.
 
-**Status (Nov 26, 2026): B0.1 to B0.3 done; B0.4 built and checked, waiting
-for the GM's approval of the new look (BQ3). Next: B0.5.** BQ1 and BQ2 are
-decided and done.
+**Status (Nov 26, 2026): B0.1 to B0.4 done. Next: B0.5 (bloom).** BQ1, BQ2
+and BQ3 are decided and done.
 
 ## Checks at the start of the phase
 
@@ -260,7 +259,7 @@ Found on the way, for a later task (readability): after a flight, a label's
 memory of its last spot can leave out a name that a fresh placement fits
 (Ostrom, 3 of 4 named). The map should place names as well as the reset does.
 
-## B0.4: high dynamic range pipeline (built; BQ3 open)
+## B0.4: high dynamic range pipeline (done)
 
 - **Packages:** `postprocessing` 6.39.6 and `@react-three/postprocessing`
   3.2.2 (approved by BD1, exact versions).
@@ -351,3 +350,9 @@ not the change; a check that passes or fails by timing hides real faults.
 3. Desktop frame time ×1.9 in the software renderer, from 4× multisampling
    in the half-float buffer. Recommendation: accept it and record a new
    performance reference; B0.6 lets slow computers turn multisampling off.
+
+**Decided (GM, Nov 26): all three as recommended.** The approved state is
+recorded in `docs/section-b/baseline/accepted/` (from commit `58b97aa`), the
+default reference of `check_visuals` and `check_performance` from now on.
+`phase2/` stays as the record of the Phase 2 look. `check_zoom` keeps its
+Phase 2 reference: B0.4 did not change CPU work.

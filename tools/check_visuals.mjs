@@ -1,12 +1,12 @@
 // Task B0.2: the visual regression check.
 //
-//   node tools/check_visuals.mjs [--ref phase2|wip|DIR] [--device desktop|phone]
+//   node tools/check_visuals.mjs [--ref accepted|phase2|wip|DIR] [--device desktop|phone]
 //        [--only NAME,NAME] [--worlds wip] [--out DIR] [--limit PCT]
 //
 // Goes to each view of tools/baseline/views.json (as tools/record_baseline.mjs
 // does), takes the same JPEG screenshot, and compares it with the reference
-// image in docs/section-b/baseline/<ref>/<device>/ (default ref: phase2, the
-// state the GM accepted). For each view it reports:
+// image in docs/section-b/baseline/<ref>/<device>/ (default ref: accepted, the
+// look the GM approved last; phase2 is the Phase 2 look, kept as history). For each view it reports:
 //
 //   changed   the share of pixels where a color channel differs by more than
 //             16 of 255, in percent: the number to watch
@@ -28,7 +28,7 @@ import { join, resolve } from 'node:path';
 import { startApp, openPage, goTo, shoot } from './views.mjs';
 
 const arg = (k) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : null; };
-const refArg = arg('--ref') ?? 'phase2';
+const refArg = arg('--ref') ?? 'accepted';
 const REF = existsSync(refArg) ? resolve(refArg) : resolve('docs/section-b/baseline', refArg);
 const OUT = resolve(arg('--out') ?? join(tmpdir(), 'lancer-visuals'));
 const LIMIT = Number(arg('--limit') ?? 0.5);

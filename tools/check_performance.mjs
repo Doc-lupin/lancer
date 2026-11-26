@@ -1,12 +1,13 @@
 // Task B0.3: the performance check.
 //
-//   node tools/check_performance.mjs [--ref phase2|wip|DIR] [--device desktop|phone]
+//   node tools/check_performance.mjs [--ref accepted|phase2|wip|DIR] [--device desktop|phone]
 //        [--only NAME,NAME] [--worlds wip] [--targets] [--out DIR]
 //
 // Goes to each view of tools/baseline/views.json, measures it as
 // tools/record_baseline.mjs does, and checks five numbers against the view's
 // budget (tools/baseline/budgets.json), made from the same view in the
-// reference baseline (default: phase2, docs/section-b/baseline/phase2):
+// reference baseline (default: accepted, docs/section-b/baseline/accepted, the
+// state the GM approved last):
 //
 //   workMs     our own CPU work per frame (median)
 //   frameMs    time from one frame to the next, with the draw (median)
@@ -29,7 +30,7 @@ import { join, resolve } from 'node:path';
 import { startApp, openPage, goTo, measure, machineMs } from './views.mjs';
 
 const arg = (k) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : null; };
-const refArg = arg('--ref') ?? 'phase2';
+const refArg = arg('--ref') ?? 'accepted';
 const REF = existsSync(refArg) ? resolve(refArg) : resolve('docs/section-b/baseline', refArg);
 const OUT = resolve(arg('--out') ?? join(tmpdir(), 'lancer-performance'));
 const strictTargets = process.argv.includes('--targets');
