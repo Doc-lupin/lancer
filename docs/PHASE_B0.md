@@ -3,8 +3,8 @@
 Tasks, test and functions are in [SECTION_B.md](SECTION_B.md), Phase B0.
 Branch `section-b`.
 
-**Status (Nov 26, 2026): B0.1 and B0.2 done. Next: B0.3.** BQ1 is decided
-(option 2: the WIP worlds are off by default). BQ2 is open.
+**Status (Nov 26, 2026): B0.1, B0.2 and B0.3 done. Next: B0.4.** BQ1 and BQ2
+are decided (option 2 and option 1) and done.
 
 ## Checks at the start of the phase
 
@@ -186,6 +186,79 @@ So decision BQ1 brings back exactly the look the GM accepted.
 With the switch off, every check gives the same result on `section-b` as on
 `main` in this container. Two checks fail on both (BQ2).
 
+## B0.3: performance check (done)
+
+`node tools/check_performance.mjs [--ref phase2|wip|DIR] [--device desktop|phone] [--only NAME,…] [--worlds wip] [--targets] [--out DIR]`
+
+The check goes to each of the 40 views, measures it as `record_baseline.mjs`
+does, and checks five numbers against the view's budget:
+
+| Number | What it is |
+|---|---|
+| `workMs` | Our own CPU work per frame (median). |
+| `frameMs` | Frame to frame, with the draw (median). In software, this measures shader cost on the CPU. |
+| `heldMs` | The longest frame on the flight to the view: the bake time. |
+| `drawCalls` | Draw calls in a frame. |
+| `gpuMB` | The estimate of GPU memory. |
+
+**Budgets** (`tools/baseline/budgets.json`): each view's budget is its value
+in the reference baseline (default `phase2`) times a ratio plus a margin. The
+margins come from the variation between two recordings of the same code on
+the same machine: CPU work varied up to 1.5×, frame time 1.36×, held frames
+2.3×; draw calls and GPU memory did not vary.
+
+| Number | Budget |
+|---|---|
+| `workMs` | 1.5 × reference + 0.5 ms |
+| `frameMs` | 1.4 × reference + 5 ms |
+| `heldMs` | 2.5 × reference + 100 ms |
+| `drawCalls` | reference + 2 |
+| `gpuMB` | 1.1 × reference + 2 MB |
+
+A budget for one view can be set in `views` in the same file. So the check
+catches large regressions (above about 1.5×). Smaller ones are inside the
+run-to-run variation of software rendering; find them with repeated runs.
+
+**Machine speed.** `machineMs()` in `tools/views.mjs` times a fixed piece of
+JavaScript (the fastest of 7 runs; about 255 ms here, within 2% from run to
+run). Each baseline records it as `machine.ms`. Time budgets are scaled by the
+ratio of this machine to the reference machine.
+
+**Targets.** `targets` in `budgets.json` holds fixed limits from the plan:
+now the Phase B0 test, "a bake never holds a frame for more than 50 ms on
+desktop". The check reports them; with `--targets` they also fail it. They
+fail now, so they are reported only until B0.9.
+
+**Result (Nov 26):** `section-b` (WIP worlds off) against `phase2`: **all 80
+views within budget.** With `--worlds wip` the check fails, as it must: at the
+Tallis close-up the frame time is 1,250 ms against a budget of 207 ms, at the
+Tallis relay 2,066 ms against 111 ms.
+
+The held-frame target (50 ms, desktop) is missed in 34 of 40 views, in three
+groups. B0.9 must deal with all three:
+
+| Held frame | Views | Probable cause |
+|---|---|---|
+| 72–116 ms | regions and systems without effects; Tallis with its moons | first frames of a flight (shader compile, label layout); not yet located |
+| 266–451 ms | the Furnace, the Mire, and the systems inside them (Quench, Murk, Anvil) | the nebula and dust paint (`RegionEffects.jsx`) |
+| 1.5–4.7 s | every globe close-up, the Tallis relay, Gelid's rogue planet | the Phase 2 world painter (`procedural.js`) when a globe first shows |
+
+### BQ2 done
+
+- `check_system` forgets the labels' last spots and draws two frames before it
+  counts names. Ostrom: 4 of 4 named, in three runs of three (3 of 4 before).
+- `check_zoom` compares CPU work at each stop with a Phase 2 reference
+  recorded on `main` (`docs/section-b/baseline/phase2/zoom.json`, written with
+  `--record-ref`): at most 1.5 × the reference mean + 0.5 ms, scaled by machine
+  speed. Without the reference it uses the old fixed limits. On `section-b`:
+  **24 of 24 pass** (phone worst 15.0 ms against a reference of 14.5 ms).
+
+With these two changes every Section A check passes on `section-b`.
+
+Found on the way, for a later task (readability): after a flight, a label's
+memory of its last spot can leave out a name that a fresh placement fits
+(Ostrom, 3 of 4 named). The map should place names as well as the reset does.
+
 ## Decisions
 
 **BQ1. The WIP planet work fails the Phase 2 test.** Options:
@@ -215,3 +288,4 @@ CPU limit of `check_zoom` (11 ms; 14.7 ms here) and the Ostrom names in
 
 Recommendation: option 1. A fixed limit in milliseconds tests the machine,
 not the change; a check that passes or fails by timing hides real faults.
+**Decided (GM, Nov 26): option 1.** Done in B0.3, above.
