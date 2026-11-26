@@ -69,6 +69,8 @@ export default function Scene() {
           </>
         )}
       </Canvas>
+      {/* A gentle vignette, under the labels and buttons. */}
+      <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', background: 'radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.28) 100%)' }} />
       {ready && (
         <>
           <RegionLabels />

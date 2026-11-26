@@ -13,7 +13,7 @@ import { useMap, isHidden } from '../data/store.js';
 import { laneEndPlaces, laneLabel, laneDaysShort } from '../data/lanes.js';
 import { lerpPlace } from './origin.js';
 import { view } from './camera/view.js';
-import { screenPos } from './camera/pick.js';
+import { visiblePos } from './occlusion.js';
 import { regionLabelBoxes } from './RegionLabels.jsx';
 import { FADE, spotOrder, wasShown, settle } from './labelPlace.js';
 
@@ -86,7 +86,7 @@ export function LaneLabelsUpdater() {
     for (const it of lanes) {
       const el = els.get(it.lane.id);
       if (!el) continue;
-      const ps = it.spots.map((sp) => screenPos(camera, cam, sp, size.width, size.height));
+      const ps = it.spots.map((sp) => visiblePos(camera, cam, sp, size.width, size.height));
       items.push({ el, ps, depth: ps[0]?.[2] ?? Infinity });
     }
     items.sort((a, b) => wasShown(a.el) - wasShown(b.el) || a.depth - b.depth);

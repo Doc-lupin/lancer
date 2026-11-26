@@ -17,7 +17,7 @@ import { displayName } from '../data/names.js';
 import { pixelsPerKm } from './origin.js';
 import { view } from './camera/view.js';
 import { flyTo } from './camera/CameraRig.jsx';
-import { screenPos } from './camera/pick.js';
+import { visiblePos } from './occlusion.js';
 import { bodyAlpha } from './System.jsx';
 import { regionLabelBoxes } from './RegionLabels.jsx';
 import { FADE, spotOrder, wasShown, settle } from './labelPlace.js';
@@ -98,7 +98,7 @@ export function BodyLabelsUpdater() {
       if (!t) continue;
       const kind = el.dataset.kind;
       const alpha = kind === 'system' || kind === 'star' ? 1 : bodyAlpha.get(id) ?? 0;
-      const p = alpha > 0.5 ? screenPos(camera, rig.camera, t.place, size.width, size.height) : null;
+      const p = alpha > 0.5 ? visiblePos(camera, rig.camera, t.place, size.width, size.height) : null;
       const r = p ? Math.max(3, t.radiusKm * pixelsPerKm(p[2], camera.fov, size.height)) : 0;
       items.push({ el, p, r, rank: kind === 'system' ? 0 : PRIORITY[kind] ?? 5, was: wasShown(el) });
     }

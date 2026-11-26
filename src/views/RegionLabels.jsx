@@ -18,7 +18,7 @@ import { displayName } from '../data/names.js';
 import { KM_PER_LY, pixelsPerKm } from './origin.js';
 import { view } from './camera/view.js';
 import { flyTo } from './camera/CameraRig.jsx';
-import { screenPos } from './camera/pick.js';
+import { visiblePos } from './occlusion.js';
 import { FADE } from './labelPlace.js';
 
 const FADE_FROM_LY = 6; // fully shown beyond this distance from the camera
@@ -97,7 +97,7 @@ export function RegionLabelsUpdater() {
       const el = els.get(r.id);
       const t = view.targets.get(r.id);
       if (!el || !t) continue;
-      const p = screenPos(camera, cam, t.place, size.width, size.height);
+      const p = visiblePos(camera, cam, t.place, size.width, size.height);
       const ly = p ? p[2] / KM_PER_LY : 0;
       const alpha = p ? Math.min(1, Math.max(0, (ly - FADE_TO_LY) / (FADE_FROM_LY - FADE_TO_LY))) : 0;
       const below = p ? Math.min(60, t.radiusKm * pixelsPerKm(p[2], camera.fov, size.height)) + 2 : 0;

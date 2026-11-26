@@ -2,7 +2,8 @@
 // orbit some of them (task 2.9). Two instanced draw calls (task 2.6):
 //   core  a sphere at true size, never smaller than CORE_PX on screen (P5);
 //   glow  a soft disc facing the camera, sized in screen pixels by luminosity,
-//         drawn additively so close pairs brighten.
+//         drawn additively so close pairs brighten: a bright core and a faint
+//         wide halo, growing up to 4× into a bloom inside a system.
 // Colors and luminosity come from src/data/starKinds.js. Unmapped stars
 // (charted: false) are drawn dimmer, except those in FULL_BRIGHTNESS. A black
 // hole has a dark core in its disk's glow. Positions are set relative to the
@@ -63,7 +64,8 @@ flat varying vec3 vColor;
 void main() {
   #include <logdepthbuf_fragment>
   float d = length(gl_FragCoord.xy - vCenter) / vRadius;
-  float a = exp(-d * d * 4.0) * (1.0 - smoothstep(0.75, 1.0, d));
+  // A bright core and a faint, wide halo, like light scattered in an eye or lens.
+  float a = (exp(-d * d * 4.0) + 0.22 / (1.0 + d * d * 60.0)) * (1.0 - smoothstep(0.6, 1.0, d));
   gl_FragColor = vec4(vColor * a, a);
 }`;
 
@@ -147,7 +149,9 @@ export default function Stars() {
       pos.set(rel[0], rel[1], rel[2]);
       core.current.setMatrixAt(i, m.compose(pos, q, scale.setScalar(r)));
       glow.current.setMatrixAt(i, m.compose(pos, q, scale.setScalar(1)));
-      sizes.array[i] = s.glow + 1.6 * truePx;
+      // Inside a system (closer than ~200 AU) the glow grows into a bloom.
+      const bloom = 1 + 3 * Math.min(1, Math.max(0, Math.log10(3e10 / dist) / 2));
+      sizes.array[i] = s.glow * bloom + 1.6 * truePx;
     });
     core.current.instanceMatrix.needsUpdate = true;
     glow.current.instanceMatrix.needsUpdate = true;

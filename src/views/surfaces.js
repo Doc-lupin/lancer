@@ -8,7 +8,8 @@
 // places' [lat, lon].
 //
 // Where a body's maps come from, first match wins:
-//   1. a registered provider, e.g. a procedural generator by world type:
+//   1. a registered provider, e.g. the procedural generator by world type
+//      (procedural.js, registered when the map opens):
 //        registerSurface((body, tools) => body.world === 'ocean' ? { map, heightMap, heightScale: 0.004 } : null);
 //   2. an image file named in the data, appearance.texture, loaded from
 //      public/textures/ (the schema already has this field);
@@ -21,14 +22,66 @@
 //   heightScale   height of white in the height map, as a fraction of the
 //                 radius (default 0.005). Places still sit on the smooth
 //                 sphere: lift them by the same height when relief is large.
-//   normalMap, roughnessMap   as three.js uses them
+//   normalMap, roughnessMap, emissiveMap   as three.js uses them (an
+//                 emissive map glows on the night side too: lava, city lights)
+//   clouds        grey = cloud cover, drawn as a lit layer just above the
+//                 surface
+//   dispose       frees the maps' GPU memory; called when the body's maps
+//                 drop out of the cache (only the most recent 16 are kept)
 // `tools` gives loadTexture(file, { color }) for files in public/textures/,
-// and canvasTexture(width, height, draw, { color }) for generated maps.
+// canvasTexture(width, height, draw, { color }) for maps drawn on the CPU,
+// and bake(width, height, material, { color, mipmaps }) to paint a map on the
+// GPU with a shader (procedural.js): the material draws a full-screen
+// square, and gets vUv with the map's layout.
 
 import * as THREE from 'three';
 
 const providers = [];
-const cache = new Map();
+const cache = new Map(); // body id → maps, oldest first
+const KEEP = 16;
+let renderer = null;
+
+// The renderer that bake() paints with (Planet.jsx sets it).
+export function setBaker(gl) {
+  renderer = gl;
+}
+
+// Paint a map with a shader on the GPU. The material's vertex shader should
+// pass uv through as vUv and place the square with gl_Position =
+// vec4(position.xy, 0.0, 1.0). A color map is stored as sRGB, so the shader
+// writes linear values; other maps are stored as written.
+const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2));
+quad.frustumCulled = false;
+const bakeScene = new THREE.Scene().add(quad);
+const bakeCamera = new THREE.Camera();
+export function bake(width, height, material, { color = true, mipmaps = true } = {}) {
+  if (!renderer) throw new Error('bake() needs setBaker(renderer) first');
+  const target = new THREE.WebGLRenderTarget(width, height, {
+    depthBuffer: false,
+    colorSpace: color ? THREE.SRGBColorSpace : THREE.NoColorSpace,
+    generateMipmaps: mipmaps,
+    minFilter: mipmaps ? THREE.LinearMipmapLinearFilter : THREE.LinearFilter,
+  });
+  target.texture.wrapS = THREE.RepeatWrapping;
+  target.texture.anisotropy = 4;
+  quad.material = material;
+  const before = renderer.getRenderTarget();
+  renderer.setRenderTarget(target);
+  renderer.render(bakeScene, bakeCamera);
+  renderer.setRenderTarget(before);
+  return target;
+}
+
+// Read back a small baked map's red channel, 0–1, one value per pixel, rows
+// from the bottom (south) up.
+export function readRed(target) {
+  const { width, height } = target;
+  const px = new Uint8Array(width * height * 4);
+  renderer.readRenderTargetPixels(target, 0, 0, width, height, px);
+  const out = new Float32Array(width * height);
+  for (let i = 0; i < out.length; i++) out[i] = px[i * 4] / 255;
+  return out;
+}
 let onTextureLoaded = () => {};
 
 export function registerSurface(provider) {
@@ -115,10 +168,20 @@ function builtIn(body) {
   };
 }
 
-const tools = { loadTexture, canvasTexture, random };
+const tools = { loadTexture, canvasTexture, random, bake, readRed };
 
 export function surfaceMaps(body) {
-  if (cache.has(body.id)) return cache.get(body.id);
+  if (cache.has(body.id)) {
+    const maps = cache.get(body.id);
+    cache.delete(body.id); // most recently used goes last
+    cache.set(body.id, maps);
+    return maps;
+  }
+  while (cache.size >= KEEP) {
+    const [oldest, maps] = cache.entries().next().value;
+    maps.dispose?.();
+    cache.delete(oldest);
+  }
   let maps = null;
   for (const p of providers) if ((maps = p(body, tools))) break;
   if (!maps && body.appearance?.texture) maps = { map: loadTexture(body.appearance.texture), tint: false };

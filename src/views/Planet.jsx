@@ -10,9 +10,14 @@
 //               up with the places.
 //   light       one directional light from the system's star; a rogue planet,
 //               with no star, gets faint light all round
-//   atmosphere  a thin rim glow 2% above the surface (appearance.atmosphere).
-//               Globes only show within ~40 radii, where that gap is well
-//               inside the depth rule of task 2.4 (gap ≥ 2 × 10^-4 × distance)
+//   atmosphere  (appearance.atmosphere) a shell 6% above the surface that
+//               works out how close each view ray passes to the planet: a
+//               soft halo outside the limb, a haze thickening toward the edge
+//               of the disc, lit on the star's side, warm at the terminator
+//   clouds      a lit layer 1% above the surface, when the maps include one
+//               (procedural.js paints them). Globes only show within ~40
+//               radii, where both gaps are inside the depth rule of task 2.4
+//               (gap ≥ 2 × 10^-4 × distance)
 //   rings       in the equatorial plane (appearance.rings), lighting themselves
 // Globes are turned by globe.js (P16). Precision: globes are only drawn close
 // up, so ordinary shaders with varying values are fine here.
@@ -28,7 +33,9 @@ import { offsetKm, place, pixelsPerKm } from './origin.js';
 import { view } from './camera/view.js';
 import { bodyRadiusKm, GLOBE_TYPES } from './mapTargets.js';
 import { latLonSphere } from './globeGeometry.js';
-import { surfaceMaps, random, whenTexturesLoad } from './surfaces.js';
+import { surfaceMaps, random, whenTexturesLoad, setBaker } from './surfaces.js';
+import './procedural.js'; // registers the procedural surfaces
+import { globes } from './occlusion.js';
 
 // Radius on screen (CSS px) over which the flat disc hands over to the globe.
 const GLOBE_FROM_PX = 10;
@@ -157,15 +164,15 @@ const RING = (() => {
   return g;
 })();
 
+const ATMOSPHERE_SHELL = 1.06;
+const CLOUD_SHELL = 1.01;
 const atmosphereVertex = /* glsl */ `
 #include <common>
 #include <logdepthbuf_pars_vertex>
-varying vec3 vN;
-varying vec3 vV;
+varying vec3 vPos;
 void main() {
-  vN = normalize(normalMatrix * normal);
   vec4 mv = modelViewMatrix * vec4(position, 1.0);
-  vV = normalize(-mv.xyz);
+  vPos = mv.xyz;
   gl_Position = projectionMatrix * mv;
   #include <logdepthbuf_vertex>
 }`;
@@ -173,15 +180,36 @@ const atmosphereFragment = /* glsl */ `
 #include <logdepthbuf_pars_fragment>
 uniform vec3 uColor;
 uniform vec3 uLight;   // toward the star, view space; zero for none
+uniform vec3 uCenter;  // the planet's centre, view space (km)
+uniform float uRadius; // km
 uniform float uOpacity;
-varying vec3 vN;
-varying vec3 vV;
+varying vec3 vPos;
 void main() {
   #include <logdepthbuf_fragment>
-  float rim = pow(1.0 - max(dot(vN, vV), 0.0), 3.0);
-  float lit = dot(uLight, uLight) > 0.0 ? clamp(dot(vN, uLight) * 0.9 + 0.35, 0.0, 1.0) : 0.3;
-  float a = rim * lit * uOpacity;
-  gl_FragColor = vec4(uColor * a, a);
+  vec3 r = normalize(vPos);
+  float t = dot(uCenter, r);
+  vec3 closest = r * t;
+  float p = length(closest - uCenter) / uRadius; // 1 at the limb
+  float glow;
+  vec3 n;
+  if (p < 1.0) {
+    // Over the disc: haze, thickening toward the limb. Lit where the ray meets
+    // the ground.
+    float s = t - sqrt(1.0 - p * p) * uRadius;
+    n = normalize(r * s - uCenter);
+    glow = 0.08 + 0.92 * pow(p, 7.0);
+  } else {
+    // Beyond the limb: thinning with height.
+    n = normalize(closest - uCenter);
+    glow = exp(-(p - 1.0) / 0.012) + 0.25 * exp(-(p - 1.0) / 0.035);
+    glow *= smoothstep(${ATMOSPHERE_SHELL.toFixed(3)}, ${(ATMOSPHERE_SHELL - 0.015).toFixed(3)}, p);
+  }
+  float sun = dot(uLight, uLight) > 0.0 ? dot(n, uLight) : 0.3;
+  float lit = smoothstep(-0.25, 0.4, sun);
+  // Warm where the light skims through at the terminator.
+  vec3 col = mix(vec3(1.0, 0.55, 0.32), uColor, smoothstep(-0.1, 0.45, sun));
+  float a = glow * lit * uOpacity * 0.85;
+  gl_FragColor = vec4(col * a, a);
 }`;
 
 function Globe({ info, blend }) {
@@ -198,6 +226,8 @@ function Globe({ info, blend }) {
     bumpMap: maps.heightMap ?? null,
     normalMap: maps.normalMap ?? null,
     roughnessMap: maps.roughnessMap ?? null,
+    emissiveMap: maps.emissiveMap ?? null,
+    emissive: maps.emissiveMap ? new THREE.Color('#ffffff') : new THREE.Color('#000000'),
     roughness: 1, metalness: 0,
   }), [maps, color]);
   const atmosphere = useMemo(() => appearance.atmosphere && new THREE.ShaderMaterial({
@@ -206,10 +236,15 @@ function Globe({ info, blend }) {
     uniforms: {
       uColor: { value: new THREE.Color(color).lerp(new THREE.Color('#9cc8ff'), 0.6).convertLinearToSRGB() }, // display color (color.js)
       uLight: { value: new THREE.Vector3() },
+      uCenter: { value: new THREE.Vector3() },
+      uRadius: { value: 1 },
       uOpacity: { value: 1 },
     },
     transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
   }), [appearance.atmosphere, color]);
+  const clouds = useMemo(() => maps.clouds && new THREE.MeshStandardMaterial({
+    color: '#ffffff', alphaMap: maps.clouds, transparent: true, depthWrite: false, roughness: 1, metalness: 0,
+  }), [maps]);
   // Rings light themselves: starlight skims along the ring plane, so a lit
   // material left them nearly black (seen after task 2.11). The planet's
   // shadow falls across them.
@@ -235,6 +270,7 @@ function Globe({ info, blend }) {
     g.visible = b > 0;
     surface.opacity = b;
     surface.transparent = b < 1;
+    if (clouds) clouds.opacity = b;
     if (rings) {
       rings.uniforms.uOpacity.value = b;
       // The direction to the star in the planet's own frame (the ring plane is
@@ -247,13 +283,16 @@ function Globe({ info, blend }) {
       if (info.toStar) light.set(...info.toStar).transformDirection(camera.matrixWorldInverse);
       else light.set(0, 0, 0);
       atmosphere.uniforms.uLight.value.copy(light);
+      atmosphere.uniforms.uCenter.value.set(rel[0], rel[1], rel[2]).applyMatrix4(camera.matrixWorldInverse);
+      atmosphere.uniforms.uRadius.value = info.radiusKm;
     }
   }, -1);
 
   return (
     <group ref={group} userData={{ layer: 'globes', body: body.id }}>
       <mesh geometry={maps.heightMap ? fineSphere() : SPHERE} material={surface} />
-      {atmosphere && <mesh geometry={SPHERE} material={atmosphere} scale={1.02} />}
+      {clouds && <mesh geometry={SPHERE} material={clouds} scale={CLOUD_SHELL} />}
+      {atmosphere && <mesh geometry={SPHERE} material={atmosphere} scale={ATMOSPHERE_SHELL} />}
       {rings && <mesh geometry={RING} material={rings} />}
     </group>
   );
@@ -267,6 +306,7 @@ export default function Planets() {
   const blend = useRef(new Map());
   const sun = useRef();
   const ambient = useRef();
+  setBaker(useThree((s) => s.gl)); // before the globes ask for their maps
 
   const candidates = useMemo(() => map.bodies
     .filter((b) => GLOBE_TYPES.has(b.type) && view.targets.has(b.system) && !isHidden(index, b.id, playerMode))
@@ -291,6 +331,13 @@ export default function Planets() {
     }
     near.sort((a, b) => b[0] - a[0]);
     const ids = near.slice(0, MAX_GLOBES).map(([, id]) => id);
+    // The globes drawn, for hiding the names behind them (occlusion.js).
+    globes.length = 0;
+    for (const id of ids) {
+      const c = byId.get(id);
+      if ((blend.current.get(id) ?? 0) < 0.5) continue;
+      globes.push({ c: offsetKm(cam, c.place, [0, 0, 0]), r: c.radiusKm });
+    }
     if (ids.join() !== shown.join()) setShown(ids);
     // Light from the star of the largest globe's system, aimed at it.
     const main = byId.get(ids[0]);

@@ -1,6 +1,9 @@
 // Region effects (task 2.8): the Furnace's nebula and the Mire's dust cloud,
-// each a cloud of soft puffs spread through the region (a simple particle
-// cloud; full volume effects are out of scope for the first release).
+// each a cloud of puffs spread through the region (a simple particle cloud;
+// full volume effects are out of scope for the first release). Each puff is
+// a wisp, not a round blob: one of four cloud shapes, full of filaments,
+// painted once on the GPU into a small atlas (surfaces.js bake), turned at
+// random. The nebula glows pink at its heart and violet and blue outward.
 //   nebula  glowing pink, violet and blue, added to what is behind it
 //   dust    murky brown, laid over the stars, so the Mire's stars are dimmed
 //           ("a dark dust cloud hiding its stars")
@@ -8,34 +11,82 @@
 // flying in doesn't fill the screen. One instanced draw call per effect.
 
 import { useMemo } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useMap, isHidden } from '../data/store.js';
 import { displayColor } from './color.js';
 import { offsetKm, place, KM_PER_LY } from './origin.js';
 import { view } from './camera/view.js';
 import { spriteVertex, spriteFragmentHead, spriteUniforms, spriteGeometry, updateViewport } from './sprite.js';
+import { bake, setBaker } from './surfaces.js';
 
 const STYLES = {
   nebula: {
-    puffs: 80, colors: ['#ff3d8b', '#b84dff', '#4f7bff', '#ff6a4d', '#ff4fd8'], alpha: [0.14, 0.3],
+    // Inner colors first: glowing hydrogen pink at the heart, violet and blue outward.
+    puffs: 140, colors: ['#ff4f7a', '#ff3d8b', '#ff6a4d', '#d455ff', '#9a5cff', '#4f7bff', '#3fa0ff'], alpha: [0.2, 0.45],
     blending: { blending: THREE.AdditiveBlending }, renderOrder: 1,
   },
   'dust-cloud': {
-    puffs: 80, colors: ['#3d2618', '#33200f', '#47291a', '#2a1a12'], alpha: [0.35, 0.55],
+    puffs: 110, colors: ['#3a2416', '#2e1d0f', '#422618', '#261811', '#1f140d'], alpha: [0.34, 0.58],
     blending: { blending: THREE.CustomBlending, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor }, renderOrder: 2,
   },
 };
 
+// vType holds the puff's own random number: which shape, and how it's turned.
 const fragment = /* glsl */ `
 ${spriteFragmentHead}
+uniform sampler2D uShapes;
 void main() {
   #include <logdepthbuf_fragment>
-  float d = length(gl_FragCoord.xy - vCenter) / max(vRadius, 0.5);
-  float a = vColor.a * exp(-d * d * 2.5) * (1.0 - smoothstep(0.85, 1.0, d));
+  vec2 q = (gl_FragCoord.xy - vCenter) / max(vRadius, 0.5);
+  float d = length(q);
+  if (d > 1.0) discard;
+  float ang = vType * 6.2831853 * 7.0;
+  q = mat2(cos(ang), sin(ang), -sin(ang), cos(ang)) * q;
+  float tile = floor(vType * 4.0);
+  vec2 uv = (q * 0.5 + 0.5) * 0.5 + vec2(mod(tile, 2.0), floor(tile / 2.0)) * 0.5;
+  // Far off (a few pixels across) a puff is a soft glow; its wisps show as it grows.
+  float shape = mix(exp(-d * d * 2.5), texture2D(uShapes, uv).r, smoothstep(4.0, 24.0, vRadius));
+  float a = vColor.a * shape * (1.0 - smoothstep(0.85, 1.0, d));
   if (a < 0.002) discard;
   gl_FragColor = vec4(vColor.rgb * a, a);
 }`;
+
+// Four cloud shapes in a 2 × 2 atlas: swirled noise with bright filaments,
+// fading to nothing at each tile's edge.
+let shapes = null;
+function cloudShapes() {
+  if (shapes) return shapes;
+  const m = new THREE.ShaderMaterial({
+    vertexShader: 'varying vec2 vUv; void main() { vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }',
+    fragmentShader: /* glsl */ `
+      varying vec2 vUv;
+      float hash(vec2 p) { p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }
+      float noise(vec2 p) {
+        vec2 i = floor(p), f = fract(p);
+        f = f * f * (3.0 - 2.0 * f);
+        return mix(mix(hash(i), hash(i + vec2(1, 0)), f.x), mix(hash(i + vec2(0, 1)), hash(i + vec2(1, 1)), f.x), f.y);
+      }
+      float fbm(vec2 p) { float s = 0.0, a = 0.5; for (int i = 0; i < 7; i++) { s += a * noise(p); p = mat2(1.6, 1.2, -1.2, 1.6) * p; a *= 0.5; } return s; }
+      void main() {
+        vec2 tile = floor(vUv * 2.0);
+        vec2 q = fract(vUv * 2.0) * 2.0 - 1.0;
+        vec2 seed = tile * 17.3 + 3.1;
+        vec2 p = q * 2.2 + seed;
+        vec2 w = vec2(fbm(p + 1.7), fbm(p + 8.3));
+        float body = fbm(p + 2.2 * w);
+        float threads = pow(1.0 - abs(2.0 * fbm(p * 1.6 + 3.0 * w) - 1.0), 7.0);
+        float fall = smoothstep(1.0, 0.25, length(q + 0.25 * (w - 0.5)));
+        float v = (smoothstep(0.35, 0.8, body) * 0.75 + threads * 0.6) * fall;
+        gl_FragColor = vec4(vec3(clamp(v * 1.3, 0.0, 1.0)), 1.0);
+      }`,
+    depthTest: false, depthWrite: false,
+  });
+  shapes = bake(512, 512, m, { color: false }).texture;
+  shapes.wrapS = THREE.ClampToEdgeWrapping;
+  m.dispose();
+  return shapes;
+}
 
 // Small seeded random numbers, so a region's cloud is the same every time.
 function random(seed) {
@@ -57,11 +108,15 @@ export function makePuffs(region, radiusKm, style) {
   const R = Math.max(1.5 * radiusKm, 1.2 * KM_PER_LY) * 1.1;
   return Array.from({ length: style.puffs }, () => {
     const offset = [gauss(), gauss(), gauss()].map((v) => Math.max(-1.3, Math.min(1.3, v * 0.5)) * R);
+    // Colors run from the first (the heart) to the last (the edge), loosely.
+    const out = Math.min(0.999, Math.hypot(...offset) / (1.2 * R) + 0.25 * (rand() - 0.5));
+    const k = Math.max(0, Math.floor(out * style.colors.length));
     return {
       place: place(region.pos, offset),
-      sizeKm: R * (0.25 + 0.3 * rand()),
-      color: displayColor(style.colors[Math.floor(rand() * style.colors.length)]),
+      sizeKm: R * (0.15 + 0.45 * rand() ** 1.5),
+      color: displayColor(style.colors[Math.min(style.colors.length - 1, k)]),
       alpha: style.alpha[0] + (style.alpha[1] - style.alpha[0]) * rand(),
+      seed: rand(),
     };
   });
 }
@@ -73,11 +128,12 @@ function Effect({ kind, puffs }) {
     puffs.forEach((p, i) => {
       g.attributes.aColor.setXYZW(i, p.color.r, p.color.g, p.color.b, p.alpha);
       g.attributes.aSize.setX(i, p.sizeKm);
+      g.attributes.aType.setX(i, p.seed);
     });
     const m = new THREE.ShaderMaterial({
       vertexShader: spriteVertex,
       fragmentShader: fragment,
-      uniforms: spriteUniforms({ uWorldSize: { value: 1 }, uFadeFrom: { value: 0.25 }, uFadeTo: { value: 0.9 } }),
+      uniforms: spriteUniforms({ uWorldSize: { value: 1 }, uFadeFrom: { value: 0.25 }, uFadeTo: { value: 0.9 }, uShapes: { value: cloudShapes() } }),
       transparent: true,
       depthWrite: false,
       ...style.blending,
@@ -110,6 +166,7 @@ function Effect({ kind, puffs }) {
 }
 
 export default function RegionEffects() {
+  setBaker(useThree((s) => s.gl)); // for the cloud shapes
   const map = useMap((s) => s.map);
   const index = useMap((s) => s.index);
   const playerMode = useMap((s) => s.playerMode);

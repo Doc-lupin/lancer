@@ -20,7 +20,7 @@ import { displayName } from '../data/names.js';
 import { surfaceOffsetKm } from '../data/globe.js';
 import { offsetKm, pixelsPerKm } from './origin.js';
 import { view } from './camera/view.js';
-import { screenPos } from './camera/pick.js';
+import { visiblePos } from './occlusion.js';
 import { GLOBE_TYPES } from './mapTargets.js';
 import { globeInfo, globeBlend } from './Planet.jsx';
 import { spriteVertex, spriteFragmentHead, spriteUniforms, spriteGeometry, updateViewport } from './sprite.js';
@@ -251,7 +251,7 @@ export function PlaceLabelsUpdater() {
     }
     if (best !== current.current) { current.current = best; setGlobeId(best); }
     if (!best) return;
-    const items = [...els.values()].map(({ el, it }) => ({ el, it, p: it.screenAlpha > 0.5 ? screenPos(camera, cam, { anchor: it.globe.place.anchor, offset: it.globe.place.offset.map((v, k) => v + it.offset[k]) }, size.width, size.height) : null }));
+    const items = [...els.values()].map(({ el, it }) => ({ el, it, p: it.screenAlpha > 0.5 ? visiblePos(camera, cam, { anchor: it.globe.place.anchor, offset: it.globe.place.offset.map((v, k) => v + it.offset[k]) }, size.width, size.height) : null }));
     items.sort((a, b) => (RANK[a.it.place.kind] ?? 6) - (RANK[b.it.place.kind] ?? 6) || wasShown(a.el) - wasShown(b.el));
     const dots = items.filter((x) => x.p).map((x) => ({ x, box: [x.p[0] - 6, x.p[1] - 6, x.p[0] + 6, x.p[1] + 6] }));
     const taken = [...regionLabelBoxes];
