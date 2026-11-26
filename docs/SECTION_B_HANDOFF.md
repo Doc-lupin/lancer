@@ -8,7 +8,7 @@ Read this, then `CLAUDE.md`, then start Phase B0 (task B0.1).
 | Branch | Holds |
 |---|---|
 | `main` | Section A Phases 0–2 (accepted), the Section B plan. |
-| `section-b` | `main` + the procedural planet work (on hold, not checked) + the tools below + this file. **Work here.** |
+| `section-b` | `main` + the procedural planet work (off by default: `?worlds=wip` in development, decision BQ1) + the tools below + this file. **Work here.** |
 | `ccr-23ad96e8-4fi4vg` | The previous session's branch. Everything on it is also on `section-b`; it can be deleted. |
 | `phase-2` | Same as the Phase 2 state of `main`. Kept for history. |
 

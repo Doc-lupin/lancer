@@ -11,21 +11,21 @@
     },
     "frames": 29,
     "workMs": {
-     "median": 1.1,
-     "p95": 2,
-     "max": 3.9
+     "median": 1,
+     "p95": 1.4,
+     "max": 1.5
     },
     "frameMs": {
-     "median": 52.1,
-     "p95": 68.9,
-     "max": 72.6
+     "median": 54.8,
+     "p95": 67.2,
+     "max": 71.2
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 31598273,
+    "jsHeapBytes": 32851607,
     "errors": []
    },
    "phone": {
@@ -35,21 +35,21 @@
     },
     "frames": 29,
     "workMs": {
-     "median": 5.9,
-     "p95": 11.6,
-     "max": 11.9
+     "median": 5.7,
+     "p95": 9.4,
+     "max": 9.6
     },
     "frameMs": {
-     "median": 92.2,
-     "p95": 115,
-     "max": 124.3
+     "median": 94,
+     "p95": 109.7,
+     "max": 115.7
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 34463532,
+    "jsHeapBytes": 28783490,
     "errors": []
    }
   },
@@ -67,21 +67,21 @@
     },
     "frames": 29,
     "workMs": {
-     "median": 1.6,
-     "p95": 3.5,
-     "max": 4.1
+     "median": 1.5,
+     "p95": 4.3,
+     "max": 7.8
     },
     "frameMs": {
-     "median": 54.6,
-     "p95": 70.2,
-     "max": 75.8
+     "median": 59.4,
+     "p95": 81.5,
+     "max": 90.5
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 35509266,
+    "jsHeapBytes": 28487051,
     "errors": []
    },
    "phone": {
@@ -91,21 +91,21 @@
     },
     "frames": 29,
     "workMs": {
-     "median": 6.6,
-     "p95": 12,
-     "max": 13
+     "median": 6.1,
+     "p95": 11.9,
+     "max": 11.9
     },
     "frameMs": {
-     "median": 91.6,
-     "p95": 119.6,
-     "max": 157.9
+     "median": 92.9,
+     "p95": 113,
+     "max": 126.7
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 32762818,
+    "jsHeapBytes": 32864906,
     "errors": []
    }
   },
@@ -124,21 +124,21 @@
     },
     "frames": 29,
     "workMs": {
-     "median": 0.8,
-     "p95": 1.6,
-     "max": 1.7
+     "median": 1.1,
+     "p95": 2.5,
+     "max": 5.5
     },
     "frameMs": {
-     "median": 49.7,
-     "p95": 61.1,
-     "max": 61.3
+     "median": 66.1,
+     "p95": 72.3,
+     "max": 130.3
     },
     "drawCalls": 7,
     "triangles": 52146,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 34307724,
+    "jsHeapBytes": 27156312,
     "errors": []
    },
    "phone": {
@@ -148,21 +148,21 @@
     },
     "frames": 29,
     "workMs": {
-     "median": 4.6,
-     "p95": 7.4,
-     "max": 8.1
+     "median": 4.1,
+     "p95": 7.6,
+     "max": 8.5
     },
     "frameMs": {
-     "median": 91,
-     "p95": 121.1,
-     "max": 122.8
+     "median": 87.3,
+     "p95": 108.2,
+     "max": 127.1
     },
     "drawCalls": 7,
     "triangles": 52146,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 33692544,
+    "jsHeapBytes": 28197160,
     "errors": []
    }
   },
@@ -179,20 +179,20 @@
     "frames": 29,
     "workMs": {
      "median": 0.9,
-     "p95": 1.7,
-     "max": 2.2
+     "p95": 1.5,
+     "max": 1.7
     },
     "frameMs": {
-     "median": 53.6,
-     "p95": 65,
-     "max": 65.9
+     "median": 54.5,
+     "p95": 62.3,
+     "max": 63.8
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 32958836,
+    "jsHeapBytes": 31310884,
     "errors": []
    },
    "phone": {
@@ -202,21 +202,21 @@
     },
     "frames": 29,
     "workMs": {
-     "median": 5.9,
-     "p95": 10.2,
-     "max": 13.7
+     "median": 5.4,
+     "p95": 7.7,
+     "max": 9.8
     },
     "frameMs": {
-     "median": 101.8,
-     "p95": 123.1,
-     "max": 138.9
+     "median": 87.1,
+     "p95": 113.2,
+     "max": 114.2
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 31078431,
+    "jsHeapBytes": 31506455,
     "errors": []
    }
   },
@@ -232,21 +232,21 @@
     },
     "frames": 29,
     "workMs": {
-     "median": 0.9,
+     "median": 1.3,
      "p95": 1.7,
-     "max": 1.7
+     "max": 2
     },
     "frameMs": {
-     "median": 54.5,
-     "p95": 68.2,
-     "max": 74.4
+     "median": 67.3,
+     "p95": 80.6,
+     "max": 89.5
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 36653136,
+    "jsHeapBytes": 32763719,
     "errors": []
    },
    "phone": {
@@ -256,21 +256,21 @@
     },
     "frames": 29,
     "workMs": {
-     "median": 5.8,
-     "p95": 11.5,
-     "max": 12.1
+     "median": 4.2,
+     "p95": 12.8,
+     "max": 13.1
     },
     "frameMs": {
-     "median": 94.5,
-     "p95": 116.8,
-     "max": 128.5
+     "median": 103.4,
+     "p95": 114,
+     "max": 140.1
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 29232274,
+    "jsHeapBytes": 29921050,
     "errors": []
    }
   },
@@ -286,21 +286,21 @@
     },
     "frames": 29,
     "workMs": {
-     "median": 1,
-     "p95": 1.9,
-     "max": 2.1
+     "median": 0.9,
+     "p95": 1.6,
+     "max": 2
     },
     "frameMs": {
-     "median": 52.3,
-     "p95": 69.3,
-     "max": 69.7
+     "median": 50.6,
+     "p95": 73,
+     "max": 74.9
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 32310376,
+    "jsHeapBytes": 34170519,
     "errors": []
    },
    "phone": {
@@ -310,21 +310,21 @@
     },
     "frames": 29,
     "workMs": {
-     "median": 4.7,
-     "p95": 8.7,
-     "max": 12.4
+     "median": 5.2,
+     "p95": 9.8,
+     "max": 12.3
     },
     "frameMs": {
-     "median": 83.5,
-     "p95": 103.5,
-     "max": 109.1
+     "median": 90,
+     "p95": 108.8,
+     "max": 118.4
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 30469789,
+    "jsHeapBytes": 29417493,
     "errors": []
    }
   },
@@ -335,50 +335,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 16,
-     "worstGapMs": 74.8
+     "frames": 15,
+     "worstGapMs": 91
     },
     "frames": 29,
     "workMs": {
-     "median": 1,
+     "median": 1.2,
      "p95": 1.8,
-     "max": 3.3
+     "max": 1.9
     },
     "frameMs": {
-     "median": 46.7,
-     "p95": 63.2,
-     "max": 65
+     "median": 57.8,
+     "p95": 69.9,
+     "max": 70.9
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 32299325,
+    "jsHeapBytes": 27706156,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 9,
-     "worstGapMs": 171.2
+     "frames": 8,
+     "worstGapMs": 176.9
     },
     "frames": 29,
     "workMs": {
-     "median": 4.9,
-     "p95": 9.4,
-     "max": 10.8
+     "median": 5.7,
+     "p95": 8.3,
+     "max": 8.4
     },
     "frameMs": {
-     "median": 83.2,
-     "p95": 96.4,
-     "max": 97.3
+     "median": 85.3,
+     "p95": 106,
+     "max": 108.1
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 28383310,
+    "jsHeapBytes": 27878510,
     "errors": []
    }
   },
@@ -389,50 +389,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 12,
-     "worstGapMs": 428.8
+     "frames": 10,
+     "worstGapMs": 240.6
     },
-    "frames": 18,
+    "frames": 17,
     "workMs": {
      "median": 1.1,
-     "p95": 1.6,
-     "max": 1.6
+     "p95": 5.4,
+     "max": 5.4
     },
     "frameMs": {
-     "median": 443.5,
-     "p95": 524.8,
-     "max": 524.8
+     "median": 478.7,
+     "p95": 613.1,
+     "max": 613.1
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 30194025,
+    "jsHeapBytes": 33219534,
     "errors": []
    },
    "phone": {
     "flight": {
      "frames": 7,
-     "worstGapMs": 444.5
+     "worstGapMs": 440.1
     },
-    "frames": 17,
+    "frames": 18,
     "workMs": {
-     "median": 5.4,
-     "p95": 12.3,
-     "max": 12.3
+     "median": 5.6,
+     "p95": 10.3,
+     "max": 10.3
     },
     "frameMs": {
-     "median": 470.7,
-     "p95": 541.1,
-     "max": 541.1
+     "median": 459,
+     "p95": 546.9,
+     "max": 546.9
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 31553037,
+    "jsHeapBytes": 28378163,
     "errors": []
    }
   },
@@ -444,50 +444,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 11,
-     "worstGapMs": 426.3
+     "frames": 10,
+     "worstGapMs": 451.9
     },
-    "frames": 25,
+    "frames": 24,
     "workMs": {
      "median": 0.9,
-     "p95": 1.6,
-     "max": 1.8
+     "p95": 1.9,
+     "max": 2.1
     },
     "frameMs": {
-     "median": 317.6,
-     "p95": 340.7,
-     "max": 379.7
+     "median": 329.2,
+     "p95": 405.5,
+     "max": 406.1
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 26790699,
+    "jsHeapBytes": 28489502,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 6,
-     "worstGapMs": 355.5
+     "frames": 7,
+     "worstGapMs": 423.4
     },
-    "frames": 9,
+    "frames": 10,
     "workMs": {
-     "median": 6.5,
-     "p95": 11.5,
-     "max": 11.5
+     "median": 5.3,
+     "p95": 13.3,
+     "max": 13.3
     },
     "frameMs": {
-     "median": 833,
-     "p95": 1231.7,
-     "max": 1231.7
+     "median": 841.7,
+     "p95": 968.1,
+     "max": 968.1
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 27677860,
+    "jsHeapBytes": 33074220,
     "errors": []
    }
   },
@@ -498,50 +498,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 12,
-     "worstGapMs": 346.8
+     "frames": 11,
+     "worstGapMs": 273.7
     },
-    "frames": 23,
+    "frames": 20,
     "workMs": {
-     "median": 0.9,
-     "p95": 1.2,
-     "max": 1.4
+     "median": 1,
+     "p95": 1.6,
+     "max": 1.6
     },
     "frameMs": {
-     "median": 359.7,
-     "p95": 383.7,
-     "max": 391.9
+     "median": 393.1,
+     "p95": 462.3,
+     "max": 462.3
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 31932916,
+    "jsHeapBytes": 27049832,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 7,
-     "worstGapMs": 401.5
+     "frames": 6,
+     "worstGapMs": 334.2
     },
     "frames": 20,
     "workMs": {
-     "median": 5.3,
-     "p95": 7.7,
-     "max": 7.7
+     "median": 4.5,
+     "p95": 8.9,
+     "max": 8.9
     },
     "frameMs": {
-     "median": 402.2,
-     "p95": 473.2,
-     "max": 473.2
+     "median": 400.4,
+     "p95": 463.9,
+     "max": 463.9
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 27807920,
+    "jsHeapBytes": 31192806,
     "errors": []
    }
   },
@@ -552,50 +552,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 14,
-     "worstGapMs": 79
+     "frames": 15,
+     "worstGapMs": 68.6
     },
     "frames": 29,
     "workMs": {
      "median": 1.1,
-     "p95": 1.7,
-     "max": 3.1
+     "p95": 1.9,
+     "max": 5.7
     },
     "frameMs": {
-     "median": 45.9,
-     "p95": 62.8,
-     "max": 66.3
+     "median": 49.9,
+     "p95": 68.5,
+     "max": 69.6
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 31700123,
+    "jsHeapBytes": 28611759,
     "errors": []
    },
    "phone": {
     "flight": {
      "frames": 8,
-     "worstGapMs": 131.2
+     "worstGapMs": 177.1
     },
     "frames": 29,
     "workMs": {
-     "median": 4.5,
-     "p95": 7.9,
-     "max": 11.5
+     "median": 7.1,
+     "p95": 10.7,
+     "max": 11.1
     },
     "frameMs": {
-     "median": 73.9,
-     "p95": 93.8,
-     "max": 100.9
+     "median": 85.8,
+     "p95": 103.8,
+     "max": 105
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 30677958,
+    "jsHeapBytes": 29004269,
     "errors": []
    }
   },
@@ -606,50 +606,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 16,
-     "worstGapMs": 66.5
+     "frames": 15,
+     "worstGapMs": 72.2
     },
     "frames": 29,
     "workMs": {
-     "median": 1,
-     "p95": 1.6,
-     "max": 1.6
+     "median": 0.9,
+     "p95": 1.4,
+     "max": 1.5
     },
     "frameMs": {
-     "median": 48.9,
-     "p95": 58.2,
-     "max": 59.1
+     "median": 45.5,
+     "p95": 60.6,
+     "max": 67.5
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 28149478,
+    "jsHeapBytes": 30582716,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 9,
-     "worstGapMs": 123.7
+     "frames": 8,
+     "worstGapMs": 192.2
     },
     "frames": 29,
     "workMs": {
-     "median": 4.8,
-     "p95": 8.5,
-     "max": 10.4
+     "median": 6.4,
+     "p95": 10.2,
+     "max": 11.5
     },
     "frameMs": {
-     "median": 72,
-     "p95": 82.4,
-     "max": 94.1
+     "median": 83.9,
+     "p95": 100.4,
+     "max": 103.8
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 30396306,
+    "jsHeapBytes": 29421478,
     "errors": []
    }
   },
@@ -660,50 +660,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 18,
-     "worstGapMs": 67
+     "frames": 17,
+     "worstGapMs": 75.9
     },
     "frames": 29,
     "workMs": {
      "median": 0.9,
-     "p95": 1.3,
-     "max": 1.9
+     "p95": 1.5,
+     "max": 2.6
     },
     "frameMs": {
-     "median": 47.8,
-     "p95": 58.1,
-     "max": 60.1
+     "median": 55.3,
+     "p95": 64.7,
+     "max": 67.3
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 33424343,
+    "jsHeapBytes": 30173293,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 9,
-     "worstGapMs": 153.1
+     "frames": 8,
+     "worstGapMs": 162.6
     },
     "frames": 29,
     "workMs": {
-     "median": 4.3,
-     "p95": 10.7,
-     "max": 11.6
+     "median": 5.2,
+     "p95": 8.6,
+     "max": 8.8
     },
     "frameMs": {
-     "median": 73.5,
-     "p95": 87.4,
-     "max": 89.7
+     "median": 84.4,
+     "p95": 95.9,
+     "max": 105.1
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 33382587,
+    "jsHeapBytes": 29657948,
     "errors": []
    }
   },
@@ -717,50 +717,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 15,
-     "worstGapMs": 76.4
+     "frames": 14,
+     "worstGapMs": 85.3
     },
     "frames": 29,
     "workMs": {
-     "median": 1,
-     "p95": 1.5,
-     "max": 2.1
+     "median": 1.2,
+     "p95": 2.8,
+     "max": 3.7
     },
     "frameMs": {
-     "median": 47.1,
-     "p95": 62,
-     "max": 62.5
+     "median": 57.3,
+     "p95": 72,
+     "max": 73.6
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 36609585,
+    "jsHeapBytes": 32155661,
     "errors": []
    },
    "phone": {
     "flight": {
      "frames": 8,
-     "worstGapMs": 160.3
+     "worstGapMs": 175.8
     },
     "frames": 29,
     "workMs": {
-     "median": 5.2,
-     "p95": 8,
-     "max": 8.1
+     "median": 5.4,
+     "p95": 8.5,
+     "max": 9.8
     },
     "frameMs": {
-     "median": 77.2,
-     "p95": 112.1,
-     "max": 116
+     "median": 82.7,
+     "p95": 108.3,
+     "max": 113.7
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 28298037,
+    "jsHeapBytes": 34363486,
     "errors": []
    }
   },
@@ -771,50 +771,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 30,
-     "worstGapMs": 80.4
+     "frames": 27,
+     "worstGapMs": 98.2
     },
     "frames": 29,
     "workMs": {
-     "median": 1.1,
-     "p95": 1.8,
-     "max": 1.8
+     "median": 1.2,
+     "p95": 1.9,
+     "max": 1.9
     },
     "frameMs": {
-     "median": 48.4,
-     "p95": 55.5,
-     "max": 64
+     "median": 49.9,
+     "p95": 66.8,
+     "max": 77
     },
     "drawCalls": 11,
     "triangles": 53756,
     "geometries": 14,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 34009353,
+    "jsHeapBytes": 30293587,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 16,
-     "worstGapMs": 139.1
+     "frames": 14,
+     "worstGapMs": 180.3
     },
     "frames": 29,
     "workMs": {
-     "median": 6.2,
-     "p95": 10.6,
-     "max": 11.8
+     "median": 7.1,
+     "p95": 12.1,
+     "max": 13
     },
     "frameMs": {
-     "median": 81.1,
-     "p95": 92.7,
-     "max": 101.8
+     "median": 92.5,
+     "p95": 107.4,
+     "max": 123.3
     },
     "drawCalls": 11,
     "triangles": 53628,
     "geometries": 14,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 33442569,
+    "jsHeapBytes": 33058717,
     "errors": []
    }
   },
@@ -825,50 +825,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 28,
-     "worstGapMs": 103.5
+     "frames": 26,
+     "worstGapMs": 94.9
     },
     "frames": 29,
     "workMs": {
-     "median": 1.4,
-     "p95": 2,
-     "max": 2
+     "median": 1.5,
+     "p95": 2.2,
+     "max": 2.5
     },
     "frameMs": {
-     "median": 47.8,
-     "p95": 64.2,
-     "max": 66.8
+     "median": 55.8,
+     "p95": 63.4,
+     "max": 63.4
     },
     "drawCalls": 11,
     "triangles": 54012,
     "geometries": 14,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 37089801,
+    "jsHeapBytes": 34119331,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 15,
-     "worstGapMs": 157.9
+     "frames": 14,
+     "worstGapMs": 173.8
     },
     "frames": 29,
     "workMs": {
-     "median": 7,
-     "p95": 10.5,
-     "max": 11.2
+     "median": 6.9,
+     "p95": 12.1,
+     "max": 13.6
     },
     "frameMs": {
-     "median": 88.2,
-     "p95": 111.1,
-     "max": 128.9
+     "median": 89.4,
+     "p95": 120.1,
+     "max": 123
     },
     "drawCalls": 11,
     "triangles": 53756,
     "geometries": 14,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 34722587,
+    "jsHeapBytes": 28081582,
     "errors": []
    }
   },
@@ -879,50 +879,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 31,
-     "worstGapMs": 117
+     "frames": 32,
+     "worstGapMs": 68.2
     },
     "frames": 29,
     "workMs": {
-     "median": 0.9,
-     "p95": 1.5,
-     "max": 3
+     "median": 1,
+     "p95": 1.3,
+     "max": 2.7
     },
     "frameMs": {
-     "median": 49.8,
-     "p95": 60.9,
-     "max": 60.9
+     "median": 52.2,
+     "p95": 60.8,
+     "max": 86.5
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 32893028,
+    "jsHeapBytes": 33531931,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 19,
-     "worstGapMs": 157.3
+     "frames": 18,
+     "worstGapMs": 159.2
     },
     "frames": 29,
     "workMs": {
-     "median": 4.5,
-     "p95": 8.8,
-     "max": 9.9
+     "median": 5.5,
+     "p95": 9.2,
+     "max": 11
     },
     "frameMs": {
-     "median": 75.5,
-     "p95": 105.9,
-     "max": 117.1
+     "median": 90,
+     "p95": 97.8,
+     "max": 98.4
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 32303507,
+    "jsHeapBytes": 36072779,
     "errors": []
    }
   },
@@ -933,50 +933,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 27,
-     "worstGapMs": 106.9
+     "frames": 26,
+     "worstGapMs": 121.3
     },
     "frames": 29,
     "workMs": {
-     "median": 1,
-     "p95": 1.8,
-     "max": 2
+     "median": 1.3,
+     "p95": 6.7,
+     "max": 7.9
     },
     "frameMs": {
-     "median": 47.9,
-     "p95": 61.8,
-     "max": 62.7
+     "median": 52.9,
+     "p95": 70.4,
+     "max": 72.7
     },
     "drawCalls": 11,
     "triangles": 53244,
     "geometries": 14,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 31581551,
+    "jsHeapBytes": 32109445,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 19,
-     "worstGapMs": 163.3
+     "frames": 15,
+     "worstGapMs": 180.8
     },
     "frames": 29,
     "workMs": {
-     "median": 4.6,
-     "p95": 7.2,
-     "max": 11.5
+     "median": 7.1,
+     "p95": 11.7,
+     "max": 18.5
     },
     "frameMs": {
-     "median": 72.6,
-     "p95": 85.8,
-     "max": 89.5
+     "median": 95.9,
+     "p95": 110.8,
+     "max": 110.8
     },
     "drawCalls": 11,
     "triangles": 53244,
     "geometries": 14,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 29353044,
+    "jsHeapBytes": 31215763,
     "errors": []
    }
   },
@@ -987,50 +987,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 32,
-     "worstGapMs": 86
+     "frames": 27,
+     "worstGapMs": 91.2
     },
     "frames": 29,
     "workMs": {
-     "median": 1.2,
+     "median": 1.4,
      "p95": 2,
-     "max": 2.1
+     "max": 2.6
     },
     "frameMs": {
-     "median": 48.5,
-     "p95": 60.6,
-     "max": 67.3
+     "median": 48.9,
+     "p95": 72.2,
+     "max": 72.7
     },
     "drawCalls": 11,
     "triangles": 53756,
     "geometries": 14,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 36418665,
+    "jsHeapBytes": 37050317,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 17,
-     "worstGapMs": 136.8
+     "frames": 15,
+     "worstGapMs": 197.9
     },
     "frames": 29,
     "workMs": {
-     "median": 5.6,
-     "p95": 9.2,
-     "max": 12.9
+     "median": 8,
+     "p95": 13.6,
+     "max": 15.7
     },
     "frameMs": {
-     "median": 80.6,
-     "p95": 96.9,
-     "max": 101.5
+     "median": 93.6,
+     "p95": 112.7,
+     "max": 237.1
     },
     "drawCalls": 11,
     "triangles": 53628,
     "geometries": 14,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 33505209,
+    "jsHeapBytes": 33370800,
     "errors": []
    }
   },
@@ -1042,49 +1042,49 @@
    "desktop": {
     "flight": {
      "frames": 12,
-     "worstGapMs": 520.8
+     "worstGapMs": 305.2
     },
     "frames": 29,
     "workMs": {
-     "median": 1,
-     "p95": 1.7,
-     "max": 1.9
+     "median": 1.4,
+     "p95": 3.2,
+     "max": 3.9
     },
     "frameMs": {
-     "median": 106.4,
-     "p95": 117,
-     "max": 123.2
+     "median": 118.4,
+     "p95": 143.1,
+     "max": 143.1
     },
     "drawCalls": 11,
     "triangles": 53372,
     "geometries": 14,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 32623755,
+    "jsHeapBytes": 27079559,
     "errors": []
    },
    "phone": {
     "flight": {
      "frames": 7,
-     "worstGapMs": 696.7
+     "worstGapMs": 579.3
     },
     "frames": 29,
     "workMs": {
-     "median": 5.8,
-     "p95": 8.1,
-     "max": 8.5
+     "median": 6.2,
+     "p95": 9.1,
+     "max": 9.7
     },
     "frameMs": {
-     "median": 153.2,
-     "p95": 181.5,
-     "max": 189.2
+     "median": 177.6,
+     "p95": 195.5,
+     "max": 197
     },
     "drawCalls": 11,
     "triangles": 53372,
     "geometries": 14,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 28272199,
+    "jsHeapBytes": 28843551,
     "errors": []
    }
   },
@@ -1095,50 +1095,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 12,
-     "worstGapMs": 425.8
+     "frames": 10,
+     "worstGapMs": 590
     },
-    "frames": 22,
+    "frames": 21,
     "workMs": {
-     "median": 1,
-     "p95": 1.7,
-     "max": 1.7
+     "median": 1.4,
+     "p95": 2.8,
+     "max": 6.7
     },
     "frameMs": {
-     "median": 359,
-     "p95": 402,
-     "max": 408
+     "median": 373.8,
+     "p95": 421.9,
+     "max": 421.9
     },
     "drawCalls": 11,
     "triangles": 53372,
     "geometries": 14,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 32366254,
+    "jsHeapBytes": 33431163,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 8,
-     "worstGapMs": 674.7
+     "frames": 7,
+     "worstGapMs": 644.3
     },
-    "frames": 15,
+    "frames": 14,
     "workMs": {
-     "median": 5.8,
-     "p95": 19.7,
-     "max": 19.7
+     "median": 8.6,
+     "p95": 14.1,
+     "max": 14.1
     },
     "frameMs": {
-     "median": 542.9,
-     "p95": 582,
-     "max": 582
+     "median": 631.7,
+     "p95": 655.4,
+     "max": 655.4
     },
     "drawCalls": 11,
     "triangles": 53372,
     "geometries": 14,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 28319658,
+    "jsHeapBytes": 34521281,
     "errors": []
    }
   },
@@ -1149,50 +1149,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 14,
-     "worstGapMs": 332.3
+     "frames": 13,
+     "worstGapMs": 450
     },
     "frames": 29,
     "workMs": {
-     "median": 1,
-     "p95": 1.5,
-     "max": 1.5
+     "median": 1.2,
+     "p95": 2,
+     "max": 2.6
     },
     "frameMs": {
-     "median": 201.2,
-     "p95": 223.2,
-     "max": 229.7
+     "median": 224.8,
+     "p95": 265.8,
+     "max": 296.5
     },
     "drawCalls": 11,
     "triangles": 53372,
     "geometries": 14,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 27562649,
+    "jsHeapBytes": 35219220,
     "errors": []
    },
    "phone": {
     "flight": {
      "frames": 7,
-     "worstGapMs": 872.7
+     "worstGapMs": 867.1
     },
-    "frames": 26,
+    "frames": 24,
     "workMs": {
-     "median": 7.1,
-     "p95": 12.9,
-     "max": 13.9
+     "median": 6.9,
+     "p95": 12.7,
+     "max": 12.9
     },
     "frameMs": {
-     "median": 302.1,
-     "p95": 343.6,
-     "max": 388.1
+     "median": 336.8,
+     "p95": 389.7,
+     "max": 398.6
     },
     "drawCalls": 11,
     "triangles": 53372,
     "geometries": 14,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 31466522,
+    "jsHeapBytes": 32052736,
     "errors": []
    }
   },
@@ -1203,50 +1203,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 37,
-     "worstGapMs": 72.7
+     "frames": 33,
+     "worstGapMs": 83
     },
     "frames": 29,
     "workMs": {
-     "median": 0.8,
+     "median": 1,
      "p95": 1.3,
-     "max": 1.6
+     "max": 2.1
     },
     "frameMs": {
-     "median": 45.5,
-     "p95": 62.8,
-     "max": 68.6
+     "median": 59.4,
+     "p95": 61.8,
+     "max": 62.4
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 28477118,
+    "jsHeapBytes": 34052391,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 19,
-     "worstGapMs": 156.2
+     "frames": 17,
+     "worstGapMs": 164.6
     },
     "frames": 29,
     "workMs": {
-     "median": 5.2,
-     "p95": 7.9,
-     "max": 8.2
+     "median": 4.2,
+     "p95": 8.4,
+     "max": 8.5
     },
     "frameMs": {
-     "median": 83.2,
-     "p95": 105.3,
-     "max": 109.7
+     "median": 82.7,
+     "p95": 97.9,
+     "max": 103.8
     },
     "drawCalls": 9,
     "triangles": 52478,
     "geometries": 13,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 30132604,
+    "jsHeapBytes": 30599982,
     "errors": []
    }
   },
@@ -1257,50 +1257,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 44,
-     "worstGapMs": 1880.8
+     "frames": 41,
+     "worstGapMs": 2399.2
     },
-    "frames": 23,
+    "frames": 21,
     "workMs": {
-     "median": 1,
-     "p95": 4.2,
-     "max": 6.7
+     "median": 1.1,
+     "p95": 1.8,
+     "max": 3.4
     },
     "frameMs": {
-     "median": 357.5,
-     "p95": 404.8,
-     "max": 415.1
+     "median": 377.3,
+     "p95": 435.1,
+     "max": 435.1
     },
     "drawCalls": 10,
     "triangles": 80126,
     "geometries": 15,
     "textures": 7,
     "gpuBytesEstimate": 29858275,
-    "jsHeapBytes": 27943903,
+    "jsHeapBytes": 29923749,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 26,
-     "worstGapMs": 2403
+     "frames": 23,
+     "worstGapMs": 445.7
     },
-    "frames": 29,
+    "frames": 28,
     "workMs": {
-     "median": 4.6,
-     "p95": 7.2,
-     "max": 8
+     "median": 5.7,
+     "p95": 10,
+     "max": 10.5
     },
     "frameMs": {
-     "median": 267.9,
-     "p95": 301.1,
-     "max": 313.2
+     "median": 285.3,
+     "p95": 340.8,
+     "max": 368.2
     },
     "drawCalls": 10,
     "triangles": 66302,
     "geometries": 15,
     "textures": 7,
     "gpuBytesEstimate": 29858275,
-    "jsHeapBytes": 35385343,
+    "jsHeapBytes": 29492299,
     "errors": []
    }
   },
@@ -1311,50 +1311,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 41,
-     "worstGapMs": 86.8
+     "frames": 38,
+     "worstGapMs": 112.9
     },
     "frames": 29,
     "workMs": {
-     "median": 2.3,
-     "p95": 2.9,
-     "max": 4.1
+     "median": 2.5,
+     "p95": 3.9,
+     "max": 3.9
     },
     "frameMs": {
-     "median": 47.7,
-     "p95": 50.1,
-     "max": 50.2
+     "median": 60,
+     "p95": 68,
+     "max": 70.1
     },
     "drawCalls": 11,
     "triangles": 53738,
     "geometries": 14,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 33026360,
+    "jsHeapBytes": 31213617,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 22,
-     "worstGapMs": 147.8
+     "frames": 20,
+     "worstGapMs": 209
     },
     "frames": 29,
     "workMs": {
-     "median": 8.4,
-     "p95": 19.2,
-     "max": 19.2
+     "median": 11.5,
+     "p95": 17.7,
+     "max": 34.3
     },
     "frameMs": {
-     "median": 85.5,
-     "p95": 121,
-     "max": 121.5
+     "median": 101.7,
+     "p95": 122.3,
+     "max": 138.7
     },
     "drawCalls": 11,
     "triangles": 53554,
     "geometries": 14,
     "textures": 3,
     "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 30025435,
+    "jsHeapBytes": 30023345,
     "errors": []
    }
   },
@@ -1365,50 +1365,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 40,
-     "worstGapMs": 659.8
+     "frames": 34,
+     "worstGapMs": 616.4
     },
     "frames": 7,
     "workMs": {
-     "median": 2.3,
-     "p95": 3.7,
-     "max": 3.7
+     "median": 3.7,
+     "p95": 4.3,
+     "max": 4.3
     },
     "frameMs": {
-     "median": 1197.5,
-     "p95": 1256.3,
-     "max": 1256.3
+     "median": 1297.1,
+     "p95": 1330.2,
+     "max": 1330.2
     },
     "drawCalls": 15,
     "triangles": 226734,
     "geometries": 17,
     "textures": 7,
     "gpuBytesEstimate": 30427267,
-    "jsHeapBytes": 36918901,
+    "jsHeapBytes": 30261561,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 23,
-     "worstGapMs": 816.7
+     "frames": 19,
+     "worstGapMs": 1061.7
     },
     "frames": 9,
     "workMs": {
-     "median": 14.8,
-     "p95": 19.5,
-     "max": 19.5
+     "median": 12.7,
+     "p95": 15.7,
+     "max": 15.7
     },
     "frameMs": {
-     "median": 889,
-     "p95": 950.6,
-     "max": 950.6
+     "median": 951.5,
+     "p95": 1132.3,
+     "max": 1132.3
     },
     "drawCalls": 15,
     "triangles": 143442,
     "geometries": 17,
     "textures": 7,
     "gpuBytesEstimate": 30427267,
-    "jsHeapBytes": 35717672,
+    "jsHeapBytes": 33900377,
     "errors": []
    }
   },
@@ -1420,50 +1420,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 38,
-     "worstGapMs": 590.4
+     "frames": 33,
+     "worstGapMs": 645.2
     },
     "frames": 7,
     "workMs": {
-     "median": 2.3,
-     "p95": 4.1,
-     "max": 4.1
+     "median": 3,
+     "p95": 3.6,
+     "max": 3.6
     },
     "frameMs": {
-     "median": 1202.1,
-     "p95": 1337.2,
-     "max": 1337.2
+     "median": 1280,
+     "p95": 1337.6,
+     "max": 1337.6
     },
     "drawCalls": 15,
     "triangles": 226734,
     "geometries": 17,
     "textures": 7,
     "gpuBytesEstimate": 30427267,
-    "jsHeapBytes": 34661408,
+    "jsHeapBytes": 32136637,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 23,
-     "worstGapMs": 834.9
+     "frames": 18,
+     "worstGapMs": 945.5
     },
-    "frames": 10,
+    "frames": 8,
     "workMs": {
-     "median": 12.2,
-     "p95": 24.4,
-     "max": 24.4
+     "median": 14.5,
+     "p95": 18.7,
+     "max": 18.7
     },
     "frameMs": {
-     "median": 843.8,
-     "p95": 895.3,
-     "max": 895.3
+     "median": 1008.7,
+     "p95": 1218.5,
+     "max": 1218.5
     },
     "drawCalls": 15,
     "triangles": 143442,
     "geometries": 17,
     "textures": 7,
     "gpuBytesEstimate": 30427267,
-    "jsHeapBytes": 38836868,
+    "jsHeapBytes": 31044579,
     "errors": []
    }
   },
@@ -1475,50 +1475,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 37,
-     "worstGapMs": 747
+     "frames": 34,
+     "worstGapMs": 722.9
     },
     "frames": 7,
     "workMs": {
-     "median": 4,
-     "p95": 5.8,
-     "max": 5.8
+     "median": 3,
+     "p95": 3.5,
+     "max": 3.5
     },
     "frameMs": {
-     "median": 1224.4,
-     "p95": 1281.6,
-     "max": 1281.6
+     "median": 1376.2,
+     "p95": 1470.9,
+     "max": 1470.9
     },
     "drawCalls": 15,
     "triangles": 226734,
     "geometries": 17,
     "textures": 7,
     "gpuBytesEstimate": 30427267,
-    "jsHeapBytes": 35076296,
+    "jsHeapBytes": 30201945,
     "errors": []
    },
    "phone": {
     "flight": {
      "frames": 21,
-     "worstGapMs": 831.7
+     "worstGapMs": 1041.1
     },
     "frames": 9,
     "workMs": {
-     "median": 10.8,
-     "p95": 15.3,
-     "max": 15.3
+     "median": 13.3,
+     "p95": 14.2,
+     "max": 14.2
     },
     "frameMs": {
-     "median": 917,
-     "p95": 1118.6,
-     "max": 1118.6
+     "median": 997.1,
+     "p95": 1032.2,
+     "max": 1032.2
     },
     "drawCalls": 15,
     "triangles": 143442,
     "geometries": 17,
     "textures": 7,
     "gpuBytesEstimate": 30427267,
-    "jsHeapBytes": 30117040,
+    "jsHeapBytes": 33925764,
     "errors": []
    }
   },
@@ -1529,50 +1529,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 34,
-     "worstGapMs": 555.5
+     "frames": 32,
+     "worstGapMs": 480
     },
-    "frames": 11,
+    "frames": 12,
     "workMs": {
-     "median": 1.7,
-     "p95": 3,
-     "max": 3
+     "median": 2.2,
+     "p95": 2.6,
+     "max": 2.6
     },
     "frameMs": {
-     "median": 746.9,
-     "p95": 804.9,
-     "max": 804.9
+     "median": 717.1,
+     "p95": 803.7,
+     "max": 803.7
     },
     "drawCalls": 14,
     "triangles": 201406,
     "geometries": 17,
     "textures": 5,
     "gpuBytesEstimate": 22042691,
-    "jsHeapBytes": 33651978,
+    "jsHeapBytes": 35572297,
     "errors": []
    },
    "phone": {
     "flight": {
      "frames": 19,
-     "worstGapMs": 666.6
+     "worstGapMs": 724.4
     },
     "frames": 15,
     "workMs": {
-     "median": 8.6,
-     "p95": 13.6,
-     "max": 13.6
+     "median": 9.9,
+     "p95": 15,
+     "max": 15
     },
     "frameMs": {
-     "median": 522.9,
-     "p95": 641.2,
-     "max": 641.2
+     "median": 551.1,
+     "p95": 727.2,
+     "max": 727.2
     },
     "drawCalls": 14,
     "triangles": 120348,
     "geometries": 17,
     "textures": 5,
     "gpuBytesEstimate": 22042691,
-    "jsHeapBytes": 32943716,
+    "jsHeapBytes": 28511785,
     "errors": []
    }
   },
@@ -1583,50 +1583,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 39,
-     "worstGapMs": 678.8
+     "frames": 36,
+     "worstGapMs": 614.3
     },
     "frames": 5,
     "workMs": {
-     "median": 2.7,
-     "p95": 3.4,
-     "max": 3.4
+     "median": 3.5,
+     "p95": 4,
+     "max": 4
     },
     "frameMs": {
-     "median": 1593.1,
-     "p95": 1641.5,
-     "max": 1641.5
+     "median": 1620.1,
+     "p95": 1636.1,
+     "max": 1636.1
     },
     "drawCalls": 15,
     "triangles": 201682,
     "geometries": 18,
     "textures": 7,
     "gpuBytesEstimate": 30427267,
-    "jsHeapBytes": 34990935,
+    "jsHeapBytes": 28451400,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 23,
-     "worstGapMs": 780.4
+     "frames": 20,
+     "worstGapMs": 941.4
     },
     "frames": 8,
     "workMs": {
-     "median": 9,
-     "p95": 16,
-     "max": 16
+     "median": 11.6,
+     "p95": 16.2,
+     "max": 16.2
     },
     "frameMs": {
-     "median": 1040.6,
-     "p95": 1206.7,
-     "max": 1206.7
+     "median": 1085.8,
+     "p95": 1289.8,
+     "max": 1289.8
     },
     "drawCalls": 15,
     "triangles": 118460,
     "geometries": 18,
     "textures": 7,
     "gpuBytesEstimate": 30427267,
-    "jsHeapBytes": 31077815,
+    "jsHeapBytes": 34136017,
     "errors": []
    }
   },
@@ -1637,50 +1637,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 40,
-     "worstGapMs": 1080.1
+     "frames": 38,
+     "worstGapMs": 495.3
     },
     "frames": 13,
     "workMs": {
-     "median": 2.1,
-     "p95": 3,
-     "max": 3
+     "median": 2,
+     "p95": 5.4,
+     "max": 5.4
     },
     "frameMs": {
-     "median": 635.8,
-     "p95": 730.5,
-     "max": 730.5
+     "median": 621,
+     "p95": 711,
+     "max": 711
     },
     "drawCalls": 14,
     "triangles": 203884,
     "geometries": 17,
     "textures": 4,
     "gpuBytesEstimate": 22027736,
-    "jsHeapBytes": 37065995,
+    "jsHeapBytes": 34603739,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 23,
-     "worstGapMs": 679.4
+     "frames": 21,
+     "worstGapMs": 823.9
     },
     "frames": 17,
     "workMs": {
-     "median": 10,
-     "p95": 24.4,
-     "max": 24.4
+     "median": 10.2,
+     "p95": 16,
+     "max": 16
     },
     "frameMs": {
-     "median": 475.5,
-     "p95": 670.9,
-     "max": 670.9
+     "median": 483.9,
+     "p95": 626.7,
+     "max": 626.7
     },
     "drawCalls": 14,
     "triangles": 120648,
     "geometries": 17,
     "textures": 4,
     "gpuBytesEstimate": 22027736,
-    "jsHeapBytes": 35209249,
+    "jsHeapBytes": 30145339,
     "errors": []
    }
   },
@@ -1692,49 +1692,49 @@
    "desktop": {
     "flight": {
      "frames": 34,
-     "worstGapMs": 543.2
+     "worstGapMs": 588.7
     },
     "frames": 5,
     "workMs": {
-     "median": 2.3,
-     "p95": 3.1,
-     "max": 3.1
+     "median": 3.7,
+     "p95": 6.6,
+     "max": 6.6
     },
     "frameMs": {
-     "median": 1953.5,
-     "p95": 1956.5,
-     "max": 1956.5
+     "median": 1870,
+     "p95": 2166.2,
+     "max": 2166.2
     },
     "drawCalls": 14,
     "triangles": 185960,
     "geometries": 19,
     "textures": 8,
     "gpuBytesEstimate": 30503253,
-    "jsHeapBytes": 36662447,
+    "jsHeapBytes": 28175399,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 21,
-     "worstGapMs": 653.9
+     "frames": 19,
+     "worstGapMs": 728.7
     },
     "frames": 7,
     "workMs": {
-     "median": 10.4,
-     "p95": 20.8,
-     "max": 20.8
+     "median": 12.5,
+     "p95": 17.3,
+     "max": 17.3
     },
     "frameMs": {
-     "median": 1164,
-     "p95": 1209,
-     "max": 1209
+     "median": 1189.2,
+     "p95": 1293.9,
+     "max": 1293.9
     },
     "drawCalls": 14,
     "triangles": 104448,
     "geometries": 17,
     "textures": 7,
     "gpuBytesEstimate": 30503253,
-    "jsHeapBytes": 30613441,
+    "jsHeapBytes": 30673419,
     "errors": []
    }
   },
@@ -1745,50 +1745,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 19,
-     "worstGapMs": 752
+     "frames": 15,
+     "worstGapMs": 767.6
     },
     "frames": 9,
     "workMs": {
-     "median": 1.4,
-     "p95": 2,
-     "max": 2
+     "median": 1.6,
+     "p95": 7.2,
+     "max": 7.2
     },
     "frameMs": {
-     "median": 966.6,
-     "p95": 1014.3,
-     "max": 1014.3
+     "median": 970.6,
+     "p95": 1259.7,
+     "max": 1259.7
     },
     "drawCalls": 12,
     "triangles": 171030,
     "geometries": 15,
     "textures": 7,
     "gpuBytesEstimate": 29858275,
-    "jsHeapBytes": 30897124,
+    "jsHeapBytes": 29110750,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 9,
-     "worstGapMs": 1061.3
+     "frames": 11,
+     "worstGapMs": 1002.4
     },
     "frames": 11,
     "workMs": {
-     "median": 7.2,
-     "p95": 11.6,
-     "max": 11.6
+     "median": 6.7,
+     "p95": 9.4,
+     "max": 9.4
     },
     "frameMs": {
-     "median": 728.3,
-     "p95": 835.9,
-     "max": 835.9
+     "median": 739.6,
+     "p95": 812.4,
+     "max": 812.4
     },
     "drawCalls": 12,
     "triangles": 94646,
     "geometries": 15,
     "textures": 7,
     "gpuBytesEstimate": 29858275,
-    "jsHeapBytes": 32307521,
+    "jsHeapBytes": 35642222,
     "errors": []
    }
   },
@@ -1799,50 +1799,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 36,
-     "worstGapMs": 672.9
+     "frames": 34,
+     "worstGapMs": 623.3
     },
-    "frames": 8,
+    "frames": 7,
     "workMs": {
-     "median": 2.4,
-     "p95": 8.4,
-     "max": 8.4
+     "median": 1.6,
+     "p95": 9.5,
+     "max": 9.5
     },
     "frameMs": {
-     "median": 1125.2,
-     "p95": 1241.4,
-     "max": 1241.4
+     "median": 1280,
+     "p95": 1482.8,
+     "max": 1482.8
     },
     "drawCalls": 14,
     "triangles": 228088,
     "geometries": 17,
     "textures": 7,
     "gpuBytesEstimate": 30427267,
-    "jsHeapBytes": 28735284,
+    "jsHeapBytes": 28578160,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 22,
-     "worstGapMs": 871.8
+     "frames": 24,
+     "worstGapMs": 814.3
     },
     "frames": 11,
     "workMs": {
-     "median": 5.9,
-     "p95": 14.1,
-     "max": 14.1
+     "median": 6.4,
+     "p95": 10.9,
+     "max": 10.9
     },
     "frameMs": {
-     "median": 797.5,
-     "p95": 833.3,
-     "max": 833.3
+     "median": 805.3,
+     "p95": 873,
+     "max": 873
     },
     "drawCalls": 14,
     "triangles": 145056,
     "geometries": 17,
     "textures": 7,
     "gpuBytesEstimate": 30427267,
-    "jsHeapBytes": 32243111,
+    "jsHeapBytes": 34441526,
     "errors": []
    }
   },
@@ -1853,50 +1853,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 34,
-     "worstGapMs": 3335.9
+     "frames": 33,
+     "worstGapMs": 725.5
     },
     "frames": 7,
     "workMs": {
-     "median": 2.6,
-     "p95": 4.8,
-     "max": 4.8
+     "median": 1.9,
+     "p95": 3.4,
+     "max": 3.4
     },
     "frameMs": {
-     "median": 1202.2,
-     "p95": 1254.4,
-     "max": 1254.4
+     "median": 1233.4,
+     "p95": 1261.9,
+     "max": 1261.9
     },
     "drawCalls": 15,
     "triangles": 228790,
     "geometries": 17,
     "textures": 7,
     "gpuBytesEstimate": 30427267,
-    "jsHeapBytes": 31665374,
+    "jsHeapBytes": 33082663,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 22,
-     "worstGapMs": 834.8
+     "frames": 21,
+     "worstGapMs": 832.8
     },
-    "frames": 10,
+    "frames": 9,
     "workMs": {
-     "median": 9.6,
-     "p95": 15.2,
-     "max": 15.2
+     "median": 9.2,
+     "p95": 17.7,
+     "max": 17.7
     },
     "frameMs": {
-     "median": 851.9,
-     "p95": 893.1,
-     "max": 893.1
+     "median": 939.6,
+     "p95": 1059.8,
+     "max": 1059.8
     },
     "drawCalls": 15,
     "triangles": 145648,
     "geometries": 17,
     "textures": 7,
     "gpuBytesEstimate": 30427267,
-    "jsHeapBytes": 29077435,
+    "jsHeapBytes": 37692917,
     "errors": []
    }
   },
@@ -1907,50 +1907,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 37,
-     "worstGapMs": 588.8
+     "frames": 39,
+     "worstGapMs": 3700
     },
-    "frames": 6,
+    "frames": 5,
     "workMs": {
-     "median": 2.2,
-     "p95": 5.3,
-     "max": 5.3
+     "median": 2.1,
+     "p95": 2.4,
+     "max": 2.4
     },
     "frameMs": {
-     "median": 1590.9,
-     "p95": 1667.3,
-     "max": 1667.3
+     "median": 1663.9,
+     "p95": 1713.8,
+     "max": 1713.8
     },
     "drawCalls": 12,
     "triangles": 200148,
     "geometries": 16,
     "textures": 7,
     "gpuBytesEstimate": 30427267,
-    "jsHeapBytes": 28465303,
+    "jsHeapBytes": 28347141,
     "errors": []
    },
    "phone": {
     "flight": {
      "frames": 22,
-     "worstGapMs": 985.5
+     "worstGapMs": 789.3
     },
     "frames": 8,
     "workMs": {
-     "median": 6.4,
-     "p95": 9,
-     "max": 9
+     "median": 6,
+     "p95": 12.7,
+     "max": 12.7
     },
     "frameMs": {
-     "median": 1078.7,
-     "p95": 1199,
-     "max": 1199
+     "median": 1128.9,
+     "p95": 1290,
+     "max": 1290
     },
     "drawCalls": 12,
     "triangles": 121542,
     "geometries": 16,
     "textures": 7,
     "gpuBytesEstimate": 30427267,
-    "jsHeapBytes": 36451507,
+    "jsHeapBytes": 29016896,
     "errors": []
    }
   },
@@ -1961,50 +1961,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 38,
-     "worstGapMs": 746.6
+     "frames": 37,
+     "worstGapMs": 632.4
     },
     "frames": 9,
     "workMs": {
-     "median": 1.5,
-     "p95": 4.1,
-     "max": 4.1
+     "median": 1.8,
+     "p95": 8.5,
+     "max": 8.5
     },
     "frameMs": {
-     "median": 985.3,
-     "p95": 1383.4,
-     "max": 1383.4
+     "median": 922.9,
+     "p95": 1120.6,
+     "max": 1120.6
     },
     "drawCalls": 13,
     "triangles": 200776,
     "geometries": 16,
     "textures": 7,
     "gpuBytesEstimate": 30427267,
-    "jsHeapBytes": 28618581,
+    "jsHeapBytes": 27832796,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 23,
-     "worstGapMs": 808.5
+     "frames": 22,
+     "worstGapMs": 822.7
     },
     "frames": 13,
     "workMs": {
-     "median": 4.8,
-     "p95": 25.2,
-     "max": 25.2
+     "median": 5.4,
+     "p95": 9.1,
+     "max": 9.1
     },
     "frameMs": {
-     "median": 629.2,
-     "p95": 679.1,
-     "max": 679.1
+     "median": 655.3,
+     "p95": 791,
+     "max": 791
     },
     "drawCalls": 13,
     "triangles": 119912,
     "geometries": 16,
     "textures": 7,
     "gpuBytesEstimate": 30427267,
-    "jsHeapBytes": 34716975,
+    "jsHeapBytes": 33573605,
     "errors": []
    }
   },
@@ -2015,50 +2015,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 32,
-     "worstGapMs": 543.3
+     "frames": 31,
+     "worstGapMs": 520.4
     },
     "frames": 11,
     "workMs": {
-     "median": 1.9,
-     "p95": 6.3,
-     "max": 6.3
+     "median": 1.5,
+     "p95": 4.5,
+     "max": 4.5
     },
     "frameMs": {
-     "median": 756.7,
-     "p95": 814.5,
-     "max": 814.5
+     "median": 729.4,
+     "p95": 834.9,
+     "max": 834.9
     },
     "drawCalls": 12,
     "triangles": 204724,
     "geometries": 16,
     "textures": 4,
     "gpuBytesEstimate": 22027736,
-    "jsHeapBytes": 29589806,
+    "jsHeapBytes": 34625872,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 23,
-     "worstGapMs": 950.3
+     "frames": 21,
+     "worstGapMs": 1336.1
     },
     "frames": 13,
     "workMs": {
-     "median": 7.9,
-     "p95": 12.8,
-     "max": 12.8
+     "median": 6.3,
+     "p95": 14.3,
+     "max": 14.3
     },
     "frameMs": {
-     "median": 610.9,
-     "p95": 687.5,
-     "max": 687.5
+     "median": 622.6,
+     "p95": 644.8,
+     "max": 644.8
     },
     "drawCalls": 12,
     "triangles": 119274,
     "geometries": 16,
     "textures": 4,
     "gpuBytesEstimate": 22027736,
-    "jsHeapBytes": 29106256,
+    "jsHeapBytes": 34551310,
     "errors": []
    }
   },
@@ -2069,50 +2069,50 @@
    },
    "desktop": {
     "flight": {
-     "frames": 33,
-     "worstGapMs": 530.9
+     "frames": 34,
+     "worstGapMs": 567.3
     },
     "frames": 11,
     "workMs": {
-     "median": 2.5,
-     "p95": 3.5,
-     "max": 3.5
+     "median": 2.8,
+     "p95": 5,
+     "max": 5
     },
     "frameMs": {
-     "median": 769.4,
-     "p95": 894.9,
-     "max": 894.9
+     "median": 719.2,
+     "p95": 849.4,
+     "max": 849.4
     },
     "drawCalls": 13,
     "triangles": 199140,
     "geometries": 16,
     "textures": 4,
     "gpuBytesEstimate": 22027736,
-    "jsHeapBytes": 31555943,
+    "jsHeapBytes": 30233024,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 22,
-     "worstGapMs": 757.1
+     "frames": 20,
+     "worstGapMs": 619.4
     },
     "frames": 15,
     "workMs": {
-     "median": 12.1,
-     "p95": 18.7,
-     "max": 18.7
+     "median": 10.9,
+     "p95": 20.1,
+     "max": 20.1
     },
     "frameMs": {
-     "median": 558.2,
-     "p95": 650,
-     "max": 650
+     "median": 548,
+     "p95": 688.7,
+     "max": 688.7
     },
     "drawCalls": 13,
     "triangles": 120212,
     "geometries": 16,
     "textures": 4,
     "gpuBytesEstimate": 22027736,
-    "jsHeapBytes": 36601019,
+    "jsHeapBytes": 33771910,
     "errors": []
    }
   },
@@ -2124,54 +2124,55 @@
    "desktop": {
     "flight": {
      "frames": 37,
-     "worstGapMs": 4137.2
+     "worstGapMs": 4242.8
     },
     "frames": 4,
     "workMs": {
-     "median": 4.9,
-     "p95": 5.6,
-     "max": 5.6
+     "median": 3.8,
+     "p95": 5.2,
+     "max": 5.2
     },
     "frameMs": {
-     "median": 2101.8,
-     "p95": 2429.4,
-     "max": 2429.4
+     "median": 2064.8,
+     "p95": 2127.5,
+     "max": 2127.5
     },
     "drawCalls": 12,
     "triangles": 2133628,
     "geometries": 16,
     "textures": 7,
     "gpuBytesEstimate": 30503253,
-    "jsHeapBytes": 28317787,
+    "jsHeapBytes": 30370713,
     "errors": []
    },
    "phone": {
     "flight": {
-     "frames": 22,
-     "worstGapMs": 671.6
+     "frames": 20,
+     "worstGapMs": 729.6
     },
-    "frames": 5,
+    "frames": 4,
     "workMs": {
-     "median": 14.8,
-     "p95": 23.1,
-     "max": 23.1
+     "median": 19.1,
+     "p95": 19.9,
+     "max": 19.9
     },
     "frameMs": {
-     "median": 2010.9,
-     "p95": 2042.2,
-     "max": 2042.2
+     "median": 1963.7,
+     "p95": 2176.6,
+     "max": 2176.6
     },
     "drawCalls": 12,
     "triangles": 2133628,
     "geometries": 16,
     "textures": 7,
     "gpuBytesEstimate": 30503253,
-    "jsHeapBytes": 32081504,
+    "jsHeapBytes": 37479986,
     "errors": []
    }
   }
  },
  "recorded": "2026-11-26",
- "commit": "bcc3eb8",
- "note": "Headless Chromium, software rendering. workMs: our CPU work per frame; frameMs: frame to frame; gpuBytesEstimate: geometry and textures reachable from the scene."
+ "commit": "f6e7712",
+ "note": "Headless Chromium, software rendering. workMs: our CPU work per frame; frameMs: frame to frame; gpuBytesEstimate: geometry and textures reachable from the scene.",
+ "worlds": "wip"
 }

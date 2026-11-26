@@ -95,7 +95,7 @@ Tallis relay station.
 | Folder | App code | Use |
 |---|---|---|
 | `docs/section-b/baseline/phase2/` | `main` at `cfd7905`: Phase 2 as the GM accepted it | The reference. All checks pass on it. |
-| `docs/section-b/baseline/wip/` | `section-b` with the WIP planet work (`8abcef4`) | The parked work, measured against the reference. |
+| `docs/section-b/baseline/wip/` | `section-b` with the WIP worlds on (`--worlds wip`; first recorded at `8abcef4`, again at `f6e7712`) | The parked work, measured against the reference. |
 
 Each has `desktop/`, `phone/` and `baseline.json`. The Phase 2 baseline was
 taken from a worktree of `main` with only the new tools and the dev-only
@@ -107,6 +107,9 @@ on a graphics chip. Use them to compare states on this machine, not to judge
 a phone.
 
 ### What the baseline shows
+
+Numbers from the first recording. The second recording (B0.2) gave the same
+picture within normal run-to-run variation.
 
 No view failed and there were no page errors in either state.
 
