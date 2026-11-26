@@ -28,9 +28,11 @@ const FULL_BRIGHTNESS = new Set(['watchfire-system']);
 
 // Glow width in CSS pixels from luminosity (Sun = 1): 8 px for the Sun,
 // 3.2 px more per factor of ten, from 5 px (dim dwarfs, remnants) to 26 px.
-// How bright a star's core is in linear light (task B0.5): from 2.2 for dim
-// dwarfs (under the bloom threshold of 2 for all but white ones) up to 8 for
-// giants, so the bright stars bloom (Output.jsx). Chart marks stay under 2.
+// How bright a star's core is in linear light inside its system (task B0.5):
+// from 2.2 for dim dwarfs (under the bloom threshold of 2 for all but white
+// ones) up to 8 for giants, so the bright stars bloom (Output.jsx). From far
+// away (the Basin, a region) cores stay at their color, under the threshold:
+// there stars are chart marks, and labels win (BD7, contrast check).
 export const coreLight = (L) => Math.min(8, Math.max(2.2, 2.2 + 1.2 * Math.log10(Math.max(L, 1e-6))));
 
 export const glowPx = (L) => Math.min(26, Math.max(5, 8 + 3.2 * Math.log10(Math.max(L, 1e-6))));
@@ -130,7 +132,7 @@ export default function Stars() {
     if (!mesh) return;
     core.current = mesh;
     const c = new THREE.Color();
-    stars.forEach((s, i) => mesh.setColorAt(i, s.dark ? c.set(0x000000) : c.copy(s.color).multiplyScalar(s.light * (s.dim ? UNMAPPED_CORE : 1))));
+    stars.forEach((s, i) => mesh.setColorAt(i, s.dark ? c.set(0x000000) : c.copy(s.color).multiplyScalar(s.dim ? UNMAPPED_CORE : 1)));
     mesh.instanceColor.needsUpdate = true;
   };
 
@@ -139,6 +141,7 @@ export default function Stars() {
   const scale = useMemo(() => new THREE.Vector3(), []);
   const pos = useMemo(() => new THREE.Vector3(), []);
   const q = useMemo(() => new THREE.Quaternion(), []);
+  const tint = useMemo(() => new THREE.Color(), []);
 
   useFrame(({ camera, size, viewport }) => {
     const cam = view.rig?.camera;
@@ -157,11 +160,15 @@ export default function Stars() {
       pos.set(rel[0], rel[1], rel[2]);
       core.current.setMatrixAt(i, m.compose(pos, q, scale.setScalar(r)));
       glow.current.setMatrixAt(i, m.compose(pos, q, scale.setScalar(1)));
-      // Inside a system (closer than ~200 AU) the glow grows into a bloom.
-      const bloom = 1 + 3 * Math.min(1, Math.max(0, Math.log10(3e10 / dist) / 2));
+      // Inside a system (closer than ~200 AU) the glow grows into a bloom, and
+      // the core grows brighter than white (real bloom, B0.5).
+      const near = Math.min(1, Math.max(0, Math.log10(3e10 / dist) / 2));
+      const bloom = 1 + 3 * near;
+      if (!s.dark) core.current.setColorAt(i, tint.copy(s.color).multiplyScalar((1 + (s.light - 1) * near) * (s.dim ? UNMAPPED_CORE : 1)));
       sizes.array[i] = s.glow * bloom + 1.6 * truePx;
     });
     core.current.instanceMatrix.needsUpdate = true;
+    core.current.instanceColor.needsUpdate = true;
     glow.current.instanceMatrix.needsUpdate = true;
     sizes.needsUpdate = true;
   }, -1);
