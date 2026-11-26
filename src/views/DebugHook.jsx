@@ -21,6 +21,7 @@ export default function DebugHook() {
     if (!import.meta.env.DEV) return undefined;
     window.__lancer = {
       render: () => ({ ...gl.info.render }),
+      memory: () => ({ ...gl.info.memory }),
       screen: (id) => screenPos(camera, view.rig.camera, view.targets.get(id).place, size.width, size.height),
       laneScreen: (id, t) => {
         const { map, index } = useMap.getState();
