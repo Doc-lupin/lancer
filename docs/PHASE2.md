@@ -222,4 +222,5 @@ The GM asked for a proper galactic sky, thicker and denser coreward, and better 
 - **Nebula and dust.** Puffs are wisps now, not round blobs: four cloud shapes full of filaments, painted once on the GPU, each puff turned at random; far-off puffs stay soft glows. The Furnace glows pink at its heart and violet and blue outward; the Mire is thicker brown dust that dims its stars (255 → 82–93 in `check_effects`).
 - **Stars** have a faint wide halo around the core, and inside a system the glow grows into a bloom (up to 4×). Basin-level sizes are unchanged.
 - **Names behind planets are hidden** (`src/views/occlusion.js`): a far region's or body's name no longer shows on top of the planet in front of it.
+- **Crowded body names** can also sit at the four corners of their dot, not only right, left, below or above (found by `check_system`: Tallis I, 5 px from its star, had nowhere to go).
 - A gentle vignette at the screen edges, under the labels and buttons.

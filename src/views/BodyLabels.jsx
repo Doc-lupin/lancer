@@ -111,12 +111,15 @@ export function BodyLabelsUpdater() {
       let box = null, spot = null;
       if (p) {
         const w = el.offsetWidth, h = el.offsetHeight, g = r + CLEAR;
+        // Right, left, below, above; then the four corners, for crowded spots.
+        const k = g * 0.75;
         const spots = [
           [p[0] + g, p[1] - h / 2], [p[0] - g - w, p[1] - h / 2], [p[0] - w / 2, p[1] + g], [p[0] - w / 2, p[1] - g - h],
+          [p[0] + k, p[1] - k - h], [p[0] - k - w, p[1] - k - h], [p[0] + k, p[1] + k], [p[0] - k - w, p[1] + k],
         ].map(([x, y]) => [x - PAD, y - PAD, x + w + PAD, y + h + PAD]);
         const free = (b) => b[0] > 0 && b[2] < size.width && b[1] > 0 && b[3] < size.height && !taken.some((o) => overlaps(b, o));
         const clear = (b) => !dots.some((d) => d.it !== item && overlaps(b, d.box));
-        const order = spotOrder(el._spot, 4).filter((i) => free(spots[i]));
+        const order = spotOrder(el._spot, spots.length).filter((i) => free(spots[i]));
         spot = order.find((i) => clear(spots[i])) ?? (item.rank === 0 ? order[0] : null) ?? null;
         box = spot == null ? null : spots[spot];
       }
