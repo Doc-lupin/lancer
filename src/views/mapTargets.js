@@ -44,7 +44,7 @@ export function buildTargets(map, index, { playerMode = false } = {}) {
   const hidden = (id) => isHidden(index, id, playerMode);
   const targets = new Map();
   const basinR = (map.basin.diameterLy / 2) * KM_PER_LY;
-  targets.set('basin', { place: place([0, 0, 0]), radiusKm: basinR, viewKm: basinR * FRAME, minKm: KM_PER_LY, parentId: null, pickable: false, pitch: 0.3 });
+  targets.set('basin', { place: place([0, 0, 0]), radiusKm: basinR, viewKm: basinR * FRAME, minKm: 0.3 * KM_PER_LY, parentId: null, pickable: false, pitch: 0.3 });
 
   for (const r of map.regions) {
     if (hidden(r.id)) continue;
@@ -53,7 +53,7 @@ export function buildTargets(map, index, { playerMode = false } = {}) {
       .filter((s) => index.kindOf.get(s.id) === 'systems')
       .map((s) => Math.hypot(...s.pos.map((v, i) => v - r.pos[i]))));
     const radiusKm = spread * KM_PER_LY;
-    targets.set(r.id, { place: place(r.pos), radiusKm, viewKm: radiusKm * FRAME, minKm: 0.2 * KM_PER_LY, parentId: 'basin', pitch: 0.3 });
+    targets.set(r.id, { place: place(r.pos), radiusKm, viewKm: radiusKm * FRAME, minKm: 0.05 * KM_PER_LY, parentId: 'basin', pitch: 0.3 });
   }
 
   for (const s of map.systems) {
@@ -115,6 +115,7 @@ export function buildTargets(map, index, { playerMode = false } = {}) {
       closeKm: GLOBE_TYPES.has(b.type) ? radiusKm * FRAME * CLOSE : undefined,
       pitch: SYSTEM_PITCH,
       solid: true,
+      rings: !!b.appearance?.rings,
       toStar: starward(b),
       closeDir: placesDirection(b),
       parentId: b.parent && targets.has(b.parent) ? b.parent : b.system,

@@ -5,6 +5,8 @@
 //                               inside the focus makes it the focus
 //   click or tap                fly to the object under the pointer, or to the
 //                               region or body whose name label is under it
+//   double-click or double-tap  on empty space, or Esc: fly up one level
+//   a fast-spun wheel           zooms faster, up to 3× per notch
 // Labels never catch the pointer themselves (a drag, pinch or wheel that starts
 // on a label still moves the camera); a click on one is found here instead.
 // Free mode (store cameraMode, free.js):
@@ -18,7 +20,7 @@ import { useEffect } from 'react';
 import { useMap } from '../../data/store.js';
 import { useFrame, useThree } from '@react-three/fiber';
 import { view } from './view.js';
-import { orbit, zoom, focusOn, step, cameraPlace, viewDirection, isDescendant, frameFor, WHEEL_STEP } from './rig.js';
+import { orbit, zoom, focusOn, upLevel, step, cameraPlace, viewDirection, isDescendant, frameFor, WHEEL_STEP } from './rig.js';
 import { pickAt } from './pick.js';
 import { toFree, toOrbit, look, move as moveFree, nearest, speedKm, WHEEL_MOVE } from './free.js';
 
@@ -55,6 +57,8 @@ export default function CameraRig() {
     const pointers = new Map();
     let press = null; // a possible click: where it started and whether it moved
     let pinch = 0;
+    let lastEmpty = null; // the last click on empty space, for a double click
+    let wheelAt = 0, spin = 1; // a fast-spun wheel zooms faster
     const free = () => view.rig.mode === 'free';
     // Leave free mode where the camera is: orbit a point straight ahead, at the
     // distance of the nearest thing, focused on it.
@@ -95,9 +99,26 @@ export default function CameraRig() {
       press = pointers.size === 1 ? { start: p, moved: false } : null;
       if (pointers.size === 2) pinch = spread();
     };
+    // A pointing hand over anything a click would fly to (mouse only).
+    let hoverQueued = false, hoverAt = null;
+    const hover = () => {
+      hoverQueued = false;
+      if (!hoverAt || pointers.size) return;
+      const [cx, cy, x, y] = hoverAt;
+      const label = labelAt(cx, cy);
+      const id = label && view.targets.has(label) ? label : pick(x, y, 'mouse');
+      el.style.cursor = id ? 'pointer' : '';
+    };
     const move = (e) => {
       const prev = pointers.get(e.pointerId);
-      if (!prev) return;
+      if (!prev) {
+        if (e.pointerType === 'mouse') {
+          hoverAt = [e.clientX, e.clientY, ...local(e)];
+          if (!hoverQueued) { hoverQueued = true; requestAnimationFrame(hover); }
+        }
+        return;
+      }
+      el.style.cursor = press?.moved ? 'grabbing' : el.style.cursor;
       const p = local(e);
       pointers.set(e.pointerId, p);
       if (pointers.size === 1) {
@@ -122,7 +143,15 @@ export default function CameraRig() {
       if (press && !press.moved && pointers.size === 0 && e.type === 'pointerup') {
         const label = labelAt(e.clientX, e.clientY);
         const id = label && view.targets.has(label) ? label : pick(p[0], p[1], e.pointerType);
-        if (id) fly(id);
+        if (id) { fly(id); lastEmpty = null; } else {
+          // Two taps on empty space, close in time and place: up one level.
+          const now = performance.now();
+          if (lastEmpty && now - lastEmpty.t < 400 && Math.hypot(p[0] - lastEmpty.p[0], p[1] - lastEmpty.p[1]) < 30) {
+            backToOrbit();
+            upLevel(view.rig, view.targets, now);
+            lastEmpty = null;
+          } else lastEmpty = { t: now, p };
+        }
       }
       if (pointers.size < 2) pinch = 0;
       if (pointers.size === 0 || pointers.size === 1) press = null;
@@ -138,8 +167,12 @@ export default function CameraRig() {
         invalidate();
         return;
       }
-      const factor = WHEEL_STEP ** notches;
       const now = performance.now();
+      // Mouse wheel notches (not a trackpad's many small steps) that come
+      // quickly one after another zoom progressively faster, up to 3×.
+      spin = Math.abs(e.deltaY * unit) >= 50 && now - wheelAt < 90 ? Math.min(3, spin * 1.25) : 1;
+      wheelAt = now;
+      const factor = WHEEL_STEP ** (notches * spin);
       if (factor < 1) {
         const [x, y] = local(e);
         const id = pick(x, y, 'mouse');
@@ -157,6 +190,12 @@ export default function CameraRig() {
     const keyDown = (e) => {
       if (typing(e) || e.ctrlKey || e.metaKey || e.altKey) return;
       const k = e.key.toLowerCase();
+      if (k === 'escape') {
+        backToOrbit();
+        upLevel(view.rig, view.targets, performance.now());
+        invalidate();
+        return;
+      }
       if (k === 'f' && !e.repeat) {
         const { cameraMode, setCameraMode } = useMap.getState();
         setCameraMode(cameraMode === 'free' ? 'orbit' : 'free');

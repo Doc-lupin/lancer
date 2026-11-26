@@ -19,6 +19,7 @@ import { KM_PER_LY, pixelsPerKm } from './origin.js';
 import { view } from './camera/view.js';
 import { flyTo } from './camera/CameraRig.jsx';
 import { screenPos } from './camera/pick.js';
+import { FADE } from './labelPlace.js';
 
 const FADE_FROM_LY = 6; // fully shown beyond this distance from the camera
 const FADE_TO_LY = 3; // gone within this
@@ -53,12 +54,14 @@ export function RegionLabels() {
           style={{
             position: 'absolute', left: 0, top: 0, opacity: 0, pointerEvents: 'none',
             background: 'none', border: 0, padding: '2px 4px', cursor: 'pointer', textAlign: 'center',
-            color: '#d8dde6', font: '600 13px/1.2 system-ui, sans-serif', letterSpacing: '0.02em',
+            // Chart lettering: region names in spaced capitals, the subtitle plain.
+            color: '#cfd8e6', font: '600 12px/1.25 system-ui, sans-serif', letterSpacing: '0.14em', textTransform: 'uppercase',
             textShadow: '0 0 3px #000, 0 0 6px #000', whiteSpace: 'nowrap', willChange: 'transform, opacity',
+            transition: FADE,
           }}
         >
           <span style={{ display: 'block' }}>{displayName(r.name)}</span>
-          {r.label && <span style={{ display: 'block', font: '400 11px/1.2 system-ui, sans-serif', color: '#8f98a6' }}>{r.label}</span>}
+          {r.label && <span style={{ display: 'block', font: '400 11px/1.25 system-ui, sans-serif', letterSpacing: '0.02em', textTransform: 'none', color: '#8a94a5' }}>{r.label}</span>}
         </button>
       ))}
     </div>
@@ -98,9 +101,11 @@ export function RegionLabelsUpdater() {
       const ly = p ? p[2] / KM_PER_LY : 0;
       const alpha = p ? Math.min(1, Math.max(0, (ly - FADE_TO_LY) / (FADE_FROM_LY - FADE_TO_LY))) : 0;
       const below = p ? Math.min(60, t.radiusKm * pixelsPerKm(p[2], camera.fov, size.height)) + 2 : 0;
-      items.push({ el, p, alpha, below, frontier: r.frontier ? 1 : 0, fromCenter: Math.hypot(...r.pos) });
+      items.push({ el, p, alpha, below, frontier: r.frontier ? 1 : 0, fromCenter: Math.hypot(...r.pos), was: el._shown ? 0 : 1 });
     }
-    items.sort((a, b) => a.frontier - b.frontier || a.fromCenter - b.fromCenter);
+    // Labels already showing keep their place before new ones get one, so
+    // names don't trade places as the view moves.
+    items.sort((a, b) => a.frontier - b.frontier || a.was - b.was || a.fromCenter - b.fromCenter);
     // Pass 1: every label as its name alone, in priority order.
     // Pass 2: give each placed label its subtitle where that still fits.
     const boxes = new Map();
@@ -118,15 +123,24 @@ export function RegionLabelsUpdater() {
         [p[0] - b - w, p[1] - h / 2], // left
       ].map(([x, y]) => [x - PAD, y - PAD, x + w + PAD, y + h + PAD]);
     };
+    // The spot a label had last frame is tried first, so labels stay put.
+    const choose = (it, size) => {
+      const all = spots(it, size);
+      const prev = it.el._spot;
+      for (const i of prev == null ? [0, 1, 2, 3] : [prev, ...[0, 1, 2, 3].filter((k) => k !== prev)]) {
+        if (fits(all[i], it)) return [all[i], i];
+      }
+      return null;
+    };
     for (const it of items) {
       if (it.alpha <= 0) continue;
-      const box = spots(it, measure(it.el)[1]).find((b) => fits(b, it));
-      if (box) { boxes.set(it, box); it.compact = true; }
+      const got = choose(it, measure(it.el)[1]);
+      if (got) { boxes.set(it, got[0]); it.spot = got[1]; it.compact = true; }
     }
     for (const it of items) {
       if (lanesMode || !boxes.has(it) || !it.el.children[1]) continue;
-      const box = spots(it, measure(it.el)[0]).find((b) => fits(b, it));
-      if (box) { boxes.set(it, box); it.compact = false; }
+      const got = choose(it, measure(it.el)[0]);
+      if (got) { boxes.set(it, got[0]); it.spot = got[1]; it.compact = false; }
     }
     regionLabelBoxes.length = 0;
     for (const b of boxes.values()) regionLabelBoxes.push(b);
@@ -137,7 +151,9 @@ export function RegionLabelsUpdater() {
       if (box) {
         el.style.transform = `translate(${Math.round(box[0] + PAD)}px, ${Math.round(box[1] + PAD)}px)`;
         if (el.children[1]) el.children[1].style.display = it.compact ? 'none' : 'block';
+        el._spot = it.spot;
       }
+      el._shown = !!box;
       el.style.opacity = alpha.toFixed(2);
     }
   });

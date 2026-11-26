@@ -122,11 +122,13 @@ const PATH = [
 async function stopChecks(page, label, small) {
   // Still: two frames with nothing changed are identical.
   await ev(page, () => window.__lancer.invalidate());
+  // (Label and hint fades are CSS transitions: the screenshots finish them, so
+  // a label still fading in after the flight doesn't count as a change.)
   await page.waitForTimeout(120);
-  const a = await page.screenshot();
+  const a = await page.screenshot({ animations: 'disabled' });
   await ev(page, () => window.__lancer.invalidate());
   await page.waitForTimeout(120);
-  const b = await page.screenshot();
+  const b = await page.screenshot({ animations: 'disabled' });
   const still = Buffer.compare(a, b) === 0;
 
   // Circling slowly: the focus stays at the center.

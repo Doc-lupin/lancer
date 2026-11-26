@@ -110,25 +110,30 @@ void main() {
   gl_Position = vec4(s / uViewport * 2.0 - 1.0, 0.0, 1.0);
 }`;
 
+// uButt = 1 gives flat ends, for lines made of many short pieces (orbits,
+// fronts): rounded ends would overlap at every joint and show as beads.
 export const stripFragment = /* glsl */ `
+uniform float uButt;
 flat varying vec2 vA;
 flat varying vec2 vB;
 flat varying vec4 vColor;
 flat varying float vHalf;
 void main() {
   vec2 p = gl_FragCoord.xy, ab = vB - vA;
-  float t = clamp(dot(p - vA, ab) / max(dot(ab, ab), 1e-6), 0.0, 1.0);
+  float t = dot(p - vA, ab) / max(dot(ab, ab), 1e-6);
+  if (uButt > 0.5 && (t < 0.0 || t >= 1.0)) discard;
+  t = clamp(t, 0.0, 1.0);
   float d = length(p - (vA + ab * t));
   float a = vColor.a * (1.0 - smoothstep(vHalf - 0.6, vHalf + 0.6, d));
   if (a <= 0.003) discard;
   gl_FragColor = vec4(vColor.rgb * a, a);
 }`;
 
-export function screenMaterial(vertexShader, fragmentShader) {
+export function screenMaterial(vertexShader, fragmentShader, { butt = false } = {}) {
   return new THREE.ShaderMaterial({
     vertexShader,
     fragmentShader,
-    uniforms: { uViewport: { value: new THREE.Vector2() }, uPixelRatio: { value: 1 }, uNear: { value: CAMERA.nearKm } },
+    uniforms: { uViewport: { value: new THREE.Vector2() }, uPixelRatio: { value: 1 }, uNear: { value: CAMERA.nearKm }, uButt: { value: butt ? 1 : 0 } },
     depthTest: false,
     depthWrite: false,
     side: THREE.DoubleSide, // the quads are built on screen; their winding varies

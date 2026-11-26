@@ -10,6 +10,7 @@ import { view } from './camera/view.js';
 import { createRig, frameFor } from './camera/rig.js';
 import CameraRig from './camera/CameraRig.jsx';
 import { buildTargets } from './mapTargets.js';
+import Backdrop from './Backdrop.jsx';
 import Stars from './Stars.jsx';
 import { RegionLabels, RegionLabelsUpdater } from './RegionLabels.jsx';
 import Lanes from './Lanes.jsx';
@@ -52,6 +53,7 @@ export default function Scene() {
         {ready && (
           <>
             <CameraRig />
+            <Backdrop />
             <Lanes />
             <System />
             <Planets />

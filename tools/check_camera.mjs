@@ -5,7 +5,7 @@
 // Starts Vite, opens ?test=camera in headless Chromium and drives the camera
 // with real input events (mouse wheel, clicks, drags; on a phone, taps,
 // one-finger drags and two-finger pinches). Checks:
-//   - wheel zoom changes the distance by the same ratio per notch at every
+//   - wheel zoom (notches 100 ms apart, slower than a fast spin) changes the distance by the same ratio per notch at every
 //     scale, and zooming in over an object inside the focus makes it the focus,
 //     so the Basin → star → planet → station descent is one continuous zoom;
 //   - zooming out climbs station → planet → star → Basin;
@@ -70,7 +70,8 @@ async function wheelInto(page, id, untilKm) {
   for (; notches < 200; ) {
     await page.mouse.wheel(0, -100);
     notches++;
-    await page.waitForTimeout(16);
+    // Slower than a fast spin (notches under 90 ms apart zoom faster, rig.js).
+    await page.waitForTimeout(100);
     const s = await state(page);
     const ratio = prev / s.distance;
     const atLimit = Math.abs(s.distance - untilKm) < 1e-9; // the last notch stops at the closest distance
@@ -149,7 +150,7 @@ async function desktop(browser, base) {
   const climbed = ['station'];
   for (let i = 0; i < 200 && (await state(page)).distance < MAX_DISTANCE_KM; i++) {
     await page.mouse.wheel(0, 100);
-    await page.waitForTimeout(16);
+    await page.waitForTimeout(100);
     const f = (await state(page)).focus;
     if (climbed.at(-1) !== f) climbed.push(f);
   }
@@ -163,9 +164,12 @@ async function desktop(browser, base) {
     check(`  … never moving back, passing it, or coming closer than the end distance`, !r.backwards && !r.passed && !r.tooClose, `backwards ${r.backwards}, passed ${r.passed}, too close ${r.tooClose}`);
   }
   // A long flight: zoom out until the far star shows, then click it (46 ly away).
-  for (let i = 0; i < 200 && (await state(page)).focus !== 'basin'; i++) {
+  // (Zooming out leaves the star for the Basin sooner than it used to, so keep
+  // going until the far star is on screen too.)
+  const shows = async () => { const p = await screen(page, 'far-star'); return p && p[0] > 40 && p[0] < 1240 && p[1] > 40 && p[1] < 760; };
+  for (let i = 0; i < 200 && ((await state(page)).focus !== 'basin' || !(await shows())); i++) {
     await page.mouse.wheel(0, 100);
-    await page.waitForTimeout(16);
+    await page.waitForTimeout(100);
   }
   await settle(page);
   const r = await flyTo(page, 'far-star');

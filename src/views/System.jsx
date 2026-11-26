@@ -6,9 +6,14 @@
 //           star, gets only faint light); stations as small squares, lane
 //           mouths as diamonds, fields as soft clouds. True size when close,
 //           never smaller than a few pixels.
-//   orbits  screen-space strips (strip.js), 128 pieces to an orbit; belts as
-//           a wide faint band. Bodies with no period (lane mouths, the gate)
-//           have no orbit line.
+//   orbits  screen-space strips (strip.js) with flat ends. Each frame an
+//           orbit is cut into pieces as fine as the view needs: 64 arcs, each
+//           halved until its middle lies within 0.15 px of the straight piece
+//           on screen and no piece is longer than 80 px, so a line passing
+//           close to the camera stays a smooth curve through its planet. The
+//           focused body's orbit (and its parents') is drawn brighter. Belts
+//           are a wide faint band. Bodies with no period (lane mouths, the
+//           gate) have no orbit line.
 // A system's bodies fade in as the camera comes within a few framing
 // distances of it; a moon or station shows only once it is a few pixels
 // apart from what it orbits. Companion stars are drawn by Stars.jsx.
@@ -30,7 +35,11 @@ import { stripVertex, stripFragment, screenMaterial, quadGeometry, clipToView, S
 // How visible each body is this frame (0–1), for the body labels.
 export const bodyAlpha = new Map();
 
-const SEGMENTS = 128;
+const BASE_ARCS = 64;
+const MAX_HALVINGS = 10;
+const MAX_ERROR_PX = 0.15;
+const MAX_PIECE_PX = 80;
+const MAX_PIECES = 60000;
 const FADE_IN = [4, 14]; // a system's bodies: shown within 4 framing distances, gone beyond 14
 const APART_PX = [3, 9]; // a body shows as it comes this many pixels apart from what it orbits
 
@@ -47,7 +56,8 @@ const LOOK = {
   'lane-mouth': { shape: 2, minPx: 8, color: '#79c8e3' },
   field: { shape: 3, minPx: 12, color: '#a0c8ff' },
 };
-const ORBIT = { color: '#8796ad', alpha: 0.28, width: 1 };
+const ORBIT = { color: '#8ea2c0', alpha: 0.34, width: 1.15 };
+const FOCUS_ORBIT = { color: '#c3d1e8', alpha: 0.55, width: 1.3 };
 const BELT = { color: '#b49a78', alpha: 0.16, width: 7 };
 
 const bodyVertex = /* glsl */ `
@@ -153,11 +163,7 @@ export default function System() {
         });
       }
       if (b.orbit?.periodDays) {
-        const ring = Array.from({ length: SEGMENTS + 1 }, (_, i) => {
-          const pt = orbitPoint(b.orbit, (2 * Math.PI * i) / SEGMENTS);
-          return pt.map((v, k) => v + parentOffset[k]);
-        });
-        orbits.push({ body: b, system, ring, style: b.type === 'asteroid-belt' ? BELT : ORBIT, radiusKm: orbitKm(b.orbit), parentPlace: place(system.pos, parentOffset) });
+        orbits.push({ body: b, system, orbit: b.orbit, parentOffset, belt: b.type === 'asteroid-belt', radiusKm: orbitKm(b.orbit), parentPlace: place(system.pos, parentOffset) });
       }
     }
     return { bodies, orbits };
@@ -191,9 +197,9 @@ export default function System() {
   }, [bodies]);
 
   const orbitMesh = useMemo(() => {
-    const g = quadGeometry(STRIP_CORNERS, orbits.length * SEGMENTS, STRIP_ATTRS);
+    const g = quadGeometry(STRIP_CORNERS, MAX_PIECES, STRIP_ATTRS);
     g.instanceCount = 0;
-    const mesh = new THREE.Mesh(g, screenMaterial(stripVertex, stripFragment));
+    const mesh = new THREE.Mesh(g, screenMaterial(stripVertex, stripFragment, { butt: true }));
     mesh.frustumCulled = false;
     mesh.renderOrder = -1;
     mesh.userData.layer = 'orbits';
@@ -244,30 +250,73 @@ export default function System() {
     g.attributes.aColor.needsUpdate = true;
     bodyMesh.visible = bodies.some((it, i) => g.attributes.aColor.getW(i) > 0); // no draw call at the Basin
 
-    // Orbits of the systems in view.
+    // Orbits of the systems in view, cut as finely as the view needs.
     const og = orbitMesh.geometry;
     const { aStart, aEnd, aColor, aWidth } = og.attributes;
+    const mv = camera.matrixWorldInverse.elements;
+    const focal = size.height / 2 / Math.tan((camera.fov * Math.PI) / 360);
+    const depth = (p) => -(mv[2] * p[0] + mv[6] * p[1] + mv[10] * p[2]);
+    const aspect = size.width / size.height;
+    // The focus and what contains it: their orbits are drawn brighter.
+    const focusChain = new Set();
+    for (let id = view.rig.focusId; id; id = view.targets.get(id)?.parentId) focusChain.add(id);
     let n = 0;
+    const drawn = []; // bodies whose orbit has pieces on screen this frame (for the checks)
+    const emit = (P0, P1, style, alpha) => {
+      if (n >= MAX_PIECES) return;
+      const A = [...P0], B = [...P1];
+      if (!clipToView(camera, aspect, A, B)) return;
+      aStart.setXYZ(n, ...A);
+      aEnd.setXYZ(n, ...B);
+      aColor.setXYZW(n, c.r, c.g, c.b, style.alpha * alpha);
+      aWidth.setX(n, style.width);
+      n++;
+    };
     for (const o of orbits) {
       let alpha = systemAlpha(o.system);
       if (alpha <= 0) continue;
       alpha *= smooth(apart(o.parentPlace, o.radiusKm), [6, 18]);
       if (alpha <= 0) continue;
+      const style = o.belt ? BELT : focusChain.has(o.body.id) ? FOCUS_ORBIT : ORBIT;
+      const before = n;
+      displayColor(style.color, c);
       offsetKm(cam, place(o.system.pos), base);
-      displayColor(o.style.color, c);
-      for (let i = 0; i < SEGMENTS; i++) {
-        const p0 = o.ring[i], p1 = o.ring[i + 1];
-        const A = [base[0] + p0[0], base[1] + p0[1], base[2] + p0[2]];
-        const B = [base[0] + p1[0], base[1] + p1[1], base[2] + p1[2]];
-        if (!clipToView(camera, size.width / size.height, A, B)) A.fill(0), B.fill(0);
-        aStart.setXYZ(n, ...A);
-        aEnd.setXYZ(n, ...B);
-        aColor.setXYZW(n, c.r, c.g, c.b, o.style.alpha * alpha);
-        aWidth.setX(n, o.style.width);
-        n++;
+      const at = (nu) => {
+        const p = orbitPoint(o.orbit, nu);
+        return [base[0] + p[0] + o.parentOffset[0], base[1] + p[1] + o.parentOffset[1], base[2] + p[2] + o.parentOffset[2]];
+      };
+      // Halve an arc until it is straight enough on screen.
+      const cut = (nu0, P0, nu1, P1, level) => {
+        const num = (nu0 + nu1) / 2;
+        const Pm = at(num);
+        const z = Math.min(depth(P0), depth(P1), depth(Pm));
+        if (Math.max(depth(P0), depth(P1), depth(Pm)) <= 0) return; // all behind the camera
+        let split = false;
+        if (level < MAX_HALVINGS) {
+          if (z <= 0) split = true; // crosses beside the camera: refine there
+          else {
+            const dev = Math.hypot(Pm[0] - (P0[0] + P1[0]) / 2, Pm[1] - (P0[1] + P1[1]) / 2, Pm[2] - (P0[2] + P1[2]) / 2);
+            const chord = Math.hypot(P1[0] - P0[0], P1[1] - P0[1], P1[2] - P0[2]);
+            split = (dev / z) * focal > MAX_ERROR_PX || (chord / z) * focal > MAX_PIECE_PX;
+          }
+        }
+        if (split) {
+          cut(nu0, P0, num, Pm, level + 1);
+          cut(num, Pm, nu1, P1, level + 1);
+        } else emit(P0, P1, style, alpha);
+      };
+      let nuPrev = 0, Pprev = at(0);
+      for (let i = 1; i <= BASE_ARCS; i++) {
+        const nu = (2 * Math.PI * i) / BASE_ARCS;
+        const P = i === BASE_ARCS ? at(0) : at(nu);
+        cut(nuPrev, Pprev, nu, P, 0);
+        nuPrev = nu;
+        Pprev = P;
       }
+      if (n > before) drawn.push(o.body.id);
     }
     og.instanceCount = n;
+    orbitMesh.userData.drawn = drawn;
     for (const a of [aStart, aEnd, aColor, aWidth]) a.needsUpdate = true;
     orbitMesh.material.uniforms.uViewport.value.set(size.width * viewport.dpr, size.height * viewport.dpr);
     orbitMesh.material.uniforms.uPixelRatio.value = viewport.dpr;

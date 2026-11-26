@@ -13,13 +13,14 @@
 //   atmosphere  a thin rim glow 2% above the surface (appearance.atmosphere).
 //               Globes only show within ~40 radii, where that gap is well
 //               inside the depth rule of task 2.4 (gap ≥ 2 × 10^-4 × distance)
-//   rings       in the equatorial plane (appearance.rings)
+//   rings       in the equatorial plane (appearance.rings), lighting themselves
 // Globes are turned by globe.js (P16). Precision: globes are only drawn close
 // up, so ordinary shaders with varying values are fine here.
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
+import { displayColor } from './color.js';
 import { useMap, isHidden } from '../data/store.js';
 import { bodyOffsetKm, daysSinceEpoch } from '../data/orbits.js';
 import { bodyAxes } from '../data/globe.js';
@@ -61,27 +62,88 @@ export function globeInfo(body, index, clock) {
   };
 }
 
-const ringTexture = (() => {
-  let tex = null;
+// Ring textures, along the ring from its inner edge to its outer edge: how
+// opaque (bands and gaps, kept linear) and how light (a little variation).
+const ringTextures = (() => {
+  let made = null;
   return () => {
-    if (tex) return tex;
-    const canvas = document.createElement('canvas');
-    canvas.width = 256;
-    canvas.height = 1;
-    const ctx = canvas.getContext('2d');
+    if (made) return made;
     const rand = random('rings');
-    for (let x = 0; x < 256; x++) {
-      const t = x / 255;
-      const a = (0.25 + 0.5 * rand()) * Math.sin(Math.PI * t) ** 0.6 * (t > 0.62 && t < 0.67 ? 0.15 : 1);
-      const v = Math.round(255 * a); // grey: used both as color and as the alpha map (green channel)
-      ctx.fillStyle = `rgb(${v},${v},${v})`;
-      ctx.fillRect(x, 0, 1, 1);
-    }
-    tex = new THREE.CanvasTexture(canvas);
-    tex.colorSpace = THREE.SRGBColorSpace;
-    return tex;
+    const W = 512;
+    // Three broad rings: a faint inner one, a dense middle one and a fainter
+    // outer one past a wide gap, with fine banding over all three.
+    const smoothstep = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+    const zone = (t, a, b, edge) => smoothstep(a, a + edge, t) * (1 - smoothstep(b - edge, b, t));
+    const fine = Array.from({ length: 40 }, () => [rand(), 0.002 + 0.01 * rand(), rand() * 2 - 1]);
+    const gaps = [[0.635, 0.018, 0.92], [0.885, 0.005, 0.85], [0.33, 0.004, 0.5]];
+    const alpha = (t) => {
+      let a = 0.28 * zone(t, 0, 0.22, 0.04) + 0.92 * zone(t, 0.2, 0.62, 0.03) + 0.62 * zone(t, 0.64, 1, 0.02);
+      for (const [c, w, s] of fine) a *= 1 + 0.22 * s * Math.exp(-(((t - c) / w) ** 2));
+      for (const [c, w, d] of gaps) a *= 1 - d * Math.exp(-(((t - c) / w) ** 2));
+      return Math.min(0.97, Math.max(0, a));
+    };
+    const paint = (value, color) => {
+      const canvas = document.createElement('canvas');
+      canvas.width = W;
+      canvas.height = 1;
+      const ctx = canvas.getContext('2d');
+      for (let x = 0; x < W; x++) {
+        const v = Math.round(255 * value(x / (W - 1)));
+        ctx.fillStyle = `rgb(${v},${v},${v})`;
+        ctx.fillRect(x, 0, 1, 1);
+      }
+      const tex = new THREE.CanvasTexture(canvas);
+      tex.colorSpace = THREE.NoColorSpace; // read as written: the ring shader writes display values
+      return tex;
+    };
+    made = { alpha: paint(alpha), light: paint((t) => 0.74 + 0.16 * rand() + 0.1 * Math.sin(t * 40)) };
+    return made;
   };
 })();
+
+// The ring material. Its position varies only across one planet's rings (a few
+// radii, in the planet's own units), so plain varyings are fine here.
+function ringMaterial(color) {
+  const t = ringTextures();
+  return new THREE.ShaderMaterial({
+    uniforms: {
+      uAlpha: { value: t.alpha }, uLightMap: { value: t.light },
+      uColor: { value: displayColor(new THREE.Color(color).lerp(new THREE.Color('#ffffff'), 0.45).getHex()) },
+      uOpacity: { value: 1 }, uLight: { value: new THREE.Vector3(1, 0, 0) }, uLit: { value: 0 },
+    },
+    vertexShader: /* glsl */ `
+      #include <common>
+      #include <logdepthbuf_pars_vertex>
+      varying vec2 vUv;
+      varying vec3 vLocal;
+      void main() {
+        vUv = uv;
+        vLocal = position;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        #include <logdepthbuf_vertex>
+      }`,
+    fragmentShader: /* glsl */ `
+      #include <common>
+      #include <logdepthbuf_pars_fragment>
+      uniform sampler2D uAlpha, uLightMap;
+      uniform vec3 uColor, uLight;
+      uniform float uOpacity, uLit;
+      varying vec2 vUv;
+      varying vec3 vLocal;
+      void main() {
+        #include <logdepthbuf_fragment>
+        float a = texture2D(uAlpha, vUv).r;
+        vec3 col = uColor * texture2D(uLightMap, vUv).r;
+        // In the planet's shadow: the way to the star passes through the planet
+        // (radius 1 in these units).
+        float s = -dot(vLocal, uLight);
+        float shade = 1.0;
+        if (uLit > 0.5 && s > 0.0) shade = mix(0.12, 1.0, smoothstep(0.96, 1.03, length(vLocal + s * uLight)));
+        gl_FragColor = vec4(col * shade, a * uOpacity);
+      }`,
+    transparent: true, side: THREE.DoubleSide, depthWrite: false,
+  });
+}
 
 // Ring geometry with u running from the inner to the outer edge.
 const RING = (() => {
@@ -148,15 +210,16 @@ function Globe({ info, blend }) {
     },
     transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
   }), [appearance.atmosphere, color]);
-  const rings = useMemo(() => appearance.rings && new THREE.MeshStandardMaterial({
-    color: new THREE.Color(color).lerp(new THREE.Color('#ffffff'), 0.35), map: ringTexture(), alphaMap: ringTexture(),
-    transparent: true, side: THREE.DoubleSide, depthWrite: false, roughness: 1, metalness: 0,
-  }), [appearance.rings, color]);
+  // Rings light themselves: starlight skims along the ring plane, so a lit
+  // material left them nearly black (seen after task 2.11). The planet's
+  // shadow falls across them.
+  const rings = useMemo(() => appearance.rings && ringMaterial(color), [appearance.rings, color]);
 
   const basis = useMemo(() => {
     const { lon0, lon90, north } = info.axes;
     return new THREE.Matrix4().makeBasis(new THREE.Vector3(...lon0), new THREE.Vector3(...lon90), new THREE.Vector3(...north));
   }, [info]);
+  const inverseBasis = useMemo(() => basis.clone().invert(), [basis]);
   const rel = useMemo(() => [0, 0, 0], []);
   const light = useMemo(() => new THREE.Vector3(), []);
 
@@ -170,10 +233,14 @@ function Globe({ info, blend }) {
     g.scale.setScalar(info.radiusKm);
     const b = blend.current.get(body.id) ?? 0;
     g.visible = b > 0;
-    for (const m of [surface, rings]) {
-      if (!m) continue;
-      m.opacity = b * (m === rings ? 0.9 : 1);
-      m.transparent = m === rings || b < 1;
+    surface.opacity = b;
+    surface.transparent = b < 1;
+    if (rings) {
+      rings.uniforms.uOpacity.value = b;
+      // The direction to the star in the planet's own frame (the ring plane is
+      // its equator), for the planet's shadow.
+      if (info.toStar) rings.uniforms.uLight.value.set(...info.toStar).applyMatrix4(inverseBasis).normalize();
+      rings.uniforms.uLit.value = info.toStar ? 1 : 0;
     }
     if (atmosphere) {
       atmosphere.uniforms.uOpacity.value = b;

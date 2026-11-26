@@ -27,6 +27,7 @@ import { spriteVertex, spriteFragmentHead, spriteUniforms, spriteGeometry, updat
 import { stripVertex, stripFragment, screenMaterial, quadGeometry, clipToView, STRIP_CORNERS, STRIP_ATTRS } from './strip.js';
 import { displayColor } from './color.js';
 import { regionLabelBoxes } from './RegionLabels.jsx';
+import { FADE, spotOrder, wasShown, settle } from './labelPlace.js';
 
 const KIND_COLOR = {
   city: '#ffe6b0', town: '#ffe6b0', settlement: '#ffe6b0', port: '#ffe6b0',
@@ -131,7 +132,7 @@ export default function Places() {
 
   const frontMesh = useMemo(() => {
     const count = fronts.reduce((n, f) => n + f.pts.length - 1, 0);
-    const mesh = new THREE.Mesh(quadGeometry(STRIP_CORNERS, count, STRIP_ATTRS), screenMaterial(stripVertex, stripFragment));
+    const mesh = new THREE.Mesh(quadGeometry(STRIP_CORNERS, count, STRIP_ATTRS), screenMaterial(stripVertex, stripFragment, { butt: true }));
     mesh.frustumCulled = false;
     mesh.renderOrder = 4;
     mesh.userData.layer = 'fronts';
@@ -219,7 +220,7 @@ export function PlaceLabels() {
           style={{
             position: 'absolute', left: 0, top: 0, opacity: 0, whiteSpace: 'nowrap', padding: '0 2px',
             color: KIND_COLOR[it.place.kind] ?? KIND_COLOR.other, font: '500 11.5px/1.2 system-ui, sans-serif',
-            textShadow: '0 0 2px #000, 0 0 4px #000, 0 0 6px #000', willChange: 'transform, opacity',
+            textShadow: '0 0 2px #000, 0 0 4px #000, 0 0 6px #000', willChange: 'transform, opacity', transition: FADE,
           }}
         >
           {it.name}
@@ -251,25 +252,29 @@ export function PlaceLabelsUpdater() {
     if (best !== current.current) { current.current = best; setGlobeId(best); }
     if (!best) return;
     const items = [...els.values()].map(({ el, it }) => ({ el, it, p: it.screenAlpha > 0.5 ? screenPos(camera, cam, { anchor: it.globe.place.anchor, offset: it.globe.place.offset.map((v, k) => v + it.offset[k]) }, size.width, size.height) : null }));
-    items.sort((a, b) => (RANK[a.it.place.kind] ?? 6) - (RANK[b.it.place.kind] ?? 6));
+    items.sort((a, b) => (RANK[a.it.place.kind] ?? 6) - (RANK[b.it.place.kind] ?? 6) || wasShown(a.el) - wasShown(b.el));
     const dots = items.filter((x) => x.p).map((x) => ({ x, box: [x.p[0] - 6, x.p[1] - 6, x.p[0] + 6, x.p[1] + 6] }));
     const taken = [...regionLabelBoxes];
     const overlaps = (b, o) => b[0] < o[2] && b[2] > o[0] && b[1] < o[3] && b[3] > o[1];
     for (const item of items) {
       const { el, p } = item;
-      let box = null;
+      let box = null, spot = null;
       if (p) {
         const w = el.offsetWidth, h = el.offsetHeight;
-        box = [[p[0] + 7, p[1] - h / 2], [p[0] - 7 - w, p[1] - h / 2], [p[0] - w / 2, p[1] + 7], [p[0] - w / 2, p[1] - 7 - h]]
-          .map(([x, y]) => [x, y, x + w, y + h])
-          .find((b) => b[0] > 0 && b[2] < size.width && b[1] > 0 && b[3] < size.height
-            && !taken.some((o) => overlaps(b, o)) && !dots.some((d) => d.x !== item && overlaps(b, d.box))) ?? null;
+        const spots = [[p[0] + 7, p[1] - h / 2], [p[0] - 7 - w, p[1] - h / 2], [p[0] - w / 2, p[1] + 7], [p[0] - w / 2, p[1] - 7 - h]]
+          .map(([x, y]) => [x, y, x + w, y + h]);
+        spot = spotOrder(el._spot, 4).find((i) => {
+          const b = spots[i];
+          return b[0] > 0 && b[2] < size.width && b[1] > 0 && b[3] < size.height
+            && !taken.some((o) => overlaps(b, o)) && !dots.some((d) => d.x !== item && overlaps(b, d.box));
+        }) ?? null;
+        box = spot == null ? null : spots[spot];
       }
       if (box) {
         taken.push(box);
         el.style.transform = `translate(${Math.round(box[0])}px, ${Math.round(box[1])}px)`;
       }
-      el.style.opacity = box ? '1' : '0';
+      settle(el, box, spot);
     }
   });
   return null;

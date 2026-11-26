@@ -13,7 +13,7 @@ import { place, offsetKm, KM_PER_LY } from '../origin.js';
 export const MAX_DISTANCE_KM = 120 * KM_PER_LY;
 export const WHEEL_STEP = 1.5; // zoom ratio per mouse-wheel notch (100 units of deltaY)
 export const ORBIT_RAD_PER_PX = 0.005;
-export const LEAVE_FACTOR = 2; // go up a level when farther than this × the distance to the parent
+export const LEAVE_FACTOR = 1.5; // go up a level when farther than this × the distance to the parent
 const PITCH_LIMIT = 1.5; // radians, just short of straight up or down
 const RECENTRE_MS = 600;
 
@@ -88,7 +88,7 @@ export function leaveDistance(targets, id, frame = 1) {
   const p = f.parentId && targets.get(f.parentId);
   if (!p) return Infinity;
   const apart = Math.hypot(...offsetKm(p.place, f.place));
-  return Math.max(LEAVE_FACTOR * apart, 2 * p.minKm, 2 * f.viewKm * frame);
+  return Math.max(LEAVE_FACTOR * apart, 1.6 * f.viewKm * frame);
 }
 
 // Multiply the distance by `factor` (above 1 = out). Stops at the focus's
@@ -96,7 +96,11 @@ export function leaveDistance(targets, id, frame = 1) {
 // the focus to the parent, which slides to the middle of the view.
 export function zoom(rig, targets, factor, now) {
   const f = targets.get(rig.focusId);
-  rig.distance = clamp(rig.distance * factor, f.minKm, MAX_DISTANCE_KM);
+  // Zooming in stops at the focus's closest distance; zooming out never jumps
+  // (after a handover, the camera may already be inside the new focus's minimum).
+  let d = rig.distance * factor;
+  if (factor < 1) d = Math.max(d, Math.min(f.minKm, rig.distance));
+  rig.distance = Math.min(d, MAX_DISTANCE_KM);
   if (rig.fly) rig.fly.d1 = null; // the user has taken over the distance
   while (factor > 1 && rig.distance > leaveDistance(targets, rig.focusId, rig.frame ?? 1)) {
     focusOn(rig, targets, targets.get(rig.focusId).parentId, now, null);
@@ -112,6 +116,7 @@ export function zoom(rig, targets, factor, now) {
 // The angle only changes when it is well off the preference, so a view the
 // user has turned to is mostly kept.
 const CLOSE_PITCH = 0.25;
+const CLOSE_PITCH_RINGS = 0.45; // high enough that the rings open up
 const CLOSE_TURN = 40 * Math.PI / 180;
 export function preferredAngles(rig, t, distanceKm) {
   const close = t.closeKm && distanceKm <= 1.2 * t.closeKm * (rig.frame ?? 1);
@@ -121,13 +126,22 @@ export function preferredAngles(rig, t, distanceKm) {
       const [x, y, z] = t.closeDir;
       return { yaw: Math.atan2(x, z), pitch: Math.max(-1.2, Math.min(1.2, Math.asin(y))) };
     }
-    if (!t.toStar) return { yaw: rig.yaw, pitch: CLOSE_PITCH };
+    const pitch = t.rings ? CLOSE_PITCH_RINGS : CLOSE_PITCH;
+    if (!t.toStar) return { yaw: rig.yaw, pitch };
     const [x, , z] = t.toStar;
     const c = Math.cos(CLOSE_TURN), s = Math.sin(CLOSE_TURN);
-    return { yaw: Math.atan2(x * c + z * s, -x * s + z * c), pitch: CLOSE_PITCH };
+    return { yaw: Math.atan2(x * c + z * s, -x * s + z * c), pitch };
   }
   if (t.pitch != null && Math.abs(rig.pitch - t.pitch) > 0.35) return { yaw: rig.yaw, pitch: t.pitch };
   return null;
+}
+
+// Fly up one level: to the focus's parent, framed (double-click or double-tap
+// on empty space, or Esc).
+export function upLevel(rig, targets, now) {
+  const parent = targets.get(rig.focusId)?.parentId;
+  if (parent) focusOn(rig, targets, parent, now);
+  return !!parent;
 }
 
 // Make `id` the focus and move the target there. With distanceKm (default:

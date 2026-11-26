@@ -15,6 +15,7 @@ import { lerpPlace } from './origin.js';
 import { view } from './camera/view.js';
 import { screenPos } from './camera/pick.js';
 import { regionLabelBoxes } from './RegionLabels.jsx';
+import { FADE, spotOrder, wasShown, settle } from './labelPlace.js';
 
 const PAD = 3;
 const ALONG = [0.5, 0.38, 0.62, 0.27, 0.73]; // where along the lane to try, in order
@@ -46,7 +47,7 @@ export function LaneLabels() {
           style={{
             position: 'absolute', left: 0, top: 0, opacity: 0, padding: '1px 5px', borderRadius: 4,
             background: 'rgba(6, 10, 16, 0.72)', color: '#cfe8e4', textAlign: 'center', whiteSpace: 'nowrap',
-            font: '500 12px/1.25 system-ui, sans-serif', willChange: 'transform, opacity',
+            font: '500 12px/1.25 system-ui, sans-serif', willChange: 'transform, opacity', transition: FADE,
           }}
         >
           <div data-short>{short}</div>
@@ -88,16 +89,17 @@ export function LaneLabelsUpdater() {
       const ps = it.spots.map((sp) => screenPos(camera, cam, sp, size.width, size.height));
       items.push({ el, ps, depth: ps[0]?.[2] ?? Infinity });
     }
-    items.sort((a, b) => a.depth - b.depth);
+    items.sort((a, b) => wasShown(a.el) - wasShown(b.el) || a.depth - b.depth);
     const taken = new Map(); // item → box
     const others = (self) => [...regionLabelBoxes, ...[...taken].filter(([k]) => k !== self).map(([, b]) => b)];
     const findSpot = (it, [w, h]) => {
       const blocked = others(it);
-      for (const p of it.ps) {
+      for (const i of spotOrder(it.el._spot, it.ps.length)) {
+        const p = it.ps[i];
         if (!p) continue;
         const box = [p[0] - w / 2 - PAD, p[1] - h / 2 - PAD, p[0] + w / 2 + PAD, p[1] + h / 2 + PAD];
         const onScreen = box[0] > 0 && box[2] < size.width && box[1] > 0 && box[3] < size.height;
-        if (onScreen && !blocked.some((o) => box[0] < o[2] && box[2] > o[0] && box[1] < o[3] && box[3] > o[1])) return box;
+        if (onScreen && !blocked.some((o) => box[0] < o[2] && box[2] > o[0] && box[1] < o[3] && box[3] > o[1])) { it.spot = i; return box; }
       }
       return null;
     };
@@ -107,8 +109,9 @@ export function LaneLabelsUpdater() {
     }
     for (const it of items) {
       if (!taken.has(it)) continue;
+      const spot = it.spot;
       const box = findSpot(it, measure(it.el)[1]);
-      if (box) { taken.set(it, box); it.full = true; }
+      if (box) { taken.set(it, box); it.full = true; } else it.spot = spot;
     }
     for (const it of items) {
       const box = taken.get(it);
@@ -118,7 +121,7 @@ export function LaneLabelsUpdater() {
         el.children[0].style.display = it.full ? 'none' : 'block';
         el.children[1].style.display = it.full ? 'block' : 'none';
       }
-      el.style.opacity = box ? '1' : '0';
+      settle(el, box, it.spot);
     }
   });
   return null;

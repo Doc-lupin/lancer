@@ -108,8 +108,14 @@ async function run(browser, base, name, options) {
       const alpha = await ev(page, (i) => window.__lancer.bodyAlpha(i), id);
       if (onScreen(p) && alpha === 1) shown.push({ id, p });
     }
-    const orbitPieces = (await ev(page, () => window.__lancer.layerCount('orbits')))[0];
-    check(`${label}: an orbit line for each planet shown`, shown.length >= 3 && orbitPieces >= shown.length * 128, `${shown.length} of ${planets.length} planets shown, ${orbitPieces / 128} orbits drawn`);
+    // Orbits are cut as finely as the view needs (System.jsx), so count the
+    // orbits drawn, not the pieces.
+    const orbitInfo = await ev(page, () => {
+      const m = window.__lancer.scene.children.find((o) => o.userData.layer === 'orbits');
+      return { drawn: m.userData.drawn ?? [], pieces: m.geometry.instanceCount };
+    });
+    const withOrbit = shown.filter(({ id }) => orbitInfo.drawn.includes(id)).length;
+    check(`${label}: an orbit line for each planet shown`, shown.length >= 3 && withOrbit === shown.length, `${shown.length} of ${planets.length} planets shown, ${withOrbit} with orbits; ${orbitInfo.drawn.length} orbits in ${orbitInfo.pieces} pieces`);
     let drawn = 0;
     const peaks = [];
     for (const { id, p } of shown) { const v = await peak(page, p[0], p[1]); peaks.push(`${id} ${v}`); if (v > 60) drawn++; }
