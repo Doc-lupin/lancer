@@ -3,8 +3,8 @@
 Tasks, test and functions are in [SECTION_B.md](SECTION_B.md), Phase B0.
 Branch `section-b`.
 
-**Status (Nov 26, 2026): B0.1 done. Next: B0.2.** One decision is open
-(BQ1, below).
+**Status (Nov 26, 2026): B0.1 and B0.2 done. Next: B0.3.** BQ1 is decided
+(option 2: the WIP worlds are off by default). BQ2 is open.
 
 ## Checks at the start of the phase
 
@@ -133,6 +133,56 @@ Three findings for later tasks:
   up 5–20× in software. B0.3 must set a budget for this; B0.6 (quality
   tiers) gives the way to meet it on phones.
 
+## B0.2: visual regression check (done)
+
+`node tools/check_visuals.mjs [--ref phase2|wip|DIR] [--device desktop|phone] [--only NAME,…] [--worlds wip] [--out DIR] [--limit PCT]`
+
+The check goes to each of the 40 views as `record_baseline.mjs` does, takes
+the same JPEG screenshot, and compares it with the reference in
+`docs/section-b/baseline/<ref>/<device>/` (default: `phase2`). The browser
+decodes both pictures in a canvas, so no image library is needed. For each
+view it reports:
+
+| Number | Meaning |
+|---|---|
+| `changed` | The share of pixels where a color channel differs by more than 16 of 255, in percent. The pass limit is 0.5%. |
+| `mean` | The mean difference over all pixels and channels (0–255). |
+| `max` | The largest difference in one channel. |
+
+A view also fails if its reference is missing or the page shows an error.
+For each view that fails, the check writes a difference picture (changed
+pixels in red over a dim copy of the new view) next to the new screenshot.
+The report is `visuals.json` in `--out`.
+
+**Pictures depend on the view only.** The first run found two sources of
+difference that were not in the drawing:
+
+1. Name labels try their spot from the last frame first (`labelPlace.js`),
+   so their sides depended on how many frames the flight took. Before the
+   shot, the tools now forget those spots and draw two frames.
+2. The orbit hint shows for the first 9 s after the map opens. The tools now
+   wait until it is off.
+
+After this change, two runs gave identical pictures. The Phase 2 references
+were recorded again from `main` with these rules (commit `f6e7712`), and the
+WIP set with `--worlds wip`.
+
+**Result (Nov 26):** `section-b` with the WIP worlds off against the Phase 2
+references: **all 80 views (40 desktop, 40 phone) identical, 0.000% changed.**
+So decision BQ1 brings back exactly the look the GM accepted.
+
+### BQ1 done
+
+- `src/views/planet/switch.js`: `WIP_WORLDS` is true only in development
+  builds with `?worlds=wip` in the address.
+- `src/views/procedural.js` is back from `main`. It paints the Phase 2
+  surfaces when the switch is off. Place markers sit at 0.002 R then (0.006 R
+  with the WIP worlds).
+- The view tools take `--worlds wip`.
+
+With the switch off, every check gives the same result on `section-b` as on
+`main` in this container. Two checks fail on both (BQ2).
+
 ## Decisions
 
 **BQ1. The WIP planet work fails the Phase 2 test.** Options:
@@ -146,3 +196,19 @@ Three findings for later tasks:
 
 Recommendation: option 2. It obeys rule 2 of Section B, and B0.2 and B0.3 can
 use the Phase 2 baseline as their reference without known failures.
+**Decided (GM, Nov 26): option 2.**
+
+**BQ2. Two Section A checks fail on `main` in this container.** The phone
+CPU limit of `check_zoom` (11 ms; 14.7 ms here) and the Ostrom names in
+`check_system` (3 of 4). Neither is caused by Section B work. Options:
+
+1. Change the two checks. `check_zoom` compares CPU work with the Phase 2
+   baseline on the same machine (B0.3 gives that baseline and budget) instead
+   of a fixed number of milliseconds. `check_system` forgets the labels'
+   last spots before it counts names, as the view tools now do; then find
+   out whether Ostrom fails every time, and fix the label placement if so.
+2. Keep the checks as they are. Record the two failures as known for this
+   machine.
+
+Recommendation: option 1. A fixed limit in milliseconds tests the machine,
+not the change; a check that passes or fails by timing hides real faults.
