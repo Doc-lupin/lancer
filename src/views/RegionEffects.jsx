@@ -27,7 +27,7 @@ const STYLES = {
     blending: { blending: THREE.AdditiveBlending }, renderOrder: 1,
   },
   'dust-cloud': {
-    puffs: 110, colors: ['#3a2416', '#2e1d0f', '#422618', '#261811', '#1f140d'], alpha: [0.34, 0.58],
+    puffs: 110, colors: ['#47241a', '#3b1d11', '#4d2a1c', '#301912', '#2a150e'], alpha: [0.34, 0.58],
     blending: { blending: THREE.CustomBlending, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor }, renderOrder: 2,
   },
 };
