@@ -166,8 +166,12 @@ export default function Stars() {
       // the core grows brighter than white (real bloom, B0.5).
       const near = Math.min(1, Math.max(0, Math.log10(3e10 / dist) / 2));
       const bloom = 1 + 3 * near;
-      if (near > 0 && !s.dark) BLOOM.stars = true;
-      if (!s.dark) core.current.setColorAt(i, tint.copy(s.color).multiplyScalar((1 + (s.light - 1) * near) * (s.dim ? UNMAPPED_CORE : 1)));
+      // A disc that grows large on screen fades back to its color (24 to 120 px
+      // across), so a star filling the view doesn't wash the labels in glow.
+      const small = 1 - Math.min(1, Math.max(0, (truePx - 24) / 96));
+      const lit = near * small * small * (3 - 2 * small);
+      if (lit > 0 && !s.dark) BLOOM.stars = true;
+      if (!s.dark) core.current.setColorAt(i, tint.copy(s.color).multiplyScalar((1 + (s.light - 1) * lit) * (s.dim ? UNMAPPED_CORE : 1)));
       sizes.array[i] = s.glow * bloom + 1.6 * truePx;
     });
     core.current.instanceMatrix.needsUpdate = true;
