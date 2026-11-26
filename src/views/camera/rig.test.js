@@ -92,3 +92,19 @@ test('the camera keeps its precision at the Keel', () => {
   assert.deepEqual(cam.anchor, KEEL);
   assert.ok(Math.abs(Math.hypot(...offsetKm(cam, targets.get('station').place)) - 1) < 1e-6); // within 1 mm
 });
+
+test('a long flight to a small thing keeps the destination in sight on the way in', () => {
+  // From a planet's close view across 4 AU to a station: the old curve zoomed
+  // to 20 km while the target still had millions of km to go (found in task 2.11).
+  const rig = createRig(targets, 'planet', { distanceKm: 25000 });
+  const dest = targets.get('station').place;
+  focusOn(rig, targets, 'station', 0, 1);
+  const { dur } = rig.fly;
+  let worst = 0;
+  for (let t = 16; t <= dur; t += 16) {
+    step(rig, t);
+    const left = Math.hypot(...offsetKm(rig.target, dest));
+    worst = Math.max(worst, left / rig.distance); // how many camera distances the target still has to go
+  }
+  assert.ok(worst < 40, `the target was ${worst.toFixed(0)} camera distances from the station at one point`);
+});

@@ -1,6 +1,6 @@
 # Phase 2: 3D view — work plan
 
-**Status: in progress. Tasks 2.1–2.10 done.** Branch `phase-2`, cut from `main` on Nov 25, 2026. The Phase 1 test still passes on it (`python3 tools/validate_map.py --complete`: 0 errors, 0 warnings).
+**Status: built. Tasks 2.1–2.11 done; the Phase 2 test passes on desktop and in phone emulation and waits for the GM's phone.** Branch `phase-2`, cut from `main` on Nov 25, 2026. The Phase 1 test still passes on it (`python3 tools/validate_map.py --complete`: 0 errors, 0 warnings).
 
 Phase 2 checklist and test are in [PLAN.md](PLAN.md). This file breaks them into small tasks and lists what must be decided first.
 
@@ -65,7 +65,7 @@ One task = one session's work, touching only the files listed. Do them in order.
 | 2.8 | (done) Region effects: a simple glow or particle cloud for the Furnace's nebula and the Mire's dust; non-star centers (rogue planet, wreck, structure) with their own instanced icons | Continuous zoom | `src/views/RegionEffects.jsx`, `src/views/Centers.jsx`; also `src/views/sprite.js`, `src/views/mapTargets.js` (+ test), `src/views/Scene.jsx`, layer tags in `Stars.jsx` and `Lanes.jsx`, `tools/check_effects.mjs` | Both effects visible from the Basin level; every system center type has an icon |
 | 2.9 | (done) System level: center star and companion stars, planets and giants placed by orbit and clock, orbit lines, belts and fields, lane mouths, stations | Continuous zoom | `src/data/orbits.js`, `src/data/orbits.test.js`, `src/views/System.jsx`; also `src/views/BodyLabels.jsx`, `src/views/strip.js`, `src/views/color.js`, `src/data/lanes.js` (+ test), `src/views/mapTargets.js` (+ test), `Stars.jsx`, `Lanes.jsx`, `LaneLabels.jsx`, `Centers.jsx`, `RegionEffects.jsx`, `origin.js`, `Scene.jsx`, `tools/check_system.mjs` | Orbit angle = `phaseDeg + 360 × days since epoch / periodDays`, tested against three hand-worked bodies; Ostrom and Tallis look right to the GM |
 | 2.10 | (done) Planet level: globe with tint and rings (P11), moons and stations on km orbits, surface places as markers at their latitude and longitude | Continuous zoom | `src/views/Planet.jsx`, `src/views/Places.jsx`, `src/data/globe.js`, `src/data/globe.test.js`; also `src/data/orbits.js` (+ test, P15), `src/views/camera/rig.js` and `CameraRig.jsx` (angles, close views), `mapTargets.js`, `System.jsx`, `BodyLabels.jsx`, `Scene.jsx`, `tools/check_planet.mjs`, `tools/check_effects.mjs` | Scald's places sit on either side of the Seam; Tallis's moons and stations are in orbit |
-| 2.11 | Phase 2 test: scripted zoom Basin → Tallis → planet → station and back, on desktop and in phone emulation (P10); jitter and frame-rate log; the GM tries it on their phone; tick the boxes in PLAN.md | — | `tools/check_zoom.mjs`, `docs/PLAN.md`, `docs/PHASE2.md` | Exit test passes |
+| 2.11 | (done, but for the GM's phone) Phase 2 test: scripted zoom Basin → Tallis → planet → station and back, on desktop and in phone emulation (P10); jitter and frame-rate log; the GM tries it on their phone; tick the boxes in PLAN.md | — | `tools/check_zoom.mjs`, `docs/PLAN.md`, `docs/PHASE2.md` | Exit test passes |
 
 Tasks 2.1–2.5 have no map content worth showing; the first look at the Basin comes with 2.6.
 
@@ -74,7 +74,7 @@ Tasks 2.1–2.5 have no map content worth showing; the first look at the Basin c
 | Risk | What to do |
 |---|---|
 | Range of scale is ~10^15, not ~10^13 | Done in task 2.4: anchored places hold under 0.001 px from 50 ly to 0.5 km. No zoom cap needed. |
-| Log depth costs fill rate on phones | Not measurable in task 2.4: the headless browser draws in software. Measure in task 2.11 on the GM's phone; fall back to two passes (P4). |
+| Log depth costs fill rate on phones | Not measurable here: the headless browser draws in software. In task 2.11 the heaviest view in software is a globe close up (14–20 frames/s, against 23–30 elsewhere); judge on the GM's phone, and fall back to two passes (P4) if it stutters. |
 | 745 KB `map.json` on a phone connection | Fine for private use. If start-up is slow, gzip on the host serves it at about a tenth. |
 | Labels at every level crowd the screen | Labels only for the level in view and its children, fading with distance. |
 | Clicking small objects on a phone | Pick by screen distance to the icon, not by ray hit on the true-size mesh. |
@@ -172,4 +172,14 @@ Planet surfaces are meant to be replaced by imported textures or procedurally ge
 - **A generator.** Call `registerSurface(provider)` once at start. A provider gets `(body, tools)` and returns `null` to pass or `{ map, tint, heightMap, heightScale, normalMap, roughnessMap }`. It can choose by `body.world`, `body.variant`, `body.type` or `body.id`, and use `tools.canvasTexture(width, height, draw)`, `tools.loadTexture(file)` and `tools.random(seed)` (seeded, so a body looks the same every time). The newest provider registered is asked first; then `appearance.texture`; then the built-in bands and mottling.
 - **Height maps.** A grey `heightMap` raises the surface by up to `heightScale` × radius (default 0.005) and shades the relief. Bodies with a height map get a finer sphere (512 × 256) so the relief has vertices to move. Place markers still sit on the smooth sphere; with strong relief, lift them by the height at their [lat, lon].
 - **Not yet:** clouds (`appearance.clouds`) and separate night-side maps. A cloud layer would be a second sphere just above the surface; mind the depth rule of task 2.4 (gap ≥ 2 × 10^-4 × distance), which a 1% cloud shell meets at globe distances.
+
+Notes from 2.11:
+- `node tools/check_zoom.mjs [--out DIR]` (about 1½ minutes) runs the real app on a 1280 × 800 desktop window and on Pixel 7 emulation with the CPU slowed 4× (P10): Basin → Tallis (region) → Tallis system → Tallis (planet, with its moons) → Tallis close up (globe and places) → Tallis relay (a station), then back to the Basin with the mouse wheel, one notch at a time. 24 checks, all pass.
+- Without a break: every frame is logged. The largest rates of change on the way down are 16.6 e-folds of distance per second and 7.8 distances of target movement per second (limits 60 and 40; a jump would be thousands); on the way up 30.3 and 2.4. No blank frame; the lasting layers (stars, lanes, bodies, orbits, icons, effects, places, fronts) are the same objects throughout, only globes come and go.
+- No shaking: at every stop two frames with nothing changed are pixel-identical, and while the camera circles slowly the focus stays at the screen center (0.000 px by the camera's numbers, within 0.15 px by the pixels drawn).
+- Our own work per frame (the CPU side, from the first update to the last before drawing): at most 1.24 ms on desktop and 4.87 ms with the CPU slowed 4×, well inside a 30 fps frame. The software renderer's frame rate is logged for reference only: 23–30 frames/s at most stops, 14–20 close up to a globe.
+- Found by this test: on long flights the camera zoomed in before the target arrived (20 km from the target while it still had 7 million km to go, on the way to the Tallis relay), so the destination appeared all at once. Flights now follow van Wijk and Nuij's smooth zoom-and-pan path (`zoomPath` in `src/views/camera/rig.js`): the camera rises just enough to keep the journey in view, motion on screen stays even, and the target still never passes the destination nor the camera come closer than the end distance. A test in `rig.test.js` keeps it so.
+- The debug helpers moved out of `Scene.jsx` into `src/views/DebugHook.jsx`, mounted only in development; the built app doesn't include them.
+- The build now uses relative paths (`base: './'` in `vite.config.js`), so `dist/` works from any folder or address; checked by serving it from a subfolder on phone emulation.
+- Left for the GM: try it on a phone, zooming Basin → a planet and back. Then the Phase 2 test is complete and Phase 3 can start.
 

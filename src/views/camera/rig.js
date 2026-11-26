@@ -20,6 +20,34 @@ const RECENTRE_MS = 600;
 const copy = (p) => place(p.anchor, p.offset);
 const clamp = (x, lo, hi) => Math.min(hi, Math.max(lo, x));
 const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
+const easeSine = (t) => (1 - Math.cos(Math.PI * t)) / 2;
+
+// Smooth zoom-and-pan (van Wijk and Nuij, 2003): the path that keeps motion on
+// screen even, rising just enough to keep a long journey in view, then coming
+// down. w0 and w1 are the start and end distances, u1 the length of the
+// journey; s runs 0..S. Returns { S, at(s) → { u, w } }: u the distance
+// travelled along the line, w the camera's distance. w never dips below the
+// smaller of w0 and w1, and u only grows.
+const RHO = Math.SQRT2;
+export function zoomPath(w0, w1, u1) {
+  if (u1 < 1e-9 * Math.max(w0, w1)) {
+    const k = Math.log(w1 / w0);
+    const S = Math.abs(k) / RHO;
+    return { S, at: (s) => ({ u: S ? (u1 * s) / S : u1, w: w0 * Math.exp(S ? (k * s) / S : 0) }) };
+  }
+  const b = (i) => (w1 * w1 - w0 * w0 + (i ? -1 : 1) * RHO ** 4 * u1 * u1) / (2 * (i ? w1 : w0) * RHO * RHO * u1);
+  const r0 = -Math.asinh(b(0));
+  const r1 = -Math.asinh(b(1));
+  const S = (r1 - r0) / RHO;
+  const c0 = Math.cosh(r0), s0 = Math.sinh(r0);
+  return {
+    S,
+    at: (s) => ({
+      u: (w0 / (RHO * RHO)) * (c0 * Math.tanh(RHO * s + r0) - s0),
+      w: (w0 * c0) / Math.cosh(RHO * s + r0),
+    }),
+  };
+}
 
 export const frameFor = (aspect) => Math.max(1, 1 / aspect);
 
@@ -111,12 +139,12 @@ export function focusOn(rig, targets, id, now, distanceKm = targets.get(id).view
   const v = offsetKm(from, to);
   const d0 = rig.distance;
   const d1 = distanceKm;
-  let hop = 0;
+  let path = null;
   let dur = RECENTRE_MS;
   if (d1 != null) {
-    // Rise far enough mid-flight to keep the journey in view, then come down.
-    hop = Math.max(0, Math.log(1.2 * Math.hypot(...v)) - Math.log(Math.max(d0, d1)));
-    dur = Math.min(3000, 800 + 50 * Math.abs(Math.log(d1 / d0)) + 100 * hop);
+    path = zoomPath(d0, d1, Math.hypot(...v));
+    path.end = path.at(path.S).u; // the whole journey, to measure progress against
+    dur = Math.min(3200, Math.max(600, 500 + 115 * path.S));
   }
   let angles = null;
   if (d1 != null) {
@@ -128,13 +156,13 @@ export function focusOn(rig, targets, id, now, distanceKm = targets.get(id).view
     }
   }
   rig.focusId = id;
-  rig.fly = { from, to, v, d0, d1, hop, t0: now, dur, angles };
+  rig.fly = { from, to, v, d0, d1, path, t0: now, dur, angles };
 }
 
 // Advance a flight to time `now`. Returns true while something moved.
-// The target follows a straight line at an eased pace, never passing the
-// destination. The distance follows a smooth curve in log scale that never
-// dips below the smaller of the start and end distances. Positions are taken
+// The target follows a straight line and the distance the zoom path above,
+// at a sine-eased pace: the target never passes the destination and the
+// camera never comes closer than the smaller of the start and end distances. Positions are taken
 // from the start's anchor for the first half and the destination's for the
 // second, so the flight ends exactly on the destination.
 export function step(rig, now) {
@@ -148,13 +176,19 @@ export function step(rig, now) {
     rig.fly = null;
     return true;
   }
-  const s = ease(t);
-  rig.target = s < 0.5
-    ? place(f.from.anchor, f.from.offset.map((x, i) => x + f.v[i] * s))
-    : place(f.to.anchor, f.to.offset.map((x, i) => x - f.v[i] * (1 - s)));
-  if (f.d1 != null) {
-    rig.distance = Math.exp((1 - s) * Math.log(f.d0) + s * Math.log(f.d1) + f.hop * 4 * s * (1 - s));
+  // Progress along the line (k) and distance: from the zoom path for a
+  // flight, an eased slide for a recentring (distance unchanged).
+  let s = ease(t);
+  let k = s;
+  if (f.path) {
+    s = easeSine(t);
+    const p = f.path.at(s * f.path.S);
+    k = f.path.end ? Math.min(1, Math.max(0, p.u / f.path.end)) : s;
+    rig.distance = p.w;
   }
+  rig.target = k < 0.5
+    ? place(f.from.anchor, f.from.offset.map((x, i) => x + f.v[i] * k))
+    : place(f.to.anchor, f.to.offset.map((x, i) => x - f.v[i] * (1 - k)));
   if (f.angles) {
     rig.yaw = f.angles.yaw0 + (f.angles.yaw1 - f.angles.yaw0) * s;
     rig.pitch = f.angles.pitch0 + (f.angles.pitch1 - f.angles.pitch0) * s;
