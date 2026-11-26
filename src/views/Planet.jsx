@@ -2,9 +2,12 @@
 // on screen (planets, giants, moons, asteroids, rogue planets, wrecks, the
 // Orrery's structure), crossfading with the flat disc System.jsx draws below
 // that size (globeBlend).
-//   surface     tinted with appearance.color; giants get soft latitude bands,
-//               rocky bodies faint mottling (canvas textures, no files; real
-//               textures and clouds are for later, P11)
+//   surface     from surfaces.js, the one place that picks a body's maps
+//               (generated, an image in public/textures/, or a registered
+//               generator; color, height, normal and roughness maps), tinted
+//               with appearance.color unless the map is full color. The
+//               sphere is laid out by lat/lon (globeGeometry.js), so maps line
+//               up with the places.
 //   light       one directional light from the system's star; a rogue planet,
 //               with no star, gets faint light all round
 //   atmosphere  a thin rim glow 2% above the surface (appearance.atmosphere).
@@ -15,7 +18,7 @@
 // up, so ordinary shaders with varying values are fine here.
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useMap, isHidden } from '../data/store.js';
 import { bodyOffsetKm, daysSinceEpoch } from '../data/orbits.js';
@@ -23,6 +26,8 @@ import { bodyAxes } from '../data/globe.js';
 import { offsetKm, place, pixelsPerKm } from './origin.js';
 import { view } from './camera/view.js';
 import { bodyRadiusKm, GLOBE_TYPES } from './mapTargets.js';
+import { latLonSphere } from './globeGeometry.js';
+import { surfaceMaps, random, whenTexturesLoad } from './surfaces.js';
 
 // Radius on screen (CSS px) over which the flat disc hands over to the globe.
 const GLOBE_FROM_PX = 10;
@@ -30,7 +35,10 @@ const GLOBE_TO_PX = 16;
 export const globeBlend = (radiusPx) => Math.min(1, Math.max(0, (radiusPx - GLOBE_FROM_PX) / (GLOBE_TO_PX - GLOBE_FROM_PX)));
 const MAX_GLOBES = 6;
 
-const SPHERE = new THREE.SphereGeometry(1, 96, 64).rotateX(Math.PI / 2); // poles along z (north = body frame z)
+const SPHERE = latLonSphere(128, 64);
+// For bodies with a height map, so the relief has vertices to move; built on first use.
+let fine = null;
+const fineSphere = () => (fine ??= latLonSphere(512, 256));
 const RING_INNER = 1.35;
 const RING_OUTER = 2.3;
 
@@ -51,63 +59,6 @@ export function globeInfo(body, index, clock) {
     axes: bodyAxes(body, days, len ? toParent.map((v) => v / len) : null),
     toStar: system.center.type === 'star' && starLen ? toStar.map((v) => v / starLen) : null,
   };
-}
-
-// Small seeded random numbers, so a body's texture is the same every time.
-function random(seed) {
-  let h = 2166136261;
-  for (const ch of seed) h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
-  return () => {
-    h = (h + 0x6d2b79f5) | 0;
-    let t = Math.imul(h ^ (h >>> 15), 1 | h);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-const textures = new Map();
-function surfaceTexture(body) {
-  if (textures.has(body.id)) return textures.get(body.id);
-  const rand = random(body.id);
-  const canvas = document.createElement('canvas');
-  const giant = body.type === 'gas-giant';
-  canvas.width = giant ? 8 : 256;
-  canvas.height = 128;
-  const ctx = canvas.getContext('2d');
-  const img = ctx.createImageData(canvas.width, canvas.height);
-  if (giant) {
-    // Latitude bands: lightness drifting smoothly from row to row.
-    let v = 0;
-    const rows = [];
-    for (let y = 0; y < canvas.height; y++) { v = 0.85 * v + 0.15 * (rand() * 2 - 1); rows.push(v); }
-    rows.forEach((r, y) => {
-      for (let x = 0; x < canvas.width; x++) {
-        const k = 4 * (y * canvas.width + x);
-        const l = 200 + 55 * Math.max(-1, Math.min(1, r * 3));
-        img.data.set([l, l, l, 255], k);
-      }
-    });
-  } else {
-    // Mottling: a few soft blobs of lighter and darker ground.
-    const blobs = Array.from({ length: 40 }, () => [rand() * 256, rand() * 128, 6 + rand() * 26, rand() * 2 - 1]);
-    for (let y = 0; y < 128; y++) {
-      for (let x = 0; x < 256; x++) {
-        let v = 0;
-        for (const [bx, by, br, s] of blobs) {
-          const dx = Math.min(Math.abs(x - bx), 256 - Math.abs(x - bx));
-          v += s * Math.exp(-(dx * dx + (y - by) ** 2) / (br * br));
-        }
-        const l = 215 + 40 * Math.max(-1, Math.min(1, v));
-        img.data.set([l, l, l, 255], 4 * (y * 256 + x));
-      }
-    }
-  }
-  ctx.putImageData(img, 0, 0);
-  const tex = new THREE.CanvasTexture(canvas);
-  tex.colorSpace = THREE.SRGBColorSpace;
-  tex.wrapS = THREE.RepeatWrapping;
-  textures.set(body.id, tex);
-  return tex;
 }
 
 const ringTexture = (() => {
@@ -176,9 +127,17 @@ function Globe({ info, blend }) {
   const { body } = info;
   const appearance = body.appearance ?? {};
   const color = appearance.color ?? '#9a8f80';
+  const maps = useMemo(() => surfaceMaps(body), [body]);
   const surface = useMemo(() => new THREE.MeshStandardMaterial({
-    color: new THREE.Color(color), map: surfaceTexture(body), roughness: 1, metalness: 0,
-  }), [body, color]);
+    color: maps.tint ? new THREE.Color(color) : new THREE.Color('#ffffff'),
+    map: maps.map ?? null,
+    displacementMap: maps.heightMap ?? null,
+    displacementScale: maps.heightMap ? maps.heightScale : 0,
+    bumpMap: maps.heightMap ?? null,
+    normalMap: maps.normalMap ?? null,
+    roughnessMap: maps.roughnessMap ?? null,
+    roughness: 1, metalness: 0,
+  }), [maps, color]);
   const atmosphere = useMemo(() => appearance.atmosphere && new THREE.ShaderMaterial({
     vertexShader: atmosphereVertex,
     fragmentShader: atmosphereFragment,
@@ -226,7 +185,7 @@ function Globe({ info, blend }) {
 
   return (
     <group ref={group} userData={{ layer: 'globes', body: body.id }}>
-      <mesh geometry={SPHERE} material={surface} />
+      <mesh geometry={maps.heightMap ? fineSphere() : SPHERE} material={surface} />
       {atmosphere && <mesh geometry={SPHERE} material={atmosphere} scale={1.02} />}
       {rings && <mesh geometry={RING} material={rings} />}
     </group>
@@ -248,6 +207,8 @@ export default function Planets() {
   const byId = useMemo(() => new Map(candidates.map((c) => [c.body.id, c])), [candidates]);
 
   useEffect(() => () => blend.current.clear(), []);
+  const invalidate = useThree((s) => s.invalidate);
+  useEffect(() => whenTexturesLoad(invalidate), [invalidate]);
 
   const rel = useMemo(() => [0, 0, 0], []);
   useFrame(({ camera, size }) => {

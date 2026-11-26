@@ -10,6 +10,9 @@
 //     Concord's places lie north of the Seam and the League's south;
 //   - turning to the far side of Scald hides the places there;
 //   - Tallis: its two moons are drawn on their orbits in the planet view;
+//   - a map registered through src/views/surfaces.js lines up with lat/lon:
+//     dots painted at two [lat, lon] on Scald's map appear where those
+//     coordinates are on screen (with a height map applied too);
 //   - Tallis III's rings are drawn; no page errors.
 // Screenshots go to --out. Uses the Playwright installed with the environment.
 
@@ -60,6 +63,36 @@ function brightest(png) {
   for (let i = 0; i < out.length; i++) if (i % bpp < 3) max = Math.max(max, out[i]);
   return max;
 }
+// Whether the middle pixel of a small clip is magenta (the test map's dots).
+function magenta(png) {
+  let width, height, type;
+  const idat = [];
+  for (let i = 8; i < png.length;) {
+    const len = png.readUInt32BE(i);
+    const tag = png.toString('ascii', i + 4, i + 8);
+    if (tag === 'IHDR') { width = png.readUInt32BE(i + 8); height = png.readUInt32BE(i + 12); type = png[i + 17]; }
+    if (tag === 'IDAT') idat.push(png.subarray(i + 8, i + 8 + len));
+    i += 12 + len;
+  }
+  const bpp = type === 6 ? 4 : 3;
+  const raw = inflateSync(Buffer.concat(idat));
+  const stride = width * bpp;
+  const out = new Uint8Array(width * height * bpp);
+  for (let y = 0; y < height; y++) {
+    const f = raw[y * (stride + 1)];
+    for (let x = 0; x < stride; x++) {
+      const v = raw[y * (stride + 1) + 1 + x];
+      const a = x >= bpp ? out[y * stride + x - bpp] : 0;
+      const b = y > 0 ? out[(y - 1) * stride + x] : 0;
+      const c = x >= bpp && y > 0 ? out[(y - 1) * stride + x - bpp] : 0;
+      const p = a + b - c, pa = Math.abs(p - a), pb = Math.abs(p - b), pc = Math.abs(p - c);
+      out[y * stride + x] = (v + [0, a, b, (a + b) >> 1, pa <= pb && pa <= pc ? a : pb <= pc ? b : c][f]) & 255;
+    }
+  }
+  const m = (Math.floor(height / 2) * width + Math.floor(width / 2)) * bpp;
+  const [r, g, b] = [out[m], out[m + 1], out[m + 2]];
+  return r > 2 * g + 20 && b > 2 * g + 20 ? true : `rgb(${r},${g},${b})`;
+}
 const peak = async (page, x, y, half = 3) => brightest(await page.screenshot({ clip: { x: Math.round(x - half), y: Math.round(y - half), width: 2 * half + 1, height: 2 * half + 1 } }));
 const ev = (page, fn, arg) => page.evaluate(fn, arg);
 async function settle(page) {
@@ -87,6 +120,21 @@ async function run(browser, base, name, options) {
   await page.waitForFunction(() => window.__lancer?.view.rig?.camera, null, { timeout: 15000 });
   await page.waitForTimeout(400);
 
+  // A test map for Scald, as an imported texture or a generator would supply:
+  // magenta dots at two [lat, lon], on a dark ground, full color, plus a height map.
+  const DOTS = [[0, 0], [-30, 20]]; // both on the face the close view turns to
+  await ev(page, async (dots) => {
+    const { registerSurface, canvasTexture } = await import('/src/views/surfaces.js');
+    const W = 1024, H = 512;
+    const paint = (fill) => (data, w, h) => {
+      for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) data.set(fill(x, y, w, h), 4 * (y * w + x));
+    };
+    const near = (x, y, w, h) => dots.some(([lat, lon]) => Math.hypot(x - ((lon + 180) / 360) * w, y - (1 - (lat + 90) / 180) * h) < 7);
+    const map = canvasTexture(W, H, paint((x, y, w, h) => (near(x, y, w, h) ? [255, 0, 255, 255] : [40, 40, 40, 255])));
+    const heightMap = canvasTexture(256, 128, paint((x) => { const v = 128 + 100 * Math.sin(x / 10); return [v, v, v, 255]; }), { color: false });
+    registerSurface((body) => (body.id === 'scald-planet' ? { map, tint: false, heightMap, heightScale: 0.002 } : null));
+  }, DOTS);
+
   // Scald: fly to it, then click it again to come in close.
   await focus(page, 'scald-planet');
   const before = await ev(page, () => window.__lancer.globeShowing('scald-planet'));
@@ -97,6 +145,19 @@ async function run(browser, base, name, options) {
   const disc = await ev(page, () => { const m = window.__lancer.scene.children.find((o) => o.userData.layer === 'bodies'); return m.geometry.attributes.aColor.getW(m.userData.ids.indexOf('scald-planet')); });
   check('the flat disc is gone where the globe shows', disc === 0, `disc opacity ${disc}`);
   await page.screenshot({ path: join(OUT, `${name}-scald.png`) });
+
+  // The test map's dots are where their [lat, lon] are on screen.
+  const dotHits = [];
+  const labelsShown = (v) => ev(page, (vis) => document.querySelectorAll('[data-place],[data-body],[data-region]').forEach((e) => { e.style.visibility = vis; }), v);
+  await labelsShown('hidden'); // measure the globe, not text laid over it
+  for (const at of DOTS) {
+    const p = await ev(page, (a) => window.__lancer.placeScreen('the-seam', a), at);
+    if (!p) { dotHits.push('behind'); continue; }
+    const png = await page.screenshot({ clip: { x: Math.round(p[0]) - 1, y: Math.round(p[1]) - 1, width: 3, height: 3 } });
+    dotHits.push(magenta(png));
+  }
+  await labelsShown('');
+  check('a registered surface map lines up with lat/lon on the globe', dotHits.every((h) => h === true), dotHits.join(', '));
 
   // Places drawn and named.
   const ids = [...CONCORD, ...LEAGUE, 'kerrtown'];
