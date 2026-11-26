@@ -18,6 +18,7 @@ import { offsetKm, pixelsPerKm } from './origin.js';
 import { view } from './camera/view.js';
 import { starRadiusKm } from './mapTargets.js';
 import { FROM_DISPLAY_GLSL } from './color.js';
+import { BLOOM } from './bloom.js';
 
 const CORE_PX = 2.5;
 const UNMAPPED_CORE = 0.5; // color multiplier for unmapped stars
@@ -151,6 +152,7 @@ export default function Stars() {
     u.uPxToClip.value.set(2 / size.width, 2 / size.height);
     u.uViewport.value.set(size.width * viewport.dpr, size.height * viewport.dpr);
     u.uPixelRatio.value = viewport.dpr;
+    BLOOM.stars = false;
     stars.forEach((s, i) => {
       offsetKm(cam, s.place, rel);
       const dist = Math.hypot(rel[0], rel[1], rel[2]);
@@ -164,6 +166,7 @@ export default function Stars() {
       // the core grows brighter than white (real bloom, B0.5).
       const near = Math.min(1, Math.max(0, Math.log10(3e10 / dist) / 2));
       const bloom = 1 + 3 * near;
+      if (near > 0 && !s.dark) BLOOM.stars = true;
       if (!s.dark) core.current.setColorAt(i, tint.copy(s.color).multiplyScalar((1 + (s.light - 1) * near) * (s.dim ? UNMAPPED_CORE : 1)));
       sizes.array[i] = s.glow * bloom + 1.6 * truePx;
     });

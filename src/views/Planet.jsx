@@ -45,6 +45,7 @@ import './procedural.js'; // the Phase 2 surfaces, while WIP_WORLDS is off
 import { globes } from './occlusion.js';
 import { FROM_DISPLAY_GLSL } from './color.js';
 import { EXPOSURE } from './exposure.js';
+import { BLOOM } from './bloom.js';
 
 // Radius on screen (CSS px) over which the flat disc hands over to the globe.
 const GLOBE_FROM_PX = 10;
@@ -189,6 +190,7 @@ function Globe({ info, blend }) {
     // Lava is light from the world: it takes exposure, and its hottest parts
     // pass the bloom threshold (Output.jsx, task B0.5).
     surface.emissiveIntensity = LAVA_GLOW * EXPOSURE.value;
+    if (b > 0 && maps.emissiveMap) BLOOM.lava = true;
     surface.transparent = b < 1;
     if (clouds) clouds.opacity = b;
     if (rings) {

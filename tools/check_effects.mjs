@@ -106,9 +106,9 @@ async function run(browser, base, name, options) {
     for (const o of window.__lancer.scene.children) if (o.userData.layer) byLayer[o.userData.layer] = o.count;
     return { calls: window.__lancer.render().calls, byLayer, icons: window.__lancer.centerTypes() };
   });
-  // + 17 for the output (Output.jsx): bloom 16 (B0.5: luminance, mipmap blur
-  // down and up) and the tone map 1 (B0.4).
-  check('draw calls at the Basin: backdrop 2, stars 2, lanes 2, icons 1, effects 2, output 17 (no bodies, orbits, places or fronts)', info.calls === 26, `${info.calls}`);
+  // + 1: the tone map (B0.4). Bloom's 16 passes run only when something can
+  // bloom (B0.5, bloom.js): not at the Basin.
+  check('draw calls at the Basin: backdrop 2, stars 2, lanes 2, icons 1, effects 2, tone map 1, no bloom (no bodies, orbits, places or fronts)', info.calls === 10, `${info.calls}`);
   check('11 center icons: 7 rogue planets, 3 wrecks, 1 structure', info.icons['rogue-planet'] === 7 && info.icons.wreck === 3 && info.icons.structure === 1 && Object.keys(info.icons).length === 3, JSON.stringify(info.icons));
 
   // Icons are no bigger than a Sun-like star's glow (8 px), so they don't out-scale the stars.

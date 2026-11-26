@@ -18,7 +18,20 @@ import * as THREE from 'three';
 import { EffectComposer } from '@react-three/postprocessing';
 import { Effect, BlendFunction, BloomEffect } from 'postprocessing';
 import { OUTPUT_GLSL } from './color.js';
+import { BLOOM } from './bloom.js';
 import { useMap } from '../data/store.js';
+
+// Bloom that does its work only when something can bloom (bloom.js). Turned
+// off, its strength (a uniform) goes to 0, so no old glow stays and the
+// shader is not rebuilt; its 16 passes are skipped.
+class GatedBloom extends BloomEffect {
+  update(renderer, inputBuffer, deltaTime) {
+    const on = BLOOM.stars || BLOOM.lava;
+    BLOOM.lava = false; // globes set it again each frame they show
+    this.intensity = on ? this.strength : 0;
+    if (on) super.update(renderer, inputBuffer, deltaTime);
+  }
+}
 
 class ToneMap extends Effect {
   constructor() {
@@ -36,7 +49,11 @@ export default function Output() {
   // Bloom (task B0.5): light over a luminance of 2 spreads into a soft halo.
   // Chart marks never pass 2 (color.js), so only light blooms: star cores
   // (Stars.jsx) and hot lava (Planet.jsx). Added before the tone map.
-  const bloom = useMemo(() => new BloomEffect({ blendFunction: BlendFunction.ADD, mipmapBlur: true, luminanceThreshold: 2, luminanceSmoothing: 0.4, intensity: 0.9, radius: 0.7 }), []);
+  const bloom = useMemo(() => {
+    const b = new GatedBloom({ blendFunction: BlendFunction.ADD, mipmapBlur: true, luminanceThreshold: 2, luminanceSmoothing: 0.4, intensity: 0.9, radius: 0.7 });
+    b.strength = 0.9;
+    return b;
+  }, []);
   const samples = useThree((s) => (s.viewport.dpr >= 2 ? 0 : 4));
   useEffect(() => {
     gl.info.autoReset = false;
