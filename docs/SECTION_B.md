@@ -10,8 +10,8 @@ data and from physical models.
 
 **Status (Nov 26, 2026): planned; decisions BD1 to BD8 made (Section 8). Next:
 Phase B0.** Earlier work for Section B is
-on branch `ccr-23ad96e8-4fi4vg`, commit `828e8d0` (procedural planets, on
-hold). Phase B2 and Phase B5 continue from that work.
+on branch `section-b` (procedural planets, on hold); see
+[SECTION_B_HANDOFF.md](SECTION_B_HANDOFF.md). Phase B2 and Phase B5 continue from that work.
 
 ## 1. Objective
 
@@ -443,4 +443,4 @@ BD1 to BD8: the GM accepted all eight recommendations on Nov 26, 2026. The
 1. Decisions BD1 to BD8 are made (Section 8).
 2. Start Phase B0 with task B0.1 (baseline screenshots and budgets).
 3. Then Phase B1, then Section A Phase 3 (BD5), then Phases B2 onward.
-4. Keep the WIP planet work on branch `ccr-23ad96e8-4fi4vg` until Phase B2. It is not on `main`.
+4. Work on branch `section-b`. The WIP planet work is there, not on `main`. Read [SECTION_B_HANDOFF.md](SECTION_B_HANDOFF.md) first.
