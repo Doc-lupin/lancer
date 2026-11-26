@@ -17,6 +17,7 @@ import { STAR_KINDS } from '../data/starKinds.js';
 import { offsetKm, pixelsPerKm } from './origin.js';
 import { view } from './camera/view.js';
 import { starRadiusKm } from './mapTargets.js';
+import { FROM_DISPLAY_GLSL } from './color.js';
 
 const CORE_PX = 2.5;
 const UNMAPPED_CORE = 0.5; // color multiplier for unmapped stars
@@ -58,6 +59,7 @@ void main() {
 
 const glowFragment = /* glsl */ `
 #include <logdepthbuf_pars_fragment>
+${FROM_DISPLAY_GLSL}
 flat varying vec2 vCenter;
 flat varying float vRadius;
 flat varying vec3 vColor;
@@ -66,7 +68,7 @@ void main() {
   float d = length(gl_FragCoord.xy - vCenter) / vRadius;
   // A bright core and a faint, wide halo, like light scattered in an eye or lens.
   float a = (exp(-d * d * 4.0) + 0.22 / (1.0 + d * d * 60.0)) * (1.0 - smoothstep(0.6, 1.0, d));
-  gl_FragColor = vec4(vColor * a, a);
+  gl_FragColor = vec4(fromDisplay(vColor * a), a);
 }`;
 
 export default function Stars() {

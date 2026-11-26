@@ -24,6 +24,7 @@ import { LaneLabels, LaneLabelsUpdater } from './LaneLabels.jsx';
 import LanesToggle from '../interface/LanesToggle.jsx';
 import CameraToggle from '../interface/CameraToggle.jsx';
 import DebugHook from './DebugHook.jsx';
+import Output from './Output.jsx';
 
 export default function Scene() {
   const status = useMap((s) => s.status);
@@ -46,7 +47,7 @@ export default function Scene() {
       <Canvas
         flat
         frameloop="demand"
-        gl={{ logarithmicDepthBuffer: true }}
+        gl={{ logarithmicDepthBuffer: true, antialias: false }}
         camera={{ fov: CAMERA.fov, near: CAMERA.nearKm, far: CAMERA.farKm, position: [0, 0, 0] }}
       >
         <color attach="background" args={['#000']} />
@@ -66,6 +67,7 @@ export default function Scene() {
             <BodyLabelsUpdater />
             <PlaceLabelsUpdater />
             {import.meta.env.DEV && <DebugHook />}
+            <Output />
           </>
         )}
       </Canvas>

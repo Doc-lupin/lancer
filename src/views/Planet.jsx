@@ -43,6 +43,8 @@ import { hasRecipe } from './planet/recipes.js';
 import { WIP_WORLDS } from './planet/switch.js';
 import './procedural.js'; // the Phase 2 surfaces, while WIP_WORLDS is off
 import { globes } from './occlusion.js';
+import { FROM_DISPLAY_GLSL } from './color.js';
+import { EXPOSURE } from './exposure.js';
 
 // Radius on screen (CSS px) over which the flat disc hands over to the globe.
 const GLOBE_FROM_PX = 10;
@@ -88,11 +90,13 @@ void main() {
 }`;
 const atmosphereFragment = /* glsl */ `
 #include <logdepthbuf_pars_fragment>
+${FROM_DISPLAY_GLSL}
 uniform vec3 uColor;
 uniform vec3 uLight;   // toward the star, view space; zero for none
 uniform vec3 uCenter;  // the planet's centre, view space (km)
 uniform float uRadius; // km
 uniform float uOpacity;
+uniform float uExposure;
 varying vec3 vPos;
 void main() {
   #include <logdepthbuf_fragment>
@@ -119,7 +123,7 @@ void main() {
   // Warm where the light skims through at the terminator.
   vec3 col = mix(vec3(1.0, 0.55, 0.32), uColor, smoothstep(-0.1, 0.45, sun));
   float a = glow * lit * uOpacity * 0.85;
-  gl_FragColor = vec4(col * a, a);
+  gl_FragColor = vec4(fromDisplay(col * a) * uExposure, a);
 }`;
 
 function Globe({ info, blend }) {
@@ -148,7 +152,7 @@ function Globe({ info, blend }) {
       uLight: { value: new THREE.Vector3() },
       uCenter: { value: new THREE.Vector3() },
       uRadius: { value: 1 },
-      uOpacity: { value: 1 },
+      uOpacity: { value: 1 }, uExposure: EXPOSURE,
     },
     transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
   }), [appearance.atmosphere, color]);
@@ -252,8 +256,8 @@ export default function Planets() {
     // Light from the star of the largest globe's system, aimed at it.
     const main = byId.get(ids[0]);
     if (sun.current && ambient.current) {
-      sun.current.intensity = main?.toStar ? 3.6 : 0;
-      ambient.current.intensity = main?.toStar ? 0.06 : 0.35;
+      sun.current.intensity = (main?.toStar ? 3.6 : 0) * EXPOSURE.value;
+      ambient.current.intensity = (main?.toStar ? 0.06 : 0.35) * EXPOSURE.value;
       if (main) {
         offsetKm(cam, main.place, rel);
         sun.current.target.position.set(rel[0], rel[1], rel[2]);

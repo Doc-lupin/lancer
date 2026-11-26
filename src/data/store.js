@@ -69,6 +69,7 @@ export const useMap = create((set) => ({
   playerMode: false, // GM view by default; the switch arrives in Phase 4
   lanes: 'faint', // how lanes show: faint, bright (lanes mode, with labels; task 2.7) or off
   cameraMode: 'orbit', // orbit around a focus, or free movement (camera/free.js)
+  exposure: 1, // linear multiplier on light from the world (views/exposure.js, task B0.4)
 
   setLoading: () => set({ status: 'loading', error: null }),
   setMap: (map) => set({ map, index: buildIndex(map), status: 'ready', error: null }),
@@ -76,4 +77,5 @@ export const useMap = create((set) => ({
   setPlayerMode: (playerMode) => set({ playerMode }),
   setLanes: (lanes) => set({ lanes }),
   setCameraMode: (cameraMode) => set({ cameraMode }),
+  setExposure: (exposure) => set({ exposure }),
 }));

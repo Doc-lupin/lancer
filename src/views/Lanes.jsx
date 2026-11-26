@@ -15,7 +15,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useMap, isHidden } from '../data/store.js';
-import { displayColor } from './color.js';
+import { displayColor, FROM_DISPLAY_GLSL } from './color.js';
 import { laneEndPlaces, tideState } from '../data/lanes.js';
 import { offsetKm } from './origin.js';
 import { common, stripVertex, stripFragment, screenMaterial as material, quadGeometry, clipToView } from './strip.js';
@@ -65,6 +65,7 @@ void main() {
 
 // A ">" shape: two strokes meeting at the front, pointing along vDir.
 const markFragment = /* glsl */ `
+${FROM_DISPLAY_GLSL}
 uniform float uPixelRatio;
 flat varying vec2 vCenter;
 flat varying vec2 vDir;
@@ -79,7 +80,7 @@ void main() {
   float hw = 0.9 * uPixelRatio;
   float a = vColor.a * (1.0 - smoothstep(hw - 0.6, hw + 0.6, dist));
   if (a <= 0.003) discard;
-  gl_FragColor = vec4(vColor.rgb * a, a);
+  gl_FragColor = vec4(fromDisplay(vColor.rgb * a), a);
 }`;
 
 export default function Lanes() {

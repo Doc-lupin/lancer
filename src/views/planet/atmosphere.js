@@ -12,6 +12,7 @@
 
 import * as THREE from 'three';
 import { NOISE } from './noise.js';
+import { EXPOSURE } from '../exposure.js';
 
 export const SCATTER = /* glsl */ `
   uniform float uAir, uAirTop, uHR, uHM, uSkyPower;
@@ -80,7 +81,7 @@ export function airUniforms(air) {
 // scattered along it.
 export function skyMaterial(air, shared) {
   return new THREE.ShaderMaterial({
-    uniforms: { ...shared, ...airUniforms(air), uCam: { value: new THREE.Vector3() }, uOpacity: { value: 1 }, uExposure: { value: 1 } },
+    uniforms: { ...shared, ...airUniforms(air), uCam: { value: new THREE.Vector3() }, uOpacity: { value: 1 }, uExposure: EXPOSURE },
     vertexShader: /* glsl */ `
       #include <common>
       #include <logdepthbuf_pars_vertex>
@@ -103,7 +104,7 @@ export function skyMaterial(air, shared) {
         if (sphereHit(uCam, rd, 1.0).x > 0.0) discard; // the ground is drawn by the surface
         vec3 trans;
         vec3 c = scatter(uCam, rd, 1e9, trans);
-        gl_FragColor = vec4(tonemap(c * uExposure) * uOpacity, 1.0);
+        gl_FragColor = vec4(c * uExposure * uOpacity, 1.0); // linear; Output.jsx tone maps
       }`,
     transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
   });

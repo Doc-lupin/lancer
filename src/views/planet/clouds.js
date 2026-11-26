@@ -7,6 +7,7 @@
 import * as THREE from 'three';
 import { NOISE } from './noise.js';
 import { SCATTER, airUniforms } from './atmosphere.js';
+import { EXPOSURE } from '../exposure.js';
 
 export const CLOUD_SHELL = 1.008;
 
@@ -26,7 +27,7 @@ export function cloudMaterial(climate, air, seed) {
     uniforms: {
       ...airUniforms(air),
       uClimate: { value: climate }, uClouds: { value: 1 }, uSeed: { value: new THREE.Vector3(...seed) },
-      uCam: { value: new THREE.Vector3() }, uOpacity: { value: 1 }, uExposure: { value: 1 }, uAmbient: { value: 0.01 }, uSun: { value: 1.7 },
+      uCam: { value: new THREE.Vector3() }, uOpacity: { value: 1 }, uExposure: EXPOSURE, uAmbient: { value: 0.01 }, uSun: { value: 1.7 },
     },
     vertexShader: /* glsl */ `
       #include <common>
@@ -63,7 +64,7 @@ export function cloudMaterial(climate, air, seed) {
         vec3 tr;
         vec3 ins = scatter(uCam, rd, length(p - uCam), tr);
         col = col * mix(vec3(1.0), tr, 0.7) + ins * 0.55;
-        gl_FragColor = vec4(tonemap(col * uExposure), c * 0.95 * uOpacity);
+        gl_FragColor = vec4(col * uExposure, c * 0.95 * uOpacity); // linear; Output.jsx tone maps
       }`,
     transparent: true, depthWrite: false,
   });

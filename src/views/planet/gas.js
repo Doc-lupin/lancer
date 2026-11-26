@@ -14,6 +14,7 @@
 import * as THREE from 'three';
 import { NOISE, CUBE } from './noise.js';
 import { SCATTER, airUniforms } from './atmosphere.js';
+import { EXPOSURE } from '../exposure.js';
 
 const vertex = /* glsl */ `
   #include <common>
@@ -114,7 +115,7 @@ const fragment = /* glsl */ `
     vec3 tr;
     vec3 ins = scatter(uCam, rd, length(d - uCam), tr);
     c3 = c3 * tr + ins;
-    gl_FragColor = vec4(tonemap(c3 * uExposure), uOpacity);
+    gl_FragColor = vec4(c3 * uExposure, uOpacity); // linear; Output.jsx tone maps
   }`;
 
 const v3 = (a) => new THREE.Vector3(...a);
@@ -130,7 +131,7 @@ export function gasMaterial({ r, ringAlpha, ring }) {
     uBands: { value: r.bands }, uContrast: { value: Math.min(1, r.contrast) }, uTurb: { value: r.turbulence },
     uStreaks: { value: r.streaks }, uThermal: { value: r.thermal }, uPolar: { value: r.polar },
     uRing: { value: ring ? 1 : 0 }, uRingInner: { value: ring?.[0] ?? 0 }, uRingOuter: { value: ring?.[1] ?? 0 },
-    uCam: { value: new THREE.Vector3() }, uAmbient: { value: 0.01 }, uSun: { value: 1.7 }, uExposure: { value: 1 }, uOpacity: { value: 1 },
+    uCam: { value: new THREE.Vector3() }, uAmbient: { value: 0.01 }, uSun: { value: 1.7 }, uExposure: EXPOSURE, uOpacity: { value: 1 },
   };
   return new THREE.ShaderMaterial({ uniforms: u, vertexShader: vertex, fragmentShader: fragment });
 }

@@ -5,8 +5,9 @@
 // same banding for the rings' shadow on the planet.
 
 import * as THREE from 'three';
-import { displayColor } from '../color.js';
+import { displayColor, FROM_DISPLAY_GLSL } from '../color.js';
 import { random } from '../surfaces.js';
+import { EXPOSURE } from '../exposure.js';
 
 export const RING_INNER = 1.35;
 export const RING_OUTER = 2.3;
@@ -58,7 +59,7 @@ export function ringMaterial(color) {
     uniforms: {
       uAlpha: { value: t.alpha }, uLightMap: { value: t.light },
       uColor: { value: displayColor(new THREE.Color(color).lerp(new THREE.Color('#ffffff'), 0.45).getHex()) },
-      uOpacity: { value: 1 }, uLight: { value: new THREE.Vector3(1, 0, 0) }, uLit: { value: 0 },
+      uOpacity: { value: 1 }, uExposure: EXPOSURE, uLight: { value: new THREE.Vector3(1, 0, 0) }, uLit: { value: 0 },
     },
     vertexShader: /* glsl */ `
       #include <common>
@@ -74,9 +75,10 @@ export function ringMaterial(color) {
     fragmentShader: /* glsl */ `
       #include <common>
       #include <logdepthbuf_pars_fragment>
+      ${FROM_DISPLAY_GLSL}
       uniform sampler2D uAlpha, uLightMap;
       uniform vec3 uColor, uLight;
-      uniform float uOpacity, uLit;
+      uniform float uOpacity, uLit, uExposure;
       varying vec2 vUv;
       varying vec3 vLocal;
       void main() {
@@ -88,7 +90,9 @@ export function ringMaterial(color) {
         float s = -dot(vLocal, uLight);
         float shade = 1.0;
         if (uLit > 0.5 && s > 0.0) shade = mix(0.12, 1.0, smoothstep(0.96, 1.03, length(vLocal + s * uLight)));
-        gl_FragColor = vec4(col * shade, a * uOpacity);
+        // Converted with the alpha, so an edge over black looks as it was written.
+        float alpha = a * uOpacity;
+        gl_FragColor = vec4(fromDisplay(col * shade * alpha) / max(alpha, 1e-4) * uExposure, alpha);
       }`,
     transparent: true, side: THREE.DoubleSide, depthWrite: false,
   });

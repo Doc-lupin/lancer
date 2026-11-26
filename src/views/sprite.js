@@ -9,6 +9,7 @@
 // uFadeTo screen heights, so a puff close to the camera doesn't fill the view.
 
 import * as THREE from 'three';
+import { FROM_DISPLAY_GLSL } from './color.js';
 
 export const spriteVertex = /* glsl */ `
 #include <common>
@@ -43,6 +44,7 @@ void main() {
 
 export const spriteFragmentHead = /* glsl */ `
 #include <logdepthbuf_pars_fragment>
+${FROM_DISPLAY_GLSL}
 uniform float uPixelRatio;
 flat varying vec2 vCenter;
 flat varying float vRadius;

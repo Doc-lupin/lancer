@@ -24,7 +24,7 @@ import { useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useMap, isHidden } from '../data/store.js';
-import { displayColor } from './color.js';
+import { displayColor, FROM_DISPLAY_GLSL } from './color.js';
 import { bodyOffsetKm, daysSinceEpoch, orbitPoint, KM_PER_AU } from '../data/orbits.js';
 import { offsetKm, place, pixelsPerKm } from './origin.js';
 import { view } from './camera/view.js';
@@ -90,6 +90,7 @@ void main() {
 }`;
 
 const bodyFragment = /* glsl */ `
+${FROM_DISPLAY_GLSL}
 #include <logdepthbuf_pars_fragment>
 uniform float uPixelRatio;
 flat varying vec2 vCenter;
@@ -127,7 +128,7 @@ void main() {
   }
   a *= vColor.a;
   if (a < 0.004) discard;
-  gl_FragColor = vec4(rgb * a, a);
+  gl_FragColor = vec4(fromDisplay(rgb * a), a);
 }`;
 
 const orbitKm = (o) => o.distance * (o.unit === 'au' ? KM_PER_AU : 1);

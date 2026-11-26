@@ -11,6 +11,7 @@
 
 import * as THREE from 'three';
 import { CAMERA } from './origin.js';
+import { FROM_DISPLAY_GLSL } from './color.js';
 
 // Trims a piece to the part that can show on screen, before it goes to the
 // GPU (task 2.11, after flicker on a phone). Cutting a piece at a near plane
@@ -113,6 +114,7 @@ void main() {
 // uButt = 1 gives flat ends, for lines made of many short pieces (orbits,
 // fronts): rounded ends would overlap at every joint and show as beads.
 export const stripFragment = /* glsl */ `
+${FROM_DISPLAY_GLSL}
 uniform float uButt;
 flat varying vec2 vA;
 flat varying vec2 vB;
@@ -126,7 +128,7 @@ void main() {
   float d = length(p - (vA + ab * t));
   float a = vColor.a * (1.0 - smoothstep(vHalf - 0.6, vHalf + 0.6, d));
   if (a <= 0.003) discard;
-  gl_FragColor = vec4(vColor.rgb * a, a);
+  gl_FragColor = vec4(fromDisplay(vColor.rgb * a), a);
 }`;
 
 export function screenMaterial(vertexShader, fragmentShader, { butt = false } = {}) {

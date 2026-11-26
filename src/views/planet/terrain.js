@@ -22,6 +22,7 @@ import { NOISE, CUBE } from './noise.js';
 import { SCATTER, airUniforms } from './atmosphere.js';
 import { COVER } from './clouds.js';
 import { MAX_HINTS } from './fields.js';
+import { EXPOSURE } from '../exposure.js';
 
 const HEIGHT = /* glsl */ `
   uniform samplerCube uShape;
@@ -249,7 +250,7 @@ const fragment = /* glsl */ `
     // A little less haze over the ground than a strict model gives, so the land
     // reads clearly; the sky at the limb keeps it all.
     col = col * mix(vec3(1.0), tr, 0.7) + ins * 0.55;
-    gl_FragColor = vec4(tonemap(col * uExposure), uOpacity);
+    gl_FragColor = vec4(col * uExposure, uOpacity); // linear; Output.jsx tone maps
     // Debug views (set uDebug from the console): 1 height, 2 moisture, 3 temperature.
     if (uDebug > 0.5) gl_FragColor = vec4(uDebug < 1.5 ? vec3(0.5 + 0.25 * (h - uSea), sea ? 0.0 : 0.5, sea ? 1.0 : 0.0) : uDebug < 2.5 ? vec3(M) : vec3(sat((T + 50.0) / 100.0), 0.0, 1.0 - sat((T + 50.0) / 100.0)), 1.0);
   }`;
@@ -279,7 +280,7 @@ export function terrainMaterial({ r, fields, hints, biomes, radiusKm, ringAlpha,
     uIcy: { value: r.icy }, uIo: { value: r.io }, uSprings: { value: r.accent && r.terrain.volcanoes && r.icy ? 1 : 0 }, uCity: { value: r.cityLights },
     uClouds: { value: r.clouds }, uHint: { value: hint }, uHintCount: { value: hints.length },
     uRing: { value: ring ? 1 : 0 }, uRingInner: { value: ring?.[0] ?? 0 }, uRingOuter: { value: ring?.[1] ?? 0 },
-    uDebug: { value: 0 }, uCam: { value: new THREE.Vector3() }, uAmbient: { value: 0.01 }, uSun: { value: 1.7 }, uExposure: { value: 1 }, uOpacity: { value: 1 },
+    uDebug: { value: 0 }, uCam: { value: new THREE.Vector3() }, uAmbient: { value: 0.01 }, uSun: { value: 1.7 }, uExposure: EXPOSURE, uOpacity: { value: 1 },
   };
   return new THREE.ShaderMaterial({ uniforms: u, vertexShader: vertex, fragmentShader: fragment });
 }

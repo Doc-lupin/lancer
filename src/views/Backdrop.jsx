@@ -24,6 +24,8 @@ import { useEffect, useMemo } from 'react';
 import { useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { random } from './surfaces.js';
+import { FROM_DISPLAY_GLSL } from './color.js';
+import { EXPOSURE } from './exposure.js';
 
 const SKY_KM = 1e9; // any distance well inside the far plane; only directions matter
 // Galactic frame in scene axes: toward the core, along the rotation, the pole.
@@ -122,7 +124,7 @@ function bakeSky(gl) {
 // The sky sphere: looks up each direction's longitude and latitude.
 const skyMaterial = (texture) => new THREE.ShaderMaterial({
   uniforms: {
-    uSky: { value: texture },
+    uSky: { value: texture }, uExposure: EXPOSURE,
     uCore: { value: new THREE.Vector3(...CORE) }, uAlong: { value: new THREE.Vector3(...ALONG) }, uPole: { value: new THREE.Vector3(...POLE) },
   },
   vertexShader: /* glsl */ `
@@ -132,7 +134,9 @@ const skyMaterial = (texture) => new THREE.ShaderMaterial({
       gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
     }`,
   fragmentShader: /* glsl */ `
+    ${FROM_DISPLAY_GLSL}
     uniform sampler2D uSky;
+    uniform float uExposure;
     uniform vec3 uCore, uAlong, uPole;
     varying vec3 vDir;
     void main() {
@@ -142,7 +146,7 @@ const skyMaterial = (texture) => new THREE.ShaderMaterial({
       vec3 c = texture2D(uSky, vec2(l / 6.2831853 + 0.5, b / 3.1415927 + 0.5)).rgb;
       // A little noise against banding on the 8-bit screen.
       c += (fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) / 255.0;
-      gl_FragColor = vec4(max(c, 0.0), 1.0);
+      gl_FragColor = vec4(fromDisplay(max(c, 0.0)) * uExposure, 1.0);
     }`,
   side: THREE.BackSide, depthTest: false, depthWrite: false,
   blending: THREE.AdditiveBlending,
@@ -194,7 +198,7 @@ function starPoints() {
 }
 
 const starMaterial = () => new THREE.ShaderMaterial({
-  uniforms: { uScale: { value: 1 } },
+  uniforms: { uScale: { value: 1 }, uExposure: EXPOSURE },
   vertexShader: /* glsl */ `
     attribute vec4 aLook;
     uniform float uScale;
@@ -205,11 +209,13 @@ const starMaterial = () => new THREE.ShaderMaterial({
       gl_PointSize = (1.1 + 2.0 * aLook.a) * uScale;
     }`,
   fragmentShader: /* glsl */ `
+    ${FROM_DISPLAY_GLSL}
+    uniform float uExposure;
     varying vec4 vLook;
     void main() {
       float r = length(gl_PointCoord - 0.5) * 2.0;
       float a = vLook.a * smoothstep(1.0, 0.15, r);
-      gl_FragColor = vec4(vLook.rgb * a, a);
+      gl_FragColor = vec4(fromDisplay(vLook.rgb * a) * uExposure, a);
     }`,
   depthTest: false, depthWrite: false,
   blending: THREE.AdditiveBlending,

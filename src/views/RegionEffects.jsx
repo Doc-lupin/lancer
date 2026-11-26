@@ -19,6 +19,7 @@ import { offsetKm, place, KM_PER_LY } from './origin.js';
 import { view } from './camera/view.js';
 import { spriteVertex, spriteFragmentHead, spriteUniforms, spriteGeometry, updateViewport } from './sprite.js';
 import { bake, setBaker } from './surfaces.js';
+import { EXPOSURE } from './exposure.js';
 
 const STYLES = {
   nebula: {
@@ -36,6 +37,7 @@ const STYLES = {
 const fragment = /* glsl */ `
 ${spriteFragmentHead}
 uniform sampler2D uShapes;
+uniform float uExposure;
 void main() {
   #include <logdepthbuf_fragment>
   vec2 q = (gl_FragCoord.xy - vCenter) / max(vRadius, 0.5);
@@ -49,7 +51,7 @@ void main() {
   float shape = mix(exp(-d * d * 2.5), texture2D(uShapes, uv).r, smoothstep(4.0, 24.0, vRadius));
   float a = vColor.a * shape * (1.0 - smoothstep(0.85, 1.0, d));
   if (a < 0.002) discard;
-  gl_FragColor = vec4(vColor.rgb * a, a);
+  gl_FragColor = vec4(fromDisplay(vColor.rgb * a) * uExposure, a);
 }`;
 
 // Four cloud shapes in a 2 × 2 atlas: swirled noise with bright filaments,
@@ -133,7 +135,7 @@ function Effect({ kind, puffs }) {
     const m = new THREE.ShaderMaterial({
       vertexShader: spriteVertex,
       fragmentShader: fragment,
-      uniforms: spriteUniforms({ uWorldSize: { value: 1 }, uFadeFrom: { value: 0.25 }, uFadeTo: { value: 0.9 }, uShapes: { value: cloudShapes() } }),
+      uniforms: spriteUniforms({ uWorldSize: { value: 1 }, uFadeFrom: { value: 0.25 }, uFadeTo: { value: 0.9 }, uShapes: { value: cloudShapes() }, uExposure: EXPOSURE }),
       transparent: true,
       depthWrite: false,
       ...style.blending,

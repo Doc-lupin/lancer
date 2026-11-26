@@ -92,11 +92,6 @@ export const NOISE = /* glsl */ `
   }
   float sat(float x) { return clamp(x, 0.0, 1.0); }
   vec3 toLinear(vec3 c) { return pow(max(c, 0.0), vec3(2.2)); }
-  // Filmic tone curve (ACES, fitted), then display gamma.
-  vec3 tonemap(vec3 c) {
-    c = (c * (2.51 * c + 0.03)) / (c * (2.43 * c + 0.59) + 0.14);
-    return pow(clamp(c, 0.0, 1.0), vec3(1.0 / 2.2));
-  }
 `;
 
 // The six cube faces, as in cubeSphere.js, and the even spread of points.

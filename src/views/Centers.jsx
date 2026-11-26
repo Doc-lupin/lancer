@@ -55,7 +55,7 @@ void main() {
   }
   float a = max(1.0 - smoothstep(hw - 0.5, hw + 0.5, stroke), fill) * vColor.a;
   if (a < 0.01) discard;
-  gl_FragColor = vec4(vColor.rgb * a, a);
+  gl_FragColor = vec4(fromDisplay(vColor.rgb * a), a);
 }`;
 
 export default function Centers() {

@@ -55,7 +55,7 @@ void main() {
   vec3 rgb = mix(vec3(0.0), vColor.rgb, core);   // a dark ring around a colored dot
   float a = max(core, ring * 0.85) * vColor.a;
   if (a < 0.01) discard;
-  gl_FragColor = vec4(rgb * a, a);
+  gl_FragColor = vec4(fromDisplay(rgb * a), a);
 }`;
 
 // Places on round bodies, with their globe; fronts with their path. One list,
