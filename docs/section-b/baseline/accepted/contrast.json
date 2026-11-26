@@ -1,0 +1,3545 @@
+{
+ "aa": 4.5,
+ "views": {
+  "01-basin": {
+   "desktop": [
+    {
+     "id": "region:ostrom:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:ostrom:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:tallis:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:pennant:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:pennant:1",
+     "contrast": 6.39
+    },
+    {
+     "id": "region:orison:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:orison:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:wending:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:wending:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:lantern-reach:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:lantern-reach:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:pale:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:pale:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:orrery:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:orrery:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:halyard:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:halyard:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:lumen:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:lumen:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:sable:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:sable:1",
+     "contrast": 6.55
+    },
+    {
+     "id": "region:furnace:0",
+     "contrast": 13.38
+    },
+    {
+     "id": "region:furnace:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:hollows:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:hollows:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:gloam:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:shoals:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:shoals:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:scald:0",
+     "contrast": 14.27
+    },
+    {
+     "id": "region:scald:1",
+     "contrast": 6.78
+    },
+    {
+     "id": "region:ferrous:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:ferrous:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:tarn:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:tarn:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:cairn:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:cairn:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:deeps:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:deeps:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:boneyard:0",
+     "contrast": 14.55
+    },
+    {
+     "id": "region:boneyard:1",
+     "contrast": 6.83
+    },
+    {
+     "id": "region:mire:0",
+     "contrast": 12.33
+    },
+    {
+     "id": "region:mire:1",
+     "contrast": 6.82
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:ostrom:0",
+     "contrast": 14.52
+    },
+    {
+     "id": "region:tallis:0",
+     "contrast": 14.52
+    },
+    {
+     "id": "region:orison:0",
+     "contrast": 7.6
+    },
+    {
+     "id": "region:orison:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:wending:0",
+     "contrast": 14.13
+    },
+    {
+     "id": "region:wending:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:lantern-reach:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:lantern-reach:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:orrery:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:halyard:0",
+     "contrast": 14.52
+    },
+    {
+     "id": "region:halyard:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:sable:0",
+     "contrast": 14.03
+    },
+    {
+     "id": "region:furnace:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:furnace:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:hollows:0",
+     "contrast": 14.35
+    },
+    {
+     "id": "region:gloam:0",
+     "contrast": 14.29
+    },
+    {
+     "id": "region:shoals:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:ferrous:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:ferrous:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:tarn:0",
+     "contrast": 14.52
+    },
+    {
+     "id": "region:cairn:0",
+     "contrast": 14.52
+    },
+    {
+     "id": "region:cairn:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:deeps:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:deeps:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:boneyard:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:boneyard:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:mire:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:mire:1",
+     "contrast": 6.82
+    }
+   ]
+  },
+  "02-basin-lanes-bright": {
+   "desktop": [
+    {
+     "id": "region:ostrom:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:tallis:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:pennant:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:orison:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:wending:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:lantern-reach:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:pale:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:orrery:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:halyard:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:lumen:0",
+     "contrast": 8.47
+    },
+    {
+     "id": "region:sable:0",
+     "contrast": 11.5
+    },
+    {
+     "id": "region:furnace:0",
+     "contrast": 13.3
+    },
+    {
+     "id": "region:hollows:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:gloam:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:shoals:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:scald:0",
+     "contrast": 5.01
+    },
+    {
+     "id": "region:ferrous:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:tarn:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:cairn:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:deeps:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:boneyard:0",
+     "contrast": 14.55
+    },
+    {
+     "id": "region:mire:0",
+     "contrast": 12.3
+    },
+    {
+     "id": "lane:ostrom-tallis:1",
+     "contrast": 11.22
+    },
+    {
+     "id": "lane:tallis-pennant:1",
+     "contrast": 16.12
+    },
+    {
+     "id": "lane:tallis-halyard:1",
+     "contrast": 3.2
+    },
+    {
+     "id": "lane:pennant-orison:1",
+     "contrast": 3.48
+    },
+    {
+     "id": "lane:wending-pale:0",
+     "contrast": 5.43
+    },
+    {
+     "id": "lane:orison-orrery:1",
+     "contrast": 16.12
+    },
+    {
+     "id": "lane:orison-gloam:0",
+     "contrast": 3.84
+    },
+    {
+     "id": "lane:pale-furnace:1",
+     "contrast": 15.06
+    },
+    {
+     "id": "lane:pale-furnace:2",
+     "contrast": 7.37
+    },
+    {
+     "id": "lane:lumen-furnace:1",
+     "contrast": 16.14
+    },
+    {
+     "id": "lane:sable-hollows:0",
+     "contrast": 2.88
+    },
+    {
+     "id": "lane:hollows-mire:0",
+     "contrast": 3.32
+    },
+    {
+     "id": "lane:shoals-orrery:0",
+     "contrast": 3.5
+    },
+    {
+     "id": "lane:halvard-ferrous:0",
+     "contrast": 12.11
+    },
+    {
+     "id": "lane:scald-ferrous:1",
+     "contrast": 8.39
+    },
+    {
+     "id": "lane:scald-tarn:1",
+     "contrast": 13.8
+    },
+    {
+     "id": "lane:scald-cairn:1",
+     "contrast": 16.14
+    },
+    {
+     "id": "lane:cairn-deeps:1",
+     "contrast": 16.14
+    },
+    {
+     "id": "lane:deeps-boneyard:0",
+     "contrast": 2.99
+    },
+    {
+     "id": "lane:ferrous-boneyard:1",
+     "contrast": 16.12
+    },
+    {
+     "id": "lane:tarn-mire:1",
+     "contrast": 16.14
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:ostrom:0",
+     "contrast": 14.52
+    },
+    {
+     "id": "region:tallis:0",
+     "contrast": 14.18
+    },
+    {
+     "id": "region:orison:0",
+     "contrast": 11.69
+    },
+    {
+     "id": "region:wending:0",
+     "contrast": 14.52
+    },
+    {
+     "id": "region:lantern-reach:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:orrery:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:halyard:0",
+     "contrast": 14.52
+    },
+    {
+     "id": "region:sable:0",
+     "contrast": 3.82
+    },
+    {
+     "id": "region:furnace:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:hollows:0",
+     "contrast": 6.04
+    },
+    {
+     "id": "region:gloam:0",
+     "contrast": 5.68
+    },
+    {
+     "id": "region:shoals:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:ferrous:0",
+     "contrast": 14.52
+    },
+    {
+     "id": "region:tarn:0",
+     "contrast": 14.52
+    },
+    {
+     "id": "region:cairn:0",
+     "contrast": 13.45
+    },
+    {
+     "id": "region:deeps:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:boneyard:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:mire:0",
+     "contrast": 14.52
+    },
+    {
+     "id": "lane:hollows-mire:0",
+     "contrast": 2.28
+    },
+    {
+     "id": "lane:scald-ferrous:0",
+     "contrast": 2.61
+    },
+    {
+     "id": "lane:scald-cairn:0",
+     "contrast": 5.17
+    },
+    {
+     "id": "lane:ferrous-boneyard:0",
+     "contrast": 5.02
+    }
+   ]
+  },
+  "03-basin-lanes-off": {
+   "desktop": [
+    {
+     "id": "region:ostrom:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:ostrom:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:tallis:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:pennant:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:pennant:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:orison:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:orison:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:wending:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:wending:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:lantern-reach:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:lantern-reach:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:pale:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:pale:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:orrery:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:orrery:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:halyard:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:halyard:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:lumen:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:lumen:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:sable:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:sable:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:furnace:0",
+     "contrast": 13.42
+    },
+    {
+     "id": "region:furnace:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:hollows:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:hollows:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:gloam:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:shoals:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:shoals:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:scald:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:scald:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:ferrous:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:ferrous:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:tarn:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:tarn:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:cairn:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:cairn:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:deeps:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:deeps:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:boneyard:0",
+     "contrast": 14.55
+    },
+    {
+     "id": "region:boneyard:1",
+     "contrast": 6.83
+    },
+    {
+     "id": "region:mire:0",
+     "contrast": 12.33
+    },
+    {
+     "id": "region:mire:1",
+     "contrast": 6.82
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:ostrom:0",
+     "contrast": 14.52
+    },
+    {
+     "id": "region:tallis:0",
+     "contrast": 14.52
+    },
+    {
+     "id": "region:orison:0",
+     "contrast": 9.14
+    },
+    {
+     "id": "region:orison:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:wending:0",
+     "contrast": 14.52
+    },
+    {
+     "id": "region:wending:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:lantern-reach:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:lantern-reach:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:orrery:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:halyard:0",
+     "contrast": 14.52
+    },
+    {
+     "id": "region:halyard:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:sable:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:furnace:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:furnace:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:hollows:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:gloam:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:shoals:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:ferrous:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:ferrous:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:tarn:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:cairn:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:cairn:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:deeps:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:deeps:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:boneyard:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:boneyard:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:mire:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:mire:1",
+     "contrast": 6.82
+    }
+   ]
+  },
+  "04-basin-face-on": {
+   "desktop": [
+    {
+     "id": "region:ostrom:0",
+     "contrast": 11.4
+    },
+    {
+     "id": "region:ostrom:1",
+     "contrast": 6.39
+    },
+    {
+     "id": "region:pennant:0",
+     "contrast": 11.36
+    },
+    {
+     "id": "region:pennant:1",
+     "contrast": 6.35
+    },
+    {
+     "id": "region:orison:0",
+     "contrast": 14.35
+    },
+    {
+     "id": "region:orison:1",
+     "contrast": 6.7
+    },
+    {
+     "id": "region:wending:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:wending:1",
+     "contrast": 6.77
+    },
+    {
+     "id": "region:lantern-reach:0",
+     "contrast": 14.37
+    },
+    {
+     "id": "region:pale:0",
+     "contrast": 14.18
+    },
+    {
+     "id": "region:pale:1",
+     "contrast": 6.69
+    },
+    {
+     "id": "region:orrery:0",
+     "contrast": 13.53
+    },
+    {
+     "id": "region:orrery:1",
+     "contrast": 6.36
+    },
+    {
+     "id": "region:halyard:0",
+     "contrast": 13.51
+    },
+    {
+     "id": "region:halyard:1",
+     "contrast": 6.26
+    },
+    {
+     "id": "region:lumen:0",
+     "contrast": 13.52
+    },
+    {
+     "id": "region:lumen:1",
+     "contrast": 6.34
+    },
+    {
+     "id": "region:sable:0",
+     "contrast": 13.15
+    },
+    {
+     "id": "region:furnace:0",
+     "contrast": 13.71
+    },
+    {
+     "id": "region:furnace:1",
+     "contrast": 6.34
+    },
+    {
+     "id": "region:hollows:0",
+     "contrast": 14.35
+    },
+    {
+     "id": "region:hollows:1",
+     "contrast": 6.7
+    },
+    {
+     "id": "region:gloam:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:gloam:1",
+     "contrast": 6.77
+    },
+    {
+     "id": "region:halvard:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:halvard:1",
+     "contrast": 6.78
+    },
+    {
+     "id": "region:shoals:0",
+     "contrast": 13.7
+    },
+    {
+     "id": "region:shoals:1",
+     "contrast": 6.39
+    },
+    {
+     "id": "region:scald:0",
+     "contrast": 13.46
+    },
+    {
+     "id": "region:scald:1",
+     "contrast": 6.39
+    },
+    {
+     "id": "region:cairn:0",
+     "contrast": 11.74
+    },
+    {
+     "id": "region:boneyard:0",
+     "contrast": 13.78
+    },
+    {
+     "id": "region:boneyard:1",
+     "contrast": 6.54
+    },
+    {
+     "id": "region:quiet:0",
+     "contrast": 14.55
+    },
+    {
+     "id": "region:quiet:1",
+     "contrast": 6.83
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:ostrom:0",
+     "contrast": 11.12
+    },
+    {
+     "id": "region:orison:0",
+     "contrast": 14.37
+    },
+    {
+     "id": "region:pale:0",
+     "contrast": 13.76
+    },
+    {
+     "id": "region:pale:1",
+     "contrast": 6.47
+    },
+    {
+     "id": "region:orrery:0",
+     "contrast": 14.11
+    },
+    {
+     "id": "region:halyard:0",
+     "contrast": 9.58
+    },
+    {
+     "id": "region:sable:0",
+     "contrast": 10.06
+    },
+    {
+     "id": "region:furnace:0",
+     "contrast": 14.37
+    },
+    {
+     "id": "region:furnace:1",
+     "contrast": 6.73
+    },
+    {
+     "id": "region:gloam:0",
+     "contrast": 13.16
+    },
+    {
+     "id": "region:halvard:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:halvard:1",
+     "contrast": 6.78
+    },
+    {
+     "id": "region:scald:0",
+     "contrast": 12.78
+    },
+    {
+     "id": "region:scald:1",
+     "contrast": 5.33
+    },
+    {
+     "id": "region:cairn:0",
+     "contrast": 14.11
+    },
+    {
+     "id": "region:boneyard:0",
+     "contrast": 13.7
+    },
+    {
+     "id": "region:quiet:0",
+     "contrast": 14.52
+    },
+    {
+     "id": "region:quiet:1",
+     "contrast": 6.82
+    }
+   ]
+  },
+  "05-basin-coreward": {
+   "desktop": [
+    {
+     "id": "region:ostrom:0",
+     "contrast": 11.42
+    },
+    {
+     "id": "region:ostrom:1",
+     "contrast": 5.52
+    },
+    {
+     "id": "region:tallis:0",
+     "contrast": 8.58
+    },
+    {
+     "id": "region:tallis:1",
+     "contrast": 5.09
+    },
+    {
+     "id": "region:pennant:0",
+     "contrast": 7.78
+    },
+    {
+     "id": "region:pennant:1",
+     "contrast": 3.82
+    },
+    {
+     "id": "region:orison:0",
+     "contrast": 9.3
+    },
+    {
+     "id": "region:orison:1",
+     "contrast": 4.63
+    },
+    {
+     "id": "region:wending:0",
+     "contrast": 10.41
+    },
+    {
+     "id": "region:wending:1",
+     "contrast": 5.03
+    },
+    {
+     "id": "region:pale:0",
+     "contrast": 5.06
+    },
+    {
+     "id": "region:pale:1",
+     "contrast": 2.38
+    },
+    {
+     "id": "region:orrery:0",
+     "contrast": 6.33
+    },
+    {
+     "id": "region:orrery:1",
+     "contrast": 2.96
+    },
+    {
+     "id": "region:halyard:0",
+     "contrast": 9.31
+    },
+    {
+     "id": "region:lumen:0",
+     "contrast": 6.84
+    },
+    {
+     "id": "region:lumen:1",
+     "contrast": 3.47
+    },
+    {
+     "id": "region:sable:0",
+     "contrast": 7.76
+    },
+    {
+     "id": "region:hollows:0",
+     "contrast": 11.52
+    },
+    {
+     "id": "region:hollows:1",
+     "contrast": 5.53
+    },
+    {
+     "id": "region:gloam:0",
+     "contrast": 11.36
+    },
+    {
+     "id": "region:gloam:1",
+     "contrast": 5.53
+    },
+    {
+     "id": "region:halvard:0",
+     "contrast": 12.68
+    },
+    {
+     "id": "region:halvard:1",
+     "contrast": 6.05
+    },
+    {
+     "id": "region:shoals:0",
+     "contrast": 5.26
+    },
+    {
+     "id": "region:shoals:1",
+     "contrast": 3.75
+    },
+    {
+     "id": "region:scald:0",
+     "contrast": 12.77
+    },
+    {
+     "id": "region:scald:1",
+     "contrast": 6.04
+    },
+    {
+     "id": "region:ferrous:0",
+     "contrast": 12.3
+    },
+    {
+     "id": "region:ferrous:1",
+     "contrast": 5.44
+    },
+    {
+     "id": "region:tarn:0",
+     "contrast": 12.54
+    },
+    {
+     "id": "region:tarn:1",
+     "contrast": 5.94
+    },
+    {
+     "id": "region:quiet:0",
+     "contrast": 14
+    },
+    {
+     "id": "region:quiet:1",
+     "contrast": 6.57
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:ostrom:0",
+     "contrast": 9.95
+    },
+    {
+     "id": "region:ostrom:1",
+     "contrast": 4.8
+    },
+    {
+     "id": "region:tallis:0",
+     "contrast": 9.15
+    },
+    {
+     "id": "region:pennant:0",
+     "contrast": 8.29
+    },
+    {
+     "id": "region:pale:0",
+     "contrast": 6.74
+    },
+    {
+     "id": "region:pale:1",
+     "contrast": 3.42
+    },
+    {
+     "id": "region:orrery:0",
+     "contrast": 8.79
+    },
+    {
+     "id": "region:orrery:1",
+     "contrast": 4.18
+    },
+    {
+     "id": "region:halyard:0",
+     "contrast": 9.97
+    },
+    {
+     "id": "region:halyard:1",
+     "contrast": 4.89
+    },
+    {
+     "id": "region:sable:0",
+     "contrast": 4.49
+    },
+    {
+     "id": "region:sable:1",
+     "contrast": 4.96
+    },
+    {
+     "id": "region:halvard:0",
+     "contrast": 11.79
+    },
+    {
+     "id": "region:halvard:1",
+     "contrast": 5.71
+    },
+    {
+     "id": "region:shoals:0",
+     "contrast": 10.14
+    },
+    {
+     "id": "region:scald:0",
+     "contrast": 12.16
+    },
+    {
+     "id": "region:scald:1",
+     "contrast": 5.78
+    },
+    {
+     "id": "region:quiet:0",
+     "contrast": 13.34
+    },
+    {
+     "id": "region:quiet:1",
+     "contrast": 6.3
+    }
+   ]
+  },
+  "06-basin-far": {
+   "desktop": [
+    {
+     "id": "region:ostrom:0",
+     "contrast": 14.12
+    },
+    {
+     "id": "region:ostrom:1",
+     "contrast": 5.93
+    },
+    {
+     "id": "region:wending:0",
+     "contrast": 12.02
+    },
+    {
+     "id": "region:lantern-reach:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:lantern-reach:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:sable:0",
+     "contrast": 11.98
+    },
+    {
+     "id": "region:furnace:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:hollows:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:hollows:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:gloam:0",
+     "contrast": 9.51
+    },
+    {
+     "id": "region:gloam:1",
+     "contrast": 5.16
+    },
+    {
+     "id": "region:tarn:0",
+     "contrast": 14.15
+    },
+    {
+     "id": "region:tarn:1",
+     "contrast": 6.77
+    },
+    {
+     "id": "region:deeps:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:deeps:1",
+     "contrast": 6.79
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:ostrom:0",
+     "contrast": 8.43
+    },
+    {
+     "id": "region:tallis:0",
+     "contrast": 6.3
+    },
+    {
+     "id": "region:tallis:1",
+     "contrast": 1.03
+    },
+    {
+     "id": "region:cairn:0",
+     "contrast": 4.26
+    },
+    {
+     "id": "region:cairn:1",
+     "contrast": 6.82
+    }
+   ]
+  },
+  "07-region-tallis": {
+   "desktop": [
+    {
+     "id": "region:halvard:0",
+     "contrast": 14.55
+    },
+    {
+     "id": "region:halvard:1",
+     "contrast": 6.83
+    },
+    {
+     "id": "region:quiet:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:quiet:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "body:tallis-system",
+     "contrast": 16.9
+    },
+    {
+     "id": "body:brace-system",
+     "contrast": 16.58
+    },
+    {
+     "id": "body:marchwell-system",
+     "contrast": 16.98
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:quiet:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:quiet:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "body:tallis-system",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:brace-system",
+     "contrast": 16.59
+    },
+    {
+     "id": "body:marchwell-system",
+     "contrast": 16.98
+    }
+   ]
+  },
+  "08-region-furnace": {
+   "desktop": [
+    {
+     "id": "region:quiet:0",
+     "contrast": 8.63
+    },
+    {
+     "id": "region:quiet:1",
+     "contrast": 3.98
+    },
+    {
+     "id": "body:crucible-system",
+     "contrast": 10.89
+    },
+    {
+     "id": "body:anvil-system",
+     "contrast": 9.23
+    },
+    {
+     "id": "body:tuyere-system",
+     "contrast": 14.55
+    },
+    {
+     "id": "body:quench-system",
+     "contrast": 9.06
+    },
+    {
+     "id": "body:clinker-system",
+     "contrast": 10.24
+    },
+    {
+     "id": "body:bloom-system",
+     "contrast": 9.17
+    },
+    {
+     "id": "body:smelt-system",
+     "contrast": 13.76
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:furnace:0",
+     "contrast": 7.35
+    },
+    {
+     "id": "region:furnace:1",
+     "contrast": 3.68
+    },
+    {
+     "id": "region:quiet:0",
+     "contrast": 12.2
+    },
+    {
+     "id": "region:quiet:1",
+     "contrast": 5.46
+    },
+    {
+     "id": "body:crucible-system",
+     "contrast": 10.75
+    },
+    {
+     "id": "body:anvil-system",
+     "contrast": 8.74
+    },
+    {
+     "id": "body:tuyere-system",
+     "contrast": 10.15
+    },
+    {
+     "id": "body:quench-system",
+     "contrast": 11.19
+    },
+    {
+     "id": "body:clinker-system",
+     "contrast": 9.94
+    },
+    {
+     "id": "body:bloom-system",
+     "contrast": 8.82
+    },
+    {
+     "id": "body:smelt-system",
+     "contrast": 11.66
+    }
+   ]
+  },
+  "09-region-furnace-inside": {
+   "desktop": [
+    {
+     "id": "region:quiet:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:quiet:1",
+     "contrast": 6.75
+    },
+    {
+     "id": "body:crucible-system",
+     "contrast": 14.43
+    },
+    {
+     "id": "body:tuyere-system",
+     "contrast": 16.59
+    },
+    {
+     "id": "body:quench-system",
+     "contrast": 16.82
+    },
+    {
+     "id": "body:bloom-system",
+     "contrast": 16.37
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:quiet:0",
+     "contrast": 13.24
+    },
+    {
+     "id": "region:quiet:1",
+     "contrast": 5.78
+    },
+    {
+     "id": "body:crucible-system",
+     "contrast": 13.77
+    },
+    {
+     "id": "body:anvil-system",
+     "contrast": 13.12
+    },
+    {
+     "id": "body:tuyere-system",
+     "contrast": 15.24
+    },
+    {
+     "id": "body:quench-system",
+     "contrast": 10.21
+    }
+   ]
+  },
+  "10-region-mire": {
+   "desktop": [
+    {
+     "id": "body:murk-system",
+     "contrast": 12.02
+    },
+    {
+     "id": "body:slough-system",
+     "contrast": 12.02
+    },
+    {
+     "id": "body:fen-system",
+     "contrast": 12.32
+    },
+    {
+     "id": "body:quag-system",
+     "contrast": 10.96
+    },
+    {
+     "id": "body:morass-system",
+     "contrast": 12.68
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:mire:0",
+     "contrast": 9.25
+    },
+    {
+     "id": "region:mire:1",
+     "contrast": 4.34
+    },
+    {
+     "id": "body:murk-system",
+     "contrast": 11.66
+    },
+    {
+     "id": "body:slough-system",
+     "contrast": 11.92
+    },
+    {
+     "id": "body:fen-system",
+     "contrast": 11.46
+    },
+    {
+     "id": "body:morass-system",
+     "contrast": 12.48
+    }
+   ]
+  },
+  "11-region-hollows": {
+   "desktop": [
+    {
+     "id": "region:quiet:0",
+     "contrast": 14.55
+    },
+    {
+     "id": "region:quiet:1",
+     "contrast": 6.83
+    },
+    {
+     "id": "body:gelid-system",
+     "contrast": 16.88
+    },
+    {
+     "id": "body:rime-system",
+     "contrast": 16.9
+    },
+    {
+     "id": "body:cistern-system",
+     "contrast": 16.9
+    },
+    {
+     "id": "body:sump-system",
+     "contrast": 16.9
+    },
+    {
+     "id": "body:coldharbour-system",
+     "contrast": 16.9
+    },
+    {
+     "id": "body:hoar-system",
+     "contrast": 16.9
+    },
+    {
+     "id": "body:floe-system",
+     "contrast": 16.9
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:hollows:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:hollows:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:quiet:0",
+     "contrast": 14.62
+    },
+    {
+     "id": "region:quiet:1",
+     "contrast": 6.86
+    },
+    {
+     "id": "body:gelid-system",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:rime-system",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:cistern-system",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:sump-system",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:coldharbour-system",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:hoar-system",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:floe-system",
+     "contrast": 16.98
+    }
+   ]
+  },
+  "12-region-boneyard": {
+   "desktop": [
+    {
+     "id": "body:ossuary-system",
+     "contrast": 16.5
+    },
+    {
+     "id": "body:charnel-system",
+     "contrast": 16.9
+    },
+    {
+     "id": "body:knell-system",
+     "contrast": 16.9
+    },
+    {
+     "id": "body:spine-system",
+     "contrast": 16.9
+    },
+    {
+     "id": "body:keel-system",
+     "contrast": 16.9
+    },
+    {
+     "id": "body:bier-system",
+     "contrast": 16.9
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:boneyard:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:boneyard:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "body:ossuary-system",
+     "contrast": 16.7
+    },
+    {
+     "id": "body:charnel-system",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:knell-system",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:keel-system",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:bier-system",
+     "contrast": 16.98
+    }
+   ]
+  },
+  "13-region-orrery": {
+   "desktop": [
+    {
+     "id": "region:orison:0",
+     "contrast": 14.55
+    },
+    {
+     "id": "region:orison:1",
+     "contrast": 6.83
+    },
+    {
+     "id": "region:quiet:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:quiet:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "body:orrery-system",
+     "contrast": 16.9
+    }
+   ],
+   "phone": [
+    {
+     "id": "body:orrery-system",
+     "contrast": 16.98
+    }
+   ]
+  },
+  "14-region-scald-lanes": {
+   "desktop": [
+    {
+     "id": "body:scald-system",
+     "contrast": 16.9
+    },
+    {
+     "id": "body:frit-system",
+     "contrast": 16.9
+    },
+    {
+     "id": "body:cullet-system",
+     "contrast": 16.9
+    }
+   ],
+   "phone": [
+    {
+     "id": "body:scald-system",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:frit-system",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:cullet-system",
+     "contrast": 16.98
+    }
+   ]
+  },
+  "15-system-tallis": {
+   "desktop": [
+    {
+     "id": "region:gloam:0",
+     "contrast": 14.55
+    },
+    {
+     "id": "region:gloam:1",
+     "contrast": 6.83
+    },
+    {
+     "id": "region:halvard:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:halvard:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:scald:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:scald:1",
+     "contrast": 6.78
+    },
+    {
+     "id": "region:ferrous:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:ferrous:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "body:tallis-system",
+     "contrast": 16.88
+    },
+    {
+     "id": "body:tallis-i",
+     "contrast": 16.9
+    },
+    {
+     "id": "body:tallis-planet",
+     "contrast": 16.9
+    },
+    {
+     "id": "body:tallis-iii",
+     "contrast": 16.9
+    },
+    {
+     "id": "body:tallis-iv",
+     "contrast": 16.9
+    },
+    {
+     "id": "body:ostrom-tallis-at-tallis",
+     "contrast": 13.22
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:ostrom:0",
+     "contrast": 14.55
+    },
+    {
+     "id": "region:scald:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:scald:1",
+     "contrast": 6.86
+    },
+    {
+     "id": "region:ferrous:0",
+     "contrast": 14.61
+    },
+    {
+     "id": "region:ferrous:1",
+     "contrast": 6.86
+    },
+    {
+     "id": "body:tallis-system",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:tallis-planet",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:tallis-iii",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:tallis-iv",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:ostrom-tallis-at-tallis",
+     "contrast": 13.28
+    }
+   ]
+  },
+  "16-system-ostrom": {
+   "desktop": [
+    {
+     "id": "region:scald:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:scald:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:ferrous:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:ferrous:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "body:ostrom-system",
+     "contrast": 16.88
+    },
+    {
+     "id": "body:ostrom-iii",
+     "contrast": 16.88
+    },
+    {
+     "id": "body:ostrom-iv",
+     "contrast": 16.9
+    },
+    {
+     "id": "body:ostrom-v",
+     "contrast": 15.63
+    },
+    {
+     "id": "body:ostrom-vi",
+     "contrast": 16.9
+    },
+    {
+     "id": "body:gate",
+     "contrast": 16.9
+    },
+    {
+     "id": "body:ostrom-tallis-at-ostrom",
+     "contrast": 13.22
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:scald:0",
+     "contrast": 14.62
+    },
+    {
+     "id": "region:scald:1",
+     "contrast": 6.86
+    },
+    {
+     "id": "body:ostrom-system",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:ostrom-v",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:ostrom-vi",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:gate",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:ostrom-tallis-at-ostrom",
+     "contrast": 13.28
+    }
+   ]
+  },
+  "17-system-watchfire": {
+   "desktop": [
+    {
+     "id": "region:gloam:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:gloam:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:halvard:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:halvard:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:shoals:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:shoals:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:scald:0",
+     "contrast": 14.55
+    },
+    {
+     "id": "region:scald:1",
+     "contrast": 6.83
+    },
+    {
+     "id": "region:ferrous:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:ferrous:1",
+     "contrast": 6.78
+    },
+    {
+     "id": "body:watchfire-system",
+     "contrast": 12.75
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:ferrous:0",
+     "contrast": 14.62
+    },
+    {
+     "id": "region:ferrous:1",
+     "contrast": 6.86
+    },
+    {
+     "id": "body:watchfire-system",
+     "contrast": 14.82
+    }
+   ]
+  },
+  "18-system-well": {
+   "desktop": [
+    {
+     "id": "region:ostrom:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:ostrom:1",
+     "contrast": 6.78
+    },
+    {
+     "id": "region:tallis:0",
+     "contrast": 14.12
+    },
+    {
+     "id": "region:tallis:1",
+     "contrast": 5.22
+    },
+    {
+     "id": "region:pennant:0",
+     "contrast": 14.55
+    },
+    {
+     "id": "region:pennant:1",
+     "contrast": 6.83
+    },
+    {
+     "id": "region:wending:0",
+     "contrast": 14.55
+    },
+    {
+     "id": "region:wending:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:halyard:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:halyard:1",
+     "contrast": 6.78
+    },
+    {
+     "id": "region:lumen:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:lumen:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:sable:0",
+     "contrast": 14.28
+    },
+    {
+     "id": "region:sable:1",
+     "contrast": 6.31
+    },
+    {
+     "id": "region:hollows:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:hollows:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:gloam:0",
+     "contrast": 14.52
+    },
+    {
+     "id": "region:gloam:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:halvard:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:halvard:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:scald:0",
+     "contrast": 13.79
+    },
+    {
+     "id": "region:scald:1",
+     "contrast": 6.77
+    },
+    {
+     "id": "region:ferrous:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:ferrous:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:tarn:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:tarn:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "body:well-system",
+     "contrast": 16.9
+    },
+    {
+     "id": "body:horizon",
+     "contrast": 16.88
+    },
+    {
+     "id": "body:caller",
+     "contrast": 16.88
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:wending:0",
+     "contrast": 14.61
+    },
+    {
+     "id": "region:wending:1",
+     "contrast": 6.86
+    },
+    {
+     "id": "region:halyard:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:halyard:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "region:sable:0",
+     "contrast": 14.61
+    },
+    {
+     "id": "region:sable:1",
+     "contrast": 6.86
+    },
+    {
+     "id": "region:hollows:0",
+     "contrast": 14.61
+    },
+    {
+     "id": "region:hollows:1",
+     "contrast": 6.86
+    },
+    {
+     "id": "region:scald:0",
+     "contrast": 13.39
+    },
+    {
+     "id": "region:scald:1",
+     "contrast": 6.62
+    },
+    {
+     "id": "region:tarn:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:tarn:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "body:well-system",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:horizon",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:caller",
+     "contrast": 16.98
+    }
+   ]
+  },
+  "19-system-cinder": {
+   "desktop": [
+    {
+     "id": "region:scald:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:scald:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:ferrous:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:ferrous:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "body:cinder-system",
+     "contrast": 16.9
+    },
+    {
+     "id": "body:cinder-ii",
+     "contrast": 16.9
+    },
+    {
+     "id": "body:cinder-iii",
+     "contrast": 16.9
+    },
+    {
+     "id": "body:cinder-picket",
+     "contrast": 11.35
+    },
+    {
+     "id": "body:ostrom-gloam-at-ostrom",
+     "contrast": 13.2
+    },
+    {
+     "id": "body:ostrom-scald-at-ostrom",
+     "contrast": 13.22
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:scald:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:scald:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "body:cinder-system",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:cinder-ii",
+     "contrast": 15.39
+    },
+    {
+     "id": "body:cinder-iii",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:cinder-picket",
+     "contrast": 11.41
+    },
+    {
+     "id": "body:ostrom-gloam-at-ostrom",
+     "contrast": 12.27
+    },
+    {
+     "id": "body:ostrom-scald-at-ostrom",
+     "contrast": 13.28
+    }
+   ]
+  },
+  "20-system-murk": {
+   "desktop": [
+    {
+     "id": "body:murk-system",
+     "contrast": 14.87
+    },
+    {
+     "id": "body:murk-dust",
+     "contrast": 10.64
+    },
+    {
+     "id": "body:murk-i",
+     "contrast": 14.24
+    },
+    {
+     "id": "body:tarn-mire-at-mire",
+     "contrast": 12.85
+    }
+   ],
+   "phone": [
+    {
+     "id": "body:murk-system",
+     "contrast": 13.15
+    },
+    {
+     "id": "body:murk-dust",
+     "contrast": 10.64
+    },
+    {
+     "id": "body:murk-i",
+     "contrast": 13.97
+    },
+    {
+     "id": "body:tarn-mire-at-mire",
+     "contrast": 12.63
+    }
+   ]
+  },
+  "21-system-anvil": {
+   "desktop": [
+    {
+     "id": "region:scald:0",
+     "contrast": 14.13
+    },
+    {
+     "id": "region:scald:1",
+     "contrast": 6.76
+    },
+    {
+     "id": "body:anvil-system",
+     "contrast": 4.95
+    },
+    {
+     "id": "body:anvil-i",
+     "contrast": 16.07
+    }
+   ],
+   "phone": [
+    {
+     "id": "body:anvil-system",
+     "contrast": 7.64
+    },
+    {
+     "id": "body:anvil-i",
+     "contrast": 12.5
+    }
+   ]
+  },
+  "22-system-quench": {
+   "desktop": [
+    {
+     "id": "region:scald:0",
+     "contrast": 14.1
+    },
+    {
+     "id": "body:quench-system",
+     "contrast": 15.9
+    },
+    {
+     "id": "body:quench-field",
+     "contrast": 10.42
+    }
+   ],
+   "phone": [
+    {
+     "id": "body:quench-system",
+     "contrast": 16.12
+    },
+    {
+     "id": "body:quench-field",
+     "contrast": 9.45
+    }
+   ]
+  },
+  "23-system-calder-147": {
+   "desktop": [
+    {
+     "id": "region:quiet:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:quiet:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "body:calder-147-system",
+     "contrast": 16.9
+    }
+   ],
+   "phone": [
+    {
+     "id": "body:calder-147-system",
+     "contrast": 16.98
+    }
+   ]
+  },
+  "24-system-gelid": {
+   "desktop": [
+    {
+     "id": "body:gelid-system",
+     "contrast": 16.9
+    }
+   ],
+   "phone": [
+    {
+     "id": "body:gelid-system",
+     "contrast": 16.98
+    }
+   ]
+  },
+  "25-planet-tallis": {
+   "desktop": [
+    {
+     "id": "region:gloam:0",
+     "contrast": 14.55
+    },
+    {
+     "id": "region:gloam:1",
+     "contrast": 6.83
+    },
+    {
+     "id": "region:halvard:0",
+     "contrast": 14.46
+    },
+    {
+     "id": "region:halvard:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "region:scald:0",
+     "contrast": 14.28
+    },
+    {
+     "id": "region:scald:1",
+     "contrast": 6.78
+    },
+    {
+     "id": "region:ferrous:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:ferrous:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "body:tallis-planet",
+     "contrast": 16.9
+    },
+    {
+     "id": "body:tallis-a",
+     "contrast": 12.26
+    },
+    {
+     "id": "body:tallis-b",
+     "contrast": 12.26
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:ostrom:0",
+     "contrast": 14.55
+    },
+    {
+     "id": "region:scald:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:scald:1",
+     "contrast": 6.86
+    },
+    {
+     "id": "region:ferrous:0",
+     "contrast": 14.61
+    },
+    {
+     "id": "region:ferrous:1",
+     "contrast": 3.4
+    },
+    {
+     "id": "body:tallis-planet",
+     "contrast": 16.98
+    },
+    {
+     "id": "body:tallis-a",
+     "contrast": 12.32
+    },
+    {
+     "id": "body:tallis-b",
+     "contrast": 12.32
+    }
+   ]
+  },
+  "26-close-tallis": {
+   "desktop": [
+    {
+     "id": "region:halyard:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:halyard:1",
+     "contrast": 6.78
+    },
+    {
+     "id": "region:lumen:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:lumen:1",
+     "contrast": 6.78
+    },
+    {
+     "id": "region:hollows:0",
+     "contrast": 13.61
+    },
+    {
+     "id": "region:hollows:1",
+     "contrast": 6.43
+    },
+    {
+     "id": "body:tallis-planet",
+     "contrast": 16.88
+    },
+    {
+     "id": "body:tallis-iv",
+     "contrast": 14.05
+    },
+    {
+     "id": "place:tallis-garrison",
+     "contrast": 1.06
+    },
+    {
+     "id": "place:dry-creek",
+     "contrast": 3.99
+    },
+    {
+     "id": "place:sallow-ford",
+     "contrast": 1.16
+    },
+    {
+     "id": "place:tallis-structure-2",
+     "contrast": 1.16
+    },
+    {
+     "id": "place:tallis-structure-3",
+     "contrast": 12.65
+    },
+    {
+     "id": "place:tallis-structure-8",
+     "contrast": 3.57
+    },
+    {
+     "id": "place:weirmouth",
+     "contrast": 1.41
+    },
+    {
+     "id": "place:fallowfield",
+     "contrast": 14.4
+    },
+    {
+     "id": "place:veterans-rest",
+     "contrast": 2
+    },
+    {
+     "id": "place:dustwater",
+     "contrast": 1.02
+    },
+    {
+     "id": "place:saltbrush",
+     "contrast": 4.34
+    },
+    {
+     "id": "place:greenhold",
+     "contrast": 14.56
+    },
+    {
+     "id": "place:eastshore-airfield",
+     "contrast": 1.18
+    },
+    {
+     "id": "place:structure-survey-shaft",
+     "contrast": 1.27
+    },
+    {
+     "id": "place:tallis-vigil-chapel",
+     "contrast": 1.75
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:lumen:0",
+     "contrast": 14.21
+    },
+    {
+     "id": "region:lumen:1",
+     "contrast": 6.69
+    },
+    {
+     "id": "region:sable:0",
+     "contrast": 13.43
+    },
+    {
+     "id": "region:sable:1",
+     "contrast": 6.3
+    },
+    {
+     "id": "region:hollows:0",
+     "contrast": 13.7
+    },
+    {
+     "id": "region:hollows:1",
+     "contrast": 6.43
+    },
+    {
+     "id": "body:tallis-planet",
+     "contrast": 16.8
+    },
+    {
+     "id": "place:the-landing",
+     "contrast": 2.2
+    },
+    {
+     "id": "place:dry-creek",
+     "contrast": 1.67
+    },
+    {
+     "id": "place:sallow-ford",
+     "contrast": 1.09
+    },
+    {
+     "id": "place:tallis-structure-2",
+     "contrast": 1.43
+    },
+    {
+     "id": "place:tallis-structure-3",
+     "contrast": 8.67
+    },
+    {
+     "id": "place:tallis-structure-8",
+     "contrast": 5.85
+    },
+    {
+     "id": "place:tallis-structure-10",
+     "contrast": 2.03
+    },
+    {
+     "id": "place:weirmouth",
+     "contrast": 1.65
+    },
+    {
+     "id": "place:dustwater",
+     "contrast": 1.07
+    },
+    {
+     "id": "place:saltbrush",
+     "contrast": 5.25
+    },
+    {
+     "id": "place:greenhold",
+     "contrast": 10.17
+    }
+   ]
+  },
+  "27-close-tallis-height": {
+   "desktop": [
+    {
+     "id": "region:halyard:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:halyard:1",
+     "contrast": 6.78
+    },
+    {
+     "id": "region:lumen:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:lumen:1",
+     "contrast": 6.78
+    },
+    {
+     "id": "region:hollows:0",
+     "contrast": 13.61
+    },
+    {
+     "id": "region:hollows:1",
+     "contrast": 6.43
+    },
+    {
+     "id": "body:tallis-planet",
+     "contrast": 16.88
+    },
+    {
+     "id": "body:tallis-iv",
+     "contrast": 14.05
+    },
+    {
+     "id": "place:tallis-garrison",
+     "contrast": 1.06
+    },
+    {
+     "id": "place:dry-creek",
+     "contrast": 3.99
+    },
+    {
+     "id": "place:sallow-ford",
+     "contrast": 1.16
+    },
+    {
+     "id": "place:tallis-structure-2",
+     "contrast": 1.16
+    },
+    {
+     "id": "place:tallis-structure-3",
+     "contrast": 12.65
+    },
+    {
+     "id": "place:tallis-structure-8",
+     "contrast": 3.57
+    },
+    {
+     "id": "place:weirmouth",
+     "contrast": 1.41
+    },
+    {
+     "id": "place:fallowfield",
+     "contrast": 14.4
+    },
+    {
+     "id": "place:veterans-rest",
+     "contrast": 2
+    },
+    {
+     "id": "place:dustwater",
+     "contrast": 1.02
+    },
+    {
+     "id": "place:saltbrush",
+     "contrast": 4.34
+    },
+    {
+     "id": "place:greenhold",
+     "contrast": 14.56
+    },
+    {
+     "id": "place:eastshore-airfield",
+     "contrast": 1.18
+    },
+    {
+     "id": "place:structure-survey-shaft",
+     "contrast": 1.27
+    },
+    {
+     "id": "place:tallis-vigil-chapel",
+     "contrast": 1.75
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:lumen:0",
+     "contrast": 14.21
+    },
+    {
+     "id": "region:lumen:1",
+     "contrast": 6.69
+    },
+    {
+     "id": "region:sable:0",
+     "contrast": 13.43
+    },
+    {
+     "id": "region:sable:1",
+     "contrast": 6.3
+    },
+    {
+     "id": "region:hollows:0",
+     "contrast": 13.7
+    },
+    {
+     "id": "region:hollows:1",
+     "contrast": 6.43
+    },
+    {
+     "id": "body:tallis-planet",
+     "contrast": 16.8
+    },
+    {
+     "id": "place:the-landing",
+     "contrast": 2.2
+    },
+    {
+     "id": "place:dry-creek",
+     "contrast": 1.67
+    },
+    {
+     "id": "place:sallow-ford",
+     "contrast": 1.09
+    },
+    {
+     "id": "place:tallis-structure-2",
+     "contrast": 1.43
+    },
+    {
+     "id": "place:tallis-structure-3",
+     "contrast": 8.67
+    },
+    {
+     "id": "place:tallis-structure-8",
+     "contrast": 5.85
+    },
+    {
+     "id": "place:tallis-structure-10",
+     "contrast": 2.03
+    },
+    {
+     "id": "place:weirmouth",
+     "contrast": 1.65
+    },
+    {
+     "id": "place:dustwater",
+     "contrast": 1.07
+    },
+    {
+     "id": "place:saltbrush",
+     "contrast": 5.25
+    },
+    {
+     "id": "place:greenhold",
+     "contrast": 10.17
+    }
+   ]
+  },
+  "28-close-tallis-temperature": {
+   "desktop": [
+    {
+     "id": "region:halyard:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:halyard:1",
+     "contrast": 6.78
+    },
+    {
+     "id": "region:lumen:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:lumen:1",
+     "contrast": 6.78
+    },
+    {
+     "id": "region:hollows:0",
+     "contrast": 13.61
+    },
+    {
+     "id": "region:hollows:1",
+     "contrast": 6.43
+    },
+    {
+     "id": "body:tallis-planet",
+     "contrast": 16.88
+    },
+    {
+     "id": "body:tallis-iv",
+     "contrast": 14.05
+    },
+    {
+     "id": "place:tallis-garrison",
+     "contrast": 1.06
+    },
+    {
+     "id": "place:dry-creek",
+     "contrast": 3.99
+    },
+    {
+     "id": "place:sallow-ford",
+     "contrast": 1.16
+    },
+    {
+     "id": "place:tallis-structure-2",
+     "contrast": 1.16
+    },
+    {
+     "id": "place:tallis-structure-3",
+     "contrast": 12.65
+    },
+    {
+     "id": "place:tallis-structure-8",
+     "contrast": 3.57
+    },
+    {
+     "id": "place:weirmouth",
+     "contrast": 1.41
+    },
+    {
+     "id": "place:fallowfield",
+     "contrast": 14.4
+    },
+    {
+     "id": "place:veterans-rest",
+     "contrast": 2
+    },
+    {
+     "id": "place:dustwater",
+     "contrast": 1.02
+    },
+    {
+     "id": "place:saltbrush",
+     "contrast": 4.34
+    },
+    {
+     "id": "place:greenhold",
+     "contrast": 14.56
+    },
+    {
+     "id": "place:eastshore-airfield",
+     "contrast": 1.18
+    },
+    {
+     "id": "place:structure-survey-shaft",
+     "contrast": 1.27
+    },
+    {
+     "id": "place:tallis-vigil-chapel",
+     "contrast": 1.75
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:lumen:0",
+     "contrast": 14.21
+    },
+    {
+     "id": "region:lumen:1",
+     "contrast": 6.69
+    },
+    {
+     "id": "region:sable:0",
+     "contrast": 13.43
+    },
+    {
+     "id": "region:sable:1",
+     "contrast": 6.3
+    },
+    {
+     "id": "region:hollows:0",
+     "contrast": 13.7
+    },
+    {
+     "id": "region:hollows:1",
+     "contrast": 6.43
+    },
+    {
+     "id": "body:tallis-planet",
+     "contrast": 16.8
+    },
+    {
+     "id": "place:the-landing",
+     "contrast": 2.2
+    },
+    {
+     "id": "place:dry-creek",
+     "contrast": 1.67
+    },
+    {
+     "id": "place:sallow-ford",
+     "contrast": 1.09
+    },
+    {
+     "id": "place:tallis-structure-2",
+     "contrast": 1.43
+    },
+    {
+     "id": "place:tallis-structure-3",
+     "contrast": 8.67
+    },
+    {
+     "id": "place:tallis-structure-8",
+     "contrast": 5.85
+    },
+    {
+     "id": "place:tallis-structure-10",
+     "contrast": 2.03
+    },
+    {
+     "id": "place:weirmouth",
+     "contrast": 1.65
+    },
+    {
+     "id": "place:dustwater",
+     "contrast": 1.07
+    },
+    {
+     "id": "place:saltbrush",
+     "contrast": 5.25
+    },
+    {
+     "id": "place:greenhold",
+     "contrast": 10.17
+    }
+   ]
+  },
+  "29-close-tallis-iii": {
+   "desktop": [
+    {
+     "id": "region:shoals:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:shoals:1",
+     "contrast": 6.77
+    },
+    {
+     "id": "body:tallis-iii",
+     "contrast": 16.8
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:shoals:0",
+     "contrast": 13.73
+    },
+    {
+     "id": "region:shoals:1",
+     "contrast": 6.86
+    },
+    {
+     "id": "body:tallis-iii",
+     "contrast": 11.14
+    }
+   ]
+  },
+  "30-close-scald": {
+   "desktop": [
+    {
+     "id": "body:scald-planet",
+     "contrast": 16.88
+    },
+    {
+     "id": "place:the-seam",
+     "contrast": 1.03
+    },
+    {
+     "id": "place:kerrtown",
+     "contrast": 3.87
+    },
+    {
+     "id": "place:kerr-varga-refinery",
+     "contrast": 9.47
+    },
+    {
+     "id": "place:syndicate-registry",
+     "contrast": 10.48
+    },
+    {
+     "id": "place:duroc-camp",
+     "contrast": 6.63
+    },
+    {
+     "id": "place:haldane-house",
+     "contrast": 2.51
+    },
+    {
+     "id": "place:league-hall",
+     "contrast": 13.63
+    },
+    {
+     "id": "place:navy-lease-camp",
+     "contrast": 1.52
+    },
+    {
+     "id": "place:saltmarsh-line",
+     "contrast": 1.17
+    },
+    {
+     "id": "place:dunmore-camp",
+     "contrast": 1.09
+    },
+    {
+     "id": "place:glasstown",
+     "contrast": 2.64
+    },
+    {
+     "id": "place:deep-site-fourteen",
+     "contrast": 9.47
+    },
+    {
+     "id": "place:listener-sabotage",
+     "contrast": 1.03
+    }
+   ],
+   "phone": [
+    {
+     "id": "body:scald-planet",
+     "contrast": 16.98
+    },
+    {
+     "id": "place:the-seam",
+     "contrast": 1.17
+    },
+    {
+     "id": "place:kerrtown",
+     "contrast": 2.68
+    },
+    {
+     "id": "place:kerr-varga-refinery",
+     "contrast": 9.49
+    },
+    {
+     "id": "place:syndicate-registry",
+     "contrast": 10.48
+    },
+    {
+     "id": "place:listener-wells",
+     "contrast": 16.99
+    },
+    {
+     "id": "place:haldane-house",
+     "contrast": 3.88
+    },
+    {
+     "id": "place:league-hall",
+     "contrast": 13.33
+    },
+    {
+     "id": "place:navy-lease-camp",
+     "contrast": 1.87
+    },
+    {
+     "id": "place:dunmore-camp",
+     "contrast": 1.59
+    },
+    {
+     "id": "place:glasstown",
+     "contrast": 4.74
+    },
+    {
+     "id": "place:deep-site-fourteen",
+     "contrast": 9.49
+    },
+    {
+     "id": "place:listener-sabotage",
+     "contrast": 1.09
+    }
+   ]
+  },
+  "31-close-cairn": {
+   "desktop": [
+    {
+     "id": "region:hollows:0",
+     "contrast": 13.34
+    },
+    {
+     "id": "region:hollows:1",
+     "contrast": 6.39
+    },
+    {
+     "id": "region:tarn:0",
+     "contrast": 14.52
+    },
+    {
+     "id": "region:tarn:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "body:cairn-planet",
+     "contrast": 3.53
+    },
+    {
+     "id": "place:cairn-landing",
+     "contrast": 4.42
+    },
+    {
+     "id": "place:league-claims",
+     "contrast": 7.58
+    },
+    {
+     "id": "place:great-ring",
+     "contrast": 11.92
+    },
+    {
+     "id": "place:cairn-listener-camp",
+     "contrast": 6.87
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:hollows:0",
+     "contrast": 14.27
+    },
+    {
+     "id": "region:hollows:1",
+     "contrast": 6.69
+    },
+    {
+     "id": "body:cairn-planet",
+     "contrast": 15.7
+    },
+    {
+     "id": "place:cairn-landing",
+     "contrast": 2.14
+    },
+    {
+     "id": "place:league-claims",
+     "contrast": 7.58
+    },
+    {
+     "id": "place:cairn-listener-camp",
+     "contrast": 4.25
+    }
+   ]
+  },
+  "32-close-halvards-rest": {
+   "desktop": [
+    {
+     "id": "region:shoals:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:shoals:1",
+     "contrast": 6.82
+    },
+    {
+     "id": "body:halvards-rest",
+     "contrast": 11.9
+    },
+    {
+     "id": "place:halvards-rest-refinery",
+     "contrast": 9.71
+    },
+    {
+     "id": "place:mercers-hold",
+     "contrast": 13.81
+    },
+    {
+     "id": "place:gap-control",
+     "contrast": 9.94
+    },
+    {
+     "id": "place:ocean-shaft",
+     "contrast": 10
+    }
+   ],
+   "phone": [
+    {
+     "id": "body:halvards-rest",
+     "contrast": 7.4
+    },
+    {
+     "id": "place:mercers-hold",
+     "contrast": 13.67
+    },
+    {
+     "id": "place:gap-control",
+     "contrast": 2.23
+    },
+    {
+     "id": "place:ocean-shaft",
+     "contrast": 9.91
+    }
+   ]
+  },
+  "33-close-slagfall": {
+   "desktop": [
+    {
+     "id": "body:slagfall",
+     "contrast": 16.82
+    }
+   ],
+   "phone": [
+    {
+     "id": "body:slagfall",
+     "contrast": 16.88
+    }
+   ]
+  },
+  "34-close-stillwater": {
+   "desktop": [
+    {
+     "id": "region:orrery:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:orrery:1",
+     "contrast": 6.78
+    },
+    {
+     "id": "body:stillwater",
+     "contrast": 6.51
+    },
+    {
+     "id": "place:stillwater-platform",
+     "contrast": 6.77
+    },
+    {
+     "id": "place:stillwater-platform-2",
+     "contrast": 5.16
+    },
+    {
+     "id": "place:stillwater-platform-3",
+     "contrast": 11.5
+    },
+    {
+     "id": "place:stillwater-platform-4",
+     "contrast": 12.41
+    }
+   ],
+   "phone": [
+    {
+     "id": "body:stillwater",
+     "contrast": 14.99
+    },
+    {
+     "id": "place:stillwater-platform",
+     "contrast": 3.36
+    },
+    {
+     "id": "place:stillwater-platform-2",
+     "contrast": 6.02
+    },
+    {
+     "id": "place:stillwater-platform-3",
+     "contrast": 12.41
+    },
+    {
+     "id": "place:stillwater-platform-4",
+     "contrast": 7.86
+    }
+   ]
+  },
+  "35-close-verdance": {
+   "desktop": [
+    {
+     "id": "region:pennant:0",
+     "contrast": 14.55
+    },
+    {
+     "id": "region:pennant:1",
+     "contrast": 6.83
+    },
+    {
+     "id": "region:lumen:0",
+     "contrast": 14.55
+    },
+    {
+     "id": "region:lumen:1",
+     "contrast": 6.83
+    },
+    {
+     "id": "body:verdance",
+     "contrast": 5.06
+    },
+    {
+     "id": "place:first-landing",
+     "contrast": 1.34
+    },
+    {
+     "id": "place:second-landing",
+     "contrast": 1.4
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:pennant:0",
+     "contrast": 13.53
+    },
+    {
+     "id": "region:pale:0",
+     "contrast": 14.52
+    },
+    {
+     "id": "region:pale:1",
+     "contrast": 6.79
+    },
+    {
+     "id": "body:verdance",
+     "contrast": 14.04
+    },
+    {
+     "id": "place:first-landing",
+     "contrast": 1.09
+    },
+    {
+     "id": "place:second-landing",
+     "contrast": 1.6
+    }
+   ]
+  },
+  "36-close-nocturne": {
+   "desktop": [
+    {
+     "id": "region:quiet:0",
+     "contrast": 14.55
+    },
+    {
+     "id": "region:quiet:1",
+     "contrast": 6.83
+    },
+    {
+     "id": "body:nocturne",
+     "contrast": 16.88
+    }
+   ],
+   "phone": [
+    {
+     "id": "body:nocturne",
+     "contrast": 16.98
+    }
+   ]
+  },
+  "37-close-umber-i": {
+   "desktop": [
+    {
+     "id": "body:umber-i",
+     "contrast": 16.88
+    }
+   ],
+   "phone": [
+    {
+     "id": "body:umber-i",
+     "contrast": 16.98
+    }
+   ]
+  },
+  "38-close-brand-i": {
+   "desktop": [
+    {
+     "id": "region:lumen:0",
+     "contrast": 14.36
+    },
+    {
+     "id": "body:brand-i",
+     "contrast": 16.88
+    }
+   ],
+   "phone": [
+    {
+     "id": "body:brand-i",
+     "contrast": 16.88
+    }
+   ]
+  },
+  "39-close-halyard-ii": {
+   "desktop": [
+    {
+     "id": "region:orison:1",
+     "contrast": 6.77
+    },
+    {
+     "id": "region:shoals:0",
+     "contrast": 12.32
+    },
+    {
+     "id": "region:shoals:1",
+     "contrast": 5.65
+    },
+    {
+     "id": "body:halyard-ii",
+     "contrast": 14.68
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:shoals:0",
+     "contrast": 13.53
+    },
+    {
+     "id": "region:shoals:1",
+     "contrast": 6.31
+    },
+    {
+     "id": "body:halyard-ii",
+     "contrast": 16.01
+    },
+    {
+     "id": "body:tack",
+     "contrast": 13
+    }
+   ]
+  },
+  "40-station-tallis-relay": {
+   "desktop": [
+    {
+     "id": "region:scald:0",
+     "contrast": 14.44
+    },
+    {
+     "id": "region:scald:1",
+     "contrast": 6.78
+    },
+    {
+     "id": "body:tallis-relay",
+     "contrast": 11.35
+    }
+   ],
+   "phone": [
+    {
+     "id": "region:scald:0",
+     "contrast": 14.53
+    },
+    {
+     "id": "region:scald:1",
+     "contrast": 6.86
+    },
+    {
+     "id": "body:tallis-relay",
+     "contrast": 11.41
+    }
+   ]
+  }
+ }
+}
