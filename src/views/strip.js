@@ -12,6 +12,47 @@
 import * as THREE from 'three';
 import { CAMERA } from './origin.js';
 
+// Trims a piece to the part that can show on screen, before it goes to the
+// GPU (task 2.11, after flicker on a phone). Cutting a piece at a near plane
+// 1 m from the camera and projecting the cut in 32-bit floats made strips
+// swing or flip as the view turned. Here, in 64-bit, each piece is cut
+// against the near plane and four side planes set GUARD times wider than the
+// view, so the GPU only ever projects points close to the screen. a and b are
+// camera-relative (km) and are rewritten in place; false means nothing shows.
+const GUARD = 2;
+const va = [0, 0, 0], vb = [0, 0, 0];
+const toView = (m, p, out) => {
+  for (let r = 0; r < 3; r++) out[r] = m[r] * p[0] + m[4 + r] * p[1] + m[8 + r] * p[2] + m[12 + r];
+  return out;
+};
+export function clipToView(camera, aspect, a, b) {
+  const m = camera.matrixWorldInverse.elements;
+  toView(m, a, va);
+  toView(m, b, vb);
+  const ty = GUARD * Math.tan((camera.fov * Math.PI) / 360);
+  const tx = ty * aspect;
+  const near = CAMERA.nearKm;
+  let t0 = 0, t1 = 1;
+  // Keep where f ≥ 0, for each plane f (linear along the piece).
+  const planes = [
+    (v) => -v[2] - near,
+    (v) => tx * -v[2] - v[0], (v) => tx * -v[2] + v[0],
+    (v) => ty * -v[2] - v[1], (v) => ty * -v[2] + v[1],
+  ];
+  for (const f of planes) {
+    const fa = f(va), fb = f(vb);
+    if (fa < 0 && fb < 0) return false;
+    if (fa < 0) t0 = Math.max(t0, fa / (fa - fb));
+    else if (fb < 0) t1 = Math.min(t1, fa / (fa - fb));
+    if (t0 > t1) return false;
+  }
+  if (t0 > 0 || t1 < 1) {
+    const d = [b[0] - a[0], b[1] - a[1], b[2] - a[2]];
+    for (let i = 0; i < 3; i++) { b[i] = a[i] + d[i] * t1; a[i] = a[i] + d[i] * t0; }
+  }
+  return true;
+}
+
 // Corners of a strip (along 0..1, side -1..1) and the attributes it needs.
 export const STRIP_CORNERS = [[0, -1, 0], [0, 1, 0], [1, -1, 0], [1, 1, 0]];
 export const STRIP_ATTRS = [['aStart', 3], ['aEnd', 3], ['aColor', 4], ['aWidth', 1]];

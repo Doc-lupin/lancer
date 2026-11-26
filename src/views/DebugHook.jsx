@@ -73,7 +73,7 @@ export default function DebugHook() {
       // Frame log for tools/check_zoom.mjs: startRecording(), then frames().
       startRecording: () => { frames.current = []; },
       frames: () => frames.current,
-      view, scene, invalidate,
+      view, scene, camera, invalidate,
     };
     return () => delete window.__lancer;
   }, [gl, scene, camera, size, invalidate]);

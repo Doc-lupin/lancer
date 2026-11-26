@@ -16,7 +16,7 @@ import { useMap, isHidden } from '../data/store.js';
 import { displayName } from '../data/names.js';
 import { pixelsPerKm } from './origin.js';
 import { view } from './camera/view.js';
-import { focusOn } from './camera/rig.js';
+import { flyTo } from './camera/CameraRig.jsx';
 import { screenPos } from './camera/pick.js';
 import { bodyAlpha } from './System.jsx';
 import { regionLabelBoxes } from './RegionLabels.jsx';
@@ -52,7 +52,7 @@ export function BodyLabels() {
       .filter((b) => b.system === systemId && PRIORITY[b.type] && view.targets.has(b.id) && !isHidden(index, b.id, playerMode))
       .map((b) => ({ id: b.id, name: displayName(b.name), type: b.type })),
   ];
-  const fly = (id) => { focusOn(view.rig, view.targets, id, performance.now()); redraw(); };
+  const fly = (id) => flyTo(id);
   return (
     <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
       {items.map((it) => (
@@ -118,7 +118,6 @@ export function BodyLabelsUpdater() {
         el.style.transform = `translate(${Math.round(box[0] + PAD)}px, ${Math.round(box[1] + PAD)}px)`;
       }
       el.style.opacity = box ? '1' : '0';
-      el.style.pointerEvents = box ? 'auto' : 'none';
     }
   });
   return null;

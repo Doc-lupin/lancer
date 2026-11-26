@@ -17,7 +17,7 @@ import { useMap, isHidden } from '../data/store.js';
 import { displayName } from '../data/names.js';
 import { KM_PER_LY, pixelsPerKm } from './origin.js';
 import { view } from './camera/view.js';
-import { focusOn } from './camera/rig.js';
+import { flyTo } from './camera/CameraRig.jsx';
 import { screenPos } from './camera/pick.js';
 
 const FADE_FROM_LY = 6; // fully shown beyond this distance from the camera
@@ -40,8 +40,7 @@ export function RegionLabels() {
   const regions = useRegions();
   const fly = (id) => {
     if (!view.rig || !view.targets.has(id)) return;
-    focusOn(view.rig, view.targets, id, performance.now());
-    redraw();
+    flyTo(id);
   };
   return (
     <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
@@ -80,7 +79,7 @@ function measure(el) {
 export function RegionLabelsUpdater() {
   const regions = useRegions();
   const { camera, size, invalidate } = useThree();
-  const lanesMode = useMap((s) => s.lanesMode);
+  const lanesMode = useMap((s) => s.lanes === 'bright');
   useEffect(() => {
     redraw = invalidate;
     return () => { redraw = () => {}; };
@@ -140,7 +139,6 @@ export function RegionLabelsUpdater() {
         if (el.children[1]) el.children[1].style.display = it.compact ? 'none' : 'block';
       }
       el.style.opacity = alpha.toFixed(2);
-      el.style.pointerEvents = alpha > 0.5 ? 'auto' : 'none';
     }
   });
   return null;

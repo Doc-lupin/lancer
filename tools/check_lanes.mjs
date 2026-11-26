@@ -6,8 +6,8 @@
 // checks:
 //   - all 37 lanes are drawn: 31 whole and 6 drifting ones in 18 dashes each,
 //     plus 3 chevrons on each of the 9 one-way lanes, in two draw calls;
-//   - lanes are faint by default and bright in lanes mode, switched by the
-//     button and by the L key; lane labels appear only in lanes mode;
+//   - lanes are faint by default; the button and the L key step them to
+//     bright (lanes mode, with labels) and off (not drawn at all), then back;
 //   - on the clock's date (5029u day 300) the five Lantern-tide lanes are open,
 //     with 9 more days, and drawn in the open style;
 //   - lanes show on screen, from the Basin and from inside a system, where one
@@ -83,13 +83,14 @@ async function run(browser, base, name, options) {
 
   const mid = await laneScreen(page, 'ostrom-tallis', 0.5);
   const faint = await brightness(page, mid[0], mid[1]);
-  const toggle = page.getByRole('button', { name: 'Lanes', exact: true });
+  const toggle = page.locator('button[data-lanes]');
+  check('lanes start faint', (await toggle.getAttribute('data-lanes')) === 'faint');
   check('no lane labels outside lanes mode', (await page.locator('[data-lane]').count()) === 0);
   await toggle.click();
   await page.waitForTimeout(300);
   const bright = await brightness(page, mid[0], mid[1]);
   check('lanes are faint by default and bright in lanes mode', faint > 15 && bright > 2.5 * faint, `Ostrom–Tallis at mid-lane: ${faint} → ${bright}`);
-  check('the button shows lanes mode is on', (await toggle.getAttribute('aria-pressed')) === 'true');
+  check('one press makes them bright', (await toggle.getAttribute('data-lanes')) === 'bright');
   const shownLabels = await page.evaluate(() => [...document.querySelectorAll('[data-lane]')].filter((e) => e.style.opacity === '1').length);
   check('lane labels appear in lanes mode', shownLabels >= (options.hasTouch ? 4 : 15), `${shownLabels} of 37 shown at the Basin level`);
   await page.screenshot({ path: join(OUT, `${name}-1-lanes-mode.png`) });
@@ -113,7 +114,12 @@ async function run(browser, base, name, options) {
   if (!options.hasTouch) {
     await page.keyboard.press('l');
     await page.waitForTimeout(300);
-    check('the L key switches lanes mode off', (await toggle.getAttribute('aria-pressed')) === 'false');
+    const off = await brightness(page, mid[0], mid[1]);
+    const meshes = await page.evaluate(() => window.__lancer.scene.children.filter((o) => o.userData.layer === 'lanes' && o.visible).length);
+    check('the L key turns them off: nothing drawn', (await toggle.getAttribute('data-lanes')) === 'off' && meshes === 0 && off < faint, `${meshes} lane meshes showing; mid-lane ${off} (faint was ${faint})`);
+    await page.keyboard.press('l');
+    await page.waitForTimeout(300);
+    check('and once more back to faint', (await toggle.getAttribute('data-lanes')) === 'faint');
     await page.keyboard.press('l');
     await page.waitForTimeout(300);
   }

@@ -66,6 +66,7 @@ export function viewDirection(rig, out = [0, 0, 0]) {
 }
 
 export function cameraPlace(rig) {
+  if (rig.mode === 'free') return place(rig.eye.anchor, rig.eye.offset); // free movement (free.js)
   const d = viewDirection(rig);
   return place(rig.target.anchor, rig.target.offset.map((v, i) => v + rig.distance * d[i]));
 }

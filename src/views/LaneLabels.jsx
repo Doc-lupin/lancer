@@ -34,7 +34,7 @@ function useLanes() {
 
 export function LaneLabels() {
   const lanes = useLanes();
-  const lanesMode = useMap((s) => s.lanesMode);
+  const lanesMode = useMap((s) => s.lanes === 'bright');
   if (!lanesMode) return null;
   return (
     <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
@@ -75,7 +75,7 @@ function measure(el) {
 
 export function LaneLabelsUpdater() {
   const lanes = useLanes();
-  const lanesMode = useMap((s) => s.lanesMode);
+  const lanesMode = useMap((s) => s.lanes === 'bright');
   const { camera, size } = useThree();
 
   useFrame(() => {

@@ -18,7 +18,7 @@ import { useMap, isHidden } from '../data/store.js';
 import { displayColor } from './color.js';
 import { laneEndPlaces, tideState } from '../data/lanes.js';
 import { offsetKm } from './origin.js';
-import { common, stripVertex, stripFragment, screenMaterial as material, quadGeometry } from './strip.js';
+import { common, stripVertex, stripFragment, screenMaterial as material, quadGeometry, clipToView } from './strip.js';
 import { view } from './camera/view.js';
 import { screenPos } from './camera/pick.js';
 
@@ -86,7 +86,8 @@ export default function Lanes() {
   const map = useMap((s) => s.map);
   const index = useMap((s) => s.index);
   const playerMode = useMap((s) => s.playerMode);
-  const lanesMode = useMap((s) => s.lanesMode);
+  const lanes = useMap((s) => s.lanes);
+  const lanesMode = lanes === 'bright';
   const invalidate = useThree((s) => s.invalidate);
   const strips = useRef();
   const marks = useRef();
@@ -136,24 +137,28 @@ export default function Lanes() {
     fill(markGeometry, chevrons, 'aSize', (st) => (lanesMode ? 12 : 9) + st.width);
     chevrons.forEach((it, i) => { it.size = markGeometry.attributes.aSize.getX(i); });
     invalidate();
-  }, [lanesMode, pieces, chevrons, stripGeometry, markGeometry, invalidate]);
+    for (const m of [strips.current, marks.current]) if (m) m.visible = lanes !== 'off';
+  }, [lanes, lanesMode, pieces, chevrons, stripGeometry, markGeometry, invalidate]);
 
   const ra = useMemo(() => [0, 0, 0], []);
   const rb = useMemo(() => [0, 0, 0], []);
   useFrame(({ camera, size, viewport }) => {
     const cam = view.rig?.camera;
-    if (!cam) return;
+    if (!cam || useMap.getState().lanes === 'off') return;
     for (const m of [stripMaterial, markMaterial]) {
       m.uniforms.uViewport.value.set(size.width * viewport.dpr, size.height * viewport.dpr);
       m.uniforms.uPixelRatio.value = viewport.dpr;
     }
     const at = (it, t, attr, i) => attr.setXYZ(i, ra[0] + (rb[0] - ra[0]) * t, ra[1] + (rb[1] - ra[1]) * t, ra[2] + (rb[2] - ra[2]) * t);
     const { aStart, aEnd } = stripGeometry.attributes;
+    const lerp = (t) => [ra[0] + (rb[0] - ra[0]) * t, ra[1] + (rb[1] - ra[1]) * t, ra[2] + (rb[2] - ra[2]) * t];
     pieces.forEach((it, i) => {
       offsetKm(cam, it.a, ra);
       offsetKm(cam, it.b, rb);
-      at(it, it.t0, aStart, i);
-      at(it, it.t1, aEnd, i);
+      const A = lerp(it.t0), B = lerp(it.t1);
+      if (!clipToView(camera, size.width / size.height, A, B)) A.fill(0), B.fill(0); // nothing on screen
+      aStart.setXYZ(i, ...A);
+      aEnd.setXYZ(i, ...B);
     });
     const { aAt, aAhead, aSize } = markGeometry.attributes;
     const screenLength = new Map();

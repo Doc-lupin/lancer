@@ -73,6 +73,7 @@ export function buildTargets(map, index, { playerMode = false } = {}) {
       place: place(s.pos), radiusKm, viewKm: reach * FRAME, minKm: 2.5 * radiusKm,
       closeKm: s.center.type === 'star' ? undefined : radiusKm * FRAME * CLOSE,
       pitch: SYSTEM_PITCH,
+      solid: true, // a thing free movement measures its speed by (camera/free.js)
       parentId: s.region && targets.has(s.region) ? s.region : 'basin',
     });
   }
@@ -113,6 +114,7 @@ export function buildTargets(map, index, { playerMode = false } = {}) {
       radiusKm, viewKm: reach * FRAME, minKm: 2.5 * radiusKm,
       closeKm: GLOBE_TYPES.has(b.type) ? radiusKm * FRAME * CLOSE : undefined,
       pitch: SYSTEM_PITCH,
+      solid: true,
       toStar: starward(b),
       closeDir: placesDirection(b),
       parentId: b.parent && targets.has(b.parent) ? b.parent : b.system,

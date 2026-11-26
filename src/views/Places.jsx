@@ -24,7 +24,7 @@ import { screenPos } from './camera/pick.js';
 import { GLOBE_TYPES } from './mapTargets.js';
 import { globeInfo, globeBlend } from './Planet.jsx';
 import { spriteVertex, spriteFragmentHead, spriteUniforms, spriteGeometry, updateViewport } from './sprite.js';
-import { stripVertex, stripFragment, screenMaterial, quadGeometry, STRIP_CORNERS, STRIP_ATTRS } from './strip.js';
+import { stripVertex, stripFragment, screenMaterial, quadGeometry, clipToView, STRIP_CORNERS, STRIP_ATTRS } from './strip.js';
 import { displayColor } from './color.js';
 import { regionLabelBoxes } from './RegionLabels.jsx';
 
@@ -174,6 +174,7 @@ export default function Places() {
         const a = s.rel.map((v, k) => v + f.pts[i].off[k]);
         const b = s.rel.map((v, k) => v + f.pts[i + 1].off[k]);
         const face = Math.min(facing(f.pts[i].n, a), facing(f.pts[i + 1].n, b));
+        if (!clipToView(camera, size.width / size.height, a, b)) a.fill(0), b.fill(0);
         aStart.setXYZ(n, ...a);
         aEnd.setXYZ(n, ...b);
         aColor.setXYZW(n, f.color.r, f.color.g, f.color.b, 0.95 * blend * Math.min(1, Math.max(0, face / 0.12)));

@@ -1,37 +1,47 @@
-// The lanes mode switch (task 2.7): a button in the corner, or the L key.
+// The lanes button (tasks 2.7, 2.11): each press steps lanes from faint to
+// bright (lanes mode, with labels) to off and back to faint. The L key does
+// the same.
 
 import { useEffect } from 'react';
 import { useMap } from '../data/store.js';
 
+const NEXT = { faint: 'bright', bright: 'off', off: 'faint' };
+const LOOK = {
+  faint: { border: '#3a4352', background: 'rgba(10, 14, 20, 0.75)', color: '#c4ccd8' },
+  bright: { border: '#79e3d2', background: 'rgba(121, 227, 210, 0.16)', color: '#bff3ea' },
+  off: { border: '#2a303a', background: 'rgba(10, 14, 20, 0.75)', color: '#7d8593' },
+};
+
 export default function LanesToggle() {
-  const lanesMode = useMap((s) => s.lanesMode);
-  const setLanesMode = useMap((s) => s.setLanesMode);
+  const lanes = useMap((s) => s.lanes);
+  const setLanes = useMap((s) => s.setLanes);
 
   useEffect(() => {
     const key = (e) => {
       if (e.key.toLowerCase() !== 'l' || e.ctrlKey || e.metaKey || e.altKey) return;
       if (e.target.closest?.('input, textarea, [contenteditable]')) return;
-      setLanesMode(!useMap.getState().lanesMode);
+      setLanes(NEXT[useMap.getState().lanes]);
     };
     addEventListener('keydown', key);
     return () => removeEventListener('keydown', key);
-  }, [setLanesMode]);
+  }, [setLanes]);
 
+  const look = LOOK[lanes];
   return (
     <button
       type="button"
-      aria-pressed={lanesMode}
-      title="Lanes mode (L)"
-      onClick={() => setLanesMode(!lanesMode)}
+      data-lanes={lanes}
+      aria-label={`Lanes: ${lanes}. Press for ${NEXT[lanes]}.`}
+      title={`Lanes: ${lanes} (L)`}
+      onClick={() => setLanes(NEXT[lanes])}
       style={{
         position: 'fixed', right: 'max(12px, env(safe-area-inset-right))', bottom: 'max(12px, env(safe-area-inset-bottom))',
         minWidth: 44, minHeight: 44, padding: '0 16px', borderRadius: 22,
-        border: `1px solid ${lanesMode ? '#79e3d2' : '#3a4352'}`,
-        background: lanesMode ? 'rgba(121, 227, 210, 0.16)' : 'rgba(10, 14, 20, 0.75)',
-        color: lanesMode ? '#bff3ea' : '#c4ccd8', font: '600 14px system-ui, sans-serif', cursor: 'pointer',
+        border: `1px solid ${look.border}`, background: look.background, color: look.color,
+        font: '600 14px system-ui, sans-serif', cursor: 'pointer',
       }}
     >
-      Lanes
+      Lanes <span style={{ fontWeight: 400, opacity: 0.85 }}>{lanes}</span>
     </button>
   );
 }

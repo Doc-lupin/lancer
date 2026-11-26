@@ -21,6 +21,7 @@ import Places, { PlaceLabels, PlaceLabelsUpdater } from './Places.jsx';
 import { BodyLabels, BodyLabelsUpdater } from './BodyLabels.jsx';
 import { LaneLabels, LaneLabelsUpdater } from './LaneLabels.jsx';
 import LanesToggle from '../interface/LanesToggle.jsx';
+import CameraToggle from '../interface/CameraToggle.jsx';
 import DebugHook from './DebugHook.jsx';
 
 export default function Scene() {
@@ -73,6 +74,7 @@ export default function Scene() {
           <BodyLabels />
           <PlaceLabels />
           <LanesToggle />
+          <CameraToggle />
         </>
       )}
       {status === 'error' && (

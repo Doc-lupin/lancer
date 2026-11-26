@@ -25,7 +25,7 @@ import { offsetKm, place, pixelsPerKm } from './origin.js';
 import { view } from './camera/view.js';
 import { bodyRadiusKm, GLOBE_TYPES } from './mapTargets.js';
 import { globeBlend } from './Planet.jsx';
-import { stripVertex, stripFragment, screenMaterial, quadGeometry, STRIP_CORNERS, STRIP_ATTRS } from './strip.js';
+import { stripVertex, stripFragment, screenMaterial, quadGeometry, clipToView, STRIP_CORNERS, STRIP_ATTRS } from './strip.js';
 
 // How visible each body is this frame (0–1), for the body labels.
 export const bodyAlpha = new Map();
@@ -257,8 +257,11 @@ export default function System() {
       displayColor(o.style.color, c);
       for (let i = 0; i < SEGMENTS; i++) {
         const p0 = o.ring[i], p1 = o.ring[i + 1];
-        aStart.setXYZ(n, base[0] + p0[0], base[1] + p0[1], base[2] + p0[2]);
-        aEnd.setXYZ(n, base[0] + p1[0], base[1] + p1[1], base[2] + p1[2]);
+        const A = [base[0] + p0[0], base[1] + p0[1], base[2] + p0[2]];
+        const B = [base[0] + p1[0], base[1] + p1[1], base[2] + p1[2]];
+        if (!clipToView(camera, size.width / size.height, A, B)) A.fill(0), B.fill(0);
+        aStart.setXYZ(n, ...A);
+        aEnd.setXYZ(n, ...B);
         aColor.setXYZW(n, c.r, c.g, c.b, o.style.alpha * alpha);
         aWidth.setX(n, o.style.width);
         n++;
