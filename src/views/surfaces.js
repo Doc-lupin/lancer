@@ -8,12 +8,15 @@
 // places' [lat, lon].
 //
 // Where a body's maps come from, first match wins:
-//   1. a registered provider, e.g. the procedural generator by world type
-//      (procedural.js, registered when the map opens):
+//   1. a registered provider, e.g. a generator by world type:
 //        registerSurface((body, tools) => body.world === 'ocean' ? { map, heightMap, heightScale: 0.004 } : null);
 //   2. an image file named in the data, appearance.texture, loaded from
 //      public/textures/ (the schema already has this field);
-//   3. the built-in look: soft bands for gas giants, faint mottling otherwise.
+//   3. for planets, moons, giants and rogue planets: the procedural worlds of
+//      src/views/planet/ (terrain, climate, biomes, clouds, air), which don't
+//      go through maps at all;
+//   4. otherwise (asteroids, wrecks, structures) the built-in look: faint
+//      mottling.
 //
 // A provider returns null to pass, or an object with any of:
 //   map           color (sRGB); multiplied by appearance.color unless tint is false
@@ -31,7 +34,7 @@
 // `tools` gives loadTexture(file, { color }) for files in public/textures/,
 // canvasTexture(width, height, draw, { color }) for maps drawn on the CPU,
 // and bake(width, height, material, { color, mipmaps }) to paint a map on the
-// GPU with a shader (procedural.js): the material draws a full-screen
+// GPU with a shader (region effects, planet/fields.js): the material draws a full-screen
 // square, and gets vUv with the map's layout.
 
 import * as THREE from 'three';
@@ -170,7 +173,10 @@ function builtIn(body) {
 
 const tools = { loadTexture, canvasTexture, random, bake, readRed };
 
-export function surfaceMaps(body) {
+// A body's maps. With { builtIn: false }, null when nothing was imported or
+// registered for it (planets, moons and giants then get the procedural
+// worlds of planet/, which take no maps).
+export function surfaceMaps(body, { builtIn: useBuiltIn = true } = {}) {
   if (cache.has(body.id)) {
     const maps = cache.get(body.id);
     cache.delete(body.id); // most recently used goes last
@@ -185,6 +191,7 @@ export function surfaceMaps(body) {
   let maps = null;
   for (const p of providers) if ((maps = p(body, tools))) break;
   if (!maps && body.appearance?.texture) maps = { map: loadTexture(body.appearance.texture), tint: false };
+  if (!maps && !useBuiltIn) return null;
   if (!maps) maps = builtIn(body);
   maps = { tint: true, heightScale: 0.005, ...maps };
   cache.set(body.id, maps);
