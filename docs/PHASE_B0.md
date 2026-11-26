@@ -29,12 +29,28 @@ The three `check_zoom` failures:
    (phone); the limit is 40. Cause: issue 2 of the handoff. B0.9 (job queue)
    and B0.10 (cache) remove it.
 3. "Our work per frame under 11 ms" on phone: 18.4 ms at the station stop
-   (11.5 and 13.1 ms at the planet stops). Phase 2 had 4.9 ms. The procedural
-   globes add CPU work in each frame (level-of-detail selection on the cube
-   sphere). Not yet located in detail.
+   (11.5 and 13.1 ms at the planet stops). The procedural globes add CPU work
+   in each frame (level-of-detail selection on the cube sphere).
 
-So `section-b` does not pass the Phase 2 test now. Section B rule 2 says
-that all Section A checks must pass after each task. See BQ1.
+So `section-b` did not pass the Phase 2 test. Section B rule 2 says that all
+Section A checks must pass after each task. See BQ1.
+
+### The same checks on `main`, on this machine
+
+`main` was checked again in this container for comparison (Nov 26):
+
+| Check on `main` | Result here | Result when Phase 2 was accepted |
+|---|---|---|
+| `check_zoom`, work per frame on phone | **fails**: 14.7 ms at the station stop, 12.3 ms at the planet | 4.9 ms at most |
+| `check_system` | **fails**: at Ostrom 3 of 4 shown planets are named | pass |
+
+This container's CPU is slower than the machine of the Phase 2 test, so the
+11 ms limit fails on `main` too. Against `main` on the same machine, the WIP
+globes add about 25% (18.4 ms against 14.7 ms), not the 4× that the old
+4.9 ms suggests. The Ostrom label failure also occurs on `main` here, and it
+passed once on `section-b` in this container: label placement depends on
+timing. Both are faults of the check or the machine, not of Section B work.
+They are BQ2.
 
 ## B0.1: baseline (done)
 
