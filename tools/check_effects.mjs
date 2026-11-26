@@ -106,8 +106,9 @@ async function run(browser, base, name, options) {
     for (const o of window.__lancer.scene.children) if (o.userData.layer) byLayer[o.userData.layer] = o.count;
     return { calls: window.__lancer.render().calls, byLayer, icons: window.__lancer.centerTypes() };
   });
-  // + 1: the tone map at the end of the HDR pipeline (task B0.4, Output.jsx).
-  check('draw calls at the Basin: backdrop 2, stars 2, lanes 2, icons 1, effects 2, tone map 1 (no bodies, orbits, places or fronts)', info.calls === 10, `${info.calls}`);
+  // + 17 for the output (Output.jsx): bloom 16 (B0.5: luminance, mipmap blur
+  // down and up) and the tone map 1 (B0.4).
+  check('draw calls at the Basin: backdrop 2, stars 2, lanes 2, icons 1, effects 2, output 17 (no bodies, orbits, places or fronts)', info.calls === 26, `${info.calls}`);
   check('11 center icons: 7 rogue planets, 3 wrecks, 1 structure', info.icons['rogue-planet'] === 7 && info.icons.wreck === 3 && info.icons.structure === 1 && Object.keys(info.icons).length === 3, JSON.stringify(info.icons));
 
   // Icons are no bigger than a Sun-like star's glow (8 px), so they don't out-scale the stars.
@@ -122,13 +123,15 @@ async function run(browser, base, name, options) {
   for (const [id, want] of [['furnace', 'pink-violet'], ['mire', 'brown']]) {
     const p = await page.evaluate((id) => window.__lancer.screen(id), id);
     const half = options.hasTouch ? 14 : 28; // about the cloud's size at this zoom
-    await layers(page, { nebula: true, dust: true });
+    // Stars hidden in both: since bloom (B0.5) the dust also hides the glow of
+    // the stars behind it, which is checked below on its own.
+    await layers(page, { nebula: true, dust: true, stars: false });
     await page.waitForTimeout(150);
     const on = await mean(page, p[0], p[1], half);
     await layers(page, { nebula: false, dust: false });
     await page.waitForTimeout(150);
     const off = await mean(page, p[0], p[1], half);
-    await layers(page, { nebula: true, dust: true });
+    await layers(page, { nebula: true, dust: true, stars: true });
     const add = on.map((v, i) => v - off[i]);
     const hue = want === 'brown' ? add[0] > add[1] && add[1] > add[2] : add[0] > add[1] && add[2] > add[1];
     check(`the ${id === 'furnace' ? "Furnace's nebula" : "Mire's dust"} shows from the Basin, ${want}`, Math.max(...add) > 4 && hue, `adds ${fmt(add)} (r, g, b) on average`);

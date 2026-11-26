@@ -56,7 +56,11 @@ void main() {
   // space looks as written. Dust (laid over): converted before its alpha, so
   // thick dust settles to its own color, as it did before linear light (B0.4).
   vec3 rgb = uOver > 0.5 ? fromDisplay(vColor.rgb) * a : fromDisplay(vColor.rgb * a);
-  gl_FragColor = vec4(rgb * uExposure, a);
+  // Dust also absorbs the light behind it more strongly than its own color
+  // covers: transmission (1 - a)^2, so a star brighter than white (bloom,
+  // B0.5) still fades behind it. Over empty sky the dust looks the same.
+  float block = uOver > 0.5 ? 1.0 - (1.0 - a) * (1.0 - a) : a;
+  gl_FragColor = vec4(rgb * uExposure, block);
 }`;
 
 // Four cloud shapes in a 2 × 2 atlas: swirled noise with bright filaments,

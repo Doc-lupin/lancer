@@ -121,6 +121,9 @@ try {
         if (bad.length) failed++;
         const worst = rows.length ? Math.min(...rows.map((x) => x.contrast)).toFixed(2) : '—';
         console.log(`${bad.length ? 'FAIL' : 'ok  '} ${device} ${v.name}: ${rows.length} labels, ${low.length} under ${AA}:1, lowest ${worst}${bad.length ? `; newly under: ${bad.map((x) => `${x.id} ${x.contrast}`).join(', ')}` : low.length ? ` (${low.map((x) => `${x.id} ${x.contrast}`).join(', ')})` : ''}`);
+      } catch (e) {
+        failed++;
+        console.log(`FAIL ${device} ${v.name}: ${String(e).split('\n')[0]}`);
       } finally {
         await close();
       }
