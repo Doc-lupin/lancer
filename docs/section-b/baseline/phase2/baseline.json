@@ -2174,5 +2174,8 @@
  "recorded": "2026-11-26",
  "commit": "cfd7905",
  "note": "Headless Chromium, software rendering. workMs: our CPU work per frame; frameMs: frame to frame; gpuBytesEstimate: geometry and textures reachable from the scene.",
- "worlds": "phase2"
+ "worlds": "phase2",
+ "machine": {
+  "ms": 254.4
+ }
 }

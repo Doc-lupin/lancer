@@ -1,0 +1,15 @@
+{
+  "_comment": "Task B0.3: performance budgets, read by tools/check_performance.mjs. Each view's budget is its value in the reference baseline (docs/section-b/baseline/<ref>/baseline.json) times `ratio` plus `plus`. Times are scaled by machine speed (machine.ms now / machine.ms in the reference). The margins cover run-to-run variation measured between two recordings of the same code on the same machine (Nov 26, 2026): CPU work up to 1.5x, frame time up to 1.36x, held frames up to 2.3x; draw calls and GPU memory did not vary. `views` overrides the default for one view. `targets` are fixed limits from the Section B plan; they are reported, and fail the check only with --targets.",
+  "default": {
+    "workMs": { "ratio": 1.5, "plus": 0.5 },
+    "frameMs": { "ratio": 1.4, "plus": 5 },
+    "heldMs": { "ratio": 2.5, "plus": 100 },
+    "drawCalls": { "ratio": 1, "plus": 2 },
+    "gpuMB": { "ratio": 1.1, "plus": 2 }
+  },
+  "views": {},
+  "targets": {
+    "desktop": { "heldMs": 50 },
+    "phone": {}
+  }
+}

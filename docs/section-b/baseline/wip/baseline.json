@@ -2174,5 +2174,8 @@
  "recorded": "2026-11-26",
  "commit": "f6e7712",
  "note": "Headless Chromium, software rendering. workMs: our CPU work per frame; frameMs: frame to frame; gpuBytesEstimate: geometry and textures reachable from the scene.",
- "worlds": "wip"
+ "worlds": "wip",
+ "machine": {
+  "ms": 259.8
+ }
 }

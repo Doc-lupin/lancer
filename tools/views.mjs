@@ -41,6 +41,33 @@ export async function startApp(port, { worlds } = {}) {
   };
 }
 
+// How fast this machine runs our kind of work: a fixed piece of JavaScript
+// (math into a typed array, then a sort) timed in an unthrottled page: the
+// fastest of 7 runs in ms (other load on the machine only makes runs slower). Time budgets recorded on one machine are scaled by
+// the ratio of this number when they are checked on another (B0.3, BQ2).
+export async function machineMs(app) {
+  const context = await app.browser.newContext();
+  const page = await context.newPage();
+  try {
+    return await page.evaluate(() => {
+      const run = () => {
+        const t = performance.now();
+        const a = new Float64Array(200000);
+        let x = 0;
+        for (let k = 0; k < 12; k++) {
+          for (let i = 0; i < a.length; i++) { a[i] = Math.sin(i * 0.001 + k) * Math.sqrt(i + k); x += a[i]; }
+          a.sort();
+        }
+        return [performance.now() - t, x];
+      };
+      run();
+      return +Math.min(...Array.from({ length: 7 }, () => run()[0])).toFixed(1);
+    });
+  } finally {
+    await context.close();
+  }
+}
+
 // A new page for one device, with page errors collected.
 export async function openPage(app, device) {
   const d = DEVICES[device];

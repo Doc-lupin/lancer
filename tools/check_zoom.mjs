@@ -22,23 +22,35 @@
 //   Smooth           This browser draws in software, so its frame rate says
 //                    nothing about a phone's graphics chip. Measured here: our
 //                    own work per frame on the CPU, which must leave room in a
-//                    30 fps frame (33 ms): under 8 ms on desktop, under 11 ms
-//                    with the CPU slowed 4×. The software frame rate is logged
+//                    30 fps frame (33 ms). Phase 2 set it under 8 ms on desktop
+//                    and under 11 ms with the CPU slowed 4×, on the machine of
+//                    that test. Since decision BQ2 (docs/PHASE_B0.md) each stop
+//                    is compared with the Phase 2 reference instead: at most
+//                    1.5× its mean + 0.5 ms, scaled by machine speed
+//                    (machineMs in tools/views.mjs). The reference is
+//                    docs/section-b/baseline/phase2/zoom.json, recorded on main
+//                    with --record-ref FILE; without it, the fixed limits. The software frame rate is logged
 //                    for reference. Smoothness on a real phone is for the GM.
 // Screenshots of each stop go to --out.
 
 import { createRequire } from 'node:module';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { inflateSync } from 'node:zlib';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { createServer } from 'vite';
 import { offsetKm } from '../src/views/origin.js';
+import { machineMs } from './views.mjs';
 
 const require = createRequire(import.meta.url);
 const { chromium, devices } = require('playwright');
 const outArg = process.argv.indexOf('--out');
 const OUT = resolve(outArg > 0 ? process.argv[outArg + 1] : join(tmpdir(), 'lancer-zoom'));
+const recArg = process.argv.indexOf('--record-ref');
+const RECORD = recArg > 0 ? resolve(process.argv[recArg + 1]) : null;
+const REF_FILE = new URL('../docs/section-b/baseline/phase2/zoom.json', import.meta.url);
+const REF = !RECORD && existsSync(REF_FILE) ? JSON.parse(readFileSync(REF_FILE, 'utf8')) : null;
+let scale = 1; // machine speed here against the reference's
 
 const results = [];
 function check(name, ok, detail = '') {
@@ -227,9 +239,16 @@ async function run(browser, base, name, options, throttle) {
 
   console.log('\n  stop                       our work per frame (mean / 95th pct)   software frames/s');
   for (const p of perf) console.log(`  ${p.label.padEnd(26)} ${p.mean.toFixed(2).padStart(6)} / ${p.p95.toFixed(2).padStart(6)} ms ${''.padStart(20)}${p.fps.toFixed(1).padStart(6)}`);
-  const limit = throttle > 1 ? 11 : 8;
-  const worst = Math.max(...perf.map((p) => p.mean));
-  check(`our work per frame under ${limit} ms at every stop`, worst < limit, `worst mean ${worst.toFixed(2)} ms`);
+  const ref = REF?.[name];
+  if (ref) {
+    const over = perf.map((p) => ({ ...p, limit: ((ref.stops[p.label] ?? Infinity) * 1.5 + 0.5) * scale })).filter((p) => p.mean > p.limit);
+    check('our work per frame within 1.5× the Phase 2 reference + 0.5 ms at every stop (scaled by machine speed)', over.length === 0,
+      over.length ? over.map((p) => `${p.label} ${p.mean.toFixed(2)} > ${p.limit.toFixed(2)} ms`).join('; ') : `machine ×${scale.toFixed(2)}; worst mean ${Math.max(...perf.map((p) => p.mean)).toFixed(2)} ms`);
+  } else {
+    const limit = throttle > 1 ? 11 : 8;
+    const worst = Math.max(...perf.map((p) => p.mean));
+    check(`our work per frame under ${limit} ms at every stop (no reference: fixed limit)`, worst < limit, `worst mean ${worst.toFixed(2)} ms`);
+  }
   check('no page errors', errors.length === 0, errors.join('; '));
   await page.close();
   return { shots, perf };
@@ -255,8 +274,16 @@ try {
   await warm.goto(base);
   await warm.waitForTimeout(3000);
   await warm.close();
+  const here = await machineMs({ browser });
+  if (REF) scale = here / REF.machineMs;
+  console.log(`machine: ${here} ms${REF ? `, reference ${REF.machineMs} ms (×${scale.toFixed(2)})` : RECORD ? '' : ', no reference: fixed limits'}\n`);
   const desk = await run(browser, base, 'desktop', { viewport: { width: 1280, height: 800 } }, 1);
-  await run(browser, base, 'phone', devices['Pixel 7'], 4);
+  const phone = await run(browser, base, 'phone', devices['Pixel 7'], 4);
+  if (RECORD) {
+    const stops = (perf) => Object.fromEntries(perf.map((p) => [p.label, +p.mean.toFixed(2)]));
+    writeFileSync(RECORD, `${JSON.stringify({ recorded: new Date().toISOString().slice(0, 10), machineMs: here, desktop: { stops: stops(desk.perf) }, phone: { stops: stops(phone.perf) } }, null, 1)}\n`);
+    console.log(`Reference written: ${RECORD}`);
+  }
   await contactSheet(browser, desk.shots);
   console.log(`\nScreenshots: ${OUT}`);
 } finally {
