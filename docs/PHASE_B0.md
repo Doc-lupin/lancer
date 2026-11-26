@@ -3,8 +3,9 @@
 Tasks, test and functions are in [SECTION_B.md](SECTION_B.md), Phase B0.
 Branch `section-b`.
 
-**Status (Nov 26, 2026): B0.1, B0.2 and B0.3 done. Next: B0.4.** BQ1 and BQ2
-are decided (option 2 and option 1) and done.
+**Status (Nov 26, 2026): B0.1 to B0.3 done; B0.4 built and checked, waiting
+for the GM's approval of the new look (BQ3). Next: B0.5.** BQ1 and BQ2 are
+decided and done.
 
 ## Checks at the start of the phase
 
@@ -259,6 +260,58 @@ Found on the way, for a later task (readability): after a flight, a label's
 memory of its last spot can leave out a name that a fresh placement fits
 (Ostrom, 3 of 4 named). The map should place names as well as the reset does.
 
+## B0.4: high dynamic range pipeline (built; BQ3 open)
+
+- **Packages:** `postprocessing` 6.39.6 and `@react-three/postprocessing`
+  3.2.2 (approved by BD1, exact versions).
+- **`src/views/Output.jsx`:** the scene renders into a half-float buffer in
+  linear light. One effect at the end tone maps it, and the composer encodes
+  it for the screen (sRGB). The draw-call count is reset once a frame, so the
+  checks see the whole frame. Multisampling is 4× on screens under 2 device
+  pixels per CSS pixel and off on denser screens (phones), until B0.6.
+- **The tone map** (`OUTPUT_GLSL` in `src/views/color.js`) is the shoulder of
+  Khronos PBR Neutral without its toe offset: colors with every channel at or
+  under 0.8 (linear) pass unchanged; brighter light rolls off toward white.
+  The toe offset of Neutral would have darkened mid-tones by about 10%.
+- **Our own shaders** still compute display colors. They end with
+  `fromDisplay(color × alpha)` (`FROM_DISPLAY_GLSL`), the exact inverse of the
+  output, so each mark over black looks as before. Dust is converted before
+  its alpha instead, so thick dust settles to its own brown.
+- **Exposure** (`src/views/exposure.js`, `store.exposure`, `setExposure` in the
+  debug hook): one multiplier on light from the world (globe lights, air,
+  rings, nebula and dust, the sky). Lanes, orbit lines, icons, markers, star
+  dots and body discs don't take it. Checked at the Tallis close-up: at 0.5
+  the globe dims (89.7 to 64.9 mean), markers, labels and lanes do not change.
+  A slider comes with the World Lab (B0.7).
+- **WIP planet shaders** output linear light; their own ACES curve is
+  removed. They come out darker than before (ACES brightened mid-tones); they
+  are off by default and get tuned when they are turned on (B2, B5).
+- **Nebula colors:** the two outer blues carry less green (`#4f7bff` to
+  `#5a62ff`, `#3fa0ff` to `#4a86ff`). Added in linear light, the old ones made
+  the Furnace blue-green from the Basin on a phone (`check_effects`).
+
+**Section A checks changed:** `check_effects` expects 10 draw calls at the
+Basin (the tone map adds one). `check_zoom` measures the drawn center of the
+focus only when at least 4 pixels are bright: at the Tallis relay, which
+draws nothing bright at the center, one faint background dot at the
+threshold moved it by 2 px.
+
+**Results (Nov 26):**
+
+| Check | Result |
+|---|---|
+| Section A checks (10) | all pass |
+| `npm test` | 50 of 50 |
+| `check_visuals` against `phase2` | 48 of 80 views within 0.5%; 32 changed, largest mean difference 4.0 of 255 (the Furnace, the Mire, Murk, Quench, Anvil, globe close-ups) |
+| `check_performance` against `phase2` | CPU work unchanged. Frame time in software: phone ×1.23 (median), 39 of 40 within budget; desktop ×1.91 with 4× multisampling, 1 of 40 within budget |
+
+Without multisampling, desktop frame times stay within budget (Basin 78 ms
+against 53 ms), but globe edges show small steps at 1 device pixel per CSS
+pixel.
+
+The review page for the GM: https://claude.ai/artifact/VEFKP2opukqTdbVyWzv2PL
+(before, after and difference for each changed view).
+
 ## Decisions
 
 **BQ1. The WIP planet work fails the Phase 2 test.** Options:
@@ -289,3 +342,12 @@ CPU limit of `check_zoom` (11 ms; 14.7 ms here) and the Ostrom names in
 Recommendation: option 1. A fixed limit in milliseconds tests the machine,
 not the change; a check that passes or fails by timing hides real faults.
 **Decided (GM, Nov 26): option 1.** Done in B0.3, above.
+
+**BQ3. Approve B0.4.** Three parts:
+
+1. The new look of the 32 changed views. Recommendation: approve, and record
+   it as the new reference for `check_visuals`.
+2. The two nebula colors. Recommendation: approve.
+3. Desktop frame time ×1.9 in the software renderer, from 4× multisampling
+   in the half-float buffer. Recommendation: accept it and record a new
+   performance reference; B0.6 lets slow computers turn multisampling off.

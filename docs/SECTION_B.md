@@ -9,8 +9,9 @@ dynamic visual database. Every world, star and orbit gets its look from its
 data and from physical models.
 
 **Status (Nov 26, 2026): Phase B0 in progress; B0.1 (baseline), B0.2 (visual
-regression check) and B0.3 (performance check) done. Work log:
-[PHASE_B0.md](PHASE_B0.md). The WIP worlds are off by default (BQ1).** Earlier work for Section B is
+regression check) and B0.3 (performance check) done; B0.4 (HDR pipeline)
+built, waiting for the GM's approval (BQ3). Work log: [PHASE_B0.md](PHASE_B0.md).
+The WIP worlds are off by default (BQ1).** Earlier work for Section B is
 on branch `section-b` (procedural planets, on hold); see
 [SECTION_B_HANDOFF.md](SECTION_B_HANDOFF.md). Phase B2 and Phase B5 continue from that work.
 
