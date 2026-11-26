@@ -19,6 +19,9 @@ import Lanes from './Lanes.jsx';
 import RegionEffects from './RegionEffects.jsx';
 import Centers from './Centers.jsx';
 import System, { bodyAlpha } from './System.jsx';
+import Planets, { globeInfo } from './Planet.jsx';
+import { surfaceOffsetKm, pathLatAt } from '../data/globe.js';
+import Places, { PlaceLabels, PlaceLabelsUpdater } from './Places.jsx';
 import { BodyLabels, BodyLabelsUpdater } from './BodyLabels.jsx';
 import { LaneLabels, LaneLabelsUpdater } from './LaneLabels.jsx';
 import LanesToggle from '../interface/LanesToggle.jsx';
@@ -37,7 +40,34 @@ function DebugHook() {
         return screenPos(camera, view.rig.camera, lerpPlace(a, b, t), size.width, size.height);
       },
       focus: (id) => { focusOn(view.rig, view.targets, id, performance.now()); invalidate(); },
+      focusAt: (id, km) => { focusOn(view.rig, view.targets, id, performance.now(), km * (view.rig.frame ?? 1)); invalidate(); },
       bodyAlpha: (id) => bodyAlpha.get(id) ?? 0,
+      // A place's screen position (lat, lon on its globe), a globe's north pole on screen,
+      // a place marker's opacity, and whether a body's globe is showing.
+      placeScreen: (id, at) => {
+        const { map, index } = useMap.getState();
+        const p = map.places.find((x) => x.id === id);
+        const g = globeInfo(index.byId.get(p.body), index, map.clock);
+        const off = surfaceOffsetKm(at ?? p.at, g.axes, g.radiusKm);
+        return screenPos(camera, view.rig.camera, { anchor: g.place.anchor, offset: g.place.offset.map((v, i) => v + off[i]) }, size.width, size.height);
+      },
+      northScreen: (bodyId) => {
+        const { map, index } = useMap.getState();
+        const g = globeInfo(index.byId.get(bodyId), index, map.clock);
+        const at = (k) => screenPos(camera, view.rig.camera, { anchor: g.place.anchor, offset: g.place.offset.map((v, i) => v + k * g.radiusKm * g.axes.north[i]) }, size.width, size.height);
+        return [at(0), at(1)];
+      },
+      placeAlpha: (id) => {
+        const m = scene.children.find((o) => o.userData.layer === 'places');
+        return m.geometry.attributes.aColor.getW(m.userData.ids.indexOf(id));
+      },
+      placeAt: (id) => useMap.getState().map.places.find((x) => x.id === id).at,
+      seamScreen: (lon) => {
+        const seam = useMap.getState().map.places.find((x) => x.id === 'the-seam');
+        return window.__lancer.placeScreen('the-seam', [pathLatAt(seam.path, lon), lon]);
+      },
+      globeShowing: (bodyId) => scene.getObjectsByProperty('type', 'Group').some((g) => g.userData.layer === 'globes' && g.userData.body === bodyId && g.visible),
+      frontPieces: () => { const m = scene.children.find((o) => o.userData.layer === 'fronts'); const c = m.geometry.attributes.aColor; let n = 0; for (let i = 0; i < m.geometry.instanceCount; i++) if (c.getW(i) > 0.5) n++; return n; },
       layerCount: (layer) => scene.children.filter((o) => o.userData.layer === layer).map((o) => o.geometry.instanceCount ?? o.count),
       centerOf: (id) => useMap.getState().index.byId.get(id)?.center?.type,
       centerTypes: () => {
@@ -89,12 +119,15 @@ export default function Scene() {
             <CameraRig />
             <Lanes />
             <System />
+            <Planets />
+            <Places />
             <Stars />
             <Centers />
             <RegionEffects />
             <RegionLabelsUpdater />
             <LaneLabelsUpdater />
             <BodyLabelsUpdater />
+            <PlaceLabelsUpdater />
             <DebugHook />
           </>
         )}
@@ -104,6 +137,7 @@ export default function Scene() {
           <RegionLabels />
           <LaneLabels />
           <BodyLabels />
+          <PlaceLabels />
           <LanesToggle />
         </>
       )}

@@ -43,6 +43,7 @@ export function cameraPlace(rig) {
 }
 
 export function orbit(rig, dxPx, dyPx) {
+  if (rig.fly) rig.fly.angles = null; // the user has taken over the angle
   rig.yaw -= dxPx * ORBIT_RAD_PER_PX;
   rig.pitch = clamp(rig.pitch + dyPx * ORBIT_RAD_PER_PX, -PITCH_LIMIT, PITCH_LIMIT);
 }
@@ -73,9 +74,37 @@ export function zoom(rig, targets, factor, now) {
   }
 }
 
+// The camera angle a level prefers (task 2.10), or null to keep the current one.
+// Each target may carry `pitch` (0.3 for the Basin and regions, a chart-like
+// view; 0.9 for systems and bodies, looking down on their orbits) and, for a
+// round body, `closeDir` or `toStar`, used in its close view (closeKm): facing
+// the middle of its places if it has any; otherwise just above the equator,
+// turned 40° from the star, so the globe shows lit with a terminator.
+// The angle only changes when it is well off the preference, so a view the
+// user has turned to is mostly kept.
+const CLOSE_PITCH = 0.25;
+const CLOSE_TURN = 40 * Math.PI / 180;
+export function preferredAngles(rig, t, distanceKm) {
+  const close = t.closeKm && distanceKm <= 1.2 * t.closeKm * (rig.frame ?? 1);
+  if (close) {
+    // Facing the middle of the body's places, if it has any.
+    if (t.closeDir) {
+      const [x, y, z] = t.closeDir;
+      return { yaw: Math.atan2(x, z), pitch: Math.max(-1.2, Math.min(1.2, Math.asin(y))) };
+    }
+    if (!t.toStar) return { yaw: rig.yaw, pitch: CLOSE_PITCH };
+    const [x, , z] = t.toStar;
+    const c = Math.cos(CLOSE_TURN), s = Math.sin(CLOSE_TURN);
+    return { yaw: Math.atan2(x * c + z * s, -x * s + z * c), pitch: CLOSE_PITCH };
+  }
+  if (t.pitch != null && Math.abs(rig.pitch - t.pitch) > 0.35) return { yaw: rig.yaw, pitch: t.pitch };
+  return null;
+}
+
 // Make `id` the focus and move the target there. With distanceKm (default:
-// the object's viewKm) the camera also zooms to that distance; with null it
-// keeps the current distance and only slides the target over.
+// the object's viewKm) the camera also zooms to that distance, and turns to
+// the level's preferred angle; with null it keeps the current distance and
+// angle and only slides the target over.
 export function focusOn(rig, targets, id, now, distanceKm = targets.get(id).viewKm * (rig.frame ?? 1)) {
   const to = copy(targets.get(id).place);
   const from = copy(rig.target);
@@ -89,8 +118,17 @@ export function focusOn(rig, targets, id, now, distanceKm = targets.get(id).view
     hop = Math.max(0, Math.log(1.2 * Math.hypot(...v)) - Math.log(Math.max(d0, d1)));
     dur = Math.min(3000, 800 + 50 * Math.abs(Math.log(d1 / d0)) + 100 * hop);
   }
+  let angles = null;
+  if (d1 != null) {
+    const want = preferredAngles(rig, targets.get(id), d1);
+    if (want) {
+      // Turn the short way round.
+      const dy = ((((want.yaw - rig.yaw) % (2 * Math.PI)) + 3 * Math.PI) % (2 * Math.PI)) - Math.PI;
+      angles = { yaw0: rig.yaw, yaw1: rig.yaw + dy, pitch0: rig.pitch, pitch1: clamp(want.pitch, -PITCH_LIMIT, PITCH_LIMIT) };
+    }
+  }
   rig.focusId = id;
-  rig.fly = { from, to, v, d0, d1, hop, t0: now, dur };
+  rig.fly = { from, to, v, d0, d1, hop, t0: now, dur, angles };
 }
 
 // Advance a flight to time `now`. Returns true while something moved.
@@ -106,6 +144,7 @@ export function step(rig, now) {
   if (t >= 1) {
     rig.target = copy(f.to);
     if (f.d1 != null) rig.distance = f.d1;
+    if (f.angles) { rig.yaw = f.angles.yaw1; rig.pitch = f.angles.pitch1; }
     rig.fly = null;
     return true;
   }
@@ -115,6 +154,10 @@ export function step(rig, now) {
     : place(f.to.anchor, f.to.offset.map((x, i) => x - f.v[i] * (1 - s)));
   if (f.d1 != null) {
     rig.distance = Math.exp((1 - s) * Math.log(f.d0) + s * Math.log(f.d1) + f.hop * 4 * s * (1 - s));
+  }
+  if (f.angles) {
+    rig.yaw = f.angles.yaw0 + (f.angles.yaw1 - f.angles.yaw0) * s;
+    rig.pitch = f.angles.pitch0 + (f.angles.pitch1 - f.angles.pitch0) * s;
   }
   return true;
 }

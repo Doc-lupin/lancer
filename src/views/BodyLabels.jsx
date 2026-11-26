@@ -42,6 +42,8 @@ export function BodyLabels() {
   const index = useMap((s) => s.index);
   const playerMode = useMap((s) => s.playerMode);
   useEffect(() => { setSystemId = setSystem; return () => { setSystemId = () => {}; }; }, []);
+  // The scene only redraws on change: ask for a frame once the names are on the page.
+  useEffect(() => { redraw(); }, [systemId]);
   if (!systemId) return null;
   const system = index.byId.get(systemId);
   const items = [

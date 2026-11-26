@@ -65,7 +65,12 @@ export default function CameraRig() {
       pointers.delete(e.pointerId);
       if (press && !press.moved && pointers.size === 0 && e.type === 'pointerup') {
         const id = pick(p[0], p[1], e.pointerType);
-        if (id) focusOn(view.rig, view.targets, id, performance.now());
+        if (id) {
+          // A second click on the focused body flies in close, to its globe.
+          const t = view.targets.get(id);
+          const close = id === view.rig.focusId && t.closeKm && view.rig.distance > 1.2 * t.closeKm * (view.rig.frame ?? 1);
+          focusOn(view.rig, view.targets, id, performance.now(), close ? t.closeKm * (view.rig.frame ?? 1) : undefined);
+        }
       }
       if (pointers.size < 2) pinch = 0;
       if (pointers.size === 0 || pointers.size === 1) press = null;

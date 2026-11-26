@@ -26,9 +26,9 @@ test('three hand-worked bodies on 5029u day 300', () => {
 test('a lane mouth with no period stays at its phase', () => {
   assert.equal(orbitAngleDeg(body('ostrom-tallis-at-ostrom').orbit, 299), 80);
   const [x, y, z] = bodyOffsetKm(body('ostrom-tallis-at-ostrom'), index, 299);
-  near(Math.hypot(x, y), 2.6 * KM_PER_AU, 1);
-  near(Math.atan2(y, x) * 180 / Math.PI, 80, 1e-9);
-  assert.equal(z, 0);
+  near(Math.hypot(x, z), 2.6 * KM_PER_AU, 1);
+  near(Math.atan2(-z, x) * 180 / Math.PI, 80, 1e-9); // from +x towards −z (P15)
+  assert.equal(y, 0);
 });
 
 test('a moon sits at its distance from its planet, which sits at its own', () => {
@@ -37,7 +37,7 @@ test('a moon sits at its distance from its planet, which sits at its own', () =>
   near(Math.hypot(...planet), 1.05 * KM_PER_AU, 1);
   near(Math.hypot(...moon.map((v, i) => v - planet[i])), 210000, 1e-3);
   // Tallis A: 30 + 360 × 299 / 10.569 = 30 + 10184.502 → 10214.502 − 28 × 360 = 134.502°
-  near(Math.atan2(moon[1] - planet[1], moon[0] - planet[0]) * 180 / Math.PI, 134.502, 0.001);
+  near(Math.atan2(-(moon[2] - planet[2]), moon[0] - planet[0]) * 180 / Math.PI, 134.502, 0.001);
 });
 
 test("Pennant's eccentric year: nearest at periapsis, farthest at apoapsis, on its ellipse", () => {

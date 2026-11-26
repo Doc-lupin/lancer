@@ -23,7 +23,8 @@ import { displayColor } from './color.js';
 import { bodyOffsetKm, daysSinceEpoch, orbitPoint, KM_PER_AU } from '../data/orbits.js';
 import { offsetKm, place, pixelsPerKm } from './origin.js';
 import { view } from './camera/view.js';
-import { bodyRadiusKm } from './mapTargets.js';
+import { bodyRadiusKm, GLOBE_TYPES } from './mapTargets.js';
+import { globeBlend } from './Planet.jsx';
 import { stripVertex, stripFragment, screenMaterial, quadGeometry, STRIP_CORNERS, STRIP_ATTRS } from './strip.js';
 
 // How visible each body is this frame (0–1), for the body labels.
@@ -233,12 +234,15 @@ export default function System() {
       let alpha = systemAlpha(it.system);
       if (alpha > 0 && it.apartKm) alpha *= smooth(apart(it.parentPlace, it.apartKm), APART_PX);
       offsetKm(cam, it.place, rel);
+      bodyAlpha.set(it.body.id, alpha); // shown at all (for labels), globe or disc
+      // Round bodies hand over to their globe (Planet.jsx) as they grow on screen.
+      if (alpha > 0 && GLOBE_TYPES.has(it.body.type)) alpha *= 1 - globeBlend(it.radiusKm * perKmAt(Math.hypot(...rel)));
       bodyMesh.setMatrixAt(i, m.makeTranslation(rel[0], rel[1], rel[2]));
       g.attributes.aColor.setXYZW(i, it.color.r, it.color.g, it.color.b, alpha);
-      bodyAlpha.set(it.body.id, alpha);
     });
     bodyMesh.instanceMatrix.needsUpdate = true;
     g.attributes.aColor.needsUpdate = true;
+    bodyMesh.visible = bodies.some((it, i) => g.attributes.aColor.getW(i) > 0); // no draw call at the Basin
 
     // Orbits of the systems in view.
     const og = orbitMesh.geometry;

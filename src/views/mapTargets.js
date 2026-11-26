@@ -12,9 +12,17 @@ import { place, KM_PER_LY, KM_PER_AU, CAMERA } from './origin.js';
 import { STAR_KINDS, SUN_RADIUS_KM } from '../data/starKinds.js';
 import { isHidden } from '../data/store.js';
 import { bodyOffsetKm, daysSinceEpoch } from '../data/orbits.js';
+import { bodyAxes, surfaceOffsetKm } from '../data/globe.js';
 
 const FRAME = 1.3 / Math.tan((CAMERA.fov * Math.PI) / 360); // distance per km of radius
 const MIN_REGION_LY = 0.5;
+
+// Round bodies get a close view (closeKm), where the globe fills most of the
+// screen (task 2.10); clicking the focused body flies there.
+export const GLOBE_TYPES = new Set(['planet', 'gas-giant', 'moon', 'asteroid', 'rogue-planet', 'wreck', 'structure']);
+const CLOSE = 1.35;
+// Systems and bodies are seen looking down on their orbits (x–z plane, P15).
+const SYSTEM_PITCH = 0.9;
 
 // Size for bodies the data gives no radius (km).
 const DEFAULT_RADIUS_KM = { station: 1, 'lane-mouth': 1000, field: 0.02 * KM_PER_AU, structure: 1000, wreck: 500 };
@@ -36,7 +44,7 @@ export function buildTargets(map, index, { playerMode = false } = {}) {
   const hidden = (id) => isHidden(index, id, playerMode);
   const targets = new Map();
   const basinR = (map.basin.diameterLy / 2) * KM_PER_LY;
-  targets.set('basin', { place: place([0, 0, 0]), radiusKm: basinR, viewKm: basinR * FRAME, minKm: KM_PER_LY, parentId: null, pickable: false });
+  targets.set('basin', { place: place([0, 0, 0]), radiusKm: basinR, viewKm: basinR * FRAME, minKm: KM_PER_LY, parentId: null, pickable: false, pitch: 0.3 });
 
   for (const r of map.regions) {
     if (hidden(r.id)) continue;
@@ -45,7 +53,7 @@ export function buildTargets(map, index, { playerMode = false } = {}) {
       .filter((s) => index.kindOf.get(s.id) === 'systems')
       .map((s) => Math.hypot(...s.pos.map((v, i) => v - r.pos[i]))));
     const radiusKm = spread * KM_PER_LY;
-    targets.set(r.id, { place: place(r.pos), radiusKm, viewKm: radiusKm * FRAME, minKm: 0.2 * KM_PER_LY, parentId: 'basin' });
+    targets.set(r.id, { place: place(r.pos), radiusKm, viewKm: radiusKm * FRAME, minKm: 0.2 * KM_PER_LY, parentId: 'basin', pitch: 0.3 });
   }
 
   for (const s of map.systems) {
@@ -63,12 +71,37 @@ export function buildTargets(map, index, { playerMode = false } = {}) {
       : Math.max(4 * radiusKm, ...orbits);
     targets.set(s.id, {
       place: place(s.pos), radiusKm, viewKm: reach * FRAME, minKm: 2.5 * radiusKm,
+      closeKm: s.center.type === 'star' ? undefined : radiusKm * FRAME * CLOSE,
+      pitch: SYSTEM_PITCH,
       parentId: s.region && targets.has(s.region) ? s.region : 'basin',
     });
   }
   const days = daysSinceEpoch(map.clock);
   const cache = new Map();
   const centers = new Set(map.systems.map((s) => s.center.body).filter(Boolean));
+  // Unit vector from a body toward its system's star (null in a starless system).
+  const starward = (b) => {
+    if (index.byId.get(b.system).center.type !== 'star') return null;
+    const o = bodyOffsetKm(b, index, days, cache);
+    const l = Math.hypot(...o);
+    return l ? o.map((v) => -v / l) : null;
+  };
+  // For a body with places: the unit direction, from its center, of the middle
+  // of its places, which its close view faces (task 2.10).
+  const placesOn = new Map();
+  for (const p of map.places) if (!hidden(p.id)) placesOn.set(p.body, [...(placesOn.get(p.body) ?? []), p]);
+  const placesDirection = (b) => {
+    const ps = placesOn.get(b.id);
+    if (!ps || !GLOBE_TYPES.has(b.type)) return null;
+    const own = bodyOffsetKm(b, index, days, cache);
+    const parent = b.parent ? bodyOffsetKm(index.byId.get(b.parent), index, days, cache) : [0, 0, 0];
+    const toParent = parent.map((v, i) => v - own[i]);
+    const l = Math.hypot(...toParent);
+    const axes = bodyAxes(b, days, l ? toParent.map((v) => v / l) : null);
+    const sum = ps.reduce((acc, p) => surfaceOffsetKm(p.at, axes, 1).map((v, i) => v + acc[i]), [0, 0, 0]);
+    const s = Math.hypot(...sum);
+    return s > 1e-6 ? sum.map((v) => v / s) : null;
+  };
   const orbitKm = (b) => (b.orbit ? b.orbit.distance * (b.orbit.unit === 'au' ? KM_PER_AU : 1) : 0);
   for (const b of map.bodies) {
     if (b.type === 'asteroid-belt' || centers.has(b.id) || hidden(b.id) || !targets.has(b.system)) continue;
@@ -78,6 +111,10 @@ export function buildTargets(map, index, { playerMode = false } = {}) {
     targets.set(b.id, {
       place: place(index.byId.get(b.system).pos, bodyOffsetKm(b, index, days, cache)),
       radiusKm, viewKm: reach * FRAME, minKm: 2.5 * radiusKm,
+      closeKm: GLOBE_TYPES.has(b.type) ? radiusKm * FRAME * CLOSE : undefined,
+      pitch: SYSTEM_PITCH,
+      toStar: starward(b),
+      closeDir: placesDirection(b),
       parentId: b.parent && targets.has(b.parent) ? b.parent : b.system,
     });
   }

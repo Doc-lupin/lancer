@@ -1,13 +1,15 @@
 // Where bodies are on a given date (task 2.9).
 //
-// Orbits lie in the chart's plane, x–y (x trailing, y coreward), around the
-// system center or the parent body; angles run from +x towards +y (decision
-// P15). `phaseDeg` is the angle at the epoch (5029u day 1), so
+// Orbits lie in the x–z plane around the system center or the parent body,
+// so a system's north is +y, which is also up on screen; angles run from +x
+// towards −z, counterclockwise seen from the north (decision P15, revised in
+// task 2.10: with orbits in the chart's x–y plane every globe was seen from
+// its pole). `phaseDeg` is the angle at the epoch (5029u day 1), so
 //   angle = phaseDeg + 360 × days since epoch / periodDays
 // and a null period keeps the body fixed at phaseDeg (lane mouths, some
 // stations). With an eccentricity, phaseDeg is the mean anomaly, the
 // periapsis is at 0°, and `distance` is the semi-major axis.
-// `inclinationDeg`, when given, tilts the orbit about its line at 0°.
+// `inclinationDeg`, when given, tilts the orbit about its line at 0°, towards +y.
 
 // Days from date a to date b ({ year, day }, Union calendar).
 export function daysBetween(a, b, daysPerYear = 365) {
@@ -35,7 +37,7 @@ export function orbitPoint(orbit, nu) {
   const x = r * Math.cos(nu);
   const y = r * Math.sin(nu);
   const inc = (orbit.inclinationDeg ?? 0) * RAD;
-  return [x, y * Math.cos(inc), y * Math.sin(inc)];
+  return [x, y * Math.sin(inc), -y * Math.cos(inc)];
 }
 
 // True anomaly (radians) on a given day.
