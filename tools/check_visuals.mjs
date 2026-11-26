@@ -91,7 +91,7 @@ try {
       try {
         await goTo(page, app.base, v);
         await shoot(page, newFile);
-        if (!existsSync(refFile)) r = { missing: true };
+        if (!existsSync(refFile)) r = { missing: true, ok: false };
         else {
           r = await compare(cmp.page, refFile, newFile, null);
           if (r.size) r.ok = false;

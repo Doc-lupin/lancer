@@ -92,7 +92,26 @@ export async function goTo(page, base, v) {
   }, v);
   // Let late bakes, label fades and the last redraw finish.
   await page.waitForTimeout(1500);
+  await steady(page);
   return flight;
+}
+
+// Make the picture depend on the view only, not on how the flight went:
+// - Name labels try their spot from the last frame first (labelPlace.js), so
+//   their sides depend on the frames flown. Forget those spots and draw two
+//   frames: the first places every label from this view alone, the second
+//   keeps them.
+// - The orbit hint shows for the first 9 s after the map opens
+//   (CameraToggle.jsx). Wait until it is off.
+async function steady(page) {
+  await page.evaluate(async () => {
+    for (const el of document.querySelectorAll('body *')) { delete el._spot; delete el._shown; }
+    for (let i = 0; i < 2; i++) {
+      window.__lancer.invalidate();
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    }
+  });
+  await page.waitForFunction(() => [...document.querySelectorAll('[data-hint="orbit"]')].every((p) => p.style.opacity === '0'), null, { timeout: 30000 });
 }
 
 // Draw up to `n` frames in a row (at least 5, and no more once `budgetMs` has
