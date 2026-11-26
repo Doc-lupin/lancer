@@ -1,0 +1,24 @@
+{
+ "recorded": "2026-11-26",
+ "machineMs": 258.5,
+ "desktop": {
+  "stops": {
+   "Basin": 1.08,
+   "Tallis (region)": 1.47,
+   "Tallis system": 1.7,
+   "Tallis (planet)": 2.68,
+   "Tallis close up": 2.76,
+   "Tallis relay (station)": 2.66
+  }
+ },
+ "phone": {
+  "stops": {
+   "Basin": 5.06,
+   "Tallis (region)": 5.7,
+   "Tallis system": 7.78,
+   "Tallis (planet)": 13.25,
+   "Tallis close up": 14.52,
+   "Tallis relay (station)": 13.14
+  }
+ }
+}
