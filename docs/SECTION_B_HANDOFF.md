@@ -1,98 +1,146 @@
-# Section B: Handoff (Nov 26, 2026)
+# Section B: Handoff (Nov 27, 2026)
 
 What a new session needs to continue Section B ([SECTION_B.md](SECTION_B.md)).
-Read this, then `CLAUDE.md`, then start Phase B0 (task B0.1).
+Read this, then `CLAUDE.md`, then the plan's Section 8 (decisions BD1 to BD15).
 
-## 1. Branches
+## 1. Where things stand
+
+- **Phase B0 is done** (B0.1 to B0.11). The GM closed it without its final
+  test run. Work log: [PHASE_B0.md](PHASE_B0.md) (what each task built, its
+  results, decisions BQ1 to BQ4, the B0 test status).
+- **Next: Phase B1** (orbits and motion), then **Section A Phase 3** (the
+  interface and the clock, which B1.9 needs), then **Phase B2** (BD5). B2
+  starts with B2.0 (the world test bed) and uses WebGPU at the high and ultra
+  tiers (BD14).
+- **The map is for desktop browsers only** (BD13). **Quality comes first**
+  (BD15): design for mid-range desktop GPUs; the low tier must work.
+
+## 2. Branches
 
 | Branch | Holds |
 |---|---|
-| `main` | Section A Phases 0–2 (accepted), the Section B plan. |
-| `section-b` | `main` + the procedural planet work (off by default: `?worlds=wip` in development, decision BQ1) + the tools below + this file. **Work here.** |
-| `ccr-23ad96e8-4fi4vg` | The previous session's branch. Everything on it is also on `section-b`; it can be deleted. |
-| `phase-2` | Same as the Phase 2 state of `main`. Kept for history. |
+| `section-b` | All Section B work. **Work here.** Not merged into `main`. |
+| `main` | Section A Phases 0–2 (accepted) and the Section B plan as first written. |
+| `ccr-23ad96e8-4fi4vg` | An older session's branch; everything on it is on `section-b`. Can be deleted. |
+| `phase-2` | The Phase 2 state of `main`, for history. |
 
-The parked planet work is one commit ("WIP: procedural planet overhaul") on
-top of `main`. `main` does not have it, because it has not passed the browser
-checks.
+## 3. What Phase B0 built
 
-## 2. The procedural planet work (src/views/planet/)
-
-Planets, moons, gas giants and rogue planets with no imported maps now get a
-procedural globe. Asteroids, wrecks and structures, and any body with an
-imported texture or a registered provider (`surfaces.js`), keep the Phase 2
-globe.
-
-| File | Does | Plan task it starts |
+| Area | Files | Notes |
 |---|---|---|
-| `cubeSphere.js` (+ test) | Cube-sphere quadtree level of detail; 32 × 32 patches, skirts, one instanced draw call. | B2.1 |
-| `noise.js` | GLSL: gradient noise, fbm with octaves/persistence/lacunarity, ridged noise, cells, craters, tone map. | B0.8 |
-| `recipes.js` | World data → settings, by `world` (about 40 types), varied per body by seed; air from pressure and sky colour; sunlight colour from the star; place hints. | B4.11 |
-| `fields.js` | Bakes two cube maps per world: shape (static Voronoi plates with convergent and divergent boundaries, noise, basins, craters, volcanoes, the pull of places) and climate (temperature, moisture by an upwind march to the sea, cloudiness). Sets the sea level from the data's water share by a read-back probe. | B2, B3 |
-| `biomes.js` | One 64 × 32 lookup table (Whittaker type) per world. | B4.9 replaces it |
-| `terrain.js` | Ground shader: displacement on the patches, per-pixel detail, normals, biome or mineral colours, seas (water, ice, lava, tar), glow, city lights, cloud and ring shadows, aerial perspective, debug views (`uDebug`). | B2, B5 |
-| `gas.js` | Gas giants and hazy worlds: jets, turbulence, storms, polar hexagon, streaks, thermal glow, ring shadow. | B6 |
-| `clouds.js` | Cloud shell (1.008 R) and the shared cloud-cover function. | B3.7 |
-| `atmosphere.js` | Single-scattering ray march (Rayleigh and Mie) and the sky shell. | B5.4 replaces it |
-| `rings.js` | Ring textures and material (moved out of `Planet.jsx`). | B6.6 |
-| `ProceduralGlobe.jsx` | Puts it together; keeps 8 worlds' fields (LRU). | — |
+| HDR pipeline (B0.4) | `src/views/Output.jsx`, `color.js`, `exposure.js` | Half-float linear buffer; one tone map at the end (Khronos Neutral's shoulder, no toe); our own shaders end with `fromDisplay(color × alpha)`; exposure on light, not on chart marks |
+| Bloom (B0.5) | `Output.jsx`, `bloom.js`, `Stars.jsx`, `Planet.jsx` | Threshold 2 (chart marks never pass 1.93); star cores pass white only near a star and while their disc is small; lava at 4 × exposure; bloom skipped when nothing can bloom |
+| Quality tiers (B0.6) | `src/views/quality.js`, `src/interface/QualityToggle.jsx` | low, medium, high (default), ultra; `?quality=`; Quality button and Q key |
+| World Lab (B0.7) | `src/interface/WorldLab.jsx` | Development builds only (`leva`); maps on the WIP worlds; exposure, quality, WIP switch |
+| Shader library (B0.8) | `src/views/shaders/` | Hash, noise, scattering, color, each GLSL function with a JavaScript twin and tests |
+| Job queue (B0.9) | `src/views/jobs.js`, `surfaces.js` | Bakes a tile at a time; a globe shows when its maps are ready (`globeShown`) |
+| Cache (B0.10) | `src/storage/bakeCache.js` | IndexedDB, PNG maps, 48 worlds / 256 MB; key from the painter's version and settings |
+| WIP switch (BQ1) | `src/views/planet/switch.js`, `procedural.js` | The WIP worlds are off by default (`?worlds=wip` in development); the Phase 2 painter serves meanwhile |
 
-Pictures of the state at this handoff are in `docs/section-b/`. The two world
-sheets are from earlier tuning passes. Lava glow, ocean glint and city lights
-were toned down after them. `wip-close-ups.jpg` is the latest.
+B0.7 to B0.10 were built and unit tested (`npm test`, 67 tests), not tried in
+a browser.
 
-### Known issues and open work
+## 4. The WIP planet work (src/views/planet/)
 
-1. **Checked Nov 26:** every check passes except `check_zoom` (3 of 24 fail: held frames from bakes, and CPU work per frame on phone). Details and decision BQ1 in [PHASE_B0.md](PHASE_B0.md). Place markers were lifted from 0.002 to 0.006 R (`Places.jsx`, `LIFT`); `check_planet` still passes.
-2. **Bakes stop the view.** A world's fields bake when its globe first shows: two cube maps (256² a face), with three 48-step upwind marches for each climate texel. Phase B0.9 (job queue) and B0.10 (IndexedDB cache) fix this. Frame time and bake time are not measured yet.
-3. **Tectonics are static.** Plates are Voronoi cells with a motion each, not a simulation over time (B2.2). Coasts come from noise, so they don't follow plate edges.
-4. **One biome table per world.** B4.9 replaces it with a biome map and a catalog.
-5. **Haze over the ground is reduced by hand** (`terrain.js` and `clouds.js`: transmittance mixed 70%, in-scatter × 0.55) so that land reads clearly. B5.4 (precomputed scattering) replaces this.
-6. **Moisture** still shows faint streaks along the winds. A per-pixel jitter of the climate lookup hides the grid.
-7. **Labels behind a globe** were seen once over the globe at a very close camera (`occlusion.js`). Not yet reproduced.
-8. **Hazy worlds** (hothouse, steam, toxic, dense air, methane sea) use the gas shader. Their surfaces are never shown.
-9. **Grid instead of a surface.** From the Tallis relay, Tallis's globe draws as bright patch edges with no surface (baseline view 40, `docs/section-b/baseline/wip/`).
+Off by default (BQ1). Phase B2 continues from it.
 
-## 3. Tools added for Section B
+| File | Does | Plan task |
+|---|---|---|
+| `cubeSphere.js` (+ test) | Cube-sphere quadtree level of detail | B2.1 |
+| `noise.js` | Older GLSL noise; moves to `src/views/shaders/` | B2 |
+| `recipes.js` | World data → settings for about 40 world types | B4.11 (catalog) |
+| `fields.js` | Bakes shape and climate cube maps at once; static Voronoi plates | B2.1 (onto the queue), B2.2 (simulation) |
+| `biomes.js` | One biome table per world | B4.9 replaces it |
+| `terrain.js` | Ground shader; World Lab maps (`uDebug` 1–7) | B2, B5 |
+| `gas.js`, `clouds.js`, `atmosphere.js`, `rings.js` | Giants, clouds, single scattering, rings | B6, B3.7, B5.4, B6.6 |
+| `ProceduralGlobe.jsx` | Puts it together | — |
 
-| Tool | Use |
-|---|---|
-| `node tools/shoot_views.mjs --views '<json>' [--phone] [--sheet NAME]` | Screenshots of chosen views (focus, close-up, angles, distance, debug view). For baselines (B0.1), the gallery (B11.2) and debugging. |
-| `node tools/check_cubemap.mjs` | Checks that cube maps read back in the right orientation. Passed with three 0.187.0. |
-| `npm run build && node tools/phone_link.mjs --out DIR` | Assembles the phone-link files from `dist/`. |
+Known issues: tectonics are static and coasts come from noise (B2.2); one
+biome table per world (B4.9); haze over the ground reduced by hand (B5.4);
+faint moisture streaks along the winds; hazy worlds use the gas shader; from
+the Tallis relay the WIP Tallis globe draws as a grid of patch edges
+(`docs/section-b/baseline/wip/`, view 40). Their shaders output linear light
+now (B0.4) and come out darker than before; tune when B2 turns them on.
 
-The review link (the phone link before BD13: the map is now for desktop
-browsers only) is https://claude.ai/artifact/K9tk8ckJppNExxZyuMYquM (version
-5, Nov 27: `section-b` at `8a936eb`, with the HDR pipeline, bloom and quality
-tiers; the World Lab is not in it, as it is in development builds only). To update it from a new session: read it first with
-the Artifact tool (`action: "read"`), then publish DIR/index.html to that URL
-with the assets as `files`, and `null` for the previous script's path.
+## 5. Checks
 
-## 4. Lessons learned
+**Run them only when the GM asks** (plan rule 10). When asked:
 
-Shaders:
+- `tools/check_all.sh --quick` while working: unit and data checks, the ten
+  Section A browser checks (seven in parallel), and 12 views.
+- `tools/check_all.sh` before an approval: all 40 views.
+- Desktop only (BD13). `--phone` on a Section A check, or `--device phone` on
+  a view tool, still runs the old Pixel 7 emulation.
 
-- GLSL reserved words: `half`, `patch`. Three.js defines `saturate` as a macro in `<common>`; use `sat`. Do not name a variable `step`.
-- Our own shaders write straight to the screen. Convert colours (`displayColor` in `color.js`), or tone map and gamma-encode at the end, as the planet shaders do.
-- A value that varies across a shape fails at light-year distances. Use flat varyings and `gl_FragCoord` (stars, sprites, lanes). Shaders in a planet's own frame are fine close up.
-- A division by a uniform that can be zero gives NaN, and NaN turns the whole map black. (A gas giant without a storm did this.)
-- Store baked values in 0–1 so the 8-bit fallback works where half floats can't be drawn to.
+Reference: `docs/section-b/baseline/accepted/` (the B0.5 look, desktop): the
+pictures, `baseline.json` (numbers), `contrast.json` (labels). Record it again
+only after the GM approves a new look, from a git worktree at the approved
+commit, so nothing else changes the files meanwhile:
+`node tools/record_baseline.mjs --out docs/section-b/baseline/accepted`.
+`phase2/` and `wip/` are history.
+
+## 6. Review link
+
+https://claude.ai/artifact/K9tk8ckJppNExxZyuMYquM (version 5, Nov 27:
+`section-b` at `8a936eb`, with the HDR pipeline, bloom and quality tiers; the
+World Lab is not in it). It was the phone link before BD13; open it in a
+desktop browser. To update: `npm run build && node tools/phone_link.mjs --out
+DIR`; read the artifact first (`action: "read"`); publish DIR/index.html to
+that URL with the assets as `files` and `null` for the previous script's path.
+Scan the script for addresses, private links and keys first.
+
+## 7. Open items
+
+- Try B0.7 to B0.10 in a browser: the World Lab, the job queue (no held
+  frames; globes appear when ready), the cache (second visits).
+- Shader compile stalls of 72 to 116 ms on ordinary flights: compile at load
+  (`compileAsync`).
+- Slagfall's held frame of 2.2 s at the low tier (B0.6): measure again.
+- The shader library's GLSL is compiled first when a shader uses it.
+- The WIP fields bake at once: onto the queue and into the cache in B2.1.
+- After a flight, a remembered label spot can leave out a name that a fresh
+  placement fits (Ostrom, 3 of 4 named): readability, later.
+
+## 8. Lessons learned
+
+Shaders and color:
+
+- Our own shaders compute display colors and end with `fromDisplay()`
+  (`color.js`): convert color × alpha together, so a mark over black looks
+  as written. Layers laid over (dust) convert before alpha.
+- Light that should bloom must pass a luminance of 2; chart marks never do.
+- Shared uniforms (`EXPOSURE`) are plain objects shared by materials; never
+  write their `.value` from one material.
+- GLSL reserved words: `half`, `patch`. Use `sat`, not `saturate`. Do not name
+  a variable `step`. A division by a uniform that can be 0 gives NaN, which
+  turns the map black.
 
 Depth and scale:
 
-- Layer rule: a gap between two layers must be at least 2 × 10⁻⁴ × the camera distance. Globes show within about 40 radii. Shells: clouds 1.008 R, air top 1.022–1.03 R; terrain displacement at most 0.005 R; place markers 0.006 R.
-- The floating origin puts the camera at the scene origin. A sphere centred there is the sky.
+- A gap between two layers must be at least 2 × 10⁻⁴ × the camera distance.
+- Values that vary across a shape fail at light-year distances: use flat
+  varyings and `gl_FragCoord`.
 
 Checks:
 
-- Headless Chromium draws in software, so bakes and big shaders are slow there. Give checks small sizes; give the gallery full sizes.
-- Each check uses its own Vite port. Run the whole suite in the background; it takes about 25 minutes.
-- To compare still frames, take the screenshots with `animations: 'disabled'`, because labels and hints fade by CSS.
-- Load Playwright with `createRequire` (see any `tools/check_*.mjs`); do not install it again.
+- Headless Chromium draws in software: frame times are for comparing
+  versions on one machine only. A real GPU (the GM's computer, through Remote
+  Control) would make the checks fast and their numbers real.
+- Pictures must depend on the view only: the tools forget the labels' last
+  spots before a shot and hide the orbit hint.
+- Do not edit `src/` while checks run: their Vite servers reload.
+- Parallel Vite servers share one dependency cache; `check_stars` runs alone
+  first to build it.
+- Load Playwright with `createRequire`; do not install it again.
 
-## 5. The GM's way of working
+## 9. The GM's way of working
 
-- One phase at a time. The GM approves each phase, often after a look on the phone.
-- The GM asked for the Section B plan in ASD-STE100 (Simplified Technical English). Keep writing plain, with no filler.
-- The GM picks from options; give a recommendation with each question.
-- Invented content gets the `invented` origin tag and "(WIP)" at the end of its name.
+- One task at a time; the GM approves each phase and each change of look.
+- Plain writing, no filler; the plan is in ASD-STE100 (simplified technical
+  English).
+- Give options with a recommendation. "Go with your recommendations" is an
+  approval; record it in Section 8 or in the phase log.
+- No checks unless asked; say how long a run will take.
+- Quality over cheap systems; desktop browsers only.
+- Invented content gets the `invented` origin tag and "(WIP)" at the end of
+  its name.

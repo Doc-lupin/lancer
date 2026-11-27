@@ -1,6 +1,6 @@
 # Working rules for this repo
 
-See `docs/PLAN.md` for the plan and current phase. Section B (the visual overhaul) is in `docs/SECTION_B.md`; its work is on branch `section-b`. Read `docs/SECTION_B_HANDOFF.md` before starting it.
+See `docs/PLAN.md` for the plan and current phase. Section B (the visual overhaul) is in `docs/SECTION_B.md`; its work is on branch `section-b`. Read `docs/SECTION_B_HANDOFF.md` before continuing it.
 
 - Libraries: Three.js, React, React Three Fiber, drei, Zustand. Build tool: Vite. Don't add others without asking.
   Approved for Section B (decisions BD1, BD3 in `docs/SECTION_B.md`): `postprocessing` with `@react-three/postprocessing`, and `leva` in development builds only.
