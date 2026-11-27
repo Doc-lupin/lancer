@@ -62,7 +62,8 @@ were toned down after them. `wip-close-ups.jpg` is the latest.
 | `npm run build && node tools/phone_link.mjs --out DIR` | Assembles the phone-link files from `dist/`. |
 
 The phone link is https://claude.ai/artifact/K9tk8ckJppNExxZyuMYquM (version
-4: Phase 2 as on `main`). To update it from a new session: read it first with
+5, Nov 27: `section-b` at `8a936eb`, with the HDR pipeline, bloom and quality
+tiers; the World Lab is not in it, as it is in development builds only). To update it from a new session: read it first with
 the Artifact tool (`action: "read"`), then publish DIR/index.html to that URL
 with the assets as `files`, and `null` for the previous script's path.
 
