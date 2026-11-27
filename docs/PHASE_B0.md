@@ -3,8 +3,34 @@
 Tasks, test and functions are in [SECTION_B.md](SECTION_B.md), Phase B0.
 Branch `section-b`.
 
-**Status (Nov 26, 2026): B0.1 to B0.4 done. Next: B0.5 (bloom).** BQ1, BQ2
-and BQ3 are decided and done.
+**Status (Nov 27, 2026): B0.1 to B0.4 done; B0.5 (bloom) built and checked,
+waiting for the GM's approval (BQ4). Next: B0.6.** BQ1 to BQ3 are decided
+and done.
+
+## How to run the checks
+
+`tools/check_all.sh [--quick]` runs everything and prints one line per step:
+unit tests, data checks, the ten Section A browser checks (seven in
+parallel; camera, controls and zoom alone, because they time input and CPU
+work), then the view checks against `docs/section-b/baseline/accepted`.
+
+| Run | What | Time on this machine |
+|---|---|---|
+| `--quick` | everything; 12 of the 40 views (marked `quick` in `views.json`), fewer frames measured | about 13 min |
+| full | everything; all 40 views on desktop and phone | about 27 min |
+
+Use `--quick` while working on a task; run the full set before asking the
+GM to approve. The view checks alone: `node tools/check_views.mjs [--quick]`
+(`--checks perf,visuals,contrast` to pick). Record a new reference after an
+approval: `node tools/record_baseline.mjs --out docs/section-b/baseline/accepted`.
+
+Before Nov 27 the same work took about 2 hours: each of the three view
+checks loaded all 80 views itself, each view waited up to 9 s for the orbit
+hint to fade, and the Section A checks ran one after another.
+`tools/viewcheck.mjs` now loads each view once and runs all three checks on
+it; the tools hide the hint with a style rule. Checked on the approved code:
+all 80 pictures identical to the reference, every view within budget, no
+label lost contrast, in 19 minutes against about 80.
 
 ## Checks at the start of the phase
 
@@ -311,6 +337,46 @@ pixel.
 The review page for the GM: https://claude.ai/artifact/VEFKP2opukqTdbVyWzv2PL
 (before, after and difference for each changed view).
 
+## B0.5: bloom (built; BQ4 open)
+
+- **`Output.jsx`:** `BloomEffect` (postprocessing, mipmap blur) before the
+  tone map, adding light: threshold at a luminance of 2, intensity 0.9,
+  radius 0.7. Since B0.4 no chart mark passes 1.93, so only light blooms.
+- **Star cores** (`Stars.jsx`) pass white near a star only: inside about
+  200 AU (the same ramp that grows the glow sprite), up to 2.2 for dim
+  dwarfs and 8 for giants by luminosity, and only while the disc is small on
+  screen (fading out from 24 to 120 px across). From the Basin and the
+  regions stars stay chart marks: there, bloom pushed three region labels
+  under 4.5:1 on the phone. Up close, a large disc washed the view in haze.
+- **Lava** (`Planet.jsx`): emissive at 4 × exposure, so the hottest lava
+  blooms; lava now takes exposure like other light.
+- **Bloom runs only when something can bloom** (`bloom.js`): stars set a
+  flag when one is near, globes when lava shows. Otherwise its 16 passes
+  are skipped and its strength set to 0 (a uniform: no shader rebuild). The
+  Basin and the regions pay nothing for it.
+- **Dust** (`RegionEffects.jsx`) lets light through as (1 − a)² per puff
+  instead of (1 − a); its own brown is unchanged. A star brighter than white
+  still fades behind the Mire (brightest Mire star 254 → 162 desktop, 125
+  phone, seen from inside a system; 252 → 76 from the region).
+- **Label contrast check** (`check_contrast`, now part of `check_views`):
+  each label against the background behind it, WCAG ratio, 90th
+  percentile, the labels' dark text shadow left out. Fails when a label
+  that met 4.5:1 in the reference falls below. The accepted reference has
+  825 label lines in 80 views, 105 of them already under 4.5:1 over bright
+  backgrounds.
+- **Section A checks changed:** `check_effects` measures the nebula's and
+  dust's own color with the stars hidden (since bloom, the dust also hides
+  the stars' glow, checked on its own); the Basin still has 10 draw calls,
+  since bloom does not run there.
+
+**Results (Nov 27):** every Section A check passes; no label lost contrast.
+Against the accepted look, 75 of 80 views are unchanged; 5 changed: the
+Mire (mean difference 4.5 desktop, 3.5 phone: dust darker where light
+passes through), Slagfall (1.1 and 0.8: hotter lava, faint glow) and the
+Watchfire system view (0.8, desktop: its core blooms). Views where bloom
+runs (systems near a star, planets, lava) cost 14 to 16 more draw calls and
+5 to 25% more frame time in software; CPU work is unchanged.
+
 ## Decisions
 
 **BQ1. The WIP planet work fails the Phase 2 test.** Options:
@@ -356,3 +422,13 @@ recorded in `docs/section-b/baseline/accepted/` (from commit `58b97aa`), the
 default reference of `check_visuals` and `check_performance` from now on.
 `phase2/` stays as the record of the Phase 2 look. `check_zoom` keeps its
 Phase 2 reference: B0.4 did not change CPU work.
+
+**BQ4. Approve B0.5.** Two parts:
+
+1. The new look of the 5 changed views (bloom on near stars and lava; dust
+   that dims light behind it more). Recommendation: approve, and record it
+   as the new reference.
+2. The cost where bloom runs: 14 to 16 more draw calls and 5 to 25% more
+   frame time in the software renderer; on a graphics chip, bloom at this
+   size is about 1 ms. Recommendation: accept it; the low quality tier
+   (B0.6) turns bloom off.
