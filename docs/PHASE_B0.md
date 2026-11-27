@@ -3,10 +3,12 @@
 Tasks, test and functions are in [SECTION_B.md](SECTION_B.md), Phase B0.
 Branch `section-b`.
 
-**Status (Nov 27, 2026): B0.1 to B0.6 done; B0.7 (World Lab), B0.8 (shader
-library), B0.9 (job queue) and B0.10 (cache of baked worlds) built, not yet
-tried in a browser (checks run only at the GM's request). Next: B0.11, then
-the Phase B0 test.** BQ1 to BQ4 are decided and done.
+**Status (Nov 27, 2026): Phase B0 done: B0.1 to B0.11. The GM closed the
+phase without running its final test (see "The Phase B0 test" below). B0.7 to
+B0.10 were built and unit tested, not tried in a browser. Next: Phase B1.**
+BQ1 to BQ4 are decided and done. After B0.10 the GM decided BD13 (desktop
+browsers only), BD14 (WebGPU from B2) and BD15 (quality first); the checks now
+run on desktop only.
 
 ## How to run the checks
 
@@ -17,8 +19,12 @@ work), then the view checks against `docs/section-b/baseline/accepted`.
 
 | Run | What | Time on this machine |
 |---|---|---|
-| `--quick` | everything; 12 of the 40 views (marked `quick` in `views.json`), fewer frames measured | about 13 min |
-| full | everything; all 40 views on desktop and phone | about 27 min |
+| `--quick` | everything; 12 of the 40 views (marked `quick` in `views.json`), fewer frames measured | about 13 min with phone emulation; desktop only (BD13) not yet timed, expected about 7 min |
+| full | everything; all 40 views | about 27 min with phone emulation; desktop only not yet timed, expected about 15 min |
+
+Since BD13 every check runs the desktop window only; `--phone` (Section A
+checks) or `--device phone` (view tools) still runs the old Pixel 7
+emulation.
 
 **Run checks only when the GM asks for them (GM, Nov 27): long runs clog
 the work.** When asked: `--quick` while working on a task, the full set
@@ -540,6 +546,35 @@ Not covered yet:
   before. The phone keeps its worlds between visits.
 - The WIP worlds' fields join the cache with B2.1, when they move onto the
   queue.
+
+## B0.11: decisions and sources (done)
+
+All decisions of Section B with their reasons are in Section 8 of
+[SECTION_B.md](SECTION_B.md): BD1 to BD15. Phase B0's own questions, BQ1 to
+BQ4, are below. The methods used in B0 and planned for later phases, with
+their sources (papers, standards, libraries), are in Section 8, "Sources".
+
+## The Phase B0 test (not run)
+
+The GM closed Phase B0 on Nov 27 without its final test run. What was last
+measured, and what is open:
+
+| Test item | Last measured |
+|---|---|
+| All Section A checks pass | Yes, Nov 27, through B0.6 (`check_all.sh --quick`, desktop and phone). Not run since B0.7. |
+| Regression and performance checks run on desktop and phone emulation | Yes (B0.2, B0.3; phone emulation dropped by BD13). |
+| Tone map and bloom keep label contrast at 4.5:1 | Yes for B0.4 and B0.5 against the accepted reference (`check_contrast`); at the low tier one label was 4.41:1 (B0.6). |
+| No bake holds a frame over 50 ms on desktop | Not measured since B0.9 (the job queue that should meet it). Before it: 34 of 40 views over 50 ms. |
+
+Open, for the next session:
+
+- Try B0.7 to B0.10 in a browser: the World Lab panel, the job queue (no
+  held frames, globes appear when ready), the cache (second visits).
+- Shader compile stalls of 72 to 116 ms on ordinary flights: compile shaders
+  at load (three.js `compileAsync`).
+- Slagfall's held frame of 2.2 s at the low tier (B0.6): measure again with
+  the job queue.
+- The shader library's GLSL is compiled first when a shader uses it.
 
 ## Decisions
 

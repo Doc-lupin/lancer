@@ -8,13 +8,12 @@ voice, one instruction in each sentence). Technical names stay as they are.
 dynamic visual database. Every world, star and orbit gets its look from its
 data and from physical models.
 
-**Status (Nov 27, 2026): Phase B0 in progress; B0.1 to B0.5 done (baseline,
-visual and performance checks, HDR pipeline, bloom); B0.6 (quality tiers)
-done; B0.7 (World Lab), B0.8 (shader library), B0.9 (job queue) and B0.10
-(cache of baked worlds) built. Work log and how to run the checks: [PHASE_B0.md](PHASE_B0.md). The
-WIP worlds are off by default (BQ1).** Earlier work for Section B is
-on branch `section-b` (procedural planets, on hold); see
-[SECTION_B_HANDOFF.md](SECTION_B_HANDOFF.md). Phase B2 and Phase B5 continue from that work.
+**Status (Nov 27, 2026): Phase B0 done, closed by the GM without its final
+test run (B0.1 to B0.11; work log [PHASE_B0.md](PHASE_B0.md)). Next: Phase B1
+(orbits), then Section A Phase 3, then Phase B2 (BD5). The map is for desktop
+browsers (BD13); quality comes first (BD15); WebGPU from B2 (BD14). The WIP
+worlds are off by default (BQ1). Handoff for the next session:
+[SECTION_B_HANDOFF.md](SECTION_B_HANDOFF.md).**
 
 ## 1. Objective
 
@@ -35,9 +34,10 @@ Make the map visually stunning and correct. The output must:
 4. The data is the authority. A generated world must agree with its data (water share, ice share, temperature, places, notes).
 5. Make all generation deterministic. The same seed must give the same world on each device.
 6. Tag each new data value with its origin. Invented values get the `invented` tag. Follow the schema in `data/schema/`.
-7. Give each effect a quality tier (Table 6). The map must work at the lowest tier.
+7. Give each effect a quality tier (Table 6). Design for the high tier first (decision BD15). The map must work at the lowest tier.
 8. Do not add a library without the GM's approval (Table 7).
-9. Record each new decision in Section 8 of this file when it is made.
+9. Record each new decision in Section 8 of this file when it is made, with its research sources (Section 8, Sources).
+10. Run the checks only when the GM asks (GM, Nov 27). Long runs slow the work.
 
 ## 3. Scope
 
@@ -153,7 +153,7 @@ Tasks:
   10. Weld small continental pieces (terranes) onto the continents they hit.
 - B2.2a Calculate height from the crust, not from noise. Use isostasy for land: thicker continental crust stands higher (35 km of crust about 1 km; doubled crust 4 to 6 km). Use the age of ocean floor for its depth: depth ≈ 2.5 km + 0.35 km × √(age in millions of years). Put the coasts on the continent edges. Use noise only for detail at render time.
 - B2.2b Select the regime from the world type. Do not use plates on every world. Use one rigid shell for small or cold rock worlds (giant volcanoes, rift scars, old craters). Use resurfacing for hothouse worlds (young flat plains, few craters). Use cracked shells, chaos terrain and cryovolcanoes for ice worlds. Use magma seas or crater history for lava and airless worlds.
-- B2.3 Run the simulation on the GPU (render-to-texture passes) or in a Web Worker. Use the job queue (B0.9).
+- B2.3 Run the simulation in WebGPU compute shaders at the high and ultra tiers (decision BD14). Use WebGL2 render-to-texture passes or a Web Worker as the fallback (low and medium tiers, browsers without WebGPU). Use the job queue (B0.9) and the cache (B0.10).
 - B2.4 Add erosion. Use hydraulic erosion: cut in proportion to the water flow and the slope (stream power), and put the sediment on lowlands and coastal plains. Use the flow of B3.5. Use thermal erosion: collapse slopes that are steeper than the angle of repose. Run both on the cube map. Keep the cube faces seamless.
 - B2.5 Add crater history for airless worlds. Use crater size and age distributions. Old craters are softer. Young craters have rays.
 - B2.6 Add special terrain sets: dunes from wind (B3 winds), karst, chaos terrain, cryovolcanoes, ice lineae, crystal fields, glassed plains, shattered crust.
@@ -412,7 +412,7 @@ Use all tools that are available. Get approval before a new library.
 | Item | Purpose |
 |---|---|
 | `postprocessing` and `@react-three/postprocessing` | Approved. Bloom, tone mapping, lens effects (B0.5). |
-| Three.js WebGPU renderer and TSL compute | Deferred. Add in Phase B9 only if the budgets need it. WebGL2 stays the base. |
+| Three.js WebGPU renderer and TSL compute | From the start of Phase B2, for the high and ultra tiers (BD14). WebGL2 stays as the fallback. |
 | `leva` | Approved for development builds only. Sliders for the World Lab. |
 | KTX2 textures (Three.js loader, Basis transcoder) | Only if detail textures exceed 20 MB. |
 
@@ -434,7 +434,7 @@ BD1 to BD8: the GM accepted all eight recommendations on Nov 26, 2026. The
 | ID | Subject | Options | Recommendation |
 |---|---|---|---|
 | BD1 | Bloom and post-processing library | Add `postprocessing`; or write our own passes | Add the library: it is mature and fast. |
-| BD2 | WebGPU | WebGL2 only; or WebGPU with WebGL2 fallback | WebGL2 first. Add WebGPU in Phase B9 if budgets need it. |
+| BD2 | WebGPU | WebGL2 only; or WebGPU with WebGL2 fallback | WebGL2 first. Add WebGPU in Phase B9 if budgets need it. (Replaced by BD14.) |
 | BD3 | World Lab sliders | `leva`; or our own panel | `leva`, development builds only. |
 | BD4 | Texture compression | KTX2; or plain PNG | KTX2 only if detail textures exceed 20 MB. |
 | BD5 | Order with Section A | Section B now, Section A Phases 3–5 after; or alternate | Do B0 and B1 now, then Section A Phase 3 (the clock that B1.9 needs), then continue B. |
@@ -442,7 +442,7 @@ BD1 to BD8: the GM accepted all eight recommendations on Nov 26, 2026. The
 | BD7 | Realism and readability | Strict physics; or physics with tuned exaggeration | Physics with tuned exaggeration (relief, air height, glow). Labels always win. |
 | BD8 | Time | Real clock only; or a time-lapse mode | Both. The clock stays the source of truth. |
 
-BD9 to BD13: decided by the GM on Nov 27, 2026.
+BD9 to BD15: decided by the GM on Nov 27, 2026. Phase B0's own questions (BQ1 to BQ4) are in [PHASE_B0.md](PHASE_B0.md).
 
 | ID | Subject | Options | Decision |
 |---|---|---|---|
@@ -451,6 +451,34 @@ BD9 to BD13: decided by the GM on Nov 27, 2026.
 | BD11 | World variants | Types only; or variants in each type's file | Variants in the type files, each marked visible or not; visible ones get modifiers (B4.11a). |
 | BD12 | Test bed for world variation | Test systems in the map (beyond the Silent Mouths); or tools outside the map data | Tools outside the map data: a world gallery (`?test=worlds`) and "Try as" in the World Lab (B2.0). Test systems in the map would contradict canon (the Quiet holds no systems; nothing is known beyond the Silent Mouths), change every check that counts the map, and could show to players. |
 | BD13 | Devices | Phones and computers; or computers only | Computers only: the GM and the players view the map in desktop browsers (GM, Nov 27). Desktop GPUs allow larger bakes, volumetric clouds, full scattering and WebGPU compute. Quality tiers stay, for weak laptops. |
+| BD14 | WebGPU | WebGL2 only (BD2: WebGPU in B9); or WebGPU from B2 | WebGPU from the start of B2 for the high and ultra tiers, with WebGL2 as the fallback. Desktop browsers have it (BD13); compute shaders run the plate, erosion and climate simulations at much higher resolution. Part of three.js: no new library. |
+| BD15 | Quality and cheap systems | Tune for weak devices; or quality first | Quality first (GM, Nov 27): design for mid-range desktop GPUs and up. The low tier must work but need not look as good. Nothing lowers the tier by itself; the default is high. |
+
+### Sources (B0.11)
+
+Methods used or planned in Section B, and where they come from.
+
+| Where | Method | Source |
+|---|---|---|
+| B0.4 | Tone map: the shoulder of Khronos PBR Neutral | Khronos Group, "PBR Neutral Tone Mapping" (2024) |
+| B0.4 | Linear light, sRGB encoding | IEC 61966-2-1 (sRGB) |
+| B0.5 | Bloom: mipmap blur | `postprocessing` (pmndrs), after Jimenez, "Next Generation Post Processing in Call of Duty: Advanced Warfare" (SIGGRAPH 2014) |
+| B0.5 | Label contrast ratio 4.5:1 | W3C, WCAG 2.2, success criterion 1.4.3 |
+| B0.8 | `pcg3d` integer hash | Jarzynski and Olano, "Hash Functions for GPU Rendering", JCGT 9(3), 2020 |
+| B0.8 | Gradient noise, 12 edge gradients, quintic fade | Perlin, "Improving Noise", SIGGRAPH 2002 |
+| B0.8 | Cell noise | Worley, "A Cellular Texture Basis Function", SIGGRAPH 1996 |
+| B0.8 | Curl noise | Bridson, Houriham and Nordenstam, "Curl-Noise for Procedural Fluid Flow", SIGGRAPH 2007 |
+| B0.8 | Phase functions | Rayleigh; Henyey and Greenstein, ApJ 93, 1941; Cornette and Shanks, Applied Optics 31(16), 1992 |
+| B0.8 | CIE 1931 matching functions, fitted | Wyman, Sloan and Shirley, "Simple Analytic Approximations to the CIE XYZ Color Matching Functions", JCGT 2(2), 2013 |
+| B0.8 | Blackbody color from temperature | Kim et al., "Design of Advanced Color Temperature Control System for HDTV Applications", J. Korean Physical Society 41(6), 2002 (Planckian locus); Planck's law |
+| B0.9 | Async read back | three.js `readRenderTargetPixelsAsync` (WebGL2 pixel buffer and fence) |
+| Phase 2 | Smooth zoom-and-pan flights | van Wijk and Nuij, "Smooth and Efficient Zooming and Panning", InfoVis 2003 |
+| B2.2 | Plate tectonics over time | Cortial, Peytavie, Galin and Guérin, "Procedural Tectonic Planets", Computer Graphics Forum 38(2), Eurographics 2019 |
+| B2.2a | Ocean depth from crust age | Parsons and Sclater, J. Geophysical Research 82(5), 1977 (half-space cooling) |
+| B2.2a | Height from crust thickness | Airy isostasy |
+| B2.4 | Hydraulic erosion by stream power | Whipple and Tucker, J. Geophysical Research 104(B8), 1999 |
+| B3.5 | Closed basins, drainage | Barnes, Lehman and Mulla, "Priority-Flood", Computers and Geosciences 62, 2014 |
+| B5.4 | Precomputed atmospheric scattering | Bruneton and Neyret, "Precomputed Atmospheric Scattering", Computer Graphics Forum 27(4), 2008 |
 
 ## 9. Risks
 
