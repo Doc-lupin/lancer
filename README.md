@@ -4,13 +4,16 @@ An interactive 3D map of a fictional universe, built as a web page (no installat
 
 The full plan is in [docs/PLAN.md](docs/PLAN.md). The original document is in `docs/`.
 
-Status: Phase 1 (complete the data) is done and its test passes; the work is merged into `main`. Phase 2 (the 3D view) is next and has not started: there is no app code yet.
+Status (Nov 27, 2026): Section A Phases 1 (the data) and 2 (the 3D view) are done and accepted. Section B, the visual overhaul ([docs/SECTION_B.md](docs/SECTION_B.md)), has finished Phase B0 (render pipeline, quality tiers, checks); next is Phase B1 (orbits), then Section A Phase 3 (the interface). The map is for desktop browsers. Run it with `npm install && npm run dev`.
 
 `data/map.json` holds the whole Basin: 24 regions, 155 systems (40 of them unmapped), 329 bodies, 163 places, 10 control areas, 37 lanes and 50 factions, with the dashboard clock set to 5029u, day 300. Every world has a datablock: physical stats compared to Union standard, and a setting profile written as an in-universe register (survey, control, ratings, people, routed trade, gazetteer pronunciation).
 
 | Document | Contents |
 |---|---|
-| [docs/PLAN.md](docs/PLAN.md) | Design decisions, functions, phases and their tests; notes for starting Phase 2 |
+| [docs/PLAN.md](docs/PLAN.md) | Section A: design decisions, functions, phases and their tests |
+| [docs/SECTION_B.md](docs/SECTION_B.md) | Section B (visual overhaul): phases B0–B11, quality tiers, decisions BD1–BD15, sources |
+| [docs/SECTION_B_HANDOFF.md](docs/SECTION_B_HANDOFF.md) | Where Section B stands and how to continue it |
+| [docs/PHASE2.md](docs/PHASE2.md), [docs/PHASE_B0.md](docs/PHASE_B0.md) | Work logs of Phase 2 and Phase B0 |
 | [docs/PHASE1.md](docs/PHASE1.md) | Phase 1 tasks, decisions D1–D19, departures from the documents |
 | [docs/WORLDS.md](docs/WORLDS.md) | World types, variants and features, with description templates |
 | [docs/DATABLOCK.md](docs/DATABLOCK.md) | Every datablock field, how it is derived, trade routing and levies |
@@ -37,15 +40,16 @@ data/
   schema/     JSON schema, field guide and a two-region example
   src/        Authored map data (per-region files, layers, lane edits)
   map.json    The map data file, built by tools/build_map.py
-src/          (from Phase 2)
+src/
   data/       Store (Zustand) and data loading
-  views/      Sector, system and planet views
-  interface/  Data panel, text boxes, news ticker, search
-  storage/    Save, load, JSON export
-public/       (from Phase 2)
+  views/      The 3D map: stars, lanes, systems, globes, effects; planet/ (procedural
+              worlds, off by default), shaders/ (shared GLSL), camera/
+  interface/  Buttons, the World Lab (development builds)
+  storage/    Map loading, the cache of baked worlds
+public/
   textures/   Planet textures
-docs/         Plan and reference documents
-tools/        Python data tools (build, validation, descriptions)
+docs/         Plans, work logs, reference documents; section-b/ (baselines)
+tools/        Python data tools; browser checks (check_*.mjs, check_all.sh)
 ```
 
 The code is split into small files on purpose, so each LLM task touches only a few of them.

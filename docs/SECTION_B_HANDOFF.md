@@ -1,12 +1,12 @@
-# Section B: Handoff (Nov 27, 2026)
+# Section B: Handoff (Nov 27, 2026, after Phase B0)
 
 What a new session needs to continue Section B ([SECTION_B.md](SECTION_B.md)).
 Read this, then `CLAUDE.md`, then the plan's Section 8 (decisions BD1 to BD15).
 
 ## 1. Where things stand
 
-- **Phase B0 is done** (B0.1 to B0.11). The GM closed it without its final
-  test run. Work log: [PHASE_B0.md](PHASE_B0.md) (what each task built, its
+- **Phase B0 is done** (B0.1 to B0.11) **and merged into `main`**. The GM
+  closed it without its final test run. Work log: [PHASE_B0.md](PHASE_B0.md) (what each task built, its
   results, decisions BQ1 to BQ4, the B0 test status).
 - **Next: Phase B1** (orbits and motion), then **Section A Phase 3** (the
   interface and the clock, which B1.9 needs), then **Phase B2** (BD5). B2
@@ -19,10 +19,10 @@ Read this, then `CLAUDE.md`, then the plan's Section 8 (decisions BD1 to BD15).
 
 | Branch | Holds |
 |---|---|
-| `section-b` | All Section B work. **Work here.** Not merged into `main`. |
-| `main` | Section A Phases 0–2 (accepted) and the Section B plan as first written. |
-| `ccr-23ad96e8-4fi4vg` | An older session's branch; everything on it is on `section-b`. Can be deleted. |
-| `phase-2` | The Phase 2 state of `main`, for history. |
+| `main` | Section A Phases 0–2 and Section B Phase B0, merged from `section-b` on Nov 27, 2026 (at the commit that added this sentence). The GM asked for the merge; Phase B0's final test was not run (see [PHASE_B0.md](PHASE_B0.md)). |
+| `section-b` | The Section B working branch. **Continue Section B here**, and merge it into `main` when the GM approves a phase. Equal to `main` at the merge. |
+| `ccr-23ad96e8-4fi4vg` | An older session's branch; everything on it is in `main`. Can be deleted. |
+| `phase-2` | The Phase 2 state, for history. |
 
 ## 3. What Phase B0 built
 

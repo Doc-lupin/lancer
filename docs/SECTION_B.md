@@ -8,8 +8,8 @@ voice, one instruction in each sentence). Technical names stay as they are.
 dynamic visual database. Every world, star and orbit gets its look from its
 data and from physical models.
 
-**Status (Nov 27, 2026): Phase B0 done, closed by the GM without its final
-test run (B0.1 to B0.11; work log [PHASE_B0.md](PHASE_B0.md)). Next: Phase B1
+**Status (Nov 27, 2026): Phase B0 done and merged into `main`, closed by the GM
+without its final test run (B0.1 to B0.11; work log [PHASE_B0.md](PHASE_B0.md)). Next: Phase B1
 (orbits), then Section A Phase 3, then Phase B2 (BD5). The map is for desktop
 browsers (BD13); quality comes first (BD15); WebGPU from B2 (BD14). The WIP
 worlds are off by default (BQ1). Handoff for the next session:

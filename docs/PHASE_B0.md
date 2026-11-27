@@ -3,7 +3,7 @@
 Tasks, test and functions are in [SECTION_B.md](SECTION_B.md), Phase B0.
 Branch `section-b`.
 
-**Status (Nov 27, 2026): Phase B0 done: B0.1 to B0.11. The GM closed the
+**Status (Nov 27, 2026): Phase B0 done (B0.1 to B0.11) and merged into `main`. The GM closed the
 phase without running its final test (see "The Phase B0 test" below). B0.7 to
 B0.10 were built and unit tested, not tried in a browser. Next: Phase B1.**
 BQ1 to BQ4 are decided and done. After B0.10 the GM decided BD13 (desktop
