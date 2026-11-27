@@ -28,8 +28,11 @@
 import * as THREE from 'three';
 import { registerSurface } from './surfaces.js';
 import { WIP_WORLDS } from './planet/switch.js';
+import { useMap } from '../data/store.js';
+import { tierOf } from './quality.js';
 
-const SIZE = [1024, 512];
+// Map size from the quality tier (quality.js): 1024 × 512 at medium and high.
+const size = () => tierOf(useMap.getState()).surfaceSize;
 const PROBE = [256, 128];
 
 // Which painter each world uses.
@@ -42,7 +45,7 @@ const PASS = { height: 0, color: 1, normal: 2, rough: 3, emit: 4, clouds: 5 };
 
 const GLSL = /* glsl */ `
   uniform float uPass, uKind, uScale, uSea, uWater, uCap, uCraters, uBump, uCold;
-  uniform float uMaria, uLineae, uChaos, uMolten, uEyeball, uBandFreq, uContrast, uCloudCover;
+  uniform float uMaria, uLineae, uChaos, uMolten, uEyeball, uBandFreq, uContrast, uCloudCover, uWidth;
   uniform vec3 uSeed, uLand, uDry, uHigh, uOcean, uShallow, uIce, uStorm;
   varying vec2 vUv;
 
@@ -163,7 +166,7 @@ const GLSL = /* glsl */ `
     if (uPass == 2.0) {
       // Normal (tangent space: x east, y north) from the height's slopes.
       if (uKind == 4.0) { gl_FragColor = vec4(0.5, 0.5, 1.0, 1.0); return; }
-      float e = 1.5 / ${SIZE[0].toFixed(1)} * 6.2831853;
+      float e = 1.5 / uWidth * 6.2831853;
       float clat = max(cos(lat), 0.05);
       vec3 de = vec3(-d.y, d.x, 0.0) / max(length(d.xy), 1e-4);
       vec3 dn = normalize(cross(de, d));
@@ -248,7 +251,7 @@ let material = null;
 function painter() {
   if (material) return material;
   const uniforms = {};
-  for (const n of ['uPass', 'uKind', 'uScale', 'uSea', 'uWater', 'uCap', 'uCraters', 'uBump', 'uCold', 'uMaria', 'uLineae', 'uChaos', 'uMolten', 'uEyeball', 'uBandFreq', 'uContrast', 'uCloudCover']) uniforms[n] = { value: 0 };
+  for (const n of ['uPass', 'uKind', 'uScale', 'uSea', 'uWater', 'uCap', 'uCraters', 'uBump', 'uCold', 'uMaria', 'uLineae', 'uChaos', 'uMolten', 'uEyeball', 'uBandFreq', 'uContrast', 'uCloudCover', 'uWidth']) uniforms[n] = { value: 0 };
   for (const n of ['uSeed', 'uLand', 'uDry', 'uHigh', 'uOcean', 'uShallow', 'uIce', 'uStorm']) uniforms[n] = { value: new THREE.Vector3() };
   material = new THREE.ShaderMaterial({
     uniforms,
@@ -353,13 +356,15 @@ if (!WIP_WORLDS) registerSurface((body, { bake, readRed, random }) => {
     m.uniforms.uSea.value = seaLevel(readRed(probe), PROBE, u.uWater);
     probe.dispose();
   }
+  const SIZE = size();
+  m.uniforms.uWidth.value = SIZE[0];
   const targets = [];
   const keep = (t) => { targets.push(t); return t.texture; };
   const maps = {
     tint: false,
     map: keep(run(PASS.color, SIZE, { color: true })),
     normalMap: keep(run(PASS.normal, SIZE, { color: false })),
-    roughnessMap: keep(run(PASS.rough, [512, 256], { color: false })),
+    roughnessMap: keep(run(PASS.rough, [SIZE[0] / 2, SIZE[1] / 2], { color: false })),
     dispose: () => targets.forEach((t) => t.dispose()),
   };
   if (u.uKind === KIND.lava) maps.emissiveMap = keep(run(PASS.emit, SIZE, { color: true }));

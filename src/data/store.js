@@ -2,6 +2,7 @@
 // The map itself is read-only in the app until Phase 5 (decision D5).
 
 import { create } from 'zustand';
+import { initialTier } from '../views/quality.js';
 
 // Collections whose objects have an id and can be looked up.
 const COLLECTIONS = ['regions', 'systems', 'bodies', 'places', 'areas', 'lanes', 'factions', 'layers'];
@@ -70,6 +71,7 @@ export const useMap = create((set) => ({
   lanes: 'faint', // how lanes show: faint, bright (lanes mode, with labels; task 2.7) or off
   cameraMode: 'orbit', // orbit around a focus, or free movement (camera/free.js)
   exposure: 1, // linear multiplier on light from the world (views/exposure.js, task B0.4)
+  quality: initialTier(), // low, medium, high or ultra (views/quality.js, task B0.6)
 
   setLoading: () => set({ status: 'loading', error: null }),
   setMap: (map) => set({ map, index: buildIndex(map), status: 'ready', error: null }),
@@ -78,4 +80,5 @@ export const useMap = create((set) => ({
   setLanes: (lanes) => set({ lanes }),
   setCameraMode: (cameraMode) => set({ cameraMode }),
   setExposure: (exposure) => set({ exposure }),
+  setQuality: (quality) => set({ quality }),
 }));

@@ -23,6 +23,8 @@ import { BodyLabels, BodyLabelsUpdater } from './BodyLabels.jsx';
 import { LaneLabels, LaneLabelsUpdater } from './LaneLabels.jsx';
 import LanesToggle from '../interface/LanesToggle.jsx';
 import CameraToggle from '../interface/CameraToggle.jsx';
+import QualityToggle from '../interface/QualityToggle.jsx';
+import { TIERS } from './quality.js';
 import DebugHook from './DebugHook.jsx';
 import Output from './Output.jsx';
 
@@ -32,6 +34,7 @@ export default function Scene() {
   const map = useMap((s) => s.map);
   const index = useMap((s) => s.index);
   const playerMode = useMap((s) => s.playerMode);
+  const quality = useMap((s) => s.quality);
 
   const ready = useMemo(() => {
     if (status !== 'ready') return false;
@@ -46,6 +49,7 @@ export default function Scene() {
     <>
       <Canvas
         flat
+        dpr={[1, TIERS[quality].pixelRatio]}
         frameloop="demand"
         gl={{ logarithmicDepthBuffer: true, antialias: false }}
         camera={{ fov: CAMERA.fov, near: CAMERA.nearKm, far: CAMERA.farKm, position: [0, 0, 0] }}
@@ -81,6 +85,7 @@ export default function Scene() {
           <PlaceLabels />
           <LanesToggle />
           <CameraToggle />
+          <QualityToggle />
         </>
       )}
       {status === 'error' && (

@@ -18,6 +18,8 @@
 //   --quick          the views marked "quick" in views.json (12), fewer frames
 //                    measured: for iterating; run the full set before approval
 //   --worlds wip     the WIP procedural worlds on (decision BQ1)
+//   --quality T      a quality tier (low, medium, high, ultra; B0.6); default:
+//                    the device's (desktop high, phone medium)
 //   --out DIR        where new screenshots and the report go (record: the
 //                    reference folder)
 //   --targets        the fixed targets in budgets.json fail the check too
@@ -154,7 +156,7 @@ export function parseArgs(argv = process.argv) {
   const arg = (k) => { const i = argv.indexOf(k); return i > 0 ? argv[i + 1] : null; };
   return {
     ref: arg('--ref') ?? 'accepted', device: arg('--device'), only: arg('--only')?.split(','),
-    quick: argv.includes('--quick'), worlds: arg('--worlds') ?? undefined, out: arg('--out'),
+    quick: argv.includes('--quick'), worlds: arg('--worlds') ?? undefined, quality: arg('--quality') ?? undefined, out: arg('--out'),
     targets: argv.includes('--targets'), checks: arg('--checks')?.split(','),
   };
 }
@@ -177,7 +179,7 @@ export async function runViews({ checks, record = false, port = 5179, ...o }) {
   const recContrast = record ? (existsSync(contrastFile) ? read(contrastFile) : { aa: AA, views: {} }) : null;
   const n = o.quick ? 10 : 30, budgetMs = o.quick ? 3000 : 8000;
 
-  const app = await startApp(port, { worlds: o.worlds });
+  const app = await startApp(port, { worlds: o.worlds, quality: o.quality });
   const report = { ref: record ? null : REF, views: {} };
   let failed = 0;
   const t0 = Date.now();

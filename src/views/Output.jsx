@@ -3,10 +3,9 @@
 // (the shoulder in color.js), and the composer encodes it for the screen
 // (sRGB). Bloom (B0.5) runs in the same composer, before the tone map.
 //
-// Multisampling smooths globe edges. It is 4× on screens under 2 device pixels
-// per CSS pixel (computers) and off on denser screens (phones), where pixels
-// are small enough to hide the steps and a 4× half-float buffer would take
-// about 80 MB. Quality tiers (B0.6) will set this.
+// The quality tier (quality.js, B0.6) sets multisampling (it smooths globe
+// edges: off on phones, whose small pixels hide the steps and where a 4×
+// half-float buffer would take about 80 MB) and whether bloom may run.
 //
 // The composer draws in two renderer calls, and three.js counts draw calls per
 // call. So the count is reset once a frame here, after the debug hook has read
@@ -19,6 +18,7 @@ import { EffectComposer } from '@react-three/postprocessing';
 import { Effect, BlendFunction, BloomEffect } from 'postprocessing';
 import { OUTPUT_GLSL } from './color.js';
 import { BLOOM } from './bloom.js';
+import { TIERS } from './quality.js';
 import { useMap } from '../data/store.js';
 
 // Bloom that does its work only when something can bloom (bloom.js). Turned
@@ -26,7 +26,7 @@ import { useMap } from '../data/store.js';
 // shader is not rebuilt; its 16 passes are skipped.
 class GatedBloom extends BloomEffect {
   update(renderer, inputBuffer, deltaTime) {
-    const on = BLOOM.stars || BLOOM.lava;
+    const on = this.allowed && (BLOOM.stars || BLOOM.lava);
     BLOOM.lava = false; // globes set it again each frame they show
     this.intensity = on ? this.strength : 0;
     if (on) super.update(renderer, inputBuffer, deltaTime);
@@ -54,7 +54,9 @@ export default function Output() {
     b.strength = 0.9;
     return b;
   }, []);
-  const samples = useThree((s) => (s.viewport.dpr >= 2 ? 0 : 4));
+  const tier = TIERS[useMap((s) => s.quality)];
+  bloom.allowed = tier.bloom;
+  const samples = tier.multisampling;
   useEffect(() => {
     gl.info.autoReset = false;
     return () => { gl.info.autoReset = true; };

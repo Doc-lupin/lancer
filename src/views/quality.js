@@ -7,8 +7,6 @@
 // address; the viewer's own choice (the Quality button, kept in this
 // browser); otherwise from the device (detectTier).
 
-import { useMap } from '../data/store.js';
-
 export const TIERS = {
   // Old phones: one device pixel per CSS pixel, no bloom, smaller bakes.
   low: { pixelRatio: 1, multisampling: 0, bloom: false, skyTexture: [1024, 512], skyStars: 6000, surfaceSize: [512, 256] },
@@ -49,7 +47,5 @@ export function saveTier(tier) {
   try { localStorage.setItem(KEY, tier); } catch { /* not kept: fine */ }
 }
 
-// For code outside React (shaders, bakes): the current tier's settings, kept
-// in step with the store.
-export const QUALITY = { tier: useMap.getState().quality, get: () => TIERS[QUALITY.tier] };
-useMap.subscribe((s) => { QUALITY.tier = s.quality; });
+// The current tier's settings, for code outside React (bakes).
+export const tierOf = (state) => TIERS[state.quality] ?? TIERS.high;

@@ -24,6 +24,8 @@ import { useEffect, useMemo } from 'react';
 import { useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { random } from './surfaces.js';
+import { useMap } from '../data/store.js';
+import { TIERS } from './quality.js';
 import { FROM_DISPLAY_GLSL } from './color.js';
 import { EXPOSURE } from './exposure.js';
 
@@ -32,8 +34,7 @@ const SKY_KM = 1e9; // any distance well inside the far plane; only directions m
 const CORE = [0, 1, 0];
 const ALONG = [1, 0, 0];
 const POLE = [0, 0, 1];
-const TEXTURE = [2048, 1024];
-const STARS = 15000;
+// Sky texture size and star count come from the quality tier (quality.js).
 
 // Shared GLSL: value noise and the galaxy's shape, in galactic longitude l
 // (0 at the core, ±π rimward) and latitude b, with d the direction in the
@@ -89,7 +90,7 @@ const GALAXY = /* glsl */ `
 
 // Paint the band into a texture laid out by longitude (u, core at the middle)
 // and latitude (v).
-function bakeSky(gl) {
+function bakeSky(gl, TEXTURE) {
   // Half floats where the GPU can draw to them: 8 bits showed steps in the
   // faint haze.
   const half = gl.extensions.has('EXT_color_buffer_half_float') || gl.extensions.has('EXT_color_buffer_float');
@@ -163,7 +164,7 @@ function crowding(l, b) {
   return Math.min(1, disc + 1.2 * Math.exp(-r2 / 0.05) + 0.3 * Math.exp(-r2 / 0.3));
 }
 
-function starPoints() {
+function starPoints(STARS) {
   const rnd = random('backdrop-stars');
   const pos = new Float32Array(STARS * 3);
   const look = new Float32Array(STARS * 4); // display colour, brightness
@@ -223,9 +224,10 @@ const starMaterial = () => new THREE.ShaderMaterial({
 
 export default function Backdrop() {
   const gl = useThree((s) => s.gl);
+  const { skyTexture, skyStars } = TIERS[useMap((s) => s.quality)];
   const [sky, stars, band] = useMemo(() => {
-    const sky = bakeSky(gl);
-    const s = new THREE.Points(starPoints(), starMaterial());
+    const sky = bakeSky(gl, skyTexture);
+    const s = new THREE.Points(starPoints(skyStars), starMaterial());
     s.material.uniforms.uScale.value = Math.min(2, window.devicePixelRatio || 1);
     const b = new THREE.Mesh(new THREE.SphereGeometry(SKY_KM, 64, 32), skyMaterial(sky.texture));
     for (const [o, order] of [[b, -1001], [s, -1000]]) {
@@ -234,7 +236,7 @@ export default function Backdrop() {
       o.userData.layer = 'backdrop';
     }
     return [sky, s, b];
-  }, [gl]);
+  }, [gl, skyTexture, skyStars]);
   useEffect(() => () => {
     sky.dispose();
     for (const o of [stars, band]) { o.geometry.dispose(); o.material.dispose(); }

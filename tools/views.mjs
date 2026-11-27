@@ -28,13 +28,14 @@ export const DEVICES = {
 };
 
 // worlds: 'wip' opens the app with the WIP procedural worlds on (?worlds=wip,
-// decision BQ1); otherwise the default, Phase 2 globes.
-export async function startApp(port, { worlds } = {}) {
+// decision BQ1); otherwise the default, Phase 2 globes. quality: a tier
+// (?quality=low, task B0.6); otherwise the device's own.
+export async function startApp(port, { worlds, quality } = {}) {
   const server = await createServer({ logLevel: 'error', server: { port, strictPort: true } });
   await server.listen();
   const browser = await chromium.launch({ args: ['--enable-precise-memory-info'] });
   return {
-    base: `http://localhost:${port}/${worlds ? `?worlds=${worlds}` : ''}`,
+    base: `http://localhost:${port}/${[worlds && `worlds=${worlds}`, quality && `quality=${quality}`].filter(Boolean).reduce((q, p) => `${q}${q ? '&' : '?'}${p}`, '')}`,
     browser,
     close: async () => { await browser.close(); await server.close(); },
   };
