@@ -19,8 +19,9 @@ work), then the view checks against `docs/section-b/baseline/accepted`.
 | `--quick` | everything; 12 of the 40 views (marked `quick` in `views.json`), fewer frames measured | about 13 min |
 | full | everything; all 40 views on desktop and phone | about 27 min |
 
-Use `--quick` while working on a task; run the full set before asking the
-GM to approve. The view checks alone: `node tools/check_views.mjs [--quick]`
+**Run checks only when the GM asks for them (GM, Nov 27): long runs clog
+the work.** When asked: `--quick` while working on a task, the full set
+before an approval. The view checks alone: `node tools/check_views.mjs [--quick]`
 (`--checks perf,visuals,contrast` to pick). Record a new reference after an
 approval: `node tools/record_baseline.mjs --out docs/section-b/baseline/accepted`.
 
