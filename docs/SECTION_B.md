@@ -135,16 +135,25 @@ Objective: make the shape of each world from a physical process, not only from n
 
 Tasks:
 
+- B2.0 Make the world test bed (decision BD12). Development builds only. Do not put test worlds in `map.json`.
+  1. Make a world gallery test scene (`?test=worlds`, as `?test=camera`). Show a grid of globes under the same light: one globe for each world type, or one for each variant of a selected type. Make the grid from the world-type catalog (B4.11), so new types and variants show without a code change. Measure the color distance between types here (B4 test). Add the scene to the phone link as a second page.
+  2. Add "Try as" controls to the World Lab (B0.7). Select a world type, a variant and a star kind. Rebuild the planet in view with them. Do not save the change.
 - B2.1 Continue from the WIP code: cube-sphere level of detail (`planet/cubeSphere.js`), fields baked in cube maps (`planet/fields.js`).
-- B2.2 Simulate plate tectonics over time. Make plates from seeds. Move each plate about its own Euler pole for N steps. At each step:
-  1. Find the boundaries and their type (convergent, divergent, transform).
-  2. Raise mountains where continents collide.
-  3. Make trenches and volcanic arcs where ocean crust subducts.
-  4. Make ridges and rift valleys where plates separate.
-  5. Make hotspot chains (island chains) under moving plates.
-  6. Grow continents from accreted terranes.
+- B2.2 Simulate plate tectonics over time (decision BD9; reference: Cortial et al., "Procedural Tectonic Planets", Eurographics 2019). Use a coarse cube-sphere grid (about 6 × 64² cells). Give each cell a plate, a crust type (continental or oceanic), a crust thickness and an age.
+  1. Set the start from the data. Get the number of plates from the world type and size. Get the continental share from the water share. Get the seed from the body id.
+  2. Move each plate about its own Euler pole for 20 to 40 steps (tens of millions of years each). Move the cells with their plate.
+  3. At each step, find the boundaries and their type (convergent, divergent, transform).
+  4. Where ocean crust meets continental crust: sink the ocean crust. Make a trench offshore and a volcanic range inland.
+  5. Where continents collide: thicken the crust. Raise high ranges and a plateau.
+  6. Where ocean crust meets ocean crust: make an arc of volcanic islands.
+  7. Where plates separate: make new ocean crust of age 0 at a mid-ocean ridge. On land, make a rift valley that can open into a new sea.
+  8. Where plates slide past: make a fault line. Do not raise mountains.
+  9. Keep hotspots fixed below the moving plates. Make chains of volcanic islands that get older along the chain.
+  10. Weld small continental pieces (terranes) onto the continents they hit.
+- B2.2a Calculate height from the crust, not from noise. Use isostasy for land: thicker continental crust stands higher (35 km of crust about 1 km; doubled crust 4 to 6 km). Use the age of ocean floor for its depth: depth ≈ 2.5 km + 0.35 km × √(age in millions of years). Put the coasts on the continent edges. Use noise only for detail at render time.
+- B2.2b Select the regime from the world type. Do not use plates on every world. Use one rigid shell for small or cold rock worlds (giant volcanoes, rift scars, old craters). Use resurfacing for hothouse worlds (young flat plains, few craters). Use cracked shells, chaos terrain and cryovolcanoes for ice worlds. Use magma seas or crater history for lava and airless worlds.
 - B2.3 Run the simulation on the GPU (render-to-texture passes) or in a Web Worker. Use the job queue (B0.9).
-- B2.4 Add erosion. Use hydraulic erosion (water flow and sediment) and thermal erosion (slope collapse). Run it on the cube map. Keep the cube faces seamless.
+- B2.4 Add erosion. Use hydraulic erosion: cut in proportion to the water flow and the slope (stream power), and put the sediment on lowlands and coastal plains. Use the flow of B3.5. Use thermal erosion: collapse slopes that are steeper than the angle of repose. Run both on the cube map. Keep the cube faces seamless.
 - B2.5 Add crater history for airless worlds. Use crater size and age distributions. Old craters are softer. Young craters have rays.
 - B2.6 Add special terrain sets: dunes from wind (B3 winds), karst, chaos terrain, cryovolcanoes, ice lineae, crystal fields, glassed plains, shattered crust.
 - B2.7 Fit the world to its data. Set sea level from the stated water share. Put places on the right ground (towns on land, ports at coasts). Use the notes where the generator can read them (for example "two continents").
@@ -156,6 +165,7 @@ Test:
 - Water share within 2% of the data for all worlds with water.
 - 100% of towns, cities and bases on land. 100% of ports within 1° of a coast.
 - Mountain belts lie along convergent boundaries (measured in the World Lab).
+- Ocean depth increases with the age of the ocean floor; coasts follow the continent edges.
 - Bake time per world: less than 300 ms on desktop, less than 1.5 s on phone, without a held frame (B0.9).
 - No seams at cube faces (pixel check along all 12 edges).
 
@@ -169,7 +179,8 @@ Tasks:
 - B3.2 Calculate temperature from insolation, height (lapse rate), albedo (ice, cloud, desert) and heat transport (ocean and air). Calibrate to the data (`tempMeanC`, `tempRangeC`).
 - B3.3 Model the general circulation. Set the number of cells from the rotation rate (fast rotation: more cells and bands). Use a special model for tidally locked worlds (flow from night side to day side).
 - B3.4 Carry moisture with the winds. Calculate rain, rain shadows and deserts.
-- B3.5 Make rivers and lakes. Calculate flow direction and flow accumulation. Fill closed basins as lakes or salt flats.
+- B3.5 Make rivers and lakes. Find the closed basins with priority-flood (Barnes et al. 2014). A basin that connects to the ocean is ocean. A closed basin is a lake where rain is more than evaporation, and a salt flat where it is less. Give each cell a flow direction to its lowest neighbour. Add the rainfall down the flow. Make a river where the sum is more than a limit. Show rivers as map lines that fade in from the region scale (decision BD10); show them at true size up close.
+- B3.5a Use the same model for other liquids: methane seas and rain (Titan type), lava seas, and oceans under an ice shell. Change only the temperatures and boiling points.
 - B3.6 Make seasons. Snow lines, sea ice and vegetation change with the clock.
 - B3.7 Make weather move. Advect cloud fields with the winds over time. Make cyclones and fronts. Make dust storms on dry worlds.
 - B3.8 Make weather on other chemistry: methane rain (Titan type), sulfuric acid clouds (Venus type), steam worlds, iron rain on hot worlds.
@@ -180,6 +191,7 @@ Test:
 - Mean and range of temperature within 3 °C of the data for 95% of worlds.
 - Wind belts and rain shadows visible in the World Lab for 10 reference worlds.
 - All rivers end in a sea, a lake or a closed basin.
+- Ice cover within 2% of the data's ice share for all worlds with ice.
 - Weather moves without jumps when the clock runs (pixel difference between frames below a limit).
 
 ### Phase B4: Biospheres and the biome catalog (F5, F12)
@@ -223,6 +235,7 @@ Tasks, the biome catalog (adding biomes):
 - B4.9 Replace the single biome lookup table (`planet/biomes.js`) with a biome map for each world. Store the two strongest biomes and their blend weight at each point. Support any number of biomes in the catalog.
 - B4.10 Choose each world's biomes from its climate, its world type, its biosphere and its star. Let the GM add, remove or weight biomes for one world in the data (`biomes` list on the body).
 - B4.11 Make the world types a catalog too (`data/src/worldTypes/`). Move the recipes of `planet/recipes.js` into it: terrain, climate, surface, air and the biome sets that each type allows. Cover all world types in `map.json` (about 40) and add exotic types: hycean (ocean under hydrogen air), eyeball, lava ocean, iron rain, ammonia sea, cloud forest, salt world, sand-sea world, ring-shadowed world. The GM adds a world type with a new file. The code does not change.
+- B4.11a Put each type's variants in its file (decision BD11). Mark each variant `visible` or not. Give each visible variant modifiers: terrain, hydrology, climate, biome weights, palette and signature features. A variant that is not visible changes only the description and the data panel. Do the 53 world types that the Basin uses first (habitable wet and dry first), then the types in the catalog only. The catalog (`docs/WORLDS.md`) has 71 types and 218 variants.
 
 Tasks, visiting biomes:
 
@@ -425,6 +438,15 @@ BD1 to BD8: the GM accepted all eight recommendations on Nov 26, 2026. The
 | BD6 | Data changes | New schema fields for orbits, generation and biospheres | Add them with `invented` tags; keep canon values. |
 | BD7 | Realism and readability | Strict physics; or physics with tuned exaggeration | Physics with tuned exaggeration (relief, air height, glow). Labels always win. |
 | BD8 | Time | Real clock only; or a time-lapse mode | Both. The clock stays the source of truth. |
+
+BD9 to BD12: the GM accepted these recommendations on Nov 27, 2026.
+
+| ID | Subject | Options | Decision |
+|---|---|---|---|
+| BD9 | Plate tectonics | A simulation over time; or one better snapshot (plates and boundary types in one pass) | The simulation, on a coarse grid (B2.2). It gives believable continents, island chains and old worn ranges; on the coarse grid its cost is small. |
+| BD10 | Rivers on screen | Map lines visible from orbit; or true size only, up close | Map lines that fade in from the region scale, true size up close (B3.5). Physics with tuned exaggeration (BD7). |
+| BD11 | World variants | Types only; or variants in each type's file | Variants in the type files, each marked visible or not; visible ones get modifiers (B4.11a). |
+| BD12 | Test bed for world variation | Test systems in the map (beyond the Silent Mouths); or tools outside the map data | Tools outside the map data: a world gallery (`?test=worlds`) and "Try as" in the World Lab (B2.0). Test systems in the map would contradict canon (the Quiet holds no systems; nothing is known beyond the Silent Mouths), change every check that counts the map, and could show to players. |
 
 ## 9. Risks
 
