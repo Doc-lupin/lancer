@@ -35,10 +35,20 @@
 // `tools` gives loadTexture(file, { color }) for files in public/textures/,
 // canvasTexture(width, height, draw, { color }) for maps drawn on the CPU,
 // and bake(width, height, material, { color, mipmaps }) to paint a map on the
-// GPU with a shader (region effects, planet/fields.js): the material draws a full-screen
-// square, and gets vUv with the map's layout.
+// GPU with a shader in one go (region effects, planet/fields.js): the material
+// draws a full-screen square, and gets vUv with the map's layout.
+//
+// Long work goes through the job queue instead (task B0.9), so the view never
+// stops: newTarget(width, height, opts) makes an empty map, and a job given
+// to enqueue() fills it with `yield* paint(target, material)`, a tile a step;
+// `yield readRedAsync(target)` reads a small map back without stopping the
+// GPU. Such a provider returns its maps at once with `ready: false`, and sets
+// `ready = true` when the job is done: until then the globe is not shown and
+// the flat disc stays (Planet.jsx). Its dispose() should set `disposed`, so
+// an unfinished job stops.
 
 import * as THREE from 'three';
+import { enqueue } from './jobs.js';
 
 const providers = [];
 const cache = new Map(); // body id → maps, oldest first
@@ -58,8 +68,7 @@ const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2));
 quad.frustumCulled = false;
 const bakeScene = new THREE.Scene().add(quad);
 const bakeCamera = new THREE.Camera();
-export function bake(width, height, material, { color = true, mipmaps = true } = {}) {
-  if (!renderer) throw new Error('bake() needs setBaker(renderer) first');
+export function newTarget(width, height, { color = true, mipmaps = true } = {}) {
   const target = new THREE.WebGLRenderTarget(width, height, {
     depthBuffer: false,
     colorSpace: color ? THREE.SRGBColorSpace : THREE.NoColorSpace,
@@ -68,12 +77,63 @@ export function bake(width, height, material, { color = true, mipmaps = true } =
   });
   target.texture.wrapS = THREE.RepeatWrapping;
   target.texture.anisotropy = 4;
+  return target;
+}
+
+// All at once, in this frame: for small bakes at load. Globes' maps use
+// paint() through the job queue (jobs.js) instead.
+export function bake(width, height, material, opts = {}) {
+  if (!renderer) throw new Error('bake() needs setBaker(renderer) first');
+  const target = newTarget(width, height, opts);
   quad.material = material;
   const before = renderer.getRenderTarget();
   renderer.setRenderTarget(target);
   renderer.render(bakeScene, bakeCamera);
   renderer.setRenderTarget(before);
   return target;
+}
+
+// Paint a target in tiles of TILE × TILE pixels, one tile a step: a generator
+// for the job queue (task B0.9; `yield* paint(target, material)` in a job).
+// The material's uniforms are copied when painting starts and put back before
+// every tile, because other jobs may use the same material in between.
+// Mipmaps are made once, after the last tile.
+export const TILE = 128;
+const copyValue = (v) => (v?.clone && !v.isTexture ? v.clone() : v);
+export function* paint(target, material) {
+  if (!renderer) throw new Error('paint() needs setBaker(renderer) first');
+  const saved = Object.entries(material.uniforms).map(([k, u]) => [k, copyValue(u.value)]);
+  const mipmaps = target.texture.generateMipmaps;
+  const { width, height } = target;
+  for (let y = 0; y < height; y += TILE) {
+    for (let x = 0; x < width; x += TILE) {
+      for (const [k, v] of saved) {
+        const u = material.uniforms[k];
+        if (u.value?.copy && v?.copy && !v.isTexture) u.value.copy(v); else u.value = v;
+      }
+      target.texture.generateMipmaps = mipmaps && y + TILE >= height && x + TILE >= width;
+      target.scissor.set(x, y, Math.min(TILE, width - x), Math.min(TILE, height - y));
+      target.scissorTest = true;
+      quad.material = material;
+      const before = renderer.getRenderTarget();
+      renderer.setRenderTarget(target);
+      renderer.render(bakeScene, bakeCamera);
+      renderer.setRenderTarget(before);
+      yield;
+    }
+  }
+  target.scissorTest = false;
+  target.texture.generateMipmaps = mipmaps;
+}
+
+// As readRed, without stopping the GPU: a Promise (yield it in a job).
+export async function readRedAsync(target) {
+  const { width, height } = target;
+  const px = new Uint8Array(width * height * 4);
+  await renderer.readRenderTargetPixelsAsync(target, 0, 0, width, height, px);
+  const out = new Float32Array(width * height);
+  for (let i = 0; i < out.length; i++) out[i] = px[i * 4] / 255;
+  return out;
 }
 
 // Read back a small baked map's red channel, 0–1, one value per pixel, rows
@@ -172,7 +232,7 @@ function builtIn(body) {
   };
 }
 
-const tools = { loadTexture, canvasTexture, random, bake, readRed };
+const tools = { loadTexture, canvasTexture, random, bake, readRed, newTarget, paint, readRedAsync, enqueue };
 
 // A body's maps. With { builtIn: false }, null when nothing was imported or
 // registered for it (planets, moons and giants then get the procedural

@@ -1,6 +1,7 @@
 // Quality tiers (task B0.6, Table 6 of docs/SECTION_B.md). Every effect that
 // costs real GPU time reads its setting from the current tier; the map must
-// work at the lowest. Later phases add their own fields here (cloud motion,
+// work at the lowest. bakeSteps: tiles of a bake painted per frame at most
+// (jobs.js, B0.9). Later phases add their own fields here (cloud motion,
 // scattering steps, belt rocks, volumes, ...).
 //
 // The tier is chosen in this order: ?quality=low|medium|high|ultra in the
@@ -9,13 +10,13 @@
 
 export const TIERS = {
   // Old phones: one device pixel per CSS pixel, no bloom, smaller bakes.
-  low: { pixelRatio: 1, multisampling: 0, bloom: false, skyTexture: [1024, 512], skyStars: 6000, surfaceSize: [512, 256] },
+  low: { pixelRatio: 1, multisampling: 0, bloom: false, skyTexture: [1024, 512], skyStars: 6000, surfaceSize: [512, 256], bakeSteps: 2 },
   // Most phones: small pixels hide jagged edges, so no multisampling.
-  medium: { pixelRatio: 2, multisampling: 0, bloom: true, skyTexture: [2048, 1024], skyStars: 15000, surfaceSize: [1024, 512] },
+  medium: { pixelRatio: 2, multisampling: 0, bloom: true, skyTexture: [2048, 1024], skyStars: 15000, surfaceSize: [1024, 512], bakeSteps: 4 },
   // Computers.
-  high: { pixelRatio: 2, multisampling: 4, bloom: true, skyTexture: [2048, 1024], skyStars: 15000, surfaceSize: [1024, 512] },
+  high: { pixelRatio: 2, multisampling: 4, bloom: true, skyTexture: [2048, 1024], skyStars: 15000, surfaceSize: [1024, 512], bakeSteps: 6 },
   // Strong graphics chips: sharper and denser.
-  ultra: { pixelRatio: 3, multisampling: 8, bloom: true, skyTexture: [4096, 2048], skyStars: 30000, surfaceSize: [2048, 1024] },
+  ultra: { pixelRatio: 3, multisampling: 8, bloom: true, skyTexture: [4096, 2048], skyStars: 30000, surfaceSize: [2048, 1024], bakeSteps: 8 },
 };
 export const TIER_NAMES = Object.keys(TIERS);
 

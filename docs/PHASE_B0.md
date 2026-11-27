@@ -3,10 +3,10 @@
 Tasks, test and functions are in [SECTION_B.md](SECTION_B.md), Phase B0.
 Branch `section-b`.
 
-**Status (Nov 27, 2026): B0.1 to B0.6 done; B0.7 (World Lab) and B0.8 (shader
-library) built, not yet tried in a browser (checks run only at the GM's
-request). Next: B0.9.** BQ1 to BQ4 are decided and done. Open from B0.6:
-Slagfall's held frame at the low tier (for B0.9).
+**Status (Nov 27, 2026): B0.1 to B0.6 done; B0.7 (World Lab), B0.8 (shader
+library) and B0.9 (job queue) built, not yet tried in a browser (checks run
+only at the GM's request). Next: B0.10 (cache of baked worlds).** BQ1 to BQ4
+are decided and done.
 
 ## How to run the checks
 
@@ -478,6 +478,44 @@ WebGL2 for the unsigned integers; three.js compiles every shader as GLSL ES
 The existing noise moves to it with its phase: the WIP planets'
 `planet/noise.js` in B2, star colors from temperature in B7, the nebulae,
 dust and sky in B9; `planet/atmosphere.js` in B5.
+
+## B0.9: GPU job queue (built)
+
+- **`src/views/jobs.js`:** a queue of jobs. A job is a generator: each
+  `yield` ends one step; yielding a Promise makes the job wait without
+  blocking the others. `runJobs()` runs once a frame (in `Planet.jsx`),
+  highest priority first, up to the tier's `bakeSteps` steps (low 2, medium
+  4, high 6, ultra 8) and no more after 6 ms, but always at least one, so
+  every job finishes. It asks for frames while work remains.
+- **`surfaces.js`:** `newTarget()` makes an empty map; `paint(target,
+  material)` fills it in tiles of 128 × 128 pixels, one tile a step, with
+  the material's uniforms copied at the start and put back before each tile
+  (other jobs share the material); mipmaps once, after the last tile.
+  `readRedAsync()` reads a map back without stopping the GPU (three.js's
+  `readRenderTargetPixelsAsync`). `bake()` stays for small bakes at load.
+- **The Phase 2 planet painter** (`procedural.js`) is a job now: its maps
+  exist at once, empty, marked `ready: false`; the sea-level probe is read
+  back asynchronously; then the color, normal, roughness, lava and cloud
+  maps are painted tile by tile. The body in focus goes first. A disposed
+  body's job stops.
+- **No half-painted globe:** a globe shows only once its maps are ready
+  (`readyGlobes` in `jobs.js`; `globeShown()` in `Planet.jsx`, used by the
+  disc in `System.jsx` and the markers in `Places.jsx`). Until then the flat
+  disc and its markers stay as they were.
+- **Tests:** `jobs.test.js` (5): steps per frame, the time budget, priority,
+  waiting on a promise while others run, a failing job dropped.
+
+Not covered yet:
+
+- The WIP worlds' field bakes (`planet/fields.js`, six cube faces at once)
+  move onto the queue with B2.1, where they are rewritten anyway.
+- Bakes at load (the sky, the nebula's cloud shapes) still run in one go:
+  they happen before any flight.
+- The held frames of 72 to 116 ms on ordinary flights (B0.3) are not bakes;
+  they look like shaders compiled on first use. The cure is to compile them
+  before they are needed (three.js `compileAsync` at load), a small task.
+- The Phase B0 test ("a bake never holds a frame for more than 50 ms on
+  desktop") is measured only when the GM asks for the checks.
 
 ## Decisions
 

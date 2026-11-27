@@ -37,6 +37,8 @@ import { view } from './camera/view.js';
 import { bodyRadiusKm, GLOBE_TYPES } from './mapTargets.js';
 import { latLonSphere } from './globeGeometry.js';
 import { surfaceMaps, random, whenTexturesLoad, setBaker } from './surfaces.js';
+import { runJobs, readyGlobes } from './jobs.js';
+import { TIERS } from './quality.js';
 import { ringMaterial, RING } from './planet/rings.js';
 import ProceduralGlobe from './planet/ProceduralGlobe.jsx';
 import { hasRecipe } from './planet/recipes.js';
@@ -50,6 +52,13 @@ import { BLOOM } from './bloom.js';
 // Radius on screen (CSS px) over which the flat disc hands over to the globe.
 const GLOBE_FROM_PX = 10;
 const GLOBE_TO_PX = 16;
+// A globe still baking (task B0.9: bakes run through the job queue,
+// jobs.js) is not shown: its flat disc and place markers stay, so nothing
+// half-painted appears and the view never stops.
+// How far a body has handed over from its disc to its globe: by size on
+// screen (globeBlend), and only once its globe is ready.
+export const globeShown = (id, radiusPx) => (readyGlobes.has(id) ? globeBlend(radiusPx) : 0);
+
 export const globeBlend = (radiusPx) => Math.min(1, Math.max(0, (radiusPx - GLOBE_FROM_PX) / (GLOBE_TO_PX - GLOBE_FROM_PX)));
 const MAX_GLOBES = 6;
 
@@ -136,6 +145,8 @@ function Globe({ info, blend }) {
   const appearance = body.appearance ?? {};
   const color = appearance.color ?? '#9a8f80';
   const maps = useMemo(() => surfaceMaps(body), [body]);
+  useEffect(() => () => readyGlobes.delete(body.id), [body.id]);
+  const invalidate = useThree((s) => s.invalidate);
   const surface = useMemo(() => new THREE.MeshStandardMaterial({
     color: maps.tint ? new THREE.Color(color) : new THREE.Color('#ffffff'),
     map: maps.map ?? null,
@@ -177,6 +188,7 @@ function Globe({ info, blend }) {
   const light = useMemo(() => new THREE.Vector3(), []);
 
   useFrame(({ camera }) => {
+    if (maps.ready !== false && !readyGlobes.has(body.id)) { readyGlobes.add(body.id); invalidate(); }
     const g = group.current;
     const cam = view.rig?.camera;
     if (!g || !cam) return;
@@ -241,6 +253,9 @@ export default function Planets() {
 
   const rel = useMemo(() => [0, 0, 0], []);
   useFrame(({ camera, size }) => {
+    // Bakes, a few tiles a frame (B0.9); ask for another frame while any remain.
+    const steps = TIERS[useMap.getState().quality].bakeSteps;
+    if (runJobs({ maxSteps: steps, budgetMs: 6 })) invalidate();
     const cam = view.rig?.camera;
     if (!cam) return;
     const near = [];
@@ -248,7 +263,8 @@ export default function Planets() {
       offsetKm(cam, c.place, rel);
       const px = c.radiusKm * pixelsPerKm(Math.hypot(...rel), camera.fov, size.height);
       const b = globeBlend(px);
-      blend.current.set(c.body.id, b);
+      // Mounted by size, so its bake starts; shown once ready.
+      blend.current.set(c.body.id, readyGlobes.has(c.body.id) ? b : 0);
       if (b > 0) near.push([px, c.body.id]);
     }
     near.sort((a, b) => b[0] - a[0]);

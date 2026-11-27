@@ -10,7 +10,8 @@ data and from physical models.
 
 **Status (Nov 27, 2026): Phase B0 in progress; B0.1 to B0.5 done (baseline,
 visual and performance checks, HDR pipeline, bloom); B0.6 (quality tiers)
-done; B0.7 (World Lab) and B0.8 (shader library) built. Work log and how to run the checks: [PHASE_B0.md](PHASE_B0.md). The
+done; B0.7 (World Lab), B0.8 (shader library) and B0.9 (job queue) built.
+Work log and how to run the checks: [PHASE_B0.md](PHASE_B0.md). The
 WIP worlds are off by default (BQ1).** Earlier work for Section B is
 on branch `section-b` (procedural planets, on hold); see
 [SECTION_B_HANDOFF.md](SECTION_B_HANDOFF.md). Phase B2 and Phase B5 continue from that work.

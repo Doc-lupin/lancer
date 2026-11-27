@@ -30,6 +30,7 @@ import { registerSurface } from './surfaces.js';
 import { WIP_WORLDS } from './planet/switch.js';
 import { useMap } from '../data/store.js';
 import { tierOf } from './quality.js';
+import { view } from './camera/view.js';
 
 // Map size from the quality tier (quality.js): 1024 × 512 at medium and high.
 const size = () => tierOf(useMap.getState()).surfaceSize;
@@ -345,29 +346,48 @@ function seaLevel(values, [w, h], share) {
 const GLOBES = new Set(['planet', 'gas-giant', 'moon', 'rogue-planet']);
 
 // Off while the WIP procedural worlds are on (planet/switch.js).
-if (!WIP_WORLDS) registerSurface((body, { bake, readRed, random }) => {
+if (!WIP_WORLDS) registerSurface((body, { random, newTarget, paint, readRedAsync, enqueue }) => {
   if (!GLOBES.has(body.type) || body.appearance?.texture) return null;
   const m = painter();
   const u = settings(body, random(`surface:${body.id}`));
-  setUniforms(m, u);
-  const run = (pass, size, opts) => { m.uniforms.uPass.value = pass; return bake(size[0], size[1], m, opts); };
-  if (u.uWater > 0) {
-    const probe = run(PASS.height, PROBE, { color: false, mipmaps: false });
-    m.uniforms.uSea.value = seaLevel(readRed(probe), PROBE, u.uWater);
-    probe.dispose();
-  }
   const SIZE = size();
-  m.uniforms.uWidth.value = SIZE[0];
+  u.uWidth = SIZE[0];
+  // The maps exist at once, empty; a job paints them a tile at a time (task
+  // B0.9), so the view never stops. The globe shows when they are ready.
   const targets = [];
-  const keep = (t) => { targets.push(t); return t.texture; };
+  const target = (w, h, opts) => { const t = newTarget(w, h, opts); targets.push(t); return t; };
+  const passes = [
+    [PASS.color, target(SIZE[0], SIZE[1], { color: true })],
+    [PASS.normal, target(SIZE[0], SIZE[1], { color: false })],
+    [PASS.rough, target(SIZE[0] / 2, SIZE[1] / 2, { color: false })],
+  ];
   const maps = {
     tint: false,
-    map: keep(run(PASS.color, SIZE, { color: true })),
-    normalMap: keep(run(PASS.normal, SIZE, { color: false })),
-    roughnessMap: keep(run(PASS.rough, [SIZE[0] / 2, SIZE[1] / 2], { color: false })),
-    dispose: () => targets.forEach((t) => t.dispose()),
+    ready: false,
+    map: passes[0][1].texture,
+    normalMap: passes[1][1].texture,
+    roughnessMap: passes[2][1].texture,
+    dispose: () => { maps.disposed = true; targets.forEach((t) => t.dispose()); },
   };
-  if (u.uKind === KIND.lava) maps.emissiveMap = keep(run(PASS.emit, SIZE, { color: true }));
-  if (body.appearance?.clouds && u.uKind !== KIND.gas) maps.clouds = keep(run(PASS.clouds, SIZE, { color: false }));
+  if (u.uKind === KIND.lava) { const t = target(SIZE[0], SIZE[1], { color: true }); passes.push([PASS.emit, t]); maps.emissiveMap = t.texture; }
+  if (body.appearance?.clouds && u.uKind !== KIND.gas) { const t = target(SIZE[0], SIZE[1], { color: false }); passes.push([PASS.clouds, t]); maps.clouds = t.texture; }
+  // The material is shared: set this body's settings before each pass.
+  const use = (pass) => { setUniforms(m, u); m.uniforms.uPass.value = pass; return m; };
+  enqueue(function* surfaceJob() {
+    if (u.uWater > 0) {
+      // Sea level: the height on a small map, read back without stopping the
+      // GPU, and the level below which the stated share of the area lies.
+      const probe = newTarget(PROBE[0], PROBE[1], { color: false, mipmaps: false });
+      yield* paint(probe, use(PASS.height));
+      const red = yield readRedAsync(probe);
+      probe.dispose();
+      u.uSea = seaLevel(red, PROBE, u.uWater);
+    }
+    for (const [pass, t] of passes) {
+      if (maps.disposed) return;
+      yield* paint(t, use(pass));
+    }
+    maps.ready = true;
+  }, { name: `surface ${body.id}`, priority: body.id === view.rig?.focusId ? 1 : 0 });
   return maps;
 });

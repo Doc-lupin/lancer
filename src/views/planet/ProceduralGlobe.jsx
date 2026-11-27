@@ -19,6 +19,7 @@ import { biomeTexture } from './biomes.js';
 import { terrainMaterial } from './terrain.js';
 import { gasMaterial } from './gas.js';
 import { useMap } from '../../data/store.js';
+import { readyGlobes } from '../jobs.js';
 import { cloudMaterial, CLOUD_SHELL } from './clouds.js';
 import { skyMaterial } from './atmosphere.js';
 import { ringMaterial, ringTextures, RING, RING_INNER, RING_OUTER } from './rings.js';
@@ -72,6 +73,8 @@ export default function ProceduralGlobe({ info, blend, places, index }) {
     sky && (sky.uniforms.uAirTop.value = w.r.air.top);
     return { surface, clouds, sky, rings: ring ? ringMaterial(color) : null };
   }, [w, info.radiusKm, body]);
+  // Its fields bake at once (fields.js), so it is ready when mounted.
+  useEffect(() => { readyGlobes.add(body.id); return () => readyGlobes.delete(body.id); }, [body.id]);
   useEffect(() => () => {
     geometry.dispose();
     for (const m of [surface, clouds, sky, rings]) m?.dispose();

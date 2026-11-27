@@ -22,7 +22,7 @@ import { offsetKm, pixelsPerKm } from './origin.js';
 import { view } from './camera/view.js';
 import { visiblePos } from './occlusion.js';
 import { GLOBE_TYPES } from './mapTargets.js';
-import { globeInfo, globeBlend } from './Planet.jsx';
+import { globeInfo, globeShown } from './Planet.jsx';
 import { spriteVertex, spriteFragmentHead, spriteUniforms, spriteGeometry, updateViewport } from './sprite.js';
 import { stripVertex, stripFragment, screenMaterial, quadGeometry, clipToView, STRIP_CORNERS, STRIP_ATTRS } from './strip.js';
 import { displayColor } from './color.js';
@@ -155,7 +155,7 @@ export default function Places() {
     const colors = markers.geometry.attributes.aColor;
     places.forEach((it, i) => {
       const s = state(it.globe);
-      const blend = globeBlend(s.px);
+      const blend = globeShown(it.globe.body.id, s.px);
       const p = s.rel.map((v, k) => v + it.offset[k]);
       const face = blend > 0 ? facing(it.normal, p) : -1;
       const alpha = blend * Math.min(1, Math.max(0, face / 0.12));
@@ -173,7 +173,7 @@ export default function Places() {
     let anyFront = false;
     for (const f of fronts) {
       const s = state(f.globe);
-      const blend = globeBlend(s.px);
+      const blend = globeShown(f.globe.body.id, s.px);
       for (let i = 0; i < f.pts.length - 1; i++) {
         const a = s.rel.map((v, k) => v + f.pts[i].off[k]);
         const b = s.rel.map((v, k) => v + f.pts[i + 1].off[k]);

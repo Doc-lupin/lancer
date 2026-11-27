@@ -29,7 +29,7 @@ import { bodyOffsetKm, daysSinceEpoch, orbitPoint, KM_PER_AU } from '../data/orb
 import { offsetKm, place, pixelsPerKm } from './origin.js';
 import { view } from './camera/view.js';
 import { bodyRadiusKm, GLOBE_TYPES } from './mapTargets.js';
-import { globeBlend } from './Planet.jsx';
+import { globeShown } from './Planet.jsx';
 import { stripVertex, stripFragment, screenMaterial, quadGeometry, clipToView, STRIP_CORNERS, STRIP_ATTRS } from './strip.js';
 
 // How visible each body is this frame (0–1), for the body labels.
@@ -243,7 +243,7 @@ export default function System() {
       offsetKm(cam, it.place, rel);
       bodyAlpha.set(it.body.id, alpha); // shown at all (for labels), globe or disc
       // Round bodies hand over to their globe (Planet.jsx) as they grow on screen.
-      if (alpha > 0 && GLOBE_TYPES.has(it.body.type)) alpha *= 1 - globeBlend(it.radiusKm * perKmAt(Math.hypot(...rel)));
+      if (alpha > 0 && GLOBE_TYPES.has(it.body.type)) alpha *= 1 - globeShown(it.body.id, it.radiusKm * perKmAt(Math.hypot(...rel)));
       bodyMesh.setMatrixAt(i, m.makeTranslation(rel[0], rel[1], rel[2]));
       g.attributes.aColor.setXYZW(i, it.color.r, it.color.g, it.color.b, alpha);
     });
