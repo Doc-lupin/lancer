@@ -8,10 +8,10 @@ voice, one instruction in each sentence). Technical names stay as they are.
 dynamic visual database. Every world, star and orbit gets its look from its
 data and from physical models.
 
-**Status (Nov 27, 2026): Phase B0 in progress; B0.1 to B0.4 done (baseline,
-visual and performance checks, HDR pipeline); B0.5 (bloom) built, waiting for
-the GM's approval (BQ4). Work log and how to run the checks:
-[PHASE_B0.md](PHASE_B0.md). The WIP worlds are off by default (BQ1).** Earlier work for Section B is
+**Status (Nov 27, 2026): Phase B0 in progress; B0.1 to B0.5 done (baseline,
+visual and performance checks, HDR pipeline, bloom); B0.6 (quality tiers)
+built. Work log and how to run the checks: [PHASE_B0.md](PHASE_B0.md). The
+WIP worlds are off by default (BQ1).** Earlier work for Section B is
 on branch `section-b` (procedural planets, on hold); see
 [SECTION_B_HANDOFF.md](SECTION_B_HANDOFF.md). Phase B2 and Phase B5 continue from that work.
 

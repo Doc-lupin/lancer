@@ -3,9 +3,9 @@
 Tasks, test and functions are in [SECTION_B.md](SECTION_B.md), Phase B0.
 Branch `section-b`.
 
-**Status (Nov 27, 2026): B0.1 to B0.4 done; B0.5 (bloom) built and checked,
-waiting for the GM's approval (BQ4). Next: B0.6.** BQ1 to BQ3 are decided
-and done.
+**Status (Nov 27, 2026): B0.1 to B0.5 done; B0.6 (quality tiers) built and
+checked at every tier; one open point at the low tier (Slagfall's held
+frame, below).** BQ1 to BQ4 are decided and done.
 
 ## How to run the checks
 
@@ -337,7 +337,7 @@ pixel.
 The review page for the GM: https://claude.ai/artifact/VEFKP2opukqTdbVyWzv2PL
 (before, after and difference for each changed view).
 
-## B0.5: bloom (built; BQ4 open)
+## B0.5: bloom (done)
 
 - **`Output.jsx`:** `BloomEffect` (postprocessing, mipmap blur) before the
   tone map, adding light: threshold at a luminance of 2, intensity 0.9,
@@ -376,6 +376,40 @@ passes through), Slagfall (1.1 and 0.8: hotter lava, faint glow) and the
 Watchfire system view (0.8, desktop: its core blooms). Views where bloom
 runs (systems near a star, planets, lava) cost 14 to 16 more draw calls and
 5 to 25% more frame time in software; CPU work is unchanged.
+
+## B0.6: quality tiers (built)
+
+- **`src/views/quality.js`:** four tiers (Table 6). Each sets the pixel ratio
+  cap, multisampling, whether bloom may run, the sky texture size and star
+  count, and the planet map size. Later phases add their own fields.
+
+  | Tier | Pixel ratio | Multisampling | Bloom | Sky | Sky stars | Planet maps |
+  |---|---|---|---|---|---|---|
+  | low | 1 | none | off | 1024 × 512 | 6,000 | 512 × 256 |
+  | medium | 2 | none | on | 2048 × 1024 | 15,000 | 1024 × 512 |
+  | high | 2 | 4× | on | 2048 × 1024 | 15,000 | 1024 × 512 |
+  | ultra | 3 | 8× | on | 4096 × 2048 | 30,000 | 2048 × 1024 |
+
+- **Choice:** `?quality=` in the address, else the viewer's saved choice, else
+  the device: a touch screen with 3 GB or less, or 2 cores or fewer, is low;
+  another touch screen medium; a computer high. Ultra only by choice.
+- **The Quality button** (above the camera button; Q key) steps through the
+  tiers; the choice is kept in this browser.
+- **View tools:** `--quality T`. Unit test: `src/views/quality.test.js`.
+
+**Results (Nov 27, quick views):**
+
+- Default tiers (desktop high, phone medium): every check passes. The button
+  changes 0.1–0.4% of the pixels on desktop, 0.3–0.5% on the phone (under the
+  0.5% limit).
+- Low: every view loads, no page errors; frames much faster (phone, Basin:
+  40 ms against about 150 ms at medium). Pictures differ from the reference
+  as designed. Sable's name from the coreward Basin view on the phone is at
+  4.41:1 (4.5:1 at medium). Open: Slagfall's held frame was 2.2 s at low
+  against about 0.5 s at medium, although low bakes smaller maps; the
+  measurement to find out why was not finished.
+- Ultra: every view loads, no page errors; GPU memory 69–104 MB (the
+  4096-wide sky), frame time up in software, as designed.
 
 ## Decisions
 
@@ -432,3 +466,6 @@ Phase 2 reference: B0.4 did not change CPU work.
    frame time in the software renderer; on a graphics chip, bloom at this
    size is about 1 ms. Recommendation: accept it; the low quality tier
    (B0.6) turns bloom off.
+
+**Decided (GM, Nov 27): as recommended.** The B0.5 look is the accepted
+reference (recorded from `c63d58a`).
