@@ -18,6 +18,7 @@ import { paintFields } from './fields.js';
 import { biomeTexture } from './biomes.js';
 import { terrainMaterial } from './terrain.js';
 import { gasMaterial } from './gas.js';
+import { useMap } from '../../data/store.js';
 import { cloudMaterial, CLOUD_SHELL } from './clouds.js';
 import { skyMaterial } from './atmosphere.js';
 import { ringMaterial, ringTextures, RING, RING_INNER, RING_OUTER } from './rings.js';
@@ -110,6 +111,11 @@ export default function ProceduralGlobe({ info, blend, places, index }) {
       if (u.uAmbient) u.uAmbient.value = sun.ambient;
       u.uOpacity.value = b;
     }
+    // World Lab view (B0.7): the map on the ground, clouds and air hidden.
+    const lab = useMap.getState().labView;
+    if (surface.uniforms.uDebug) surface.uniforms.uDebug.value = lab;
+    if (clouds) clouds.uniforms.uOpacity.value = lab ? 0 : b;
+    if (sky) sky.uniforms.uOpacity.value = lab ? 0 : b;
     surface.transparent = b < 1;
     if (rings) {
       rings.uniforms.uOpacity.value = b;

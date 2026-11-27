@@ -23,6 +23,7 @@ export default function DebugHook() {
       render: () => ({ ...gl.info.render }),
       memory: () => ({ ...gl.info.memory }),
       setExposure: (e) => useMap.getState().setExposure(e),
+      setLabView: (v) => useMap.getState().setLabView(v),
       screen: (id) => screenPos(camera, view.rig.camera, view.targets.get(id).place, size.width, size.height),
       laneScreen: (id, t) => {
         const { map, index } = useMap.getState();

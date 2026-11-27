@@ -62,9 +62,10 @@ export default function Output() {
     return () => { gl.info.autoReset = true; };
   }, [gl]);
   useFrame(() => gl.info.reset(), 0.5);
-  // Exposure (exposure.js) is a shared uniform: redraw when it changes.
+  // Exposure (exposure.js) and the World Lab map (B0.7) are read in shaders:
+  // redraw when they change.
   const invalidate = useThree((s) => s.invalidate);
-  useEffect(() => useMap.subscribe((s, prev) => { if (s.exposure !== prev.exposure) invalidate(); }), [invalidate]);
+  useEffect(() => useMap.subscribe((s, prev) => { if (s.exposure !== prev.exposure || s.labView !== prev.labView) invalidate(); }), [invalidate]);
   return (
     <EffectComposer frameBufferType={THREE.HalfFloatType} multisampling={samples}>
       <primitive object={bloom} />

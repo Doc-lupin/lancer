@@ -11,8 +11,8 @@
 //   close    fly in close to this body's globe
 //   yaw, pitch   set the camera's angles (radians)
 //   dist     multiply the camera's distance (e.g. 0.5 for twice as close)
-//   debug    World Lab view on procedural worlds: 0 off, 1 height, 2 moisture,
-//            3 temperature (uDebug in src/views/planet/terrain.js)
+//   debug    World Lab map on procedural worlds: 0 off, 1 height, 2 moisture,
+//            3 temperature, 4 plates, 5 wind, 6 biome, 7 normal (B0.7)
 // Example: '[{"name":"tallis","close":"tallis-planet"},{"name":"wet","debug":2}]'
 // --sheet NAME also writes NAME.png, all views side by side (needs python3 with
 // Pillow). Prints page errors. Uses the Playwright installed with the
@@ -58,7 +58,7 @@ try {
       if (v.yaw != null) r.yaw = v.yaw;
       if (v.pitch != null) r.pitch = v.pitch;
       if (v.dist) r.distance *= v.dist;
-      if (v.debug != null) window.__lancer.scene.traverse((o) => { if (o.material?.uniforms?.uDebug) o.material.uniforms.uDebug.value = v.debug; });
+      if (v.debug != null) window.__lancer.setLabView(v.debug);
       window.__lancer.invalidate();
     }, v);
     await page.waitForTimeout(700);

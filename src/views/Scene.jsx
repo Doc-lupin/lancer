@@ -2,7 +2,7 @@
 // has the map, the camera targets are built and the camera starts framed on
 // the whole Basin.
 
-import { useMemo } from 'react';
+import { useMemo, lazy, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { useMap } from '../data/store.js';
 import { CAMERA } from './origin.js';
@@ -25,6 +25,10 @@ import LanesToggle from '../interface/LanesToggle.jsx';
 import CameraToggle from '../interface/CameraToggle.jsx';
 import QualityToggle from '../interface/QualityToggle.jsx';
 import { TIERS } from './quality.js';
+
+// The World Lab panel (B0.7): development builds only, and not in automated
+// browsers (the checks' pictures stay as they are).
+const WorldLab = import.meta.env.DEV && !navigator.webdriver ? lazy(() => import('../interface/WorldLab.jsx')) : null;
 import DebugHook from './DebugHook.jsx';
 import Output from './Output.jsx';
 
@@ -86,6 +90,7 @@ export default function Scene() {
           <LanesToggle />
           <CameraToggle />
           <QualityToggle />
+          {WorldLab && <Suspense fallback={null}><WorldLab /></Suspense>}
         </>
       )}
       {status === 'error' && (

@@ -3,9 +3,10 @@
 Tasks, test and functions are in [SECTION_B.md](SECTION_B.md), Phase B0.
 Branch `section-b`.
 
-**Status (Nov 27, 2026): B0.1 to B0.5 done; B0.6 (quality tiers) built and
-checked at every tier; one open point at the low tier (Slagfall's held
-frame, below).** BQ1 to BQ4 are decided and done.
+**Status (Nov 27, 2026): B0.1 to B0.6 done; B0.7 (World Lab) built, not
+yet tried in a browser (checks run only at the GM's request). Next: B0.8.**
+BQ1 to BQ4 are decided and done. Open from B0.6: Slagfall's held frame at the
+low tier (for B0.9).
 
 ## How to run the checks
 
@@ -411,6 +412,43 @@ runs (systems near a star, planets, lava) cost 14 to 16 more draw calls and
   measurement to find out why was not finished.
 - Ultra: every view loads, no page errors; GPU memory 69–104 MB (the
   4096-wide sky), frame time up in software, as designed.
+
+## B0.7: World Lab (built)
+
+A debug panel for development builds only (`src/interface/WorldLab.jsx`,
+`leva` 0.10.1 as a development dependency, decision BD3). `Scene.jsx` loads it
+lazily under `import.meta.env.DEV`, so the built app has no `leva` code
+(checked: no `leva` code in `npm run build`'s output). It is hidden in
+automated browsers (`navigator.webdriver`), so the checks' pictures do not
+change. The panel starts collapsed, at the top right.
+
+| Control | Does |
+|---|---|
+| World | the body in view: name, world type, variant (read twice a second) |
+| Map | off, height, moisture, temperature, plates, wind, biome, normal |
+| WIP worlds | reloads with or without `?worlds=wip` (BQ1) |
+| Exposure | 0.1–4 (B0.4), with a reset button |
+| Quality | the tier (B0.6), kept like the Quality button's choice |
+
+The maps show on the WIP procedural worlds (`uDebug` in
+`src/views/planet/terrain.js`, set each frame from `store.labView` by
+`ProceduralGlobe.jsx`); clouds and air are hidden while a map shows. Unlit,
+in the colors written:
+
+| Map | Colors |
+|---|---|
+| height | land green, brighter higher; sea blue |
+| moisture | dry black to wet white |
+| temperature | −50 °C blue to +50 °C red |
+| plates | mountain belts where plates meet red, basins green, volcanoes blue |
+| wind | wind from the east red, from the west cyan; brighter where it blows poleward (the same rule as the climate bake: `UPWIND` in `fields.js`) |
+| biome | the ground's color before light |
+| normal | the surface normal as RGB |
+
+Plate identities are not stored in the baked fields, so the plates map shows
+their effects (belts, basins, volcanoes), not the plates themselves; B2.2
+(plates over time) can add a plate map. The view tools' `debug` field now goes
+through the store (`setLabView` in the debug hook).
 
 ## Decisions
 

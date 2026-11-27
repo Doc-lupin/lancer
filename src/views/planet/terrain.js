@@ -21,7 +21,7 @@ import * as THREE from 'three';
 import { NOISE, CUBE } from './noise.js';
 import { SCATTER, airUniforms } from './atmosphere.js';
 import { COVER } from './clouds.js';
-import { MAX_HINTS } from './fields.js';
+import { MAX_HINTS, UPWIND } from './fields.js';
 import { EXPOSURE } from '../exposure.js';
 
 const HEIGHT = /* glsl */ `
@@ -105,7 +105,7 @@ const fragment = /* glsl */ `
   uniform float uSea, uHasSea, uFrozenSea, uLavaSea, uTarSea, uBump, uReliefKm;
   uniform float uBiome, uGlow, uGloss, uGlitter, uIcy, uIo, uSprings, uCity;
   uniform float uAmbient, uSun, uExposure, uOpacity;
-  uniform float uRing, uRingInner, uRingOuter, uDebug;
+  uniform float uRing, uRingInner, uRingOuter, uDebug, uTidal;
   uniform vec4 uHint[${MAX_HINTS}];
   uniform float uHintCount;
   varying vec3 vDir;
@@ -113,6 +113,7 @@ const fragment = /* glsl */ `
   ${SCATTER}
   ${HEIGHT}
   ${COVER}
+  ${UPWIND}
 
   float ringShadow(vec3 p, vec3 L) {
     if (uRing < 0.5 || abs(L.z) < 1e-3) return 1.0;
@@ -251,8 +252,25 @@ const fragment = /* glsl */ `
     // reads clearly; the sky at the limb keeps it all.
     col = col * mix(vec3(1.0), tr, 0.7) + ins * 0.55;
     gl_FragColor = vec4(col * uExposure, uOpacity); // linear; Output.jsx tone maps
-    // Debug views (set uDebug from the console): 1 height, 2 moisture, 3 temperature.
-    if (uDebug > 0.5) gl_FragColor = vec4(uDebug < 1.5 ? vec3(0.5 + 0.25 * (h - uSea), sea ? 0.0 : 0.5, sea ? 1.0 : 0.0) : uDebug < 2.5 ? vec3(M) : vec3(sat((T + 50.0) / 100.0), 0.0, 1.0 - sat((T + 50.0) / 100.0)), 1.0);
+    // World Lab views (task B0.7; uDebug, set from the store by
+    // ProceduralGlobe.jsx): unlit, colors as written on the screen.
+    if (uDebug > 0.5) {
+      vec3 c;
+      int v = int(uDebug + 0.5);
+      if (v == 1) c = vec3(0.5 + 0.25 * (h - uSea), sea ? 0.0 : 0.5, sea ? 1.0 : 0.0);           // height: land green, sea blue
+      else if (v == 2) c = vec3(M);                                                          // moisture: dry black, wet white
+      else if (v == 3) c = vec3(sat((T + 50.0) / 100.0), 0.0, 1.0 - sat((T + 50.0) / 100.0)); // temperature: -50 blue to +50 °C red
+      else if (v == 4) c = vec3(shp.g, shp.b, shp.a) * 0.9 + (sea ? vec3(0.0, 0.0, 0.12) : vec3(0.1)); // plates: mountain belts red, basins green, volcanoes blue
+      else if (v == 5) {                                                                     // wind: from the east red, the west cyan; poleward bright
+        vec3 w = upwind(d);
+        vec3 east = normalize(cross(vec3(0.0, 0.0, 1.0), d) + vec3(1e-5, 0.0, 0.0));
+        float fromEast = dot(w, east), toPole = dot(w, cross(d, east)) * sign(d.z);
+        c = vec3(0.5 + 0.5 * fromEast, 0.5 - 0.5 * fromEast, 0.5 - 0.5 * fromEast) * (0.7 + 0.6 * toPole);
+      }
+      else if (v == 6) c = pow(clamp(albedo, 0.0, 1.0), vec3(1.0 / 2.2));                  // biome: ground color, unlit
+      else c = N * 0.5 + 0.5;                                                                 // normal (7)
+      gl_FragColor = vec4(pow(clamp(c, 0.0, 1.0), vec3(2.2)), 1.0); // linear: shows as written after the output
+    }
   }`;
 
 const v3 = (a) => new THREE.Vector3(...a);
@@ -280,7 +298,7 @@ export function terrainMaterial({ r, fields, hints, biomes, radiusKm, ringAlpha,
     uIcy: { value: r.icy }, uIo: { value: r.io }, uSprings: { value: r.accent && r.terrain.volcanoes && r.icy ? 1 : 0 }, uCity: { value: r.cityLights },
     uClouds: { value: r.clouds }, uHint: { value: hint }, uHintCount: { value: hints.length },
     uRing: { value: ring ? 1 : 0 }, uRingInner: { value: ring?.[0] ?? 0 }, uRingOuter: { value: ring?.[1] ?? 0 },
-    uDebug: { value: 0 }, uCam: { value: new THREE.Vector3() }, uAmbient: { value: 0.01 }, uSun: { value: 1.7 }, uExposure: EXPOSURE, uOpacity: { value: 1 },
+    uDebug: { value: 0 }, uTidal: { value: r.climate?.tidal ?? 0 }, uCam: { value: new THREE.Vector3() }, uAmbient: { value: 0.01 }, uSun: { value: 1.7 }, uExposure: EXPOSURE, uOpacity: { value: 1 },
   };
   return new THREE.ShaderMaterial({ uniforms: u, vertexShader: vertex, fragmentShader: fragment });
 }

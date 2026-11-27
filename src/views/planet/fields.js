@@ -117,12 +117,9 @@ const SHAPE = /* glsl */ `
   }
 `;
 
-const CLIMATE = /* glsl */ `
-  uniform samplerCube uShape;
-  uniform float uSea, uHasSea, uReliefKm, uTemp, uSpread, uTidal, uMoist, uClouds;
-  uniform vec3 uSeed;
-  ${NOISE}
-  float heightAt(vec3 d) { return (texture(uShape, d).r - 0.5) * 4.0; }
+// Where the wind comes from (shared with the World Lab's wind view in
+// terrain.js). Needs uTidal.
+export const UPWIND = /* glsl */ `
   // Where the wind comes from (a unit vector along the ground).
   vec3 upwind(vec3 d) {
     if (uTidal > 0.5) {
@@ -138,6 +135,15 @@ const CLIMATE = /* glsl */ `
     float fromEast = cos(lat * 4.0);
     return normalize(east * fromEast + pole * 0.25 * cos(lat * 2.0));
   }
+`;
+
+const CLIMATE = /* glsl */ `
+  uniform samplerCube uShape;
+  uniform float uSea, uHasSea, uReliefKm, uTemp, uSpread, uTidal, uMoist, uClouds;
+  uniform vec3 uSeed;
+  ${NOISE}
+  float heightAt(vec3 d) { return (texture(uShape, d).r - 0.5) * 4.0; }
+  ${UPWIND}
   vec4 climate(vec3 d) {
     float lat = asin(d.z);
     float h = heightAt(d);

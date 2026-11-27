@@ -72,6 +72,7 @@ export const useMap = create((set) => ({
   cameraMode: 'orbit', // orbit around a focus, or free movement (camera/free.js)
   exposure: 1, // linear multiplier on light from the world (views/exposure.js, task B0.4)
   quality: initialTier(), // low, medium, high or ultra (views/quality.js, task B0.6)
+  labView: 0, // World Lab map on procedural worlds: 0 off, 1 height … 7 normal (interface/WorldLab.jsx, B0.7)
 
   setLoading: () => set({ status: 'loading', error: null }),
   setMap: (map) => set({ map, index: buildIndex(map), status: 'ready', error: null }),
@@ -81,4 +82,5 @@ export const useMap = create((set) => ({
   setCameraMode: (cameraMode) => set({ cameraMode }),
   setExposure: (exposure) => set({ exposure }),
   setQuality: (quality) => set({ quality }),
+  setLabView: (labView) => set({ labView }),
 }));
