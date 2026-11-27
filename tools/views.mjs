@@ -1,7 +1,6 @@
 // Shared helpers for the Section B view tools: open the app in headless
-// Chromium, go to a named view, and measure it. Used by
-// tools/record_baseline.mjs (task B0.1) and by the regression and
-// performance checks that compare against its baseline (B0.2, B0.3).
+// Chromium, go to a named view, and measure it. Used by tools/viewcheck.mjs
+// (the view checks and the baseline recorder) and a few others.
 //
 // A view is an object; all fields are optional and apply in this order:
 //   name     file name
@@ -76,12 +75,27 @@ export async function openPage(app, device) {
   const errors = [];
   page.on('pageerror', (e) => errors.push(String(e)));
   page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text().slice(0, 400)); });
+  // The orbit hint shows for the first 9 s (CameraToggle.jsx); the tools hide
+  // it rather than wait for it. Pictures are the same as after its fade.
+  await page.addInitScript(() => addEventListener('DOMContentLoaded', () => {
+    const s = document.createElement('style');
+    s.textContent = '[data-hint="orbit"] { opacity: 0 !important; transition: none !important; }';
+    document.head.appendChild(s);
+  }));
   if (d.cpuSlowdown > 1) {
     const cdp = await context.newCDPSession(page);
     await cdp.send('Emulation.setCPUThrottlingRate', { rate: d.cpuSlowdown });
   }
   return { page, errors, close: () => context.close() };
 }
+
+// Draw `n` frames, one after another (bakes run in the first frame a thing shows).
+export const frames = (page, n) => page.evaluate(async (n) => {
+  for (let i = 0; i < n; i++) {
+    window.__lancer.invalidate();
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+  }
+}, n);
 
 const settle = (page) => page.waitForFunction(() => !window.__lancer.view.rig.fly, null, { timeout: 120000 });
 
@@ -90,7 +104,7 @@ const settle = (page) => page.waitForFunction(() => !window.__lancer.view.rig.fl
 export async function goTo(page, base, v) {
   await page.goto(base);
   await page.waitForFunction(() => window.__lancer?.view.rig?.camera, null, { timeout: 60000 });
-  await page.waitForTimeout(1500);
+  await frames(page, 3);
   for (const k of v.press ?? []) await page.keyboard.press(k);
   // The longest gap between frames while flying: a bake that holds the view.
   const flight = { frames: 0, worstGapMs: 0 };
@@ -117,8 +131,9 @@ export async function goTo(page, base, v) {
     if (v.debug != null) window.__lancer.scene.traverse((o) => { if (o.material?.uniforms?.uDebug) o.material.uniforms.uDebug.value = v.debug; });
     window.__lancer.invalidate();
   }, v);
-  // Let late bakes, label fades and the last redraw finish.
-  await page.waitForTimeout(1500);
+  // Let late bakes and the last redraw finish; label fades are finished by the
+  // screenshot (animations disabled).
+  await frames(page, 3);
   await steady(page);
   return flight;
 }
@@ -128,17 +143,9 @@ export async function goTo(page, base, v) {
 //   their sides depend on the frames flown. Forget those spots and draw two
 //   frames: the first places every label from this view alone, the second
 //   keeps them.
-// - The orbit hint shows for the first 9 s after the map opens
-//   (CameraToggle.jsx). Wait until it is off.
 async function steady(page) {
-  await page.evaluate(async () => {
-    for (const el of document.querySelectorAll('body *')) { delete el._spot; delete el._shown; }
-    for (let i = 0; i < 2; i++) {
-      window.__lancer.invalidate();
-      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
-    }
-  });
-  await page.waitForFunction(() => [...document.querySelectorAll('[data-hint="orbit"]')].every((p) => p.style.opacity === '0'), null, { timeout: 30000 });
+  await page.evaluate(() => { for (const el of document.querySelectorAll('body *')) { delete el._spot; delete el._shown; } });
+  await frames(page, 2);
 }
 
 // Draw up to `n` frames in a row (at least 5, and no more once `budgetMs` has
