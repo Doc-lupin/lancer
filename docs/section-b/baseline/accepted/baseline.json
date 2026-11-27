@@ -27,30 +27,6 @@
     "gpuBytesEstimate": 21394981,
     "jsHeapBytes": 34542181,
     "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 0,
-     "worstGapMs": 0
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 3.6,
-     "p95": 8.4,
-     "max": 9.4
-    },
-    "frameMs": {
-     "median": 113.6,
-     "p95": 132.2,
-     "max": 144.8
-    },
-    "drawCalls": 10,
-    "triangles": 52479,
-    "geometries": 14,
-    "textures": 4,
-    "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 38986169,
-    "errors": []
    }
   },
   "02-basin-lanes-bright": {
@@ -82,30 +58,6 @@
     "textures": 4,
     "gpuBytesEstimate": 21394981,
     "jsHeapBytes": 32266849,
-    "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 0,
-     "worstGapMs": 0
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 5.2,
-     "p95": 11.8,
-     "max": 16.8
-    },
-    "frameMs": {
-     "median": 114.7,
-     "p95": 144.4,
-     "max": 167.7
-    },
-    "drawCalls": 10,
-    "triangles": 52479,
-    "geometries": 14,
-    "textures": 4,
-    "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 35348511,
     "errors": []
    }
   },
@@ -140,30 +92,6 @@
     "gpuBytesEstimate": 21394981,
     "jsHeapBytes": 39155099,
     "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 0,
-     "worstGapMs": 0
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 3.4,
-     "p95": 7,
-     "max": 7.8
-    },
-    "frameMs": {
-     "median": 111.1,
-     "p95": 141.5,
-     "max": 143.9
-    },
-    "drawCalls": 8,
-    "triangles": 52147,
-    "geometries": 14,
-    "textures": 4,
-    "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 38409122,
-    "errors": []
    }
   },
   "04-basin-face-on": {
@@ -193,30 +121,6 @@
     "textures": 4,
     "gpuBytesEstimate": 21394981,
     "jsHeapBytes": 34325074,
-    "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 0,
-     "worstGapMs": 0
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 4.2,
-     "p95": 6.7,
-     "max": 7.5
-    },
-    "frameMs": {
-     "median": 111.8,
-     "p95": 122.5,
-     "max": 125.2
-    },
-    "drawCalls": 10,
-    "triangles": 52479,
-    "geometries": 14,
-    "textures": 4,
-    "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 38035353,
     "errors": []
    }
   },
@@ -248,30 +152,6 @@
     "gpuBytesEstimate": 21394981,
     "jsHeapBytes": 41611710,
     "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 0,
-     "worstGapMs": 0
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 3.7,
-     "p95": 7.5,
-     "max": 9.1
-    },
-    "frameMs": {
-     "median": 113.6,
-     "p95": 128.8,
-     "max": 132.8
-    },
-    "drawCalls": 10,
-    "triangles": 52479,
-    "geometries": 14,
-    "textures": 4,
-    "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 36328077,
-    "errors": []
    }
   },
   "06-basin-far": {
@@ -301,30 +181,6 @@
     "textures": 4,
     "gpuBytesEstimate": 21394981,
     "jsHeapBytes": 36724548,
-    "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 0,
-     "worstGapMs": 0
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 4.1,
-     "p95": 7,
-     "max": 9.1
-    },
-    "frameMs": {
-     "median": 111,
-     "p95": 122.8,
-     "max": 124.2
-    },
-    "drawCalls": 10,
-    "triangles": 52479,
-    "geometries": 14,
-    "textures": 4,
-    "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 34543941,
     "errors": []
    }
   },
@@ -356,30 +212,6 @@
     "gpuBytesEstimate": 21394981,
     "jsHeapBytes": 37401508,
     "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 8,
-     "worstGapMs": 149.5
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 4.6,
-     "p95": 6.5,
-     "max": 7.4
-    },
-    "frameMs": {
-     "median": 106.2,
-     "p95": 115.3,
-     "max": 116.2
-    },
-    "drawCalls": 10,
-    "triangles": 52479,
-    "geometries": 14,
-    "textures": 4,
-    "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 36944990,
-    "errors": []
    }
   },
   "08-region-furnace": {
@@ -409,30 +241,6 @@
     "textures": 4,
     "gpuBytesEstimate": 21394981,
     "jsHeapBytes": 38521977,
-    "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 5,
-     "worstGapMs": 267.1
-    },
-    "frames": 14,
-    "workMs": {
-     "median": 4.4,
-     "p95": 6.3,
-     "max": 6.3
-    },
-    "frameMs": {
-     "median": 579.7,
-     "p95": 610.3,
-     "max": 610.3
-    },
-    "drawCalls": 10,
-    "triangles": 52479,
-    "geometries": 14,
-    "textures": 4,
-    "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 31492839,
     "errors": []
    }
   },
@@ -465,30 +273,6 @@
     "gpuBytesEstimate": 21394981,
     "jsHeapBytes": 31844273,
     "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 6,
-     "worstGapMs": 368.6
-    },
-    "frames": 8,
-    "workMs": {
-     "median": 3.8,
-     "p95": 7,
-     "max": 7
-    },
-    "frameMs": {
-     "median": 1050.8,
-     "p95": 1066.2,
-     "max": 1066.2
-    },
-    "drawCalls": 10,
-    "triangles": 52479,
-    "geometries": 14,
-    "textures": 4,
-    "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 37329864,
-    "errors": []
    }
   },
   "10-region-mire": {
@@ -518,30 +302,6 @@
     "textures": 4,
     "gpuBytesEstimate": 21394981,
     "jsHeapBytes": 31519239,
-    "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 6,
-     "worstGapMs": 308
-    },
-    "frames": 18,
-    "workMs": {
-     "median": 4.3,
-     "p95": 8.3,
-     "max": 8.3
-    },
-    "frameMs": {
-     "median": 445.1,
-     "p95": 510.6,
-     "max": 510.6
-    },
-    "drawCalls": 10,
-    "triangles": 52479,
-    "geometries": 14,
-    "textures": 4,
-    "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 31691530,
     "errors": []
    }
   },
@@ -573,30 +333,6 @@
     "gpuBytesEstimate": 21394981,
     "jsHeapBytes": 32030756,
     "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 7,
-     "worstGapMs": 137.5
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 3.8,
-     "p95": 5.6,
-     "max": 5.9
-    },
-    "frameMs": {
-     "median": 103.9,
-     "p95": 122.1,
-     "max": 124.7
-    },
-    "drawCalls": 10,
-    "triangles": 52479,
-    "geometries": 14,
-    "textures": 4,
-    "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 31851104,
-    "errors": []
    }
   },
   "12-region-boneyard": {
@@ -627,30 +363,6 @@
     "gpuBytesEstimate": 21394981,
     "jsHeapBytes": 34279039,
     "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 7,
-     "worstGapMs": 139.6
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 3.4,
-     "p95": 5.8,
-     "max": 8.8
-    },
-    "frameMs": {
-     "median": 103.9,
-     "p95": 130.1,
-     "max": 133.1
-    },
-    "drawCalls": 10,
-    "triangles": 52479,
-    "geometries": 14,
-    "textures": 4,
-    "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 38891987,
-    "errors": []
    }
   },
   "13-region-orrery": {
@@ -680,30 +392,6 @@
     "textures": 4,
     "gpuBytesEstimate": 21394981,
     "jsHeapBytes": 32658388,
-    "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 9,
-     "worstGapMs": 132.4
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 3.5,
-     "p95": 6,
-     "max": 8.3
-    },
-    "frameMs": {
-     "median": 100.5,
-     "p95": 132.6,
-     "max": 138.8
-    },
-    "drawCalls": 10,
-    "triangles": 52479,
-    "geometries": 14,
-    "textures": 4,
-    "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 37902856,
     "errors": []
    }
   },
@@ -738,30 +426,6 @@
     "gpuBytesEstimate": 21394981,
     "jsHeapBytes": 32113044,
     "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 8,
-     "worstGapMs": 145.5
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 4.4,
-     "p95": 7.6,
-     "max": 8.9
-    },
-    "frameMs": {
-     "median": 113,
-     "p95": 132.6,
-     "max": 141.5
-    },
-    "drawCalls": 10,
-    "triangles": 52479,
-    "geometries": 14,
-    "textures": 4,
-    "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 35368571,
-    "errors": []
    }
   },
   "15-system-tallis": {
@@ -791,30 +455,6 @@
     "textures": 20,
     "gpuBytesEstimate": 21394981,
     "jsHeapBytes": 33898343,
-    "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 12,
-     "worstGapMs": 295.8
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 5.1,
-     "p95": 11,
-     "max": 11.4
-    },
-    "frameMs": {
-     "median": 195.3,
-     "p95": 217.2,
-     "max": 227.2
-    },
-    "drawCalls": 28,
-    "triangles": 53645,
-    "geometries": 15,
-    "textures": 20,
-    "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 37233552,
     "errors": []
    }
   },
@@ -846,30 +486,6 @@
     "gpuBytesEstimate": 21394981,
     "jsHeapBytes": 38506999,
     "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 12,
-     "worstGapMs": 326.7
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 5.1,
-     "p95": 8,
-     "max": 8.8
-    },
-    "frameMs": {
-     "median": 186.3,
-     "p95": 229.3,
-     "max": 234.9
-    },
-    "drawCalls": 28,
-    "triangles": 53773,
-    "geometries": 15,
-    "textures": 20,
-    "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 38654919,
-    "errors": []
    }
   },
   "17-system-watchfire": {
@@ -899,30 +515,6 @@
     "textures": 20,
     "gpuBytesEstimate": 21394981,
     "jsHeapBytes": 35632677,
-    "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 13,
-     "worstGapMs": 302.4
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 3.4,
-     "p95": 7.1,
-     "max": 7.1
-    },
-    "frameMs": {
-     "median": 189.9,
-     "p95": 259.4,
-     "max": 277.9
-    },
-    "drawCalls": 26,
-    "triangles": 52495,
-    "geometries": 14,
-    "textures": 20,
-    "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 33046131,
     "errors": []
    }
   },
@@ -954,30 +546,6 @@
     "gpuBytesEstimate": 21394981,
     "jsHeapBytes": 36090141,
     "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 13,
-     "worstGapMs": 169.7
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 4.3,
-     "p95": 7.2,
-     "max": 9.4
-    },
-    "frameMs": {
-     "median": 110.1,
-     "p95": 129.1,
-     "max": 141.3
-    },
-    "drawCalls": 12,
-    "triangles": 53245,
-    "geometries": 15,
-    "textures": 4,
-    "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 39539688,
-    "errors": []
    }
   },
   "19-system-cinder": {
@@ -1007,30 +575,6 @@
     "textures": 20,
     "gpuBytesEstimate": 21394981,
     "jsHeapBytes": 33787718,
-    "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 12,
-     "worstGapMs": 335.5
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 5.3,
-     "p95": 8.1,
-     "max": 11.3
-    },
-    "frameMs": {
-     "median": 188.6,
-     "p95": 207.3,
-     "max": 234.5
-    },
-    "drawCalls": 28,
-    "triangles": 53645,
-    "geometries": 15,
-    "textures": 20,
-    "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 34477806,
     "errors": []
    }
   },
@@ -1062,30 +606,6 @@
     "gpuBytesEstimate": 21394981,
     "jsHeapBytes": 33647074,
     "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 7,
-     "worstGapMs": 394.6
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 4.6,
-     "p95": 9.4,
-     "max": 9.6
-    },
-    "frameMs": {
-     "median": 189.1,
-     "p95": 212.1,
-     "max": 213.3
-    },
-    "drawCalls": 12,
-    "triangles": 53373,
-    "geometries": 15,
-    "textures": 4,
-    "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 32133700,
-    "errors": []
    }
   },
   "21-system-anvil": {
@@ -1115,30 +635,6 @@
     "textures": 20,
     "gpuBytesEstimate": 21394981,
     "jsHeapBytes": 34978704,
-    "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 6,
-     "worstGapMs": 1019.8
-    },
-    "frames": 11,
-    "workMs": {
-     "median": 5.6,
-     "p95": 8.2,
-     "max": 8.2
-    },
-    "frameMs": {
-     "median": 769.3,
-     "p95": 815.4,
-     "max": 815.4
-    },
-    "drawCalls": 28,
-    "triangles": 53389,
-    "geometries": 15,
-    "textures": 20,
-    "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 31672697,
     "errors": []
    }
   },
@@ -1170,30 +666,6 @@
     "gpuBytesEstimate": 21394981,
     "jsHeapBytes": 32278750,
     "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 7,
-     "worstGapMs": 1022.7
-    },
-    "frames": 17,
-    "workMs": {
-     "median": 4.6,
-     "p95": 9,
-     "max": 9
-    },
-    "frameMs": {
-     "median": 471.7,
-     "p95": 489.4,
-     "max": 489.4
-    },
-    "drawCalls": 28,
-    "triangles": 53389,
-    "geometries": 15,
-    "textures": 20,
-    "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 32654266,
-    "errors": []
    }
   },
   "23-system-calder-147": {
@@ -1223,30 +695,6 @@
     "textures": 20,
     "gpuBytesEstimate": 21394981,
     "jsHeapBytes": 37949500,
-    "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 13,
-     "worstGapMs": 300.3
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 3.3,
-     "p95": 5.4,
-     "max": 7.1
-    },
-    "frameMs": {
-     "median": 191.5,
-     "p95": 219.6,
-     "max": 229.3
-    },
-    "drawCalls": 26,
-    "triangles": 52495,
-    "geometries": 14,
-    "textures": 20,
-    "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 31998276,
     "errors": []
    }
   },
@@ -1278,30 +726,6 @@
     "gpuBytesEstimate": 28051525,
     "jsHeapBytes": 32527546,
     "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 21,
-     "worstGapMs": 4456.6
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 3.9,
-     "p95": 6.8,
-     "max": 8.6
-    },
-    "frameMs": {
-     "median": 120.9,
-     "p95": 129.5,
-     "max": 147.8
-    },
-    "drawCalls": 11,
-    "triangles": 68607,
-    "geometries": 16,
-    "textures": 8,
-    "gpuBytesEstimate": 28051525,
-    "jsHeapBytes": 38508201,
-    "errors": []
    }
   },
   "25-planet-tallis": {
@@ -1332,30 +756,6 @@
     "gpuBytesEstimate": 21394981,
     "jsHeapBytes": 33927931,
     "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 15,
-     "worstGapMs": 365.8
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 8.5,
-     "p95": 11,
-     "max": 13.3
-    },
-    "frameMs": {
-     "median": 199.8,
-     "p95": 224.4,
-     "max": 229.8
-    },
-    "drawCalls": 28,
-    "triangles": 53571,
-    "geometries": 15,
-    "textures": 20,
-    "gpuBytesEstimate": 21394981,
-    "jsHeapBytes": 36210580,
-    "errors": []
    }
   },
   "26-close-tallis": {
@@ -1385,30 +785,6 @@
     "textures": 25,
     "gpuBytesEstimate": 30847728,
     "jsHeapBytes": 41834496,
-    "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 14,
-     "worstGapMs": 1808.9
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 9.2,
-     "p95": 16,
-     "max": 17.8
-    },
-    "frameMs": {
-     "median": 247.1,
-     "p95": 278.4,
-     "max": 299.8
-    },
-    "drawCalls": 32,
-    "triangles": 102115,
-    "geometries": 17,
-    "textures": 25,
-    "gpuBytesEstimate": 30847728,
-    "jsHeapBytes": 37897484,
     "errors": []
    }
   },
@@ -1441,30 +817,6 @@
     "gpuBytesEstimate": 30847728,
     "jsHeapBytes": 34522520,
     "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 14,
-     "worstGapMs": 1708.8
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 8.8,
-     "p95": 14.1,
-     "max": 14.8
-    },
-    "frameMs": {
-     "median": 234.3,
-     "p95": 258,
-     "max": 258.7
-    },
-    "drawCalls": 32,
-    "triangles": 102115,
-    "geometries": 17,
-    "textures": 25,
-    "gpuBytesEstimate": 30847728,
-    "jsHeapBytes": 37188261,
-    "errors": []
    }
   },
   "28-close-tallis-temperature": {
@@ -1496,30 +848,6 @@
     "gpuBytesEstimate": 30847728,
     "jsHeapBytes": 36387469,
     "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 16,
-     "worstGapMs": 1742
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 8.5,
-     "p95": 12.5,
-     "max": 15.7
-    },
-    "frameMs": {
-     "median": 228.4,
-     "p95": 251.3,
-     "max": 287.7
-    },
-    "drawCalls": 32,
-    "triangles": 102115,
-    "geometries": 17,
-    "textures": 25,
-    "gpuBytesEstimate": 30847728,
-    "jsHeapBytes": 35191868,
-    "errors": []
    }
   },
   "29-close-tallis-iii": {
@@ -1549,30 +877,6 @@
     "textures": 26,
     "gpuBytesEstimate": 28069211,
     "jsHeapBytes": 38394049,
-    "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 16,
-     "worstGapMs": 1935.5
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 6.1,
-     "p95": 10.8,
-     "max": 13.6
-    },
-    "frameMs": {
-     "median": 234.8,
-     "p95": 284.6,
-     "max": 292.9
-    },
-    "drawCalls": 31,
-    "triangles": 85869,
-    "geometries": 17,
-    "textures": 26,
-    "gpuBytesEstimate": 28069211,
-    "jsHeapBytes": 37331914,
     "errors": []
    }
   },
@@ -1604,30 +908,6 @@
     "gpuBytesEstimate": 28051525,
     "jsHeapBytes": 37627175,
     "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 16,
-     "worstGapMs": 2669.2
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 7.3,
-     "p95": 11.1,
-     "max": 12.2
-    },
-    "frameMs": {
-     "median": 224.7,
-     "p95": 245,
-     "max": 246.8
-    },
-    "drawCalls": 32,
-    "triangles": 86285,
-    "geometries": 18,
-    "textures": 24,
-    "gpuBytesEstimate": 28051525,
-    "jsHeapBytes": 34131569,
-    "errors": []
    }
   },
   "31-close-cairn": {
@@ -1657,30 +937,6 @@
     "textures": 24,
     "gpuBytesEstimate": 28051525,
     "jsHeapBytes": 39125303,
-    "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 16,
-     "worstGapMs": 1980.2
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 7.6,
-     "p95": 12.6,
-     "max": 15.6
-    },
-    "frameMs": {
-     "median": 224.4,
-     "p95": 259.2,
-     "max": 261.3
-    },
-    "drawCalls": 31,
-    "triangles": 86169,
-    "geometries": 17,
-    "textures": 24,
-    "gpuBytesEstimate": 28051525,
-    "jsHeapBytes": 36997318,
     "errors": []
    }
   },
@@ -1712,30 +968,6 @@
     "gpuBytesEstimate": 34360667,
     "jsHeapBytes": 36280571,
     "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 15,
-     "worstGapMs": 1774.9
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 9,
-     "p95": 16.2,
-     "max": 17.4
-    },
-    "frameMs": {
-     "median": 205.8,
-     "p95": 220.4,
-     "max": 236.8
-    },
-    "drawCalls": 30,
-    "triangles": 69905,
-    "geometries": 17,
-    "textures": 27,
-    "gpuBytesEstimate": 34360667,
-    "jsHeapBytes": 32546392,
-    "errors": []
    }
   },
   "33-close-slagfall": {
@@ -1765,30 +997,6 @@
     "textures": 25,
     "gpuBytesEstimate": 30847728,
     "jsHeapBytes": 37099020,
-    "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 9,
-     "worstGapMs": 747.3
-    },
-    "frames": 17,
-    "workMs": {
-     "median": 5.1,
-     "p95": 7.5,
-     "max": 7.5
-    },
-    "frameMs": {
-     "median": 478.5,
-     "p95": 529.3,
-     "max": 529.3
-    },
-    "drawCalls": 29,
-    "triangles": 69319,
-    "geometries": 16,
-    "textures": 25,
-    "gpuBytesEstimate": 30847728,
-    "jsHeapBytes": 39952534,
     "errors": []
    }
   },
@@ -1820,30 +1028,6 @@
     "gpuBytesEstimate": 30847728,
     "jsHeapBytes": 40184494,
     "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 16,
-     "worstGapMs": 1585.6
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 4.7,
-     "p95": 8.3,
-     "max": 9.6
-    },
-    "frameMs": {
-     "median": 233.6,
-     "p95": 250.9,
-     "max": 256.1
-    },
-    "drawCalls": 31,
-    "triangles": 101425,
-    "geometries": 17,
-    "textures": 25,
-    "gpuBytesEstimate": 30847728,
-    "jsHeapBytes": 40025835,
-    "errors": []
    }
   },
   "35-close-verdance": {
@@ -1873,30 +1057,6 @@
     "textures": 25,
     "gpuBytesEstimate": 30847728,
     "jsHeapBytes": 37118353,
-    "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 15,
-     "worstGapMs": 1685.4
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 7.6,
-     "p95": 9.8,
-     "max": 15.8
-    },
-    "frameMs": {
-     "median": 228.3,
-     "p95": 256.5,
-     "max": 301.3
-    },
-    "drawCalls": 32,
-    "triangles": 102017,
-    "geometries": 17,
-    "textures": 25,
-    "gpuBytesEstimate": 30847728,
-    "jsHeapBytes": 39913226,
     "errors": []
    }
   },
@@ -1928,30 +1088,6 @@
     "gpuBytesEstimate": 28051525,
     "jsHeapBytes": 34548832,
     "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 16,
-     "worstGapMs": 1724.5
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 4.6,
-     "p95": 7.1,
-     "max": 7.2
-    },
-    "frameMs": {
-     "median": 215.8,
-     "p95": 260,
-     "max": 262.4
-    },
-    "drawCalls": 29,
-    "triangles": 84759,
-    "geometries": 16,
-    "textures": 24,
-    "gpuBytesEstimate": 28051525,
-    "jsHeapBytes": 37195040,
-    "errors": []
    }
   },
   "37-close-umber-i": {
@@ -1981,30 +1117,6 @@
     "textures": 24,
     "gpuBytesEstimate": 28051525,
     "jsHeapBytes": 38303008,
-    "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 17,
-     "worstGapMs": 2724.6
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 4.5,
-     "p95": 8.8,
-     "max": 12.9
-    },
-    "frameMs": {
-     "median": 214.3,
-     "p95": 237.2,
-     "max": 269.7
-    },
-    "drawCalls": 30,
-    "triangles": 85433,
-    "geometries": 16,
-    "textures": 24,
-    "gpuBytesEstimate": 28051525,
-    "jsHeapBytes": 36061759,
     "errors": []
    }
   },
@@ -2036,30 +1148,6 @@
     "gpuBytesEstimate": 28051525,
     "jsHeapBytes": 38527356,
     "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 15,
-     "worstGapMs": 347.1
-    },
-    "frames": 26,
-    "workMs": {
-     "median": 4.6,
-     "p95": 8.1,
-     "max": 8.5
-    },
-    "frameMs": {
-     "median": 307,
-     "p95": 337.9,
-     "max": 353.7
-    },
-    "drawCalls": 28,
-    "triangles": 68667,
-    "geometries": 16,
-    "textures": 24,
-    "gpuBytesEstimate": 28051525,
-    "jsHeapBytes": 34055633,
-    "errors": []
    }
   },
   "39-close-halyard-ii": {
@@ -2090,30 +1178,6 @@
     "gpuBytesEstimate": 28051525,
     "jsHeapBytes": 32256384,
     "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 15,
-     "worstGapMs": 1867.1
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 8.1,
-     "p95": 12.9,
-     "max": 13.4
-    },
-    "frameMs": {
-     "median": 214.6,
-     "p95": 260.2,
-     "max": 309.9
-    },
-    "drawCalls": 29,
-    "triangles": 69605,
-    "geometries": 16,
-    "textures": 24,
-    "gpuBytesEstimate": 28051525,
-    "jsHeapBytes": 32214865,
-    "errors": []
    }
   },
   "40-station-tallis-relay": {
@@ -2143,30 +1207,6 @@
     "textures": 27,
     "gpuBytesEstimate": 34360667,
     "jsHeapBytes": 35700276,
-    "errors": []
-   },
-   "phone": {
-    "flight": {
-     "frames": 15,
-     "worstGapMs": 1855.1
-    },
-    "frames": 29,
-    "workMs": {
-     "median": 8.7,
-     "p95": 14.2,
-     "max": 15.7
-    },
-    "frameMs": {
-     "median": 193.9,
-     "p95": 209.6,
-     "max": 212.1
-    },
-    "drawCalls": 28,
-    "triangles": 69261,
-    "geometries": 16,
-    "textures": 27,
-    "gpuBytesEstimate": 34360667,
-    "jsHeapBytes": 37862713,
     "errors": []
    }
   }

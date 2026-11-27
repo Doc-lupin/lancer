@@ -37,6 +37,9 @@ import { join, resolve } from 'node:path';
 import { createServer } from 'vite';
 
 const require = createRequire(import.meta.url);
+// Decision BD13: the map is for computers only. --phone also runs the phone
+// (Pixel 7) emulation of Phase 2.
+const PHONE = process.argv.includes('--phone');
 const { chromium, devices } = require('playwright');
 
 const KM_PER_LY = 9.4607304725808e12;
@@ -214,7 +217,7 @@ const browser = await chromium.launch();
 const DEVICES = [
   { name: 'desktop', options: { viewport: { width: 1280, height: 800 } } },
   { name: 'phone', options: devices['Pixel 7'] },
-];
+].filter((d) => PHONE || d.name !== 'phone');
 let pass = true;
 try {
   // Warm-up visit, so Vite's first dependency scan and reload happen before measuring.

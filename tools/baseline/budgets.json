@@ -9,7 +9,6 @@
   },
   "views": {},
   "targets": {
-    "desktop": { "heldMs": 50 },
-    "phone": {}
+    "desktop": { "heldMs": 50 }
   }
 }

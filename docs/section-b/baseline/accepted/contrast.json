@@ -171,120 +171,6 @@
      "id": "region:mire:1",
      "contrast": 6.82
     }
-   ],
-   "phone": [
-    {
-     "id": "region:ostrom:0",
-     "contrast": 14.52
-    },
-    {
-     "id": "region:tallis:0",
-     "contrast": 14.52
-    },
-    {
-     "id": "region:orison:0",
-     "contrast": 7.6
-    },
-    {
-     "id": "region:orison:1",
-     "contrast": 6.82
-    },
-    {
-     "id": "region:wending:0",
-     "contrast": 14.13
-    },
-    {
-     "id": "region:wending:1",
-     "contrast": 6.82
-    },
-    {
-     "id": "region:lantern-reach:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:lantern-reach:1",
-     "contrast": 6.82
-    },
-    {
-     "id": "region:orrery:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:halyard:0",
-     "contrast": 14.52
-    },
-    {
-     "id": "region:halyard:1",
-     "contrast": 6.82
-    },
-    {
-     "id": "region:sable:0",
-     "contrast": 14.03
-    },
-    {
-     "id": "region:furnace:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:furnace:1",
-     "contrast": 6.82
-    },
-    {
-     "id": "region:hollows:0",
-     "contrast": 14.35
-    },
-    {
-     "id": "region:gloam:0",
-     "contrast": 14.29
-    },
-    {
-     "id": "region:shoals:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:ferrous:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:ferrous:1",
-     "contrast": 6.82
-    },
-    {
-     "id": "region:tarn:0",
-     "contrast": 14.52
-    },
-    {
-     "id": "region:cairn:0",
-     "contrast": 14.52
-    },
-    {
-     "id": "region:cairn:1",
-     "contrast": 6.82
-    },
-    {
-     "id": "region:deeps:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:deeps:1",
-     "contrast": 6.82
-    },
-    {
-     "id": "region:boneyard:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:boneyard:1",
-     "contrast": 6.82
-    },
-    {
-     "id": "region:mire:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:mire:1",
-     "contrast": 6.82
-    }
    ]
   },
   "02-basin-lanes-bright": {
@@ -461,96 +347,6 @@
      "id": "lane:tarn-mire:1",
      "contrast": 16.14
     }
-   ],
-   "phone": [
-    {
-     "id": "region:ostrom:0",
-     "contrast": 14.52
-    },
-    {
-     "id": "region:tallis:0",
-     "contrast": 14.18
-    },
-    {
-     "id": "region:orison:0",
-     "contrast": 11.69
-    },
-    {
-     "id": "region:wending:0",
-     "contrast": 14.52
-    },
-    {
-     "id": "region:lantern-reach:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:orrery:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:halyard:0",
-     "contrast": 14.52
-    },
-    {
-     "id": "region:sable:0",
-     "contrast": 3.82
-    },
-    {
-     "id": "region:furnace:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:hollows:0",
-     "contrast": 6.04
-    },
-    {
-     "id": "region:gloam:0",
-     "contrast": 5.68
-    },
-    {
-     "id": "region:shoals:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:ferrous:0",
-     "contrast": 14.52
-    },
-    {
-     "id": "region:tarn:0",
-     "contrast": 14.52
-    },
-    {
-     "id": "region:cairn:0",
-     "contrast": 13.45
-    },
-    {
-     "id": "region:deeps:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:boneyard:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:mire:0",
-     "contrast": 14.52
-    },
-    {
-     "id": "lane:hollows-mire:0",
-     "contrast": 2.28
-    },
-    {
-     "id": "lane:scald-ferrous:0",
-     "contrast": 2.61
-    },
-    {
-     "id": "lane:scald-cairn:0",
-     "contrast": 5.17
-    },
-    {
-     "id": "lane:ferrous-boneyard:0",
-     "contrast": 5.02
-    }
    ]
   },
   "03-basin-lanes-off": {
@@ -723,120 +519,6 @@
      "id": "region:mire:1",
      "contrast": 6.82
     }
-   ],
-   "phone": [
-    {
-     "id": "region:ostrom:0",
-     "contrast": 14.52
-    },
-    {
-     "id": "region:tallis:0",
-     "contrast": 14.52
-    },
-    {
-     "id": "region:orison:0",
-     "contrast": 9.14
-    },
-    {
-     "id": "region:orison:1",
-     "contrast": 6.82
-    },
-    {
-     "id": "region:wending:0",
-     "contrast": 14.52
-    },
-    {
-     "id": "region:wending:1",
-     "contrast": 6.82
-    },
-    {
-     "id": "region:lantern-reach:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:lantern-reach:1",
-     "contrast": 6.82
-    },
-    {
-     "id": "region:orrery:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:halyard:0",
-     "contrast": 14.52
-    },
-    {
-     "id": "region:halyard:1",
-     "contrast": 6.82
-    },
-    {
-     "id": "region:sable:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:furnace:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:furnace:1",
-     "contrast": 6.82
-    },
-    {
-     "id": "region:hollows:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:gloam:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:shoals:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:ferrous:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:ferrous:1",
-     "contrast": 6.82
-    },
-    {
-     "id": "region:tarn:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:cairn:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:cairn:1",
-     "contrast": 6.82
-    },
-    {
-     "id": "region:deeps:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:deeps:1",
-     "contrast": 6.82
-    },
-    {
-     "id": "region:boneyard:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:boneyard:1",
-     "contrast": 6.82
-    },
-    {
-     "id": "region:mire:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:mire:1",
-     "contrast": 6.82
-    }
    ]
   },
   "04-basin-face-on": {
@@ -981,80 +663,6 @@
      "id": "region:quiet:1",
      "contrast": 6.83
     }
-   ],
-   "phone": [
-    {
-     "id": "region:ostrom:0",
-     "contrast": 11.12
-    },
-    {
-     "id": "region:orison:0",
-     "contrast": 14.37
-    },
-    {
-     "id": "region:pale:0",
-     "contrast": 13.76
-    },
-    {
-     "id": "region:pale:1",
-     "contrast": 6.47
-    },
-    {
-     "id": "region:orrery:0",
-     "contrast": 14.11
-    },
-    {
-     "id": "region:halyard:0",
-     "contrast": 11.19
-    },
-    {
-     "id": "region:sable:0",
-     "contrast": 10.06
-    },
-    {
-     "id": "region:furnace:0",
-     "contrast": 14.37
-    },
-    {
-     "id": "region:furnace:1",
-     "contrast": 6.73
-    },
-    {
-     "id": "region:gloam:0",
-     "contrast": 13.16
-    },
-    {
-     "id": "region:halvard:0",
-     "contrast": 14.44
-    },
-    {
-     "id": "region:halvard:1",
-     "contrast": 6.78
-    },
-    {
-     "id": "region:scald:0",
-     "contrast": 12.78
-    },
-    {
-     "id": "region:scald:1",
-     "contrast": 5.33
-    },
-    {
-     "id": "region:cairn:0",
-     "contrast": 14.11
-    },
-    {
-     "id": "region:boneyard:0",
-     "contrast": 13.7
-    },
-    {
-     "id": "region:quiet:0",
-     "contrast": 14.52
-    },
-    {
-     "id": "region:quiet:1",
-     "contrast": 6.82
-    }
    ]
   },
   "05-basin-coreward": {
@@ -1195,84 +803,6 @@
      "id": "region:quiet:1",
      "contrast": 6.57
     }
-   ],
-   "phone": [
-    {
-     "id": "region:ostrom:0",
-     "contrast": 9.95
-    },
-    {
-     "id": "region:ostrom:1",
-     "contrast": 4.8
-    },
-    {
-     "id": "region:tallis:0",
-     "contrast": 9.15
-    },
-    {
-     "id": "region:pennant:0",
-     "contrast": 8.29
-    },
-    {
-     "id": "region:pale:0",
-     "contrast": 6.74
-    },
-    {
-     "id": "region:pale:1",
-     "contrast": 3.42
-    },
-    {
-     "id": "region:orrery:0",
-     "contrast": 8.79
-    },
-    {
-     "id": "region:orrery:1",
-     "contrast": 4.18
-    },
-    {
-     "id": "region:halyard:0",
-     "contrast": 9.97
-    },
-    {
-     "id": "region:halyard:1",
-     "contrast": 4.89
-    },
-    {
-     "id": "region:sable:0",
-     "contrast": 4.62
-    },
-    {
-     "id": "region:sable:1",
-     "contrast": 5.03
-    },
-    {
-     "id": "region:halvard:0",
-     "contrast": 11.79
-    },
-    {
-     "id": "region:halvard:1",
-     "contrast": 5.71
-    },
-    {
-     "id": "region:shoals:0",
-     "contrast": 10.14
-    },
-    {
-     "id": "region:scald:0",
-     "contrast": 12.16
-    },
-    {
-     "id": "region:scald:1",
-     "contrast": 5.78
-    },
-    {
-     "id": "region:quiet:0",
-     "contrast": 13.34
-    },
-    {
-     "id": "region:quiet:1",
-     "contrast": 6.3
-    }
    ]
   },
   "06-basin-far": {
@@ -1337,28 +867,6 @@
      "id": "region:deeps:1",
      "contrast": 6.79
     }
-   ],
-   "phone": [
-    {
-     "id": "region:ostrom:0",
-     "contrast": 8.43
-    },
-    {
-     "id": "region:tallis:0",
-     "contrast": 6.3
-    },
-    {
-     "id": "region:tallis:1",
-     "contrast": 1.03
-    },
-    {
-     "id": "region:cairn:0",
-     "contrast": 4.49
-    },
-    {
-     "id": "region:cairn:1",
-     "contrast": 6.82
-    }
    ]
   },
   "07-region-tallis": {
@@ -1386,28 +894,6 @@
     {
      "id": "body:brace-system",
      "contrast": 16.58
-    },
-    {
-     "id": "body:marchwell-system",
-     "contrast": 16.98
-    }
-   ],
-   "phone": [
-    {
-     "id": "region:quiet:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:quiet:1",
-     "contrast": 6.82
-    },
-    {
-     "id": "body:tallis-system",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:brace-system",
-     "contrast": 16.59
     },
     {
      "id": "body:marchwell-system",
@@ -1453,52 +939,6 @@
      "id": "body:smelt-system",
      "contrast": 13.76
     }
-   ],
-   "phone": [
-    {
-     "id": "region:furnace:0",
-     "contrast": 7.35
-    },
-    {
-     "id": "region:furnace:1",
-     "contrast": 3.68
-    },
-    {
-     "id": "region:quiet:0",
-     "contrast": 12.2
-    },
-    {
-     "id": "region:quiet:1",
-     "contrast": 5.46
-    },
-    {
-     "id": "body:crucible-system",
-     "contrast": 10.75
-    },
-    {
-     "id": "body:anvil-system",
-     "contrast": 8.74
-    },
-    {
-     "id": "body:tuyere-system",
-     "contrast": 10.15
-    },
-    {
-     "id": "body:quench-system",
-     "contrast": 11.19
-    },
-    {
-     "id": "body:clinker-system",
-     "contrast": 9.94
-    },
-    {
-     "id": "body:bloom-system",
-     "contrast": 8.82
-    },
-    {
-     "id": "body:smelt-system",
-     "contrast": 11.66
-    }
    ]
   },
   "09-region-furnace-inside": {
@@ -1527,32 +967,6 @@
      "id": "body:bloom-system",
      "contrast": 16.37
     }
-   ],
-   "phone": [
-    {
-     "id": "region:quiet:0",
-     "contrast": 13.24
-    },
-    {
-     "id": "region:quiet:1",
-     "contrast": 5.78
-    },
-    {
-     "id": "body:crucible-system",
-     "contrast": 13.77
-    },
-    {
-     "id": "body:anvil-system",
-     "contrast": 13.12
-    },
-    {
-     "id": "body:tuyere-system",
-     "contrast": 15.24
-    },
-    {
-     "id": "body:quench-system",
-     "contrast": 10.21
-    }
    ]
   },
   "10-region-mire": {
@@ -1576,32 +990,6 @@
     {
      "id": "body:morass-system",
      "contrast": 13.53
-    }
-   ],
-   "phone": [
-    {
-     "id": "region:mire:0",
-     "contrast": 10.68
-    },
-    {
-     "id": "region:mire:1",
-     "contrast": 5.01
-    },
-    {
-     "id": "body:murk-system",
-     "contrast": 13.28
-    },
-    {
-     "id": "body:slough-system",
-     "contrast": 13.04
-    },
-    {
-     "id": "body:fen-system",
-     "contrast": 12.99
-    },
-    {
-     "id": "body:morass-system",
-     "contrast": 13.39
     }
    ]
   },
@@ -1643,52 +1031,6 @@
      "id": "body:floe-system",
      "contrast": 16.9
     }
-   ],
-   "phone": [
-    {
-     "id": "region:hollows:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:hollows:1",
-     "contrast": 6.82
-    },
-    {
-     "id": "region:quiet:0",
-     "contrast": 14.62
-    },
-    {
-     "id": "region:quiet:1",
-     "contrast": 6.86
-    },
-    {
-     "id": "body:gelid-system",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:rime-system",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:cistern-system",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:sump-system",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:coldharbour-system",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:hoar-system",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:floe-system",
-     "contrast": 16.98
-    }
    ]
   },
   "12-region-boneyard": {
@@ -1717,36 +1059,6 @@
      "id": "body:bier-system",
      "contrast": 16.9
     }
-   ],
-   "phone": [
-    {
-     "id": "region:boneyard:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:boneyard:1",
-     "contrast": 6.82
-    },
-    {
-     "id": "body:ossuary-system",
-     "contrast": 16.7
-    },
-    {
-     "id": "body:charnel-system",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:knell-system",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:keel-system",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:bier-system",
-     "contrast": 16.98
-    }
    ]
   },
   "13-region-orrery": {
@@ -1771,12 +1083,6 @@
      "id": "body:orrery-system",
      "contrast": 16.9
     }
-   ],
-   "phone": [
-    {
-     "id": "body:orrery-system",
-     "contrast": 16.98
-    }
    ]
   },
   "14-region-scald-lanes": {
@@ -1792,20 +1098,6 @@
     {
      "id": "body:cullet-system",
      "contrast": 16.9
-    }
-   ],
-   "phone": [
-    {
-     "id": "body:scald-system",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:frit-system",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:cullet-system",
-     "contrast": 16.98
     }
    ]
   },
@@ -1867,48 +1159,6 @@
      "id": "body:ostrom-tallis-at-tallis",
      "contrast": 13.22
     }
-   ],
-   "phone": [
-    {
-     "id": "region:ostrom:0",
-     "contrast": 14.55
-    },
-    {
-     "id": "region:scald:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:scald:1",
-     "contrast": 6.86
-    },
-    {
-     "id": "region:ferrous:0",
-     "contrast": 14.61
-    },
-    {
-     "id": "region:ferrous:1",
-     "contrast": 6.86
-    },
-    {
-     "id": "body:tallis-system",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:tallis-planet",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:tallis-iii",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:tallis-iv",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:ostrom-tallis-at-tallis",
-     "contrast": 13.28
-    }
    ]
   },
   "16-system-ostrom": {
@@ -1957,36 +1207,6 @@
      "id": "body:ostrom-tallis-at-ostrom",
      "contrast": 13.22
     }
-   ],
-   "phone": [
-    {
-     "id": "region:scald:0",
-     "contrast": 14.62
-    },
-    {
-     "id": "region:scald:1",
-     "contrast": 6.86
-    },
-    {
-     "id": "body:ostrom-system",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:ostrom-v",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:ostrom-vi",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:gate",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:ostrom-tallis-at-ostrom",
-     "contrast": 13.28
-    }
    ]
   },
   "17-system-watchfire": {
@@ -2034,20 +1254,6 @@
     {
      "id": "body:watchfire-system",
      "contrast": 9.46
-    }
-   ],
-   "phone": [
-    {
-     "id": "region:ferrous:0",
-     "contrast": 14.62
-    },
-    {
-     "id": "region:ferrous:1",
-     "contrast": 6.86
-    },
-    {
-     "id": "body:watchfire-system",
-     "contrast": 14.82
     }
    ]
   },
@@ -2169,68 +1375,6 @@
      "id": "body:caller",
      "contrast": 16.88
     }
-   ],
-   "phone": [
-    {
-     "id": "region:wending:0",
-     "contrast": 14.61
-    },
-    {
-     "id": "region:wending:1",
-     "contrast": 6.86
-    },
-    {
-     "id": "region:halyard:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:halyard:1",
-     "contrast": 6.82
-    },
-    {
-     "id": "region:sable:0",
-     "contrast": 14.61
-    },
-    {
-     "id": "region:sable:1",
-     "contrast": 6.86
-    },
-    {
-     "id": "region:hollows:0",
-     "contrast": 14.61
-    },
-    {
-     "id": "region:hollows:1",
-     "contrast": 6.86
-    },
-    {
-     "id": "region:scald:0",
-     "contrast": 13.39
-    },
-    {
-     "id": "region:scald:1",
-     "contrast": 6.62
-    },
-    {
-     "id": "region:tarn:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:tarn:1",
-     "contrast": 6.82
-    },
-    {
-     "id": "body:well-system",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:horizon",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:caller",
-     "contrast": 16.98
-    }
    ]
   },
   "19-system-cinder": {
@@ -2275,40 +1419,6 @@
      "id": "body:ostrom-scald-at-ostrom",
      "contrast": 13.22
     }
-   ],
-   "phone": [
-    {
-     "id": "region:scald:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:scald:1",
-     "contrast": 6.82
-    },
-    {
-     "id": "body:cinder-system",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:cinder-ii",
-     "contrast": 15.39
-    },
-    {
-     "id": "body:cinder-iii",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:cinder-picket",
-     "contrast": 11.41
-    },
-    {
-     "id": "body:ostrom-gloam-at-ostrom",
-     "contrast": 12.27
-    },
-    {
-     "id": "body:ostrom-scald-at-ostrom",
-     "contrast": 13.28
-    }
    ]
   },
   "20-system-murk": {
@@ -2328,24 +1438,6 @@
     {
      "id": "body:tarn-mire-at-mire",
      "contrast": 12.85
-    }
-   ],
-   "phone": [
-    {
-     "id": "body:murk-system",
-     "contrast": 13.44
-    },
-    {
-     "id": "body:murk-dust",
-     "contrast": 10.64
-    },
-    {
-     "id": "body:murk-i",
-     "contrast": 14.05
-    },
-    {
-     "id": "body:tarn-mire-at-mire",
-     "contrast": 12.63
     }
    ]
   },
@@ -2367,16 +1459,6 @@
      "id": "body:anvil-i",
      "contrast": 16.07
     }
-   ],
-   "phone": [
-    {
-     "id": "body:anvil-system",
-     "contrast": 7.56
-    },
-    {
-     "id": "body:anvil-i",
-     "contrast": 12.5
-    }
    ]
   },
   "22-system-quench": {
@@ -2392,16 +1474,6 @@
     {
      "id": "body:quench-field",
      "contrast": 10.42
-    }
-   ],
-   "phone": [
-    {
-     "id": "body:quench-system",
-     "contrast": 16.12
-    },
-    {
-     "id": "body:quench-field",
-     "contrast": 9.45
     }
    ]
   },
@@ -2419,12 +1491,6 @@
      "id": "body:calder-147-system",
      "contrast": 16.9
     }
-   ],
-   "phone": [
-    {
-     "id": "body:calder-147-system",
-     "contrast": 16.98
-    }
    ]
   },
   "24-system-gelid": {
@@ -2432,12 +1498,6 @@
     {
      "id": "body:gelid-system",
      "contrast": 16.9
-    }
-   ],
-   "phone": [
-    {
-     "id": "body:gelid-system",
-     "contrast": 16.98
     }
    ]
   },
@@ -2486,40 +1546,6 @@
     {
      "id": "body:tallis-b",
      "contrast": 12.26
-    }
-   ],
-   "phone": [
-    {
-     "id": "region:ostrom:0",
-     "contrast": 14.55
-    },
-    {
-     "id": "region:scald:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:scald:1",
-     "contrast": 6.86
-    },
-    {
-     "id": "region:ferrous:0",
-     "contrast": 14.61
-    },
-    {
-     "id": "region:ferrous:1",
-     "contrast": 3.4
-    },
-    {
-     "id": "body:tallis-planet",
-     "contrast": 16.98
-    },
-    {
-     "id": "body:tallis-a",
-     "contrast": 12.32
-    },
-    {
-     "id": "body:tallis-b",
-     "contrast": 12.32
     }
    ]
   },
@@ -2617,80 +1643,6 @@
      "id": "place:tallis-vigil-chapel",
      "contrast": 1.75
     }
-   ],
-   "phone": [
-    {
-     "id": "region:lumen:0",
-     "contrast": 14.21
-    },
-    {
-     "id": "region:lumen:1",
-     "contrast": 6.69
-    },
-    {
-     "id": "region:sable:0",
-     "contrast": 13.43
-    },
-    {
-     "id": "region:sable:1",
-     "contrast": 6.3
-    },
-    {
-     "id": "region:hollows:0",
-     "contrast": 13.7
-    },
-    {
-     "id": "region:hollows:1",
-     "contrast": 6.43
-    },
-    {
-     "id": "body:tallis-planet",
-     "contrast": 16.8
-    },
-    {
-     "id": "place:the-landing",
-     "contrast": 2.2
-    },
-    {
-     "id": "place:dry-creek",
-     "contrast": 1.67
-    },
-    {
-     "id": "place:sallow-ford",
-     "contrast": 1.09
-    },
-    {
-     "id": "place:tallis-structure-2",
-     "contrast": 1.43
-    },
-    {
-     "id": "place:tallis-structure-3",
-     "contrast": 8.67
-    },
-    {
-     "id": "place:tallis-structure-8",
-     "contrast": 5.85
-    },
-    {
-     "id": "place:tallis-structure-10",
-     "contrast": 2.03
-    },
-    {
-     "id": "place:weirmouth",
-     "contrast": 1.65
-    },
-    {
-     "id": "place:dustwater",
-     "contrast": 1.07
-    },
-    {
-     "id": "place:saltbrush",
-     "contrast": 5.25
-    },
-    {
-     "id": "place:greenhold",
-     "contrast": 10.17
-    }
    ]
   },
   "27-close-tallis-height": {
@@ -2786,80 +1738,6 @@
     {
      "id": "place:tallis-vigil-chapel",
      "contrast": 1.75
-    }
-   ],
-   "phone": [
-    {
-     "id": "region:lumen:0",
-     "contrast": 14.21
-    },
-    {
-     "id": "region:lumen:1",
-     "contrast": 6.69
-    },
-    {
-     "id": "region:sable:0",
-     "contrast": 13.43
-    },
-    {
-     "id": "region:sable:1",
-     "contrast": 6.3
-    },
-    {
-     "id": "region:hollows:0",
-     "contrast": 13.7
-    },
-    {
-     "id": "region:hollows:1",
-     "contrast": 6.43
-    },
-    {
-     "id": "body:tallis-planet",
-     "contrast": 16.8
-    },
-    {
-     "id": "place:the-landing",
-     "contrast": 2.2
-    },
-    {
-     "id": "place:dry-creek",
-     "contrast": 1.67
-    },
-    {
-     "id": "place:sallow-ford",
-     "contrast": 1.09
-    },
-    {
-     "id": "place:tallis-structure-2",
-     "contrast": 1.43
-    },
-    {
-     "id": "place:tallis-structure-3",
-     "contrast": 8.67
-    },
-    {
-     "id": "place:tallis-structure-8",
-     "contrast": 5.85
-    },
-    {
-     "id": "place:tallis-structure-10",
-     "contrast": 2.03
-    },
-    {
-     "id": "place:weirmouth",
-     "contrast": 1.65
-    },
-    {
-     "id": "place:dustwater",
-     "contrast": 1.07
-    },
-    {
-     "id": "place:saltbrush",
-     "contrast": 5.25
-    },
-    {
-     "id": "place:greenhold",
-     "contrast": 10.17
     }
    ]
   },
@@ -2957,80 +1835,6 @@
      "id": "place:tallis-vigil-chapel",
      "contrast": 1.75
     }
-   ],
-   "phone": [
-    {
-     "id": "region:lumen:0",
-     "contrast": 14.21
-    },
-    {
-     "id": "region:lumen:1",
-     "contrast": 6.69
-    },
-    {
-     "id": "region:sable:0",
-     "contrast": 13.43
-    },
-    {
-     "id": "region:sable:1",
-     "contrast": 6.3
-    },
-    {
-     "id": "region:hollows:0",
-     "contrast": 13.7
-    },
-    {
-     "id": "region:hollows:1",
-     "contrast": 6.43
-    },
-    {
-     "id": "body:tallis-planet",
-     "contrast": 16.8
-    },
-    {
-     "id": "place:the-landing",
-     "contrast": 2.2
-    },
-    {
-     "id": "place:dry-creek",
-     "contrast": 1.67
-    },
-    {
-     "id": "place:sallow-ford",
-     "contrast": 1.09
-    },
-    {
-     "id": "place:tallis-structure-2",
-     "contrast": 1.43
-    },
-    {
-     "id": "place:tallis-structure-3",
-     "contrast": 8.67
-    },
-    {
-     "id": "place:tallis-structure-8",
-     "contrast": 5.85
-    },
-    {
-     "id": "place:tallis-structure-10",
-     "contrast": 2.03
-    },
-    {
-     "id": "place:weirmouth",
-     "contrast": 1.65
-    },
-    {
-     "id": "place:dustwater",
-     "contrast": 1.07
-    },
-    {
-     "id": "place:saltbrush",
-     "contrast": 5.25
-    },
-    {
-     "id": "place:greenhold",
-     "contrast": 10.17
-    }
    ]
   },
   "29-close-tallis-iii": {
@@ -3046,20 +1850,6 @@
     {
      "id": "body:tallis-iii",
      "contrast": 16.8
-    }
-   ],
-   "phone": [
-    {
-     "id": "region:shoals:0",
-     "contrast": 13.73
-    },
-    {
-     "id": "region:shoals:1",
-     "contrast": 6.86
-    },
-    {
-     "id": "body:tallis-iii",
-     "contrast": 11.14
     }
    ]
   },
@@ -3121,60 +1911,6 @@
      "id": "place:listener-sabotage",
      "contrast": 1.03
     }
-   ],
-   "phone": [
-    {
-     "id": "body:scald-planet",
-     "contrast": 16.98
-    },
-    {
-     "id": "place:the-seam",
-     "contrast": 1.17
-    },
-    {
-     "id": "place:kerrtown",
-     "contrast": 2.68
-    },
-    {
-     "id": "place:kerr-varga-refinery",
-     "contrast": 9.49
-    },
-    {
-     "id": "place:syndicate-registry",
-     "contrast": 10.48
-    },
-    {
-     "id": "place:listener-wells",
-     "contrast": 16.99
-    },
-    {
-     "id": "place:haldane-house",
-     "contrast": 3.88
-    },
-    {
-     "id": "place:league-hall",
-     "contrast": 13.33
-    },
-    {
-     "id": "place:navy-lease-camp",
-     "contrast": 1.87
-    },
-    {
-     "id": "place:dunmore-camp",
-     "contrast": 1.59
-    },
-    {
-     "id": "place:glasstown",
-     "contrast": 4.74
-    },
-    {
-     "id": "place:deep-site-fourteen",
-     "contrast": 9.49
-    },
-    {
-     "id": "place:listener-sabotage",
-     "contrast": 1.09
-    }
    ]
   },
   "31-close-cairn": {
@@ -3215,32 +1951,6 @@
      "id": "place:cairn-listener-camp",
      "contrast": 6.87
     }
-   ],
-   "phone": [
-    {
-     "id": "region:hollows:0",
-     "contrast": 14.27
-    },
-    {
-     "id": "region:hollows:1",
-     "contrast": 6.69
-    },
-    {
-     "id": "body:cairn-planet",
-     "contrast": 15.7
-    },
-    {
-     "id": "place:cairn-landing",
-     "contrast": 2.14
-    },
-    {
-     "id": "place:league-claims",
-     "contrast": 7.58
-    },
-    {
-     "id": "place:cairn-listener-camp",
-     "contrast": 4.25
-    }
    ]
   },
   "32-close-halvards-rest": {
@@ -3273,24 +1983,6 @@
      "id": "place:ocean-shaft",
      "contrast": 10
     }
-   ],
-   "phone": [
-    {
-     "id": "body:halvards-rest",
-     "contrast": 7.4
-    },
-    {
-     "id": "place:mercers-hold",
-     "contrast": 13.67
-    },
-    {
-     "id": "place:gap-control",
-     "contrast": 2.23
-    },
-    {
-     "id": "place:ocean-shaft",
-     "contrast": 9.91
-    }
    ]
   },
   "33-close-slagfall": {
@@ -3298,12 +1990,6 @@
     {
      "id": "body:slagfall",
      "contrast": 16.82
-    }
-   ],
-   "phone": [
-    {
-     "id": "body:slagfall",
-     "contrast": 16.88
     }
    ]
   },
@@ -3337,28 +2023,6 @@
      "id": "place:stillwater-platform-4",
      "contrast": 12.41
     }
-   ],
-   "phone": [
-    {
-     "id": "body:stillwater",
-     "contrast": 14.99
-    },
-    {
-     "id": "place:stillwater-platform",
-     "contrast": 3.36
-    },
-    {
-     "id": "place:stillwater-platform-2",
-     "contrast": 6.02
-    },
-    {
-     "id": "place:stillwater-platform-3",
-     "contrast": 12.41
-    },
-    {
-     "id": "place:stillwater-platform-4",
-     "contrast": 7.86
-    }
    ]
   },
   "35-close-verdance": {
@@ -3391,32 +2055,6 @@
      "id": "place:second-landing",
      "contrast": 1.4
     }
-   ],
-   "phone": [
-    {
-     "id": "region:pennant:0",
-     "contrast": 13.53
-    },
-    {
-     "id": "region:pale:0",
-     "contrast": 14.52
-    },
-    {
-     "id": "region:pale:1",
-     "contrast": 6.79
-    },
-    {
-     "id": "body:verdance",
-     "contrast": 14.04
-    },
-    {
-     "id": "place:first-landing",
-     "contrast": 1.09
-    },
-    {
-     "id": "place:second-landing",
-     "contrast": 1.6
-    }
    ]
   },
   "36-close-nocturne": {
@@ -3433,12 +2071,6 @@
      "id": "body:nocturne",
      "contrast": 16.88
     }
-   ],
-   "phone": [
-    {
-     "id": "body:nocturne",
-     "contrast": 16.98
-    }
    ]
   },
   "37-close-umber-i": {
@@ -3446,12 +2078,6 @@
     {
      "id": "body:umber-i",
      "contrast": 16.88
-    }
-   ],
-   "phone": [
-    {
-     "id": "body:umber-i",
-     "contrast": 16.98
     }
    ]
   },
@@ -3461,12 +2087,6 @@
      "id": "region:lumen:0",
      "contrast": 14.36
     },
-    {
-     "id": "body:brand-i",
-     "contrast": 16.88
-    }
-   ],
-   "phone": [
     {
      "id": "body:brand-i",
      "contrast": 16.88
@@ -3491,24 +2111,6 @@
      "id": "body:halyard-ii",
      "contrast": 14.68
     }
-   ],
-   "phone": [
-    {
-     "id": "region:shoals:0",
-     "contrast": 13.53
-    },
-    {
-     "id": "region:shoals:1",
-     "contrast": 6.31
-    },
-    {
-     "id": "body:halyard-ii",
-     "contrast": 16.01
-    },
-    {
-     "id": "body:tack",
-     "contrast": 13
-    }
    ]
   },
   "40-station-tallis-relay": {
@@ -3524,20 +2126,6 @@
     {
      "id": "body:tallis-relay",
      "contrast": 11.35
-    }
-   ],
-   "phone": [
-    {
-     "id": "region:scald:0",
-     "contrast": 14.53
-    },
-    {
-     "id": "region:scald:1",
-     "contrast": 6.86
-    },
-    {
-     "id": "body:tallis-relay",
-     "contrast": 11.41
     }
    ]
   }

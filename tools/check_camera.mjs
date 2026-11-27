@@ -25,6 +25,9 @@ import { offsetKm, KM_PER_AU, KM_PER_LY } from '../src/views/origin.js';
 import { WHEEL_STEP, MAX_DISTANCE_KM } from '../src/views/camera/rig.js';
 
 const require = createRequire(import.meta.url);
+// Decision BD13: the map is for computers only. --phone also runs the phone
+// (Pixel 7) emulation of Phase 2.
+const PHONE = process.argv.includes('--phone');
 const { chromium, devices } = require('playwright');
 const outArg = process.argv.indexOf('--out');
 const OUT = resolve(outArg > 0 ? process.argv[outArg + 1] : join(tmpdir(), 'lancer-camera'));
@@ -242,7 +245,7 @@ try {
   await warm.waitForTimeout(3000);
   await warm.close();
   await desktop(browser, base);
-  await phone(browser, base);
+  if (PHONE) await phone(browser, base);
   await contactSheet(browser);
   console.log(`\nScreenshots: ${OUT}`);
 } finally {

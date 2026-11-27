@@ -3,23 +3,10 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { detectTier, TIERS, TIER_NAMES } from './quality.js';
 
-function device({ coarse, memory, cores }) {
-  globalThis.matchMedia = (q) => ({ matches: q === '(pointer: coarse)' && coarse });
-  Object.defineProperty(globalThis, 'navigator', { value: { deviceMemory: memory, hardwareConcurrency: cores }, configurable: true });
-}
-
-test('a computer is high, a phone medium, an old phone low', () => {
-  device({ coarse: false, memory: 8, cores: 8 });
+test('without a choice the tier is high, on any device (BD13, BD15)', () => {
+  globalThis.matchMedia = () => ({ matches: true });
+  Object.defineProperty(globalThis, 'navigator', { value: { deviceMemory: 2, hardwareConcurrency: 2 }, configurable: true });
   assert.equal(detectTier(), 'high');
-  device({ coarse: true, memory: 8, cores: 8 });
-  assert.equal(detectTier(), 'medium');
-  device({ coarse: true, memory: 2, cores: 8 });
-  assert.equal(detectTier(), 'low');
-  device({ coarse: true, memory: undefined, cores: 2 });
-  assert.equal(detectTier(), 'low');
-  // A browser that tells nothing about memory or cores: a phone, not an old one.
-  device({ coarse: true, memory: undefined, cores: undefined });
-  assert.equal(detectTier(), 'medium');
 });
 
 test('every tier has every setting, and cost grows with the tier', () => {

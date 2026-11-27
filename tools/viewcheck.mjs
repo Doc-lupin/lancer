@@ -13,7 +13,8 @@
 //
 // Common options:
 //   --ref NAME|DIR   reference (default: accepted, docs/section-b/baseline/accepted)
-//   --device D       desktop or phone (default both)
+//   --device D       desktop (the default) or phone (decision BD13: the map
+//                    is for computers; phone is the old Pixel 7 emulation)
 //   --only A,B       these views only
 //   --quick          the views marked "quick" in views.json (12), fewer frames
 //                    measured: for iterating; run the full set before approval
@@ -167,7 +168,8 @@ export async function runViews({ checks, record = false, port = 5179, ...o }) {
   const REF = existsSync(o.ref) ? resolve(o.ref) : resolve('docs/section-b/baseline', o.ref);
   if (record && !o.out) { console.error('Give --out DIR (docs/section-b/baseline/accepted only after the GM approves a look).'); process.exit(2); }
   const OUT = resolve(o.out ?? join(tmpdir(), 'lancer-views'));
-  const devices = o.device ? [o.device] : ['desktop', 'phone'];
+  // Decision BD13: computers only. --device phone still runs the emulation.
+  const devices = o.device ? [o.device] : ['desktop'];
   const views = read(new URL('./baseline/views.json', import.meta.url))
     .filter((v) => (!o.only || o.only.includes(v.name)) && (!o.quick || v.quick));
   const budgets = read(new URL('./baseline/budgets.json', import.meta.url));
@@ -274,7 +276,7 @@ export async function runViews({ checks, record = false, port = 5179, ...o }) {
     writeFileSync(baseFile, `${JSON.stringify(recBase, null, 1)}\n`);
     writeFileSync(contrastFile, `${JSON.stringify(recContrast, null, 1)}\n`);
   }
-  writeFileSync(join(OUT, 'report.json'), `${JSON.stringify(report, null, 1)}\n`);
+  if (!record) writeFileSync(join(OUT, 'report.json'), `${JSON.stringify(report, null, 1)}\n`);
   const runs = Object.values(report.views).reduce((s, d) => s + Object.keys(d).length, 0);
   const what = record ? 'recorded' : [...want].join(', ');
   console.log(`\n${record ? `Recorded ${runs} views into ${OUT}` : failed ? `FAIL: ${failed} of ${runs} views (${what}) against ${REF}` : `PASS: ${runs} views (${what}) against ${REF}`} in ${Math.round((Date.now() - t0) / 1000)} s. Pictures and report: ${OUT}`);

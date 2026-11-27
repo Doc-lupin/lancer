@@ -21,6 +21,9 @@ import { join, resolve } from 'node:path';
 import { createServer } from 'vite';
 
 const require = createRequire(import.meta.url);
+// Decision BD13: the map is for computers only. --phone also runs the phone
+// (Pixel 7) emulation of Phase 2.
+const PHONE = process.argv.includes('--phone');
 const { chromium, devices } = require('playwright');
 const outArg = process.argv.indexOf('--out');
 const OUT = resolve(outArg > 0 ? process.argv[outArg + 1] : join(tmpdir(), 'lancer-effects'));
@@ -194,7 +197,7 @@ try {
   await warm.waitForTimeout(3000);
   await warm.close();
   await run(browser, base, 'desktop', { viewport: { width: 1280, height: 800 } });
-  await run(browser, base, 'phone', devices['Pixel 7']);
+  if (PHONE) await run(browser, base, 'phone', devices['Pixel 7']);
   console.log(`\nScreenshots: ${OUT}`);
 } finally {
   await browser.close();

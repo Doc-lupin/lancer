@@ -6,14 +6,17 @@
 //
 // The tier is chosen in this order: ?quality=low|medium|high|ultra in the
 // address; the viewer's own choice (the Quality button, kept in this
-// browser); otherwise from the device (detectTier).
+// browser); otherwise high. The map is for desktop browsers (decision BD13)
+// and quality comes first (BD15): nothing lowers the tier by itself; a
+// viewer on a weak laptop picks low or medium, one with a strong GPU ultra.
 
 export const TIERS = {
-  // Old phones: one device pixel per CSS pixel, no bloom, smaller bakes.
+  // Laptops with integrated graphics: one device pixel per CSS pixel, no
+  // bloom, smaller bakes.
   low: { pixelRatio: 1, multisampling: 0, bloom: false, skyTexture: [1024, 512], skyStars: 6000, surfaceSize: [512, 256], bakeSteps: 2 },
-  // Most phones: small pixels hide jagged edges, so no multisampling.
+  // Older desktop GPUs: no multisampling.
   medium: { pixelRatio: 2, multisampling: 0, bloom: true, skyTexture: [2048, 1024], skyStars: 15000, surfaceSize: [1024, 512], bakeSteps: 4 },
-  // Computers.
+  // Mid-range desktop GPUs: the default.
   high: { pixelRatio: 2, multisampling: 4, bloom: true, skyTexture: [2048, 1024], skyStars: 15000, surfaceSize: [1024, 512], bakeSteps: 6 },
   // Strong graphics chips: sharper and denser.
   ultra: { pixelRatio: 3, multisampling: 8, bloom: true, skyTexture: [4096, 2048], skyStars: 30000, surfaceSize: [2048, 1024], bakeSteps: 8 },
@@ -22,15 +25,10 @@ export const TIER_NAMES = Object.keys(TIERS);
 
 const KEY = 'lancer.quality';
 
-// A touch screen with little memory or few cores is an old phone; another
-// touch screen, a phone or tablet; anything with a mouse, a computer. Ultra
-// is only by choice.
+// The tier when the viewer has not chosen one: high (BD13, BD15). Before
+// BD13, touch screens got medium or low here.
 export function detectTier() {
-  const coarse = typeof matchMedia === 'function' && matchMedia('(pointer: coarse)').matches;
-  if (!coarse) return 'high';
-  const memory = navigator.deviceMemory ?? 4; // GB, rounded; not every browser says
-  const cores = navigator.hardwareConcurrency ?? 4;
-  return memory <= 3 || cores <= 2 ? 'low' : 'medium';
+  return 'high';
 }
 
 export function initialTier() {

@@ -43,6 +43,9 @@ import { offsetKm } from '../src/views/origin.js';
 import { machineMs } from './views.mjs';
 
 const require = createRequire(import.meta.url);
+// Decision BD13: the map is for computers only. --phone also runs the phone
+// (Pixel 7) emulation of Phase 2.
+const PHONE = process.argv.includes('--phone');
 const { chromium, devices } = require('playwright');
 const outArg = process.argv.indexOf('--out');
 const OUT = resolve(outArg > 0 ? process.argv[outArg + 1] : join(tmpdir(), 'lancer-zoom'));
@@ -281,10 +284,10 @@ try {
   if (REF) scale = here / REF.machineMs;
   console.log(`machine: ${here} ms${REF ? `, reference ${REF.machineMs} ms (×${scale.toFixed(2)})` : RECORD ? '' : ', no reference: fixed limits'}\n`);
   const desk = await run(browser, base, 'desktop', { viewport: { width: 1280, height: 800 } }, 1);
-  const phone = await run(browser, base, 'phone', devices['Pixel 7'], 4);
+  const phone = PHONE ? await run(browser, base, 'phone', devices['Pixel 7'], 4) : null;
   if (RECORD) {
     const stops = (perf) => Object.fromEntries(perf.map((p) => [p.label, +p.mean.toFixed(2)]));
-    writeFileSync(RECORD, `${JSON.stringify({ recorded: new Date().toISOString().slice(0, 10), machineMs: here, desktop: { stops: stops(desk.perf) }, phone: { stops: stops(phone.perf) } }, null, 1)}\n`);
+    writeFileSync(RECORD, `${JSON.stringify({ recorded: new Date().toISOString().slice(0, 10), machineMs: here, desktop: { stops: stops(desk.perf) }, ...(phone && { phone: { stops: stops(phone.perf) } }) }, null, 1)}\n`);
     console.log(`Reference written: ${RECORD}`);
   }
   await contactSheet(browser, desk.shots);
