@@ -3,10 +3,10 @@
 Tasks, test and functions are in [SECTION_B.md](SECTION_B.md), Phase B0.
 Branch `section-b`.
 
-**Status (Nov 27, 2026): B0.1 to B0.6 done; B0.7 (World Lab) built, not
-yet tried in a browser (checks run only at the GM's request). Next: B0.8.**
-BQ1 to BQ4 are decided and done. Open from B0.6: Slagfall's held frame at the
-low tier (for B0.9).
+**Status (Nov 27, 2026): B0.1 to B0.6 done; B0.7 (World Lab) and B0.8 (shader
+library) built, not yet tried in a browser (checks run only at the GM's
+request). Next: B0.9.** BQ1 to BQ4 are decided and done. Open from B0.6:
+Slagfall's held frame at the low tier (for B0.9).
 
 ## How to run the checks
 
@@ -449,6 +449,35 @@ Plate identities are not stored in the baked fields, so the plates map shows
 their effects (belts, basins, volcanoes), not the plates themselves; B2.2
 (plates over time) can add a plate map. The view tools' `debug` field now goes
 through the store (`setLabView` in the debug hook).
+
+## B0.8: shared shader library (built)
+
+`src/views/shaders/`: GLSL strings to include in shaders, each function with
+a JavaScript twin written line for line, so the maths is tested in Node
+(`shaders.test.js`, 9 tests) and usable on the CPU.
+
+| Module | GLSL (include in this order) | What |
+|---|---|---|
+| `hash.js` | `HASH_GLSL` | `pcg3d` integer hash (Jarzynski and Olano 2020); `hash3(ivec3)` → three floats in [0, 1). The same seed gives the same world on every GPU. |
+| `noise.js` | `NOISE_GLSL` | `noise3` gradient noise; `fbm3`, `ridged3` (octaves, persistence, lacunarity; fractional octave counts fade in); `cell3` Worley (nearest, second nearest, cell id); `curl3` divergence-free flow |
+| `scatter.js` | `SCATTER_GLSL` | `rayleighPhase`, `hgPhase` (Henyey–Greenstein), `csPhase` (Cornette–Shanks), `raySphere` |
+| `color.js` | `COLOR_GLSL` | `cie1931` (Wyman, Sloan and Shirley 2013 fit), `xyzToSrgb`, `blackbody(T)` (Kim et al. 2002 Planckian locus, 1667–25000 K, largest channel 1), `wavelengthRgb` |
+
+Tested: the hash spreads evenly (20,000 samples, 10 bins within 10%);
+gradient noise is 0 on lattice points, within ±1.1 and continuous; fbm and
+ridged noise stay in range and do not jump at an octave; cell distances are
+ordered; curl noise has no divergence (numerically, under 2% of its size);
+the three phase functions integrate to 1 over the sphere; `blackbody(T)` is
+within 0.03 per channel of the full Planck spectrum summed against the
+matching functions from 1,800 to 25,000 K, and 6500 K is white within 7%;
+wavelengths 450, 530 and 656.3 nm come out blue, green and red.
+
+Not yet done: the GLSL is not compiled until a shader includes it (it needs
+WebGL2 for the unsigned integers; three.js compiles every shader as GLSL ES
+3.0). Nothing on screen uses the library yet, so B0.8 changes no picture.
+The existing noise moves to it with its phase: the WIP planets'
+`planet/noise.js` in B2, star colors from temperature in B7, the nebulae,
+dust and sky in B9; `planet/atmosphere.js` in B5.
 
 ## Decisions
 
