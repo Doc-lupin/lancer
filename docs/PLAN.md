@@ -20,7 +20,7 @@ https://claude.ai/artifact/MDzMcUZF9q7TRJi2YMVwLC. V1 is `3D_Universe_Map_Tool_O
 | Unmapped stars | Drawn dimmer. |
 | Invented content | Origin tag on every object (`canon` / `invented`) to help with cuts. Invented objects also get "(WIP)" at the end of their name, e.g. "Tew II (WIP)". |
 | Orbits | Planet positions follow the dashboard clock. |
-| Use | Private use only. |
+| Use | Private use only. The GM and the players view the map in desktop browsers (decision BD13 in SECTION_B.md, Nov 27, 2026). |
 | Affiliation layers | Swappable: governments, corporations, cultures, religions. One layer and one color per faction. |
 | Contested areas | Stripes in the colors of the factions involved. |
 | Player mode | Hides GM notes in the interface only. Players are trusted; no separate player file. |
@@ -119,7 +119,7 @@ Built with Vite (D19). The app reads `data/map.json`; the data is still authored
 - [ ] Save/load via JSON export
 - [ ] Decide how players get the map
 - [ ] Remove or hide origin tags if wanted
-- [ ] Test on computer and phone; test session with one player; fix findings
+- [ ] Test in desktop browsers (BD13); test session with one player; fix findings
 - **Test:** data stays correct after closing and reopening.
 
 ## Risks

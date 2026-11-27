@@ -61,7 +61,8 @@ were toned down after them. `wip-close-ups.jpg` is the latest.
 | `node tools/check_cubemap.mjs` | Checks that cube maps read back in the right orientation. Passed with three 0.187.0. |
 | `npm run build && node tools/phone_link.mjs --out DIR` | Assembles the phone-link files from `dist/`. |
 
-The phone link is https://claude.ai/artifact/K9tk8ckJppNExxZyuMYquM (version
+The review link (the phone link before BD13: the map is now for desktop
+browsers only) is https://claude.ai/artifact/K9tk8ckJppNExxZyuMYquM (version
 5, Nov 27: `section-b` at `8a936eb`, with the HDR pipeline, bloom and quality
 tiers; the World Lab is not in it, as it is in development builds only). To update it from a new session: read it first with
 the Artifact tool (`action: "read"`), then publish DIR/index.html to that URL

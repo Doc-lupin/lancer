@@ -25,7 +25,7 @@ Make the map visually stunning and correct. The output must:
 3. Move the bodies on true orbits: eccentric, inclined, retrograde and irregular.
 4. Show stars, stellar remnants and black holes with their physical properties.
 5. Keep the map readable. Labels, lanes and data stay clear at all times.
-6. Run smoothly on a phone and on a computer.
+6. Run smoothly in desktop browsers, from laptops with integrated graphics to strong GPUs (decision BD13: the map is viewed on computers only).
 
 ## 2. Rules for Section B
 
@@ -102,7 +102,7 @@ Tasks:
 Test:
 
 - All Section A checks pass.
-- The regression and performance checks run on desktop and on phone emulation.
+- The regression and performance checks run on desktop (and, as built before BD13, on phone emulation).
 - The tone map and bloom do not change label or lane contrast below the WCAG AA contrast ratio (4.5:1) for labels.
 - A bake never holds a frame for more than 50 ms on desktop.
 
@@ -167,7 +167,7 @@ Test:
 - 100% of towns, cities and bases on land. 100% of ports within 1° of a coast.
 - Mountain belts lie along convergent boundaries (measured in the World Lab).
 - Ocean depth increases with the age of the ocean floor; coasts follow the continent edges.
-- Bake time per world: less than 300 ms on desktop, less than 1.5 s on phone, without a held frame (B0.9).
+- Bake time per world: less than 2 s at the high tier on a mid-range desktop GPU and less than 4 s at the low tier on integrated graphics, spread over frames without a held frame (B0.9); from the cache after the first visit (B0.10).
 - No seams at cube faces (pixel check along all 12 edges).
 
 ### Phase B3: Climate and weather (F4)
@@ -362,7 +362,7 @@ Tasks:
 
 - B10.1 Tune all light to one exposure model. Check each level: Basin, region, system, planet, surface.
 - B10.2 Add options: reduce motion, effects off, a "chart" mode with flat colors for players and print.
-- B10.3 Tune the phone tier on real phones (the GM's phone and one low-end phone).
+- B10.3 Tune the low tier on a laptop with integrated graphics, and the high tier on a mid-range desktop GPU.
 - B10.4 Update the docs: `PHASE2.md` notes, data documentation for the new schema fields, World Lab guide.
 - B10.5 Run all checks. Fix all findings.
 - B10.6 Get the GM's approval. Merge Section B into `main`.
@@ -370,11 +370,11 @@ Tasks:
 Test:
 
 - All Section A and Section B checks pass.
-- The GM approves the final review gallery and the phone test.
+- The GM approves the final review gallery and a test session in a desktop browser.
 
 ### Phase B11: Review (continuous, all phases)
 
-- B11.1 After each phase, update the phone link (private artifact) for the GM.
+- B11.1 After each phase, update the review link (private artifact; it was the phone link before BD13) for the GM.
 - B11.2 Keep a gallery page of reference views. Update it after each phase.
 - B11.3 Ask the GM to approve the gallery before the next phase starts.
 
@@ -382,10 +382,12 @@ Test:
 
 | Tier | For | Examples |
 |---|---|---|
-| Low | Old phones | No bloom; clouds baked; 4 scattering steps; 1,000 belt rocks; no volumes. |
-| Medium | Most phones | Bloom; moving clouds; scattering tables; 5,000 rocks; simple volumes. |
-| High | Computers | All effects; lensing; 10,000+ rocks; full volumes; detail textures. |
+| Low | Laptops with integrated graphics | No bloom; clouds baked; 4 scattering steps; 1,000 belt rocks; no volumes. |
+| Medium | Older or low-end desktop GPUs | Bloom; moving clouds; scattering tables; 5,000 rocks; simple volumes. |
+| High | Mid-range desktop GPUs (the default) | All effects; lensing; 10,000+ rocks; full volumes; detail textures. |
 | Ultra | Strong GPUs | Higher bake sizes; more ray-march steps; depth of field. |
+
+Before BD13, low and medium were for phones (B0.6 picks them on touch screens).
 
 ## 7. Tools
 
@@ -420,8 +422,8 @@ Use all tools that are available. Get approval before a new library.
 |---|---|
 | Web research | Scientific references: plate tectonics models, Bruneton scattering, Kepler solvers, photosynthesis under other stars, black hole imaging. Record the sources in the decisions file. |
 | Parallel agents | Independent reviews of shaders and math; research in parallel. |
-| Private artifacts | Phone link after each phase; the review gallery; this plan as a shared page if the GM wants one. |
-| The artifact viewer check | Check the phone link before each update. |
+| Private artifacts | Review link after each phase (desktop browser); the review gallery; this plan as a shared page if the GM wants one. |
+| The artifact viewer check | Check the review link before each update. |
 | Memory notes | Keep the GM's preferences for the look between sessions. |
 
 ## 8. Decisions
@@ -440,7 +442,7 @@ BD1 to BD8: the GM accepted all eight recommendations on Nov 26, 2026. The
 | BD7 | Realism and readability | Strict physics; or physics with tuned exaggeration | Physics with tuned exaggeration (relief, air height, glow). Labels always win. |
 | BD8 | Time | Real clock only; or a time-lapse mode | Both. The clock stays the source of truth. |
 
-BD9 to BD12: the GM accepted these recommendations on Nov 27, 2026.
+BD9 to BD13: decided by the GM on Nov 27, 2026.
 
 | ID | Subject | Options | Decision |
 |---|---|---|---|
@@ -448,12 +450,13 @@ BD9 to BD12: the GM accepted these recommendations on Nov 27, 2026.
 | BD10 | Rivers on screen | Map lines visible from orbit; or true size only, up close | Map lines that fade in from the region scale, true size up close (B3.5). Physics with tuned exaggeration (BD7). |
 | BD11 | World variants | Types only; or variants in each type's file | Variants in the type files, each marked visible or not; visible ones get modifiers (B4.11a). |
 | BD12 | Test bed for world variation | Test systems in the map (beyond the Silent Mouths); or tools outside the map data | Tools outside the map data: a world gallery (`?test=worlds`) and "Try as" in the World Lab (B2.0). Test systems in the map would contradict canon (the Quiet holds no systems; nothing is known beyond the Silent Mouths), change every check that counts the map, and could show to players. |
+| BD13 | Devices | Phones and computers; or computers only | Computers only: the GM and the players view the map in desktop browsers (GM, Nov 27). Desktop GPUs allow larger bakes, volumetric clouds, full scattering and WebGPU compute. Quality tiers stay, for weak laptops. |
 
 ## 9. Risks
 
 | Risk | Corrective action |
 |---|---|
-| Phones are too slow | Quality tiers; budgets in checks; bakes divided across frames. |
+| Weak laptops (integrated graphics) are too slow | Quality tiers; budgets in checks; bakes divided across frames; baked worlds cached. |
 | Long bake times | GPU bakes; Web Workers; IndexedDB cache; small bake sizes at low tiers. |
 | Shader compile stalls | Parallel shader compile; warm-up during the flight; fewer shader variants. |
 | Worlds disagree with the data | Fit checks in B2 and B3; the GM can lock a world. |
