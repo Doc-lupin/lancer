@@ -4,9 +4,9 @@ Tasks, test and functions are in [SECTION_B.md](SECTION_B.md), Phase B0.
 Branch `section-b`.
 
 **Status (Nov 27, 2026): B0.1 to B0.6 done; B0.7 (World Lab), B0.8 (shader
-library) and B0.9 (job queue) built, not yet tried in a browser (checks run
-only at the GM's request). Next: B0.10 (cache of baked worlds).** BQ1 to BQ4
-are decided and done.
+library), B0.9 (job queue) and B0.10 (cache of baked worlds) built, not yet
+tried in a browser (checks run only at the GM's request). Next: B0.11, then
+the Phase B0 test.** BQ1 to BQ4 are decided and done.
 
 ## How to run the checks
 
@@ -516,6 +516,30 @@ Not covered yet:
   before they are needed (three.js `compileAsync` at load), a small task.
 - The Phase B0 test ("a bake never holds a frame for more than 50 ms on
   desktop") is measured only when the GM asks for the checks.
+
+## B0.10: cache of baked worlds (built)
+
+- **`src/storage/bakeCache.js`:** IndexedDB (`lancer-bakes`), one record per
+  world: its maps as lossless PNG blobs. At most 48 worlds and 256 MB; the
+  least recently used go first. Where storage is blocked (private windows,
+  full quota) every call does nothing, and worlds are painted again.
+- **Key:** the painter's version (`PAINTER_VERSION` in `procedural.js`: a
+  hash of its shader source and a number to raise when `settings()` or the
+  passes change) and a hash of its settings for the body (they come from the
+  body's data) with each map's size (it follows the quality tier). Changed
+  data, tier or shader gives a new key; old records age out.
+- **In the painter's job:** first the stored maps; if all are there, each is
+  copied back into the globe's own texture in one draw (`restore()` in
+  `surfaces.js`; the GPU decodes and encodes sRGB maps, so the copy is
+  exact). Otherwise the maps are painted as in B0.9, the globe shows, and
+  then the maps are read back without stopping the GPU (`pngOf()`) and
+  stored. A stored map that can't be read falls back to painting.
+- **The queue** now throws a failed wait into its job, which can catch it and
+  go another way (`jobs.test.js`, 6 tests).
+- The checks open a fresh browser for each view, so they always paint, as
+  before. The phone keeps its worlds between visits.
+- The WIP worlds' fields join the cache with B2.1, when they move onto the
+  queue.
 
 ## Decisions
 

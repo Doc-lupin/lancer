@@ -136,6 +136,47 @@ export async function readRedAsync(target) {
   return out;
 }
 
+// A painted map as a lossless PNG (rows from the bottom up, as stored), read
+// back without stopping the GPU: for the cache of baked worlds (B0.10).
+export async function pngOf(target) {
+  const { width, height } = target;
+  const px = new Uint8Array(width * height * 4);
+  await renderer.readRenderTargetPixelsAsync(target, 0, 0, width, height, px);
+  const canvas = new OffscreenCanvas(width, height);
+  canvas.getContext('2d').putImageData(new ImageData(new Uint8ClampedArray(px.buffer), width, height), 0, 0);
+  return canvas.convertToBlob({ type: 'image/png' });
+}
+
+// Put a map stored by pngOf back into a target, in one draw: a job step
+// (`yield* restore(target, blob)`). The GPU decodes an sRGB map on reading
+// and encodes it again on writing, so the copy is exact.
+const copyMaterial = new THREE.ShaderMaterial({
+  uniforms: { uMap: { value: null } },
+  vertexShader: 'varying vec2 vUv; void main() { vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }',
+  fragmentShader: 'uniform sampler2D uMap; varying vec2 vUv; void main() { gl_FragColor = texture2D(uMap, vUv); }',
+  depthTest: false, depthWrite: false,
+});
+export function* restore(target, blob) {
+  const bitmap = yield createImageBitmap(blob, { premultiplyAlpha: 'none', colorSpaceConversion: 'none' });
+  if (bitmap.width !== target.width || bitmap.height !== target.height) { bitmap.close(); throw new Error('cached map has the wrong size'); }
+  const tex = new THREE.Texture(bitmap);
+  tex.colorSpace = target.texture.colorSpace;
+  tex.flipY = false;
+  tex.generateMipmaps = false;
+  tex.minFilter = tex.magFilter = THREE.NearestFilter;
+  tex.needsUpdate = true;
+  copyMaterial.uniforms.uMap.value = tex;
+  quad.material = copyMaterial;
+  target.scissorTest = false;
+  const before = renderer.getRenderTarget();
+  renderer.setRenderTarget(target);
+  renderer.render(bakeScene, bakeCamera);
+  renderer.setRenderTarget(before);
+  tex.dispose();
+  bitmap.close();
+  yield;
+}
+
 // Read back a small baked map's red channel, 0–1, one value per pixel, rows
 // from the bottom (south) up.
 export function readRed(target) {
@@ -232,7 +273,7 @@ function builtIn(body) {
   };
 }
 
-const tools = { loadTexture, canvasTexture, random, bake, readRed, newTarget, paint, readRedAsync, enqueue };
+const tools = { loadTexture, canvasTexture, random, bake, readRed, newTarget, paint, readRedAsync, enqueue, pngOf, restore };
 
 // A body's maps. With { builtIn: false }, null when nothing was imported or
 // registered for it (planets, moons and giants then get the procedural

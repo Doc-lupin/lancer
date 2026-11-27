@@ -64,3 +64,19 @@ test('a failing job is dropped and the others go on', async () => {
     console.error = orig;
   }
 });
+
+test('a failed wait throws into the job, which can catch it and go on', async () => {
+  const log = [];
+  enqueue(function* () {
+    try {
+      yield Promise.reject(new Error('no such map'));
+      log.push('not here');
+    } catch (e) {
+      log.push(`caught: ${e.message}`);
+    }
+    yield;
+    log.push('painted instead');
+  });
+  await drain();
+  assert.deepEqual(log, ['caught: no such map', 'painted instead']);
+});

@@ -31,6 +31,7 @@ import { WIP_WORLDS } from './planet/switch.js';
 import { useMap } from '../data/store.js';
 import { tierOf } from './quality.js';
 import { view } from './camera/view.js';
+import { loadBake, saveBake, hashKey } from '../storage/bakeCache.js';
 
 // Map size from the quality tier (quality.js): 1024 × 512 at medium and high.
 const size = () => tierOf(useMap.getState()).surfaceSize;
@@ -345,8 +346,12 @@ function seaLevel(values, [w, h], share) {
 
 const GLOBES = new Set(['planet', 'gas-giant', 'moon', 'rogue-planet']);
 
+// The painter's version for the cache of baked worlds (B0.10): its shader
+// source, and a number to raise when settings() or the passes change.
+const PAINTER_VERSION = `phase2-1:${hashKey(GLSL)}`;
+
 // Off while the WIP procedural worlds are on (planet/switch.js).
-if (!WIP_WORLDS) registerSurface((body, { random, newTarget, paint, readRedAsync, enqueue }) => {
+if (!WIP_WORLDS) registerSurface((body, { random, newTarget, paint, readRedAsync, enqueue, pngOf, restore }) => {
   if (!GLOBES.has(body.type) || body.appearance?.texture) return null;
   const m = painter();
   const u = settings(body, random(`surface:${body.id}`));
@@ -371,9 +376,26 @@ if (!WIP_WORLDS) registerSurface((body, { random, newTarget, paint, readRedAsync
   };
   if (u.uKind === KIND.lava) { const t = target(SIZE[0], SIZE[1], { color: true }); passes.push([PASS.emit, t]); maps.emissiveMap = t.texture; }
   if (body.appearance?.clouds && u.uKind !== KIND.gas) { const t = target(SIZE[0], SIZE[1], { color: false }); passes.push([PASS.clouds, t]); maps.clouds = t.texture; }
+  // Cached by what the maps are made from: the settings, which come from the
+  // body's data, the map size and the painter's version.
+  const key = `${PAINTER_VERSION}:${hashKey(JSON.stringify({ u, sizes: passes.map(([pass, t]) => [pass, t.width, t.height]) }))}`;
   // The material is shared: set this body's settings before each pass.
   const use = (pass) => { setUniforms(m, u); m.uniforms.uPass.value = pass; return m; };
   enqueue(function* surfaceJob() {
+    // Painted before, on this device: copy the stored maps back (B0.10).
+    const stored = yield loadBake(key);
+    if (stored?.length === passes.length) {
+      try {
+        for (let i = 0; i < passes.length; i++) {
+          if (maps.disposed) return;
+          yield* restore(passes[i][1], stored[i]);
+        }
+        maps.ready = true;
+        return;
+      } catch {
+        // A stored map that can't be read: paint the world instead.
+      }
+    }
     if (u.uWater > 0) {
       // Sea level: the height on a small map, read back without stopping the
       // GPU, and the level below which the stated share of the area lies.
@@ -388,6 +410,18 @@ if (!WIP_WORLDS) registerSurface((body, { random, newTarget, paint, readRedAsync
       yield* paint(t, use(pass));
     }
     maps.ready = true;
+    // Keep them for next time, in the background. Where the browser can't
+    // (no OffscreenCanvas), the world is simply painted again next time.
+    const blobs = [];
+    try {
+      for (const [, t] of passes) {
+        if (maps.disposed) return;
+        blobs.push(yield pngOf(t));
+      }
+    } catch {
+      return;
+    }
+    saveBake(key, blobs);
   }, { name: `surface ${body.id}`, priority: body.id === view.rig?.focusId ? 1 : 0 });
   return maps;
 });
